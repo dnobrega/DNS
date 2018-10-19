@@ -1,3 +1,4 @@
+;Prueba
 PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ;Plot options
                    nwin=nwin, $
