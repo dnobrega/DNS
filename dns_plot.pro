@@ -1,4 +1,4 @@
-;Prueba
+
 PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ;Plot options
                    nwin=nwin, $
@@ -46,7 +46,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ; Default values
 ;---------------------------------------------------------------------------------
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=0  
-  IF (NOT (KEYWORD_SET(dim)))          THEN dim=2
+  IF (NOT (KEYWORD_SET(dim)))          THEN dim='xz'
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=800
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=600                 
   IF (NOT (KEYWORD_SET(setplot)))      THEN setplot='X'
@@ -65,13 +65,9 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=0
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
 ;---------------------------------------------------------------------------------
-  IF (NOT (KEYWORD_SET(folder))) THEN BEGIN
-     IF !version.build_date EQ "Jul  7 2015" THEN BEGIN
-        folder='/Users/dnobrega/Desktop/Projects/PFM_graphs/'+idlparam+'/' 
-     ENDIF ELSE BEGIN
-        folder='/Users/dnobrega/Desktop/Projects/PFM_graphs/'+idlparam+'/' 
-     ENDELSE
-  ENDIF
+  SPAWN, 'echo $PROJECTS', projects
+  IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/Plots/'+idlparam+'/' 
+  print, folder
   file_mkdir,folder
 ;---------------------------------------------------------------------------------
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
@@ -143,10 +139,10 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
 ; 1D CASE
 ;---------------------------------------------------------------------------------
-  IF (dim EQ 1) THEN BEGIN
+  IF (FIX(STRLEN(dim)) EQ 1) THEN BEGIN
      FOR k=snap0,snapf,step DO BEGIN
          pfm5_var,d,k,var,name, swap,$
-                  d1=d1,donde=donde,title1d=title1d,ytitle1d=ytitle1d,$
+                  dim=dim,donde=donde,title1d=title1d,ytitle1d=ytitle1d,$
                   title2d=title,btitle=btitle,$
                   log=log,yrange=yrange,$
                   myrange=myrange,mylog=mylog,$
@@ -156,7 +152,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                      xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
                      title1d=title1d,ytitle1d=ytitle1d,$
                      yrange=yrange,log=log,$
-                     d1=d1,donde=donde
+                     dim=dim,donde=donde
         IF (KEYWORD_SET(png))   THEN $
            WRITE_PNG,folder+idlparam+'_'+name+'_'+STRTRIM(k,2)+'.png', TVRD(TRUE=1)
         IF (KEYWORD_SET(movie)) THEN $
@@ -166,7 +162,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
 ; 2D CASE
 ;---------------------------------------------------------------------------------
-  IF (dim EQ 2) THEN BEGIN
+  IF (STRLEN(dim) EQ 2) THEN BEGIN
       FOR k=snap0,snapf,step DO BEGIN
           pfm5_var,d,k,var,name,swap,$
                    title1d=title1d,ytitle1d=ytitle1d,$
@@ -202,7 +198,6 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ; Evolution with time of the average
 ;---------------------------------------------------------------------------------
    IF (KEYWORD_SET(dtp)) THEN BEGIN
-      dim=1
       tarray=0. & vtime=0. & tplot=0
       FOR k=snap0,snapf,step DO BEGIN
             
@@ -218,7 +213,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
                    title1d=title1d,ytitle1d=ytitle1d,$
                    yrange=yrange,log=log,$
-                   d1=dtp,donde=donde
+                   dim=dtp,donde=donde
           tarray=[tarray, temp]
           vtime=[vtime, timev]
           IF (k EQ snapf) THEN BEGIN
@@ -229,7 +224,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
                    title1d=title1d,ytitle1d=ytitle1d,$
                    yrange=yrange,log=log,$
-                   d1=dtp,donde=donde
+                   dim=dtp,donde=donde
           ENDIF
 
        ENDFOR
