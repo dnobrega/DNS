@@ -61,7 +61,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=2.0
   IF (NOT (KEYWORD_SET(pposition)))    THEN pposition=[0.14, 0.14, 0.83, 0.92]
   IF (NOT (KEYWORD_SET(fmipos)))       THEN fmipos=[0.84, 0.14, 0.88, 0.92]  
-  IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] ; y, x (0.77)    
+  IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] 
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=0
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
 ;---------------------------------------------------------------------------------
