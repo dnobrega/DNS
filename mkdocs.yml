@@ -1,18 +1,25 @@
 site_name: DNS documentation
-site_url: https://ita-solar.github.io/dns/
+site_url: https://dnobrega.github.io/DNS/
 
 #Repository
+repo_name: dnobrega/DNS
+repo_url: https://github.com/dnobrega/DNS
+edit_uri: ""
+
+pages:
+  - About me: index.md
+  - Bifrost: bifrost.md
 
 theme:
   name: 'material'
   palette:
     primary: 'deep orange'
-    primary: 'deep orange'
-  feature:
-    tabs: true
-pages:
-  - Welcome: index.md
-  - Bifrost: bifrost.md
+    secondary: 'deep orange'
+    accent: 'teal'
+  favicon: 'images/favicon_flare.png'
+#  feature:
+#    tabs: true
+
 # Copyright
 copyright: 'Copyright &copy; 2019 - 2020 Daniel Nobrega Siverio'
 # Customization
