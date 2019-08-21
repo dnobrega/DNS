@@ -1,6 +1,4 @@
-# Welcome to D. Nóbrega-Siverio's webpage
-
-## Bifrost
+# Bifrost
 
 The paper explaing the code can be found in the following link:
 
