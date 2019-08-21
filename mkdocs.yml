@@ -1,0 +1,30 @@
+site_name: My Docs
+theme:
+  name: 'material'
+  palette:
+    primary: 'deep orange'
+    primary: 'deep orange'
+  feature:
+    tabs: true
+pages:
+  - Welcome: index.md
+  - Bifrost: bifrost.md
+# Copyright
+copyright: 'Copyright &copy; 2019 - 2020 Daniel Nobrega Siverio'
+# Customization
+extra:
+  manifest: 'manifest.webmanifest'
+  social:
+    - type: 'github'
+      link: 'https://github.com/dnobrega'
+# Google Analytics
+google_analytics:
+  - 'UA-XXXXXXXX-X'
+  - 'auto'
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
