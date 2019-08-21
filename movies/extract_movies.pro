@@ -14,7 +14,7 @@ SPAWN, 'ls *.mp4', list
 nel = n_elements(list)
 IF (NOT KEYWORD_SET(savefile))   THEN savefile='savefile'
 IF (NOT KEYWORD_SET(xsize))      THEN xsize=800
-IF (NOT KEYWORD_SET(ysize))      THEN ysize=450
+IF (NOT KEYWORD_SET(ysize))      THEN ysize=600
 IF (KEYWORD_SET(folder))         THEN CD, folder
 IF (NOT KEYWORD_SET(nframes))    THEN nframes=1000
 
@@ -40,7 +40,7 @@ FOR jj=0, nel-1 DO BEGIN
       tt=tt+1
    ENDREP UNTIL type EQ -1
    OBJ_DESTROY, movie
-   array=array(*,*,*,0:tt-1)
+   array=array(*,*,*,0:tt)
    
    SAVE, array, filename=savefile+'_'+STRTRIM(STRING(JJ),2)+'.sav'
 
