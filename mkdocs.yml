@@ -6,7 +6,7 @@ repo_name: dnobrega/DNS
 repo_url: https://github.com/dnobrega/DNS
 edit_uri: ""
 
-pages:
+nav:
   - About me: index.md
   - Bifrost: bifrost.md
 
