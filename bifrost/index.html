@@ -407,7 +407,7 @@
               
                 
                 
-                <h1 id="welcome-to-d-nobrega-siverios-webpage">Welcome to D. Nobrega-Siverio's webpage<a class="headerlink" href="#welcome-to-d-nobrega-siverios-webpage" title="Permanent link">&para;</a></h1>
+                <h1 id="welcome-to-d-nobrega-siverios-webpage">Welcome to D. Nóbrega-Siverio's webpage<a class="headerlink" href="#welcome-to-d-nobrega-siverios-webpage" title="Permanent link">&para;</a></h1>
 <h2 id="bifrost">Bifrost<a class="headerlink" href="#bifrost" title="Permanent link">&para;</a></h2>
 <p>The paper explaing the code can be found in the following link:</p>
 <p><a href="https://www.aanda.org/articles/aa/pdf/2011/07/aa16520-11.pdf">Gudiksen et al. (2011)</a></p>
@@ -418,43 +418,59 @@ should be logged in with your github username to see it at:</p>
 <p>To get started with the new repository, you'll need to have git
 (pre-installed in most machines) and configure it to use your name and
 email address you registered with github, by doing something like:</p>
-<blockquote>
-<p><code>git config --global user.name "Daniel Nobrega"</code><br />
-<code>git config --global user.email dnobrega@example.com</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span>git config --global user.name <span class="s2">&quot;Daniel Nobrega&quot;</span>  
+git config --global user.email dnobrega@example.com
+</pre></div>
+
+
 <p>You can clone the repository through HTTPS like this:</p>
-<blockquote>
-<p><code>git clone https://username@github.com/ITA-Solar/Bifrost.git</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span>git clone https://username@github.com/ITA-Solar/Bifrost.git
+</pre></div>
+
+
 <p>replacing "username" with your github username.</p>
 <h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
 <p>In your home directory, create (or modify) your .login file to add the following system variables.
 In case of working with tcsh:</p>
-<blockquote>
-<p><code>setenv BIFROST "/folder/Bifrost"</code><br />
-<code>setenv BIFROST_IDL $BIFROST"/IDL"</code>  </p>
-</blockquote>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
+<span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
+</pre></div>
+
+
 <p>where <em>folder</em> is the location where you have cloned the Bifrost repository.
 It is also necessary to define a system variable called OSC_CSTAGGER 
-depending on your operative system</p>
-<blockquote>
-<p><code>setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/linux"</code> - if you use a Linux system<br />
-<code>setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/intelmac"</code> - in case of a intelmac</p>
-</blockquote>
+depending on your operative system. </p>
+<ul>
+<li>If you use a Linux system:  </li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/linux&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>In case of a intelmac:  </li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
+</pre></div>
+
+
 <p>You can also add an alias so you can go the Bifrost folder easily.
 In case of working with tcsh:</p>
-<blockquote>
-<p><code>alias bifrost "cd /folder/Bifrost/"</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><span class="nb">alias </span>bifrost <span class="s2">&quot;cd /folder/Bifrost/&quot;</span>
+</pre></div>
+
+
 <h2 id="stagger-configuration">Stagger configuration<a class="headerlink" href="#stagger-configuration" title="Permanent link">&para;</a></h2>
 <p>Next step is to go to your stagger folder, typing in your terminal</p>
-<blockquote>
-<p><code>cd $OSC_CSTAGGER</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="nv">$OSC_CSTAGGER</span>
+</pre></div>
+
+
 <p>and then</p>
-<blockquote>
-<p><code>make</code></p>
-</blockquote>
+<div class="codehilite"><pre><span></span>make
+</pre></div>
+
+
 <p>That would create the following six files:</p>
 <ul>
 <li>cstagger.pro</li>
