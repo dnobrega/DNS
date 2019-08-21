@@ -1,4 +1,8 @@
-site_name: My Docs
+site_name: DNS documentation
+site_url: https://ita-solar.github.io/dns/
+
+#Repository
+
 theme:
   name: 'material'
   palette:
