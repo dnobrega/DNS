@@ -1,4 +1,4 @@
-# Welcome to D. Nobrega-Siverio's webpage
+# Welcome to D. Nóbrega-Siverio's webpage
 
 ## Bifrost
 
@@ -17,12 +17,16 @@ To get started with the new repository, you'll need to have git
 (pre-installed in most machines) and configure it to use your name and
 email address you registered with github, by doing something like:
 
-> `git config --global user.name "Daniel Nobrega"`  
-> `git config --global user.email dnobrega@example.com`
+``` tcsh
+git config --global user.name "Daniel Nobrega"  
+git config --global user.email dnobrega@example.com
+```
 
 You can clone the repository through HTTPS like this:
 
-> `git clone https://username@github.com/ITA-Solar/Bifrost.git`
+```tcsh
+git clone https://username@github.com/ITA-Solar/Bifrost.git
+```
 
 replacing "username" with your github username.
 
@@ -31,31 +35,43 @@ replacing "username" with your github username.
 In your home directory, create (or modify) your .login file to add the following system variables.
 In case of working with tcsh:
 
-> `setenv BIFROST "/folder/Bifrost"`  
-> `setenv BIFROST_IDL $BIFROST"/IDL"`  
-
+``` csh
+setenv BIFROST "/folder/Bifrost"
+setenv BIFROST_IDL $BIFROST"/IDL"
+```
 where _folder_ is the location where you have cloned the Bifrost repository.
 It is also necessary to define a system variable called OSC_CSTAGGER 
-depending on your operative system
+depending on your operative system. 
 
-> `setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/linux"` - if you use a Linux system  
-> `setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/intelmac"` - in case of a intelmac
-
+- If you use a Linux system:  
+``` tcsh 
+setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/linux"
+``` 
+- In case of a intelmac:  
+``` tcsh 
+setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/intelmac"
+```
 
 You can also add an alias so you can go the Bifrost folder easily.
 In case	of working with	tcsh:
 
-> `alias bifrost "cd /folder/Bifrost/"`
+``` tcsh 
+alias bifrost "cd /folder/Bifrost/"
+```
 
 ## Stagger configuration
 
 Next step is to go to your stagger folder, typing in your terminal
 
-> `cd $OSC_CSTAGGER`
+``` tcsh
+cd $OSC_CSTAGGER
+```
 
 and then
 
-> `make`
+``` tcsh 
+make
+```
 
 That would create the following six files:
 
