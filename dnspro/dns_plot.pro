@@ -14,7 +14,12 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    folder=folder,movie=movie,png=png,$
                    ; Variable options
                    myrange=myrange,mylog=mylog,$
-                   xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
+                   xmin=xmin, xmax=xmax, $
+                   ymin=ymin, ymax=ymax, $
+                   zmin=zmin, zmax=zmax, $
+                   ix0=ix0,iy0=iy0,iz0=iz0, $
+                   ixstep=ixstep, iystep=iystep, izstep=izstep,$
+                   ixf=ixf,iyf=iyf,izf=izf,$
                    ; Oplot options
                    blines=blines, bcolor=bcolor,bh=bh, $
                    bxmin=bxmin, bxmax=bxmax, bzmin=bzmin, bzmax=bzmax,$
@@ -28,8 +33,8 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    useeds=useeds,$
                    lagrange=lagrange, lcolor=lcolor,lh=lh, lsymsize=lsymsize, $
                    lxmin=lxmin, lxmax=lxmax, lzmin=lzmin, lzmax=lzmax,$
-                   lseeds=lseeds, xxl=xxl, zzl=zzl,$
-                   x3d=x3d,y3d=y3d,z3d=z3d
+                   lseeds=lseeds, xxl=xxl, zzl=zzl
+
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -76,7 +81,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF N_ELEMENTS(snapt) NE 0 THEN BEGIN
      snaps=snapt & snap0=snaps & snapf=snaps
   ENDIF
-  nel=N_ELEMENTS(snaps)
+  n_snaps=N_ELEMENTS(snaps)
 ;---------------------------------------------------------------------------------
   IF (setplot EQ 'X') THEN BEGIN
      SET_PLOT, 'X'
@@ -164,35 +169,45 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (STRLEN(dim) EQ 2) THEN BEGIN
       FOR k=snap0,snapf,step DO BEGIN
-          pfm5_var,d,k,var,name,swap,$
-                   title1d=title1d,ytitle1d=ytitle1d,$
-                   title2d=title,btitle=btitle,$
-                   log=log,yrange=yrange,$
-                   myrange=myrange,mylog=mylog,$
-                   varunits=varunits,$
-                   shiftx=shiftx,$
-                   x3d=x3d, y3d=y3d,z3d=z3d
-          pfm5_2dplot,d,k,var,name,swap,$
-                      xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
-                      blines=blines, bcolor=bcolor,bh=bh, $
-                      bxmin=bxmin, bxmax=bxmax, bzmin=bzmin, bzmax=bzmax,$
-                      bseeds=bseeds, biter=biter, bu=bu,$
-                      velovect=velovect, vcolor=vcolor,$
+            pfm5_var,d,k,var,name,swap,$
+                      title1d=title1d,ytitle1d=ytitle1d,$
                       title2d=title,btitle=btitle,$
-                      brange=yrange,log=log,nghost=nghost,$
-                      uvector=uvector,ucolor=ucolor,uh=uh, uthick=uthick, $
-                      ulength=ulength, uu=uu, $
-                      uxmin=uxmin, uxmax=uxmax, uzmin=uzmin, uzmax=uzmax,$
-                      useeds=useeds, $
-                      lagrange=lagrange, lcolor=lcolor,lh=lh, lsymsize=lsymsize, $
-                      lxmin=lxmin, lxmax=lxmax, lzmin=lzmin, lzmax=lzmax,$
-                      lseeds=lseeds, xxl=xxl, zzl=zzl, $
-                      fmipos=fmipos, fmititle=fmititle
-          IF (KEYWORD_SET(png)) THEN $
-              WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'.png', TVRD(TRUE=1)
-          IF (KEYWORD_SET(movie)) THEN $
-              makingmp4=video.Put(stream,TVRD(TRUE=1))
-       ENDFOR
+                      log=log,yrange=yrange,$
+                      myrange=myrange,mylog=mylog,$
+                      varunits=varunits,$
+                      shiftx=shiftx,$
+                      ix0=ix0,iy0=iy0,iz0=iz0, $
+                      ixstep=ixstep, iystep=iystep, izstep=izstep,$
+                      ixf=ixf,iyf=iyf,izf=izf,$
+                      im0=im0, imf=imf, imstep=imstep,$
+                      x3d=x3d,y3d=y3d,z3d=z3d
+
+            FOR m=im0,imf,imstep DO BEGIN
+               IF (x3d EQ 1) THEN var_plot = reform(var(m,*,*))
+               IF (y3d EQ 1) THEN var_plot = reform(var(*,m,*))
+               IF (z3d EQ 1) THEN var_plot = reform(var(*,*,m))
+               pfm5_2dplot,d,k,var_plot,name,swap,$
+                           xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
+                           blines=blines, bcolor=bcolor,bh=bh, $
+                           bxmin=bxmin, bxmax=bxmax, bzmin=bzmin, bzmax=bzmax,$
+                           bseeds=bseeds, biter=biter, bu=bu,$
+                           velovect=velovect, vcolor=vcolor,$
+                           title2d=title,btitle=btitle,$
+                           brange=yrange,log=log,nghost=nghost,$
+                           uvector=uvector,ucolor=ucolor,uh=uh, uthick=uthick, $
+                           ulength=ulength, uu=uu, $
+                           uxmin=uxmin, uxmax=uxmax, uzmin=uzmin, uzmax=uzmax,$
+                           useeds=useeds, $
+                           lagrange=lagrange, lcolor=lcolor,lh=lh, lsymsize=lsymsize, $
+                           lxmin=lxmin, lxmax=lxmax, lzmin=lzmin, lzmax=lzmax,$
+                           lseeds=lseeds, xxl=xxl, zzl=zzl, $
+                           fmipos=fmipos, fmititle=fmititle
+               IF (KEYWORD_SET(png)) THEN $
+                  WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+coord+STRTRIM(m,2)+'.png', TVRD(TRUE=1)
+               IF (KEYWORD_SET(movie)) THEN $
+                  makingmp4=video.Put(stream,TVRD(TRUE=1))
+            ENDFOR
+         ENDFOR
    ENDIF
 ;---------------------------------------------------------------------------------
 ; Evolution with time of the average
