@@ -16,9 +16,9 @@ nav:
 theme:
   name: 'material'
   palette:
-    primary: 'Light blue'
-    accent: 'Light blue'
-  favicon: 'images/favicon_flare.png'
+    primary: 'Teal'
+    accent: 'Teal'
+  favicon: 'images/dns.png'
 #  feature:
 #    tabs: true
 
