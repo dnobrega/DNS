@@ -16,9 +16,8 @@ nav:
 theme:
   name: 'material'
   palette:
-    primary: 'deep orange'
-    secondary: 'deep orange'
-    accent: 'teal'
+    primary: 'Light blue'
+    accent: 'Light blue'
   favicon: 'images/favicon_flare.png'
 #  feature:
 #    tabs: true
