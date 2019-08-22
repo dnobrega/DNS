@@ -7,8 +7,11 @@ repo_url: https://github.com/dnobrega/DNS
 edit_uri: ""
 
 nav:
-  - About me: index.md
+  - Introduction: index.md
   - Bifrost: bifrost.md
+  - IDL: idl.md
+  - Unix: unix.md
+  - About: about.md
 
 theme:
   name: 'material'
