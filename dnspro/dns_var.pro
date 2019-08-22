@@ -14,8 +14,8 @@ PRO dns_var,d,snaps,var,name,swap,$
             ix0=ix0,iy0=iy0,iz0=iz0, $
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
             ixf=ixf,iyf=iyf,izf=izf,$
-            im0=im0, imf=imf, imstep=imstep, $
-            x3d=x3d,y3d=y3d,z3d=z3d
+            im0=im0, imf=imf, imstep=imstep
+
 
   
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -501,7 +501,6 @@ IF (N_ELEMENTS(ix0)+ N_ELEMENTS(ixf) GE 1) THEN BEGIN
    IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
    IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
    var=var(im0 : imf,*,*)
-   x3d = 1 & y3d = 0 & z3d = 0
 ENDIF
 
 IF (N_ELEMENTS(iy0)+ N_ELEMENTS(iyf) GE 1) THEN BEGIN
@@ -509,15 +508,13 @@ IF (N_ELEMENTS(iy0)+ N_ELEMENTS(iyf) GE 1) THEN BEGIN
    IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
    IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
    var=var(*,im0 : imf,*)
-   x3d = 0 & y3d = 1 & z3d = 0
 ENDIF
 
 IF (N_ELEMENTS(iz0)+ N_ELEMENTS(izf) GE 1) THEN BEGIN
    IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
    IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
-   IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izf
+   IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
    var=var(im0 : imf,*,*)
-   x3d = 0 & y3d = 0 & z3d = 1
 ENDIF
 
 ENDIF

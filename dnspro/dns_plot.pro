@@ -179,13 +179,13 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                       ix0=ix0,iy0=iy0,iz0=iz0, $
                       ixstep=ixstep, iystep=iystep, izstep=izstep,$
                       ixf=ixf,iyf=iyf,izf=izf,$
-                      im0=im0, imf=imf, imstep=imstep,$
-                      x3d=x3d,y3d=y3d,z3d=z3d
+                      im0=im0, imf=imf, imstep=imstep
+
 
             FOR m=im0,imf,imstep DO BEGIN
-               IF (x3d EQ 1) THEN var_plot = reform(var(m,*,*))
-               IF (y3d EQ 1) THEN var_plot = reform(var(*,m,*))
-               IF (z3d EQ 1) THEN var_plot = reform(var(*,*,m))
+               IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
+               IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
+               IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
                pfm5_2dplot,d,k,var_plot,name,swap,$
                            xmin=xmin, xmax=xmax, zmin=zmin, zmax=zmax, $
                            blines=blines, bcolor=bcolor,bh=bh, $
