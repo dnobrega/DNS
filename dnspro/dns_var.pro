@@ -44,22 +44,33 @@ PRO dns_var,d,snaps,var,name,swap,$
 
 ;---------------------------------------------------------------------------------
 
-;Cargamos las unidades del codigo
- UNITS, units
 
 ;Logaritmo en eje y
- log=0
+ var_log=0
+ var_title=''
  title=''
 
-CASE name OF
+ dnsvar_name="dnsvar_"+name
+ file_exists=STRLEN(file_which(dnsvar_name+".pro"))
+ IF (file_exists GT 0) THEN BEGIN 
+    CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, $
+                    var, var_title, var_range, var_log
+    varunits=var_title
+    log=var_log
+    yrange=var_range
+ ENDIF ELSE BEGIN
+    print, "Variable not found in dnsvar folder"
+    print, "Trying in Bifrost folder..."
+    var=d->getvar(name,snaps,swap=swap)
+    var_max = MAX(var, min=var_min)
+    IF (var_min EQ 0) AND (var_max EQ 0) THEN BEGIN
+       print, "Variable not found in Bifrost folder"
+       STOP
+    ENDIF ELSE var_range=[min(var),max(var)]
+ ENDELSE
 
-    ;Temperatura
-    'tg' : BEGIN
-           var=d->getvar(name,snaps,swap=swap)
-           varunits='T (K)'
-           yrange=[1.d3,2.0d6]
-           log=1
-           END
+
+CASE name OF
 
     ;Campo magnetico en direccion X
     'bx' : BEGIN
@@ -105,12 +116,12 @@ CASE name OF
             END
 
     ;Campo magnetico en direccion Z
-     'bz' : BEGIN
-            var=d->getvar(name,snaps,swap=swap)*units.ub*(-1.0)
-            varunits=' B!dz!n (G)'
-            yrange=[-15.,15.d]
-            log=log
-            END
+;     'bz' : BEGIN
+;            var=d->getvar(name,snaps,swap=swap)*units.ub*(-1.0)
+;            varunits=' B!dz!n (G)'
+;            yrange=[-15.,15.d]
+;            log=log
+;            END
 
     ;Valor absoluto del campo magnetico en direccion Z
      'bvz' : BEGIN
@@ -484,10 +495,10 @@ CASE name OF
 
      ELSE: BEGIN
            print, "Variable no definida en PFM5_VAR"
-           var=d->getvar(name,snaps,swap=swap)
-           varunits=''
-           yrange=[min(var),max(var)]
-           title=''
+;           var=d->getvar(name,snaps,swap=swap)
+;           varunits=''
+;           yrange=[min(var),max(var)]
+;           title=''
            END
 ENDCASE
 
