@@ -146,7 +146,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (FIX(STRLEN(dim)) EQ 1) THEN BEGIN
      FOR k=snap0,snapf,step DO BEGIN
-         pfm5_var,d,k,var,name, swap,$
+         dns_var,d,k,var,name, swap,$
                   dim=dim,donde=donde,title1d=title1d,ytitle1d=ytitle1d,$
                   title2d=title,btitle=btitle,$
                   log=log,yrange=yrange,$
@@ -169,7 +169,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (STRLEN(dim) EQ 2) THEN BEGIN
       FOR k=snap0,snapf,step DO BEGIN
-            pfm5_var,d,k,var,name,swap,$
+            dns_var,d,k,var,name,swap,$
                       title1d=title1d,ytitle1d=ytitle1d,$
                       title2d=title,btitle=btitle,$
                       log=log,yrange=yrange,$
@@ -216,7 +216,7 @@ PRO DNS_PLOT,name, snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
       tarray=0. & vtime=0. & tplot=0
       FOR k=snap0,snapf,step DO BEGIN
             
-          pfm5_var,d,k,var,name, swap,$
+          dns_var,d,k,var,name, swap,$
                 dim=dim,donde=donde,title1d=title1d,ytitle1d=ytitle1d,$
                 title2d=title,btitle=btitle,$
                 log=log,yrange=yrange,$
