@@ -1,19 +1,19 @@
-PRO dnsvar_bx, d, name, snaps, swap, var, $
+PRO dnsvar_ee, d, name, snaps, swap, var, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Magnetic field in x-direction: Bx (G)',/info
+       message, 'Internal energy per mass units: epsilon (erg/g)',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 5 THEN BEGIN
-          message,'dnsvar_bx, d, name, snaps, swap, var' $
+          message,'dnsvar_ee, d, name, snaps, swap, var' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
        UNITS, units
-       var=d->getvar(name,snaps,swap=swap)*units.ub
-       var_title='B!dx!n (G)'
-       var_range=[-5.0,5.0]
-       var_log=var_log
+       var=d->getvar(name,snaps,swap=swap)*units.uee
+       var_title='!4e (erg g!u-1!n)'
+       var_range=[1.d12,1.d15]
+       var_log=1
     ENDELSE
 END

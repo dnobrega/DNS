@@ -1,19 +1,19 @@
-PRO dnsvar_bx, d, name, snaps, swap, var, $
+PRO dnsvar_modu, d, name, snaps, swap, var, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Magnetic field in x-direction: Bx (G)',/info
+       message, 'Module of the velocity field: U (km/s)',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 5 THEN BEGIN
-          message,'dnsvar_bx, d, name, snaps, swap, var' $
+          message,'dnsvar_modu, d, name, snaps, swap, var' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
        UNITS, units
-       var=d->getvar(name,snaps,swap=swap)*units.ub
-       var_title='B!dx!n (G)'
-       var_range=[-5.0,5.0]
-       var_log=var_log
+       var=d->getvar(name,snaps,swap=swap)*10.
+       var_title='u (km !u-1!n)'
+       var_range=[1d,1d3]
+       var_log=1
     ENDELSE
 END
