@@ -105,8 +105,9 @@ ENDIF
 ; DEFAULT VALUES IF NOT DEFINED PREVIOUSLY
 ;---------------------------------------------------------------------------------  
  IF (var_log GT 0) THEN BEGIN
-    var=ALOG10(var)
+    var=alog10(var)
     IF (var_range(0) EQ 0) THEN var_range(0)=1d-30
+    var_range=alog10(var_range)
  ENDIF
 
 END

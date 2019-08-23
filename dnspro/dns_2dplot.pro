@@ -85,6 +85,28 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
  ENDIF
 
 ;---------------------------------------------------------------------------------  
+; XY-plane
+;---------------------------------------------------------------------------------
+ IF (dim EQ "xy") THEN BEGIN
+    x=d->getx() & nelx=n_elements(x)   
+    coord='Z'
+    coord_array=d->getz()    
+    y=d->gety() & nely=n_elements(y)
+    IF KEYWORD_SET(xmin) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
+    IF KEYWORD_SET(xmax) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
+    IF KEYWORD_SET(ymin) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
+    IF KEYWORD_SET(ymax) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
+    x=x(minix:maxix)
+    dx=(max(x)-min(x))/(nelx-1)
+    y=y(miniy:maxiy)
+    dy=(max(y)-min(y))/(nely-1)
+    scale=[dx,dy]
+    origin=[min(x),min(y)]
+    var_plot=var_plot(minix:maxix,miniy:maxiy)
+    xtitle='X (Mm)' & ytitle='Y (Mm)'
+ ENDIF
+
+;---------------------------------------------------------------------------------  
 ; Time in minutes
 ;---------------------------------------------------------------------------------         
   t=d->gett()
@@ -112,7 +134,6 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
 
 
 
-  brange=var_range
   nlev=256
   lev2vel=min(brange)+findgen(nlev)*(max(brange)-min(brange))/(nlev-1)
   orient='yright'
