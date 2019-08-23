@@ -11,9 +11,9 @@ PRO dnsvar_uy, d, name, snaps, swap, var, $
           RETURN
        ENDIF
        UNITS, units
-       var=-d->getvar(name,snaps,swap=swap)*10.
+       var=d->getvar(name,snaps,swap=swap)*10.
        var_title='u!dy!n (km s!u-1!n)'
        var_range=[-5.0,5.0]
-       var_log=var_log
+       var_log=0
     ENDELSE
 END

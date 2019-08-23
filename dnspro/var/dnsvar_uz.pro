@@ -14,6 +14,6 @@ PRO dnsvar_uz, d, name, snaps, swap, var, $
        var=-d->getvar(name,snaps,swap=swap)*10.
        var_title='u!dz!n (km s!u-1!n)'
        var_range=[-5.0,5.0]
-       var_log=var_log
+       var_log=0
     ENDELSE
 END

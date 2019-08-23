@@ -4,142 +4,109 @@
 ;--------------------------------------------------------------------------------- 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-PRO dns_var,d,snaps,var,name,swap,$
-            dim=dim, donde=donde, title1d=title1d,ytitle1d=ytitle1d,$
-            title2d=title,btitle=btitle,$
-            log=log,yrange=yrange,$
-            myrange=myrange,mylog=mylog,$
-            varunits=varunits, $
-            shiftx=shiftx,$
+PRO dns_var,d,name,snaps,swap,var,$
+            var_title=var_title, var_range=var_range, var_log=var_log,$
             ix0=ix0,iy0=iy0,iz0=iz0, $
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
             ixf=ixf,iyf=iyf,izf=izf,$
-            im0=im0, imf=imf, imstep=imstep
+            im0=im0, imf=imf, imstep=imstep,$
+            sim3d=sim3d
 
+;---------------------------------------------------------------------------------  
 
+IF (n_params() LT 5) THEN BEGIN
+    message,$
+    'dns_var,d,snaps,var,name,swap,'$
+              +'var_title=var_title, var_range=var_range, var_log=var_log,'$
+              +'ix0=ix0,iy0=iy0,iz0=iz0,'$
+              +'ixstep=ixstep, iystep=iystep, izstep=izstep,$'$
+              +'ixf=ixf,iyf=iyf,izf=izf,'$
+              +'im0=im0, imf=imf, imstep=imstep',/info
+    RETURN
+ENDIF
   
-;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-;---------------------------------------------------------------------------------
-;                                   HELP                                      
-;---------------------------------------------------------------------------------
-
-  IF (n_params() LT 5) THEN BEGIN
-      message,$
-      'dns_var,d,snaps,var,name,swap,'+$
-            'd1=d1,donde=donde, title1d=title1d,ytitle1d=ytitle1d,'+$
-            'title2d=title,btitle=btitle,'+$
-            'log=log,yrange=yrange,'+$
-            'myrange=myrange,mylog=mylog,'+$
-            'varunits=varunits,'+$
-            'shiftx',/info
-      RETURN
-  ENDIF
-
-  
-;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-;---------------------------------------------------------------------------------
-;                                  VARIABLES                                    
 ;--------------------------------------------------------------------------------- 
+ 
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+;
+;                                   MAIN       
+;
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-
-;---------------------------------------------------------------------------------
-
-
-;Logaritmo en eje y
- var_log=0
- var_title=''
- title=''
-
+;---------------------------------------------------------------------------------  
+; LOADING VARIABLES
+;---------------------------------------------------------------------------------  
  dnsvar_name="dnsvar_"+name
  file_exists=STRLEN(file_which(dnsvar_name+".pro"))
  IF (file_exists GT 0) THEN BEGIN 
     CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
-                    var_title=var_title, var_range=var_range, var_log=var_log
-    varunits=var_title
-    log=var_log
-    yrange=var_range
+                    var_title=dnsvar_title, var_range=dnsvar_range, var_log=dnsvar_log
  ENDIF ELSE BEGIN
     print, "Variable not found in dnsvar folder"
     print, "Trying in Bifrost folder..."
     var=d->getvar(name,snaps,swap=swap)
-    var_max = MAX(var, min=var_min)
-    IF (var_min EQ 0) AND (var_max EQ 0) THEN BEGIN
+    var_max = MAX(var, min=var_min, /NAN)
+    IF (var_min EQ var_max) THEN BEGIN
        print, "Variable not found in Bifrost folder"
        STOP
-    ENDIF ELSE var_range=[min(var),max(var)]
+    ENDIF ELSE BEGIN
+       dnsvar_log = 0
+       dnsvar_title = ''
+       dnsvar_range = [var_min,var_max]
+    ENDELSE
  ENDELSE
 
+ IF (NOT (KEYWORD_SET(var_log)))   THEN var_log   = dnsvar_log
+ IF (NOT (KEYWORD_SET(var_title))) THEN var_title = dnsvar_title
+ IF (NOT (KEYWORD_SET(var_range))) THEN var_range = dnsvar_range
+
+;---------------------------------------------------------------------------------  
+; SCANNING 3D VARIABLES
+;---------------------------------------------------------------------------------  
+ var=reform(var)
  sizevar=size(var)
- print, sizevar
+
  IF sizevar(0) EQ 3 THEN BEGIN
 
-IF (N_ELEMENTS(ix0)+ N_ELEMENTS(ixf) GE 1) THEN BEGIN
-   IF (N_ELEMENTS(ix0) EQ 0) THEN im0=0 ELSE im0=ix0
-   IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
-   IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
-   var=var(im0 : imf,*,*)
-ENDIF
+    sim3d=1
 
-IF (N_ELEMENTS(iy0)+ N_ELEMENTS(iyf) GE 1) THEN BEGIN
-   IF (N_ELEMENTS(iy0) EQ 0) THEN im0=0 ELSE im0=iy0
-   IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
-   IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
-   var=var(*,im0 : imf,*)
-ENDIF
+    IF (N_ELEMENTS(ix0)+ N_ELEMENTS(ixf) GE 1) THEN BEGIN
+       IF (N_ELEMENTS(ix0) EQ 0) THEN im0=0 ELSE im0=ix0
+       IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
+       IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
+       var=var(im0 : imf,*,*)
+    ENDIF
 
-IF (N_ELEMENTS(iz0)+ N_ELEMENTS(izf) GE 1) THEN BEGIN
-   IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
-   IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
-   IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
-   var=var(im0 : imf,*,*)
-ENDIF
+    IF (N_ELEMENTS(iy0)+ N_ELEMENTS(iyf) GE 1) THEN BEGIN
+       IF (N_ELEMENTS(iy0) EQ 0) THEN im0=0 ELSE im0=iy0
+       IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
+       IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
+       var=var(*,im0 : imf,*)
+    ENDIF
 
-ENDIF
+    IF (N_ELEMENTS(iz0)+ N_ELEMENTS(izf) GE 1) THEN BEGIN
+       IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
+       IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
+       IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
+       var=var(im0 : imf,*,*)
+    ENDIF
 
-PRINT, "------------------------------------------"
-PRINT, " ",name, snaps, MIN(var,/NAN), MAX(var,/NAN)
-PRINT, "------------------------------------------"
+ ENDIF
 
+;---------------------------------------------------------------------------------  
+; PRINTING INFORMATION
+;---------------------------------------------------------------------------------  
+ var_max = MAX(var, min=var_min, /NAN)
+ PRINT, "------------------------------------------"
+ PRINT, " ",name, snaps, var_min, var_max
+ PRINT, "------------------------------------------"
 
-
-
-
-;Hacemos shift
-;IF (KEYWORD_SET(shiftx)) THEN BEGIN
-;   var=shift(var,shiftx,0)         ;Desplaza las columnas
-;ENDIF
-
-;Creamos el resto de titulos
-;IF (KEYWORD_SET(dim)) THEN BEGIN
-; IF (dim EQ 'z') THEN BEGIN
-;     IF (N_ELEMENTS(donde) EQ 0 ) THEN BEGIN
-;         title1d='< '+title+' > vs Z'
-;      ENDIF ELSE BEGIN
-;         x=d->getx()
-;         title1d=title+' in X='+STRTRIM(STRING(x(donde), FORMAT='(F6.1)'),2)
-;      ENDELSE
-; ENDIF
-; IF (dim EQ 'x') THEN BEGIN
-;     IF (N_ELEMENTS(donde) EQ 0 ) THEN BEGIN
-;        title1d='< '+title+' > vs X' 
-;     ENDIF ELSE BEGIN
-;         z=d->getz()
-;         title1d=title+' in Z='+STRTRIM(STRING(-z(donde), FORMAT='(F6.1)'),2)
-;     ENDELSE
-; ENDIF
-; ENDIF
-
- ytitle1d=varunits
- btitle=varunits
- title2d=title
-
-;Escala y logaritmo
-IF (KEYWORD_SET(myrange)) THEN yrange=myrange
-IF N_ELEMENTS(mylog) NE 0 THEN log=mylog
-IF log EQ 1 THEN BEGIN
-   var=ALOG10(var)
-   IF yrange(0) EQ 0 THEN yrange(0)=1.
-   yrange=ALOG10(yrange)
-ENDIF
+;---------------------------------------------------------------------------------  
+; DEFAULT VALUES IF NOT DEFINED PREVIOUSLY
+;---------------------------------------------------------------------------------  
+ IF (var_log GT 0) THEN BEGIN
+    var=ALOG10(var)
+    IF (var_range(0) EQ 0) THEN var_range(0)=1d-30
+ ENDIF
 
 END
