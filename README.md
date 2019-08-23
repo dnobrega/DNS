@@ -1,5 +1,5 @@
 # DNS
-This github contains documentation to install the Bifrost code
+This github repository contains documentation to install the Bifrost code
 as well as IDL routines to analyze Bifrost numerical experiments and
 other IDL utilities.
 
