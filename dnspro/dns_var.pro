@@ -53,8 +53,8 @@ PRO dns_var,d,snaps,var,name,swap,$
  dnsvar_name="dnsvar_"+name
  file_exists=STRLEN(file_which(dnsvar_name+".pro"))
  IF (file_exists GT 0) THEN BEGIN 
-    CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, $
-                    var, var_title, var_range, var_log
+    CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
+                    var_title=var_title, var_range=var_range, var_log=var_log
     varunits=var_title
     log=var_log
     yrange=var_range
