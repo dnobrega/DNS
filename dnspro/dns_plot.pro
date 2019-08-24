@@ -10,6 +10,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    pposition=pposition, fmipos=fmipos, fmititle=fmititle, $
                    load=load, reverse=reverse, $
                    ; Saving options
+                   dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namef=namef,$                   
                    folder=folder,movie=movie,png=png,$
                    ; Variable options
@@ -18,6 +19,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
+                   ixt=ixt,iyt=iyt,izt=izt, $
                    ix0=ix0,iy0=iy0,iz0=iz0, $
                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
                    ixf=ixf,iyf=iyf,izf=izf
@@ -35,13 +37,17 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   d=obj_new('br_data',idlparam)
   br_getsnapind,idlparam,snaps
 ;---------------------------------------------------------------------------------
+; Configuration file
+;---------------------------------------------------------------------------------
+  IF (NOT (KEYWORD_SET(dns_confi)))    THEN dns_confi="dns_confi"
+  IF file_test(dns_confi+".sav") THEN RESTORE, dns_confi+".sav"
+;---------------------------------------------------------------------------------
 ; Default values
 ;---------------------------------------------------------------------------------
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=0  
   IF (NOT (KEYWORD_SET(dim)))          THEN dim='xz'
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=800
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=600                 
-  IF (NOT (KEYWORD_SET(setplot)))      THEN setplot='X'
   IF (NOT (KEYWORD_SET(pbackground)))  THEN pbackground=255
   IF (NOT (KEYWORD_SET(pcolor)))       THEN pcolor=255
   IF (NOT (KEYWORD_SET(pcharthick)))   THEN pcharthick=2.0
@@ -54,8 +60,22 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(pposition)))    THEN pposition=[0.14, 0.14, 0.83, 0.92]
   IF (NOT (KEYWORD_SET(fmipos)))       THEN fmipos=[0.84, 0.14, 0.88, 0.92]  
   IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] 
+  IF (N_ELEMENTS(load) EQ 0)           THEN MYCOLOR
+  IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] 
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=0
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
+  IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
+     save, swap, nwin, $ 
+           xsize, ysize, setplot,$
+           pbackground, pcolor,$
+           pcharthick, pcharsize, $
+           pthick, pticklen, pmulti,$
+           xthick, ythick, $
+           pposition, fmipos, fmititle, $
+           load, reverse, $
+           FILENAME=dns_confi+".sav"
+  ENDIF
+
 ;---------------------------------------------------------------------------------
   SPAWN, 'echo $DNS_PROJECTS', projects
   IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/Plots/'+idlparam+'/' 
@@ -69,7 +89,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDIF
   n_snaps=N_ELEMENTS(snaps)
 ;---------------------------------------------------------------------------------
-  IF (setplot EQ 'X') THEN BEGIN
+  IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
      SET_PLOT, 'X'
      DEVICE, DECOMPOSED=0, RETAIN=2
      WINDOW, nwin, XSIZE=xsize,YSIZE=ysize
@@ -78,7 +98,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      DEVICE, SET_RESOLUTION=[xsize,ysize],SET_PIXEL_DEPTH=24,DECOMPOSED=0
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  LOADCT,0,/SILENT
   !P.Background=pbackground
   !P.color=pcolor
   !P.charthick=pcharthick
@@ -90,14 +109,12 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   !y.thick=ythick
   !P.position=pposition      
 ;---------------------------------------------------------------------------------
-  IF N_ELEMENTS(load) EQ 0 THEN BEGIN
-     MYCOLOR 
-  ENDIF ELSE BEGIN
+  IF (N_ELEMENTS(load) NE 0) THEN BEGIN
      IF load LT 0 THEN BEGIN
         RESTORE, "/Users/dnobrega/Bifrost/IDL/data/ancillary/bluewhitered.sav"
         tvlct, r,g,b
      ENDIF ELSE LOADCT,load,/SILENT
-  ENDELSE 
+  ENDIF
   tvlct, rgb, /get
   IF (KEYWORD_SET(REVERSE)) THEN BEGIN
      IF reverse EQ 1 THEN BEGIN 
@@ -134,26 +151,38 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
       FOR k=snap0,snapf,step DO BEGIN
             dns_var,d,name,snaps,swap,var,$
                     var_title=var_title, var_range=var_range, var_log=var_log,$
+                    ixt=ixt,iyt=iyt,izt=izt, $                   
                     ix0=ix0,iy0=iy0,iz0=iz0, $
                     ixstep=ixstep, iystep=iystep, izstep=izstep,$
                     ixf=ixf,iyf=iyf,izf=izf,$
                     im0=im0, imf=imf, imstep=imstep,$
-                    sim3d=sim3d
+                    sim3d=sim3d, mm=mm, dim=dim
 
-            FOR m=im0,imf,imstep DO BEGIN
-               IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
-               IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
-               IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
+            IF (KEYWORD_SET(sim3d)) THEN BEGIN
+               FOR m=im0,imf,imstep DO BEGIN
+                   IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
+                   IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
+                   IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
+                   dns_2dplot, d,var_plot,dim, $
+                               mm=mm+m, coord=coord,$
+                               var_title=var_title, var_range=var_range, var_log=var_log,  $
+                               xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                               fmipos=fmipos, fmititle=fmititle, axcol=axcol
+                   IF (KEYWORD_SET(png)) THEN $
+                      WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
+                   IF (KEYWORD_SET(movie)) THEN $
+                      makingmp4=video.Put(stream,TVRD(TRUE=1))
+                ENDFOR
+            ENDIF ELSE BEGIN
                dns_2dplot, d,var_plot,dim, $
-                           sim3d=sim3d, m=m, coord=coord,$
                            var_title=var_title, var_range=var_range, var_log=var_log,  $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                            fmipos=fmipos, fmititle=fmititle, axcol=axcol
                IF (KEYWORD_SET(png)) THEN $
-                  WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(m,2)+'.png', TVRD(TRUE=1)
+                  WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'.png', TVRD(TRUE=1)
                IF (KEYWORD_SET(movie)) THEN $
-                  makingmp4=video.Put(stream,TVRD(TRUE=1))
-            ENDFOR
+                  makingmp4=video.Put(stream,TVRD(TRUE=1))               
+            ENDELSE
          ENDFOR
    ENDIF
 ;---------------------------------------------------------------------------------

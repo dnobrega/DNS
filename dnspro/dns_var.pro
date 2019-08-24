@@ -6,11 +6,12 @@
 
 PRO dns_var,d,name,snaps,swap,var,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
+            ixt=ixt,iyt=iyt,izt=izt, $
             ix0=ix0,iy0=iy0,iz0=iz0, $
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
-            sim3d=sim3d
+            sim3d=sim3d, mm=mm, dim=dim
 
 ;---------------------------------------------------------------------------------  
 
@@ -70,27 +71,64 @@ ENDIF
 
     sim3d=1
 
-    IF (N_ELEMENTS(ix0)+ N_ELEMENTS(ixf) GE 1) THEN BEGIN
-       IF (N_ELEMENTS(ix0) EQ 0) THEN im0=0 ELSE im0=ix0
-       IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
-       IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
-       var=var(im0 : imf,*,*)
-    ENDIF
+    CASE dim OF
 
-    IF (N_ELEMENTS(iy0)+ N_ELEMENTS(iyf) GE 1) THEN BEGIN
-       IF (N_ELEMENTS(iy0) EQ 0) THEN im0=0 ELSE im0=iy0
-       IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
-       IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
-       var=var(*,im0 : imf,*)
-    ENDIF
+    "yz" : BEGIN  
+           IF N_ELEMENTS(ixt) GT 0 THEN BEGIN
+              var=var(ixt,*,*)
+              mm=ixt & imf=0 & im0=0 & imstep=1
+           ENDIF ELSE BEGIN
+              IF (N_ELEMENTS(ix0) EQ 0) THEN im0=0 ELSE im0=ix0
+              IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
+              IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
+              var=var(im0 : imf,*,*)
+              IF (im0 EQ imf) THEN BEGIN
+                 mm=im0 & imf=0 & im0=0 & imstep=1
+              ENDIF ELSE BEGIN
+                 mm=im0 & imf=imf-im0 & im0=0
+              ENDELSE
+           ENDELSE
+           END
 
-    IF (N_ELEMENTS(iz0)+ N_ELEMENTS(izf) GE 1) THEN BEGIN
-       IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
-       IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
-       IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
-       var=var(im0 : imf,*,*)
-    ENDIF
+    "xz" : BEGIN  
+           IF N_ELEMENTS(iyt) GT 0 THEN BEGIN
+              var=var(*,iyt,*)
+              mm=iyt & imf=0 & im0=0 & imstep=1
+           ENDIF ELSE BEGIN
+              IF (N_ELEMENTS(iy0) EQ 0) THEN im0=0 ELSE im0=iy0
+              IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
+              IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
+              var=var(*,im0 : imf,*)
+              IF (im0 EQ imf) THEN BEGIN
+                 mm=im0  & imf=0 & im0=0 & imstep=1
+              ENDIF ELSE BEGIN
+                 mm=im0 & imf=imf-im0 & im0=0
+              ENDELSE
+           ENDELSE
+           END
 
+    "xy" : BEGIN  
+           IF N_ELEMENTS(izt) GT 0 THEN BEGIN
+              var=var(*,*,izt)
+              mm=izt & imf=0 & im0=0 & imstep=1
+           ENDIF ELSE BEGIN
+              IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
+              IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
+              IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
+              var=var(im0 : imf,*,*)
+              IF (im0 EQ imf) THEN BEGIN
+                 mm=im0 & imf=0 & im0=0 & imstep=1
+              ENDIF ELSE BEGIN
+                 mm=im0 & imf=imf-im0 & im0=0
+              ENDELSE
+           ENDELSE
+           END
+
+    ELSE : BEGIN
+           print, "Wrong plane"
+           STOP
+           END
+ ENDCASE
  ENDIF
 
 ;---------------------------------------------------------------------------------  

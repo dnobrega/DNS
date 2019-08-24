@@ -1,6 +1,6 @@
 
 PRO DNS_2DPLOT, d,var_plot,dim,$
-                sim3d=sim3d, m=m, coord=coord,$
+                mm=mm, coord=coord,$
                 var_title=var_title, var_range=var_range, var_log=var_log,  $
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 fmipos=fmipos, fmititle=fmititle, axcol=axcol
@@ -9,7 +9,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
 
   IF (n_params() LT 3) THEN BEGIN
      message,'d,var_plot,dim,'$
-            +'sim3d=sim3d, m=m, coord=coord,'$
+            +'mm=mm, coord=coord,'$
             +'var_title=var_title, var_range=var_range, var_log=var_log,'$
             +'xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,'$
             +'fmipos=fmipos, fmititle=fmititle, axcol=axcol',/info
@@ -117,25 +117,22 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
 ;---------------------------------------------------------------------------------
 ;                                     PLOT                               
 ;--------------------------------------------------------------------------------- 
-   
-  IF (N_ELEMENTS(sim3d) EQ 1) THEN $
-     title=coord+': '+STRTRIM(STRING(coord_array(m),format='(F10.1)'),2)+' (Mm) ' $
-     ELSE title=''
+
+  IF (KEYWORD_SET(mm)) THEN BEGIN
+     title=coord+': '+STRTRIM(STRING(coord_array(mm),format='(F10.1)'),2)+' (Mm)   t='+STRTRIM(stt,2)+' min'
+  ENDIF ELSE title='t='+STRTRIM(stt,2)+' min' 
 
   plot_image, var_plot, $
               origin=origin, scale=scale, $
-              title=title+'t='+STRTRIM(stt,2)+' min'  ,  $
+              title=title,  $
               xtitle=xtitle, ytitle=ytitle, $
               min=var_range[0],max=var_range[1], $
               xminor=5, yminor=5, $  
               smooth=1, /isotropic,$
               bottom=0, top=255
 
-
-
-
   nlev=256
-  lev2vel=min(brange)+findgen(nlev)*(max(brange)-min(brange))/(nlev-1)
+  lev2vel=var_range[0]+findgen(nlev)*(var_range[1]-var_range[0])/(nlev-1)
   orient='yright'
   colarr=findgen(nlev) & colarr(254:255)=255
   COLORBAR_FMI, lev2vel,log=var_log,  $
