@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#bifrost" tabindex="1" class="md-skip">
+      <a href="#idl-in-bifrost" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -273,6 +273,18 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../sswidl/" title="SSWIDL" class="md-nav__link">
+      SSWIDL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -302,15 +314,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-bifrost" title="Getting Bifrost" class="md-nav__link">
-    Getting Bifrost
+  <a href="#first-steps" title="First steps" class="md-nav__link">
+    First steps
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
-    Terminal configuration
+  <a href="#terminal-configuration-to-use-the-idl-routines-of-bifrost" title="Terminal configuration to use the IDL routines of Bifrost" class="md-nav__link">
+    Terminal configuration to use the IDL routines of Bifrost
   </a>
   
 </li>
@@ -323,8 +335,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dnspro" title="DNSPRO" class="md-nav__link">
-    DNSPRO
+  <a href="#idl-startup" title="IDL startup" class="md-nav__link">
+    IDL startup
   </a>
   
 </li>
@@ -337,6 +349,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../dns/" title="DNS" class="md-nav__link">
+      DNS
+    </a>
   </li>
 
     
@@ -385,15 +409,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-bifrost" title="Getting Bifrost" class="md-nav__link">
-    Getting Bifrost
+  <a href="#first-steps" title="First steps" class="md-nav__link">
+    First steps
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
-    Terminal configuration
+  <a href="#terminal-configuration-to-use-the-idl-routines-of-bifrost" title="Terminal configuration to use the IDL routines of Bifrost" class="md-nav__link">
+    Terminal configuration to use the IDL routines of Bifrost
   </a>
   
 </li>
@@ -406,8 +430,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dnspro" title="DNSPRO" class="md-nav__link">
-    DNSPRO
+  <a href="#idl-startup" title="IDL startup" class="md-nav__link">
+    IDL startup
   </a>
   
 </li>
@@ -429,38 +453,38 @@
               
                 
                 
-                <h1 id="bifrost">Bifrost<a class="headerlink" href="#bifrost" title="Permanent link">&para;</a></h1>
-<p>The paper explaing the code can be found in the following link:</p>
-<p><a href="https://www.aanda.org/articles/aa/pdf/2011/07/aa16520-11.pdf">Gudiksen et al. (2011)</a></p>
-<h2 id="getting-bifrost">Getting Bifrost<a class="headerlink" href="#getting-bifrost" title="Permanent link">&para;</a></h2>
-<p>Bifrost is located on github. The repository is private, meaning you
-should be logged in with your github username to see it at:</p>
-<p><a href="https://github.com/ITA-Solar/Bifrost">Bifrost repository</a></p>
-<p>To get started with the new repository, you'll need to have git
-(pre-installed in most machines) and configure it to use your name and
-email address you registered with github, by doing something like:</p>
-<div class="codehilite"><pre><span></span>git config --global user.name <span class="s2">&quot;Daniel Nobrega&quot;</span>  
-git config --global user.email dnobrega@example.com
+                <h1 id="idl-in-bifrost">IDL in Bifrost<a class="headerlink" href="#idl-in-bifrost" title="Permanent link">&para;</a></h1>
+<h2 id="first-steps">First steps<a class="headerlink" href="#first-steps" title="Permanent link">&para;</a></h2>
+<p>In your home directory, check your .login file to see if you have defined the
+following variables: <code>IDL_DIR</code> and  <code>IDL_PATH</code>.
+In case of using Mac and tcsh, you should have something like this:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;</span>
+<span class="nb">setenv </span>IDL_DIR <span class="s2">&quot;/Applications/exelis/idl85/&quot;</span>
 </pre></div>
 
 
-<p>You can clone the repository through HTTPS like this:</p>
-<div class="codehilite"><pre><span></span>git clone https://username@github.com/ITA-Solar/Bifrost.git
+<p>including the <code>IDL_PATH</code> in your <code>PATH</code>:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>PATH <span class="nv">$PATH</span><span class="s2">&quot;:&quot;</span><span class="nv">$IDL_PATH</span>
 </pre></div>
 
 
-<p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
-<p>In your home directory, create (or modify) your .login file to add the following system variables.
+<p>In addition to that, you need to have installed Solar Soft IDL (SSWIDL). 
+Check the documentation in <a href="https://dnobrega.github.io/DNS/sswidl/">SSWIDL</a></p>
+<h2 id="terminal-configuration-to-use-the-idl-routines-of-bifrost">Terminal configuration to use the IDL routines of Bifrost<a class="headerlink" href="#terminal-configuration-to-use-the-idl-routines-of-bifrost" title="Permanent link">&para;</a></h2>
+<p>Modify your .login file to add the following system variables.
 In case of working with tcsh:</p>
-<div class="codehilite"><pre><span></span><span class="nb">setenv </span>BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
-<span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
 </pre></div>
 
 
-<p>where <em>folder</em> is the location where you have cloned the Bifrost repository.
-It is also necessary to define a system variable called OSC_CSTAGGER 
-depending on your operative system. </p>
+<p>where <code>BIFROST</code> is a system variable for your Bifrost repository (see Bifrost section).
+Then, modifiy your <code>IDL_PATH</code> to the the Bifrost IDL folder:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span>
+</pre></div>
+
+
+<p>It is also necessary to define a system variable called <code>OSC_CSTAGGER</code>, which
+depends on your operative system. </p>
 <ul>
 <li>If you use a Linux system:  </li>
 </ul>
@@ -472,12 +496,6 @@ depending on your operative system. </p>
 <li>In case of a intelmac:  </li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
-</pre></div>
-
-
-<p>You can also add an alias so you can go the Bifrost folder easily.
-In case of working with tcsh:</p>
-<div class="codehilite"><pre><span></span><span class="nb">alias </span>bifrost <span class="s2">&quot;cd /folder/Bifrost/&quot;</span>
 </pre></div>
 
 
@@ -501,10 +519,40 @@ In case of working with tcsh:</p>
 <li>inverse.o</li>
 <li>cstagger.so</li>
 </ul>
-<p>which are necessary for stagger operations </p>
-<h2 id="dnspro">DNSPRO<a class="headerlink" href="#dnspro" title="Permanent link">&para;</a></h2>
-<p>IDL routines are located on
-<a href="https://github.com/dnobrega/">dnspro</a></p>
+<p>which are necessary for stagger operations.</p>
+<h2 id="idl-startup">IDL startup<a class="headerlink" href="#idl-startup" title="Permanent link">&para;</a></h2>
+<p>After all this steps, create a IDL startup file.
+This file is going to be executed automatically each time IDL 
+is started. For example, you can create it in your
+IDLWorkspace and then add a similar line in your .login file
+(in case of using tcsh) with the location:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>IDL_STARTUP <span class="s2">&quot;/Users/yourname/IDLWorkspace85/startup.pro&quot;</span>
+</pre></div>
+
+
+<p>Edit the startup.pro file to add the following line</p>
+<div class="codehilite"><pre><span></span>.r $OSC_CSTAGGER<span class="o">/</span>cstagger
+</pre></div>
+
+
+<p>whici will compile the Stagger routines each time you execute
+IDL. With all the information above, you should be able
+to use the IDL routines of Bifrost without any problem.</p>
+<p>I also have the following useful lines in startup.pro</p>
+<div class="codehilite"><pre><span></span>br_select_idlparam, idlparam
+d<span class="o">=</span><span class="nb">obj_new</span>(<span class="s1">&#39;br_data&#39;</span>, idlparam)
+br_getsnapind, idlparam, snaps
+<span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
+<span class="nb">PRINT</span>, <span class="s1">&#39; Project : &#39;</span>, idlparam, <span class="s1">&#39;  &#39;</span>, <span class="nb">strtrim</span>(<span class="nb">string</span>(<span class="nb">min</span>(snaps)),<span class="mi">2</span>), <span class="s1">&#39;-&#39;</span>,<span class="nb">strtrim</span>(<span class="nb">string</span>(<span class="nb">max</span>(snaps)),<span class="mi">2</span>)
+<span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
+<span class="nb">PRINT</span>, &#39;
+</pre></div>
+
+
+<p>so everytime I run IDL within a folder containing a numerical experiment carried out with
+Bifrost, I get the object to load Bifrost variables (<code>d</code>), the name of the simulation 
+(<code>idlparam</code>) and all the snapshots I have in that folder (<code>snaps</code>). Then I print 
+on the screen some of that information.</p>
                 
                   
                 
@@ -525,7 +573,7 @@ In case of working with tcsh:</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../bifrost/" title="Bifrost" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../sswidl/" title="SSWIDL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -534,19 +582,19 @@ In case of working with tcsh:</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Bifrost
+                SSWIDL
               </span>
             </div>
           </a>
         
         
-          <a href="../unix/" title="Unix" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../dns/" title="DNS" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Unix
+                DNS
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

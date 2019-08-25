@@ -114,7 +114,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#bifrost" tabindex="1" class="md-skip">
+      <a href="#unix-useful-commands" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -275,8 +275,32 @@
 
 
   <li class="md-nav__item">
+    <a href="../sswidl/" title="SSWIDL" class="md-nav__link">
+      SSWIDL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../idl/" title="IDL" class="md-nav__link">
       IDL
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../dns/" title="DNS" class="md-nav__link">
+      DNS
     </a>
   </li>
 
@@ -295,59 +319,9 @@
       
     
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Unix
-      </label>
-    
     <a href="./" title="Unix" class="md-nav__link md-nav__link--active">
       Unix
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-bifrost" title="Getting Bifrost" class="md-nav__link">
-    Getting Bifrost
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
-    Terminal configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stagger-configuration" title="Stagger configuration" class="md-nav__link">
-    Stagger configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dnspro" title="DNSPRO" class="md-nav__link">
-    DNSPRO
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -381,43 +355,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-bifrost" title="Getting Bifrost" class="md-nav__link">
-    Getting Bifrost
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
-    Terminal configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stagger-configuration" title="Stagger configuration" class="md-nav__link">
-    Stagger configuration
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dnspro" title="DNSPRO" class="md-nav__link">
-    DNSPRO
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -429,82 +366,8 @@
               
                 
                 
-                <h1 id="bifrost">Bifrost<a class="headerlink" href="#bifrost" title="Permanent link">&para;</a></h1>
-<p>The paper explaing the code can be found in the following link:</p>
-<p><a href="https://www.aanda.org/articles/aa/pdf/2011/07/aa16520-11.pdf">Gudiksen et al. (2011)</a></p>
-<h2 id="getting-bifrost">Getting Bifrost<a class="headerlink" href="#getting-bifrost" title="Permanent link">&para;</a></h2>
-<p>Bifrost is located on github. The repository is private, meaning you
-should be logged in with your github username to see it at:</p>
-<p><a href="https://github.com/ITA-Solar/Bifrost">Bifrost repository</a></p>
-<p>To get started with the new repository, you'll need to have git
-(pre-installed in most machines) and configure it to use your name and
-email address you registered with github, by doing something like:</p>
-<div class="codehilite"><pre><span></span>git config --global user.name <span class="s2">&quot;Daniel Nobrega&quot;</span>  
-git config --global user.email dnobrega@example.com
-</pre></div>
-
-
-<p>You can clone the repository through HTTPS like this:</p>
-<div class="codehilite"><pre><span></span>git clone https://username@github.com/ITA-Solar/Bifrost.git
-</pre></div>
-
-
-<p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
-<p>In your home directory, create (or modify) your .login file to add the following system variables.
-In case of working with tcsh:</p>
-<div class="codehilite"><pre><span></span><span class="nb">setenv </span>BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
-<span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
-</pre></div>
-
-
-<p>where <em>folder</em> is the location where you have cloned the Bifrost repository.
-It is also necessary to define a system variable called OSC_CSTAGGER 
-depending on your operative system. </p>
-<ul>
-<li>If you use a Linux system:  </li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/linux&quot;</span>
-</pre></div>
-
-
-<ul>
-<li>In case of a intelmac:  </li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
-</pre></div>
-
-
-<p>You can also add an alias so you can go the Bifrost folder easily.
-In case of working with tcsh:</p>
-<div class="codehilite"><pre><span></span><span class="nb">alias </span>bifrost <span class="s2">&quot;cd /folder/Bifrost/&quot;</span>
-</pre></div>
-
-
-<h2 id="stagger-configuration">Stagger configuration<a class="headerlink" href="#stagger-configuration" title="Permanent link">&para;</a></h2>
-<p>Next step is to go to your stagger folder, typing in your terminal</p>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> <span class="nv">$OSC_CSTAGGER</span>
-</pre></div>
-
-
-<p>and then</p>
-<div class="codehilite"><pre><span></span>make
-</pre></div>
-
-
-<p>That would create the following six files:</p>
-<ul>
-<li>cstagger.pro</li>
-<li>cstagger.c</li>
-<li>cstagger.o</li>
-<li>init_stagger.o</li>
-<li>inverse.o</li>
-<li>cstagger.so</li>
-</ul>
-<p>which are necessary for stagger operations </p>
-<h2 id="dnspro">DNSPRO<a class="headerlink" href="#dnspro" title="Permanent link">&para;</a></h2>
-<p>IDL routines are located on
-<a href="https://github.com/dnobrega/">dnspro</a></p>
+                <h1 id="unix-useful-commands">Unix useful commands<a class="headerlink" href="#unix-useful-commands" title="Permanent link">&para;</a></h1>
+<p>Documentation in process...</p>
                 
                   
                 
@@ -525,7 +388,7 @@ In case of working with tcsh:</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../idl/" title="IDL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../dns/" title="DNS" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -534,7 +397,7 @@ In case of working with tcsh:</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                IDL
+                DNS
               </span>
             </div>
           </a>
