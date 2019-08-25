@@ -9,7 +9,9 @@ edit_uri: ""
 nav:
   - Introduction: index.md
   - Bifrost: bifrost.md
+  - SSWIDL: sswidl.md
   - IDL: idl.md
+  - DNS: dns.md
   - Unix: unix.md
   - About: about.md
 
