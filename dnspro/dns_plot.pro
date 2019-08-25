@@ -7,7 +7,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    pcharthick=pcharthick, pcharsize=pcharsize, $
                    pthick=pthick, pticklen=pticklen, pmulti=pmulti,$
                    xthick=xthick, ythick=ythick, $
-                   pposition=pposition, fmipos=fmipos, fmititle=fmititle, $
+                   position=position, $
+                   bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                   bar_orient=bar_orient, bar_charthick=bar_charthick, $
+                   bar_thick=bar_thick, bar_charsize=bar_charsize,$
                    load=load, reverse=reverse, $
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
@@ -57,11 +60,22 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(pmulti)))       THEN pmulti=0
   IF (NOT (KEYWORD_SET(xthick)))       THEN xthick=2.0
   IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=2.0
-  IF (NOT (KEYWORD_SET(pposition)))    THEN pposition=[0.14, 0.14, 0.83, 0.92]
-  IF (NOT (KEYWORD_SET(fmipos)))       THEN fmipos=[0.84, 0.14, 0.88, 0.92]  
-  IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] 
+  IF (NOT (KEYWORD_SET(position)))     THEN position=[0.14, 0.12, 0.88, 0.74]
+  IF (NOT (KEYWORD_SET(bar_pos)))      THEN BEGIN
+     bar_pos =  fltarr(4)
+     bar_pos(0)=position(0)
+     bar_pos(1)=position(3)+0.09
+     bar_pos(2)=position(2)
+     bar_pos(3)=bar_pos(1)+0.02
+  ENDIF
+  IF (NOT (KEYWORD_SET(bar_titlepos))) THEN bar_titlepos=[0.94,0.43]
+  IF (NOT (KEYWORD_SET(bar_orient)))   THEN bar_orient="xtop"
+  IF (NOT (KEYWORD_SET(bar_charthick)))THEN bar_charthick=pcharthick-0.5
+  IF (NOT (KEYWORD_SET(bar_thick)))    THEN bar_thick=pcharthick
+  IF (NOT (KEYWORD_SET(bar_charsize))) THEN bar_charsize=pcharsize
+  IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=pcharthick-0.5
+  IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=pcharsize
   IF (N_ELEMENTS(load) EQ 0)           THEN MYCOLOR
-  IF (NOT (KEYWORD_SET(fmititle)))     THEN fmititle=[0.95,0.82] 
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=0
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
@@ -71,7 +85,12 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            pcharthick, pcharsize, $
            pthick, pticklen, pmulti,$
            xthick, ythick, $
-           pposition, fmipos, fmititle, $
+           position, $
+           bar_pos, bar_titlepos, $
+           bar_orient, bar_charthick, $
+           bar_thick, bar_charsize,$
+           bar_titchart,$
+           bar_titchars,$
            load, reverse, $
            FILENAME=dns_confi+".sav"
   ENDIF
@@ -107,7 +126,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   !P.MULTI=pmulti
   !x.thick=xthick
   !y.thick=ythick
-  !P.position=pposition      
+  !P.position=position      
 ;---------------------------------------------------------------------------------
   IF (N_ELEMENTS(load) NE 0) THEN BEGIN
      IF load LT 0 THEN BEGIN
@@ -167,7 +186,11 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                mm=mm+m, coord=coord,$
                                var_title=var_title, var_range=var_range, var_log=var_log,  $
                                xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                               fmipos=fmipos, fmititle=fmititle, axcol=axcol
+                               bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                               bar_orient=bar_orient, bar_charthick=bar_charthick, $
+                               bar_thick=bar_thick, bar_charsize=bar_charsize, $
+                               bar_titchart=bar_titchart, bar_titchars=bar_titchars
+                   wait, 0.0001
                    IF (KEYWORD_SET(png)) THEN $
                       WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
                    IF (KEYWORD_SET(movie)) THEN $
@@ -177,7 +200,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                dns_2dplot, d,var,dim, $
                            var_title=var_title, var_range=var_range, var_log=var_log,  $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                           fmipos=fmipos, fmititle=fmititle, axcol=axcol
+                           bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                           bar_orient=bar_orient, bar_charthick=bar_charthick, $
+                           bar_thick=bar_thick, bar_charsize=bar_charsize, $
+                           bar_titchart=bar_titchart, bar_titchars=bar_titchars
                IF (KEYWORD_SET(png)) THEN $
                   WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'.png', TVRD(TRUE=1)
                IF (KEYWORD_SET(movie)) THEN $
