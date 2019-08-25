@@ -118,7 +118,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
 ;                                     PLOT                               
 ;--------------------------------------------------------------------------------- 
 
-  IF (KEYWORD_SET(mm)) THEN BEGIN
+  IF (N_ELEMENTS(mm) EQ 1) THEN BEGIN
      title=coord+': '+STRTRIM(STRING(coord_array(mm),format='(F10.1)'),2)+' (Mm)   t='+STRTRIM(stt,2)+' min'
   ENDIF ELSE title='t='+STRTRIM(stt,2)+' min' 
 
