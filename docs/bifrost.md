@@ -1,8 +1,19 @@
 # Bifrost
 
-The paper explaing the code can be found in the following link:
 
-[Gudiksen et al. (2011)](https://www.aanda.org/articles/aa/pdf/2011/07/aa16520-11.pdf)
+## Bifrost literature
+
+The paper explaing the code can be found in [Gudiksen et al. (2011)](http://adsabs.harvard.edu/abs/2011A%26A...531A.154G)
+
+Other important papers to understand the Bifrost modules are:
+
+- Radiative transfer solver with coherent scattering: [Hayek et al. (2010)](http://adsabs.harvard.edu/abs/2010A%26A...517A..49H)
+- Nonequilibrium ionization of Hydrogen: [Leenaarts et al. (2011)](http://adsabs.harvard.edu/abs/2011A%26A...530A.124L)
+- Approximations for radiative cooling and heating in the solar chromosphere: [Carlsson and Leenaarts (2012)](http://adsabs.harvard.edu/abs/2012A%26A...539A..39C)
+- Generalized Ohm's Law: [Martínez-Sykora et al. (2012)](http://adsabs.harvard.edu/abs/2012ApJ...753..161M)
+- Nonequilibrium ionization of _optically thin ions_: [Olluri et al. (2013)](http://adsabs.harvard.edu/abs/2013AJ....145...72O)
+- Nonequilibrium ionization of Helium: [Golding et al. (2016)](http://adsabs.harvard.edu/abs/2016ApJ...817..125G)
+- Lagrangian Tracing module: [Leenaarts (2018)](http://adsabs.harvard.edu/abs/2018A%26A...616A.136L)
 
 
 
