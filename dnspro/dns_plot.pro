@@ -66,7 +66,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
      save, swap, nwin, $ 
-           xsize, ysize, setplot,$
+           xsize, ysize, $
            pbackground, pcolor,$
            pcharthick, pcharsize, $
            pthick, pticklen, pmulti,$
