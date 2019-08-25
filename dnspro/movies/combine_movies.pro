@@ -10,7 +10,7 @@ PRO COMBINE_MOVIES, folder=folder, $
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 IF (KEYWORD_SET(folder))    THEN CD, folder
-SPAWN, 'ls *.sav', list
+SPAWN, 'ls *.mp4.sav', list
 n_list = N_ELEMENTS(list)
 FOR ii=0, n_list-1 DO BEGIN
    RESTORE, list[ii], /VERBOSE
@@ -23,7 +23,7 @@ xsize  = (size(SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii-1),2),level=1)))[2]
 ysize  = (size(SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii-1),2),level=1)))[3]
 nframes= (size(SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii-1),2),level=1)))[4]   
 IF (NOT KEYWORD_SET(nrow))       THEN nrow=1
-IF (NOT KEYWORD_SET(ncol))       THEN ncol=n_list
+IF (NOT KEYWORD_SET(ncol))       THEN ncol=n_list/nrow
 IF (NOT KEYWORD_SET(fps))        THEN fps=1
 IF (n_list NE nrow*ncol)         THEN STOP
 IF (NOT KEYWORD_SET(moviename))  THEN moviename='moviename'
@@ -35,6 +35,7 @@ stream=video.AddVideoStream(xsize*ncol,ysize*nrow,fps,BIT_RATE=24E5)
 
 array=BYTARR(3,xsize*ncol,ysize*nrow,nframes)
 
+PRINT, "Combining movies..."
 counter=0
 FOR jj=0,nrow-1 DO BEGIN
    FOR ii=0,ncol-1 DO BEGIN
@@ -44,6 +45,7 @@ FOR jj=0,nrow-1 DO BEGIN
    ENDFOR
 ENDFOR
 
+PRINT, "Creating combined movie..."
 FOR kk=0,nframes-1 DO makingmp4=video.Put(stream,byte(array(*,*,*,kk)))
 
 video.cleanup
