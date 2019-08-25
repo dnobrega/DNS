@@ -1,45 +1,39 @@
-# Bifrost
+# IDL in Bifrost
 
-The paper explaing the code can be found in the following link:
+## First steps
 
-[Gudiksen et al. (2011)](https://www.aanda.org/articles/aa/pdf/2011/07/aa16520-11.pdf)
+In your home directory, check your .login file to see if you have defined the
+following variables: ```IDL_DIR``` and  ```IDL_PATH```.
+In case of using Mac and tcsh, you should have something like this:
 
-## Getting Bifrost
-
-Bifrost is located on github. The repository is private, meaning you
-should be logged in with your github username to see it at:
-
-[Bifrost repository](https://github.com/ITA-Solar/Bifrost)
-
-To get started with the new repository, you'll need to have git
-(pre-installed in most machines) and configure it to use your name and
-email address you registered with github, by doing something like:
-
-``` tcsh
-git config --global user.name "Daniel Nobrega"  
-git config --global user.email dnobrega@example.com
+``` csh
+setenv IDL_PATH "/Applications/exelis/idl85/bin"
+setenv IDL_DIR "/Applications/exelis/idl85/"
 ```
 
-You can clone the repository through HTTPS like this:
+including the ```IDL_PATH``` in your ```PATH```:
 
-```tcsh
-git clone https://username@github.com/ITA-Solar/Bifrost.git
+``` csh
+setenv PATH $PATH":"$IDL_PATH
 ```
 
-replacing "username" with your github username.
+## Terminal configuration to use the IDL routines of Bifrost
 
-## Terminal configuration
-
-In your home directory, create (or modify) your .login file to add the following system variables.
+Modify your .login file to add the following system variables.
 In case of working with tcsh:
 
 ``` csh
-setenv BIFROST "/folder/Bifrost"
 setenv BIFROST_IDL $BIFROST"/IDL"
 ```
-where _folder_ is the location where you have cloned the Bifrost repository.
-It is also necessary to define a system variable called OSC_CSTAGGER 
-depending on your operative system. 
+where ```BIFROST``` is a system variable for your Bifrost repository (see Bifrost section).
+Then, modifiy your ```IDL_PATH``` to the the Bifrost IDL folder:
+
+``` csh
+setenv IDL_PATH "/Applications/exelis/idl85/bin"":+"$BIFROST_IDL
+```
+
+It is also necessary to define a system variable called ```OSC_CSTAGGER```, which
+depends on your operative system. 
 
 - If you use a Linux system:  
 ``` tcsh 
@@ -48,13 +42,6 @@ setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/linux"
 - In case of a intelmac:  
 ``` tcsh 
 setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/intelmac"
-```
-
-You can also add an alias so you can go the Bifrost folder easily.
-In case	of working with	tcsh:
-
-``` tcsh 
-alias bifrost "cd /folder/Bifrost/"
 ```
 
 ## Stagger configuration
@@ -80,9 +67,43 @@ That would create the following six files:
 * inverse.o
 * cstagger.so
 
-which are necessary for stagger operations 
+which are necessary for stagger operations.
 
-## DNSPRO
+## IDL startup
 
-IDL routines are located on
-[dnspro](https://github.com/dnobrega/)
+After all this steps, create a IDL startup file.
+This file is going to be executed automatically each time IDL 
+is started. For example, you can create it in your
+IDLWorkspace and then add a similar line in your .login file
+(in case of using tcsh) with the location:
+
+``` csh
+setenv IDL_STARTUP "/Users/yourname/IDLWorkspace85/startup.pro"
+```
+Edit the startup.pro file to add the following line
+
+``` idl
+.r $OSC_CSTAGGER/cstagger
+```
+whici will compile the Stagger routines each time you execute
+IDL. With all the information above, you should be able
+to use the IDL routines of Bifrost without any problem.
+
+I also have the following useful lines in startup.pro
+
+``` IDL
+br_select_idlparam, idlparam
+d=obj_new('br_data', idlparam)
+br_getsnapind, idlparam, snaps
+PRINT, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+PRINT, ' Project : ', idlparam, '  ', strtrim(string(min(snaps)),2), '-',strtrim(string(max(snaps)),2)
+PRINT, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+PRINT, '
+```
+
+so everytime I run IDL within a folder containing a numerical experiment carried out with
+Bifrost, I get the object to load Bifrost variables (```d```), the name of the simulation 
+(```idlparam```) and all the snapshots I have in that folder (```snaps```). Then I print 
+on the screen some of that information.
+
+
