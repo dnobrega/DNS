@@ -174,7 +174,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                       makingmp4=video.Put(stream,TVRD(TRUE=1))
                 ENDFOR
             ENDIF ELSE BEGIN
-               dns_2dplot, d,var_plot,dim, $
+               dns_2dplot, d,var,dim, $
                            var_title=var_title, var_range=var_range, var_log=var_log,  $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                            fmipos=fmipos, fmititle=fmititle, axcol=axcol

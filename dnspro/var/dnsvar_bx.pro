@@ -12,7 +12,7 @@ PRO dnsvar_bx, d, name, snaps, swap, var, $
        ENDIF
        UNITS, units
        var=d->getvar(name,snaps,swap=swap)*units.ub
-       IF (NOT (KEYWORD_SET(var_title))) var_title='B!dx!n (G)'
+       var_title='B!dx!n (G)'
        var_range=[-5.0,5.0]
        var_log=0
     ENDELSE

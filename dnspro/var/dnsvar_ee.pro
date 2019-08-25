@@ -12,7 +12,7 @@ PRO dnsvar_ee, d, name, snaps, swap, var, $
        ENDIF
        UNITS, units
        var=d->getvar(name,snaps,swap=swap)*units.uee
-       var_title='!4e (erg g!u-1!n)'
+       var_title='!4e!3 (erg g!u-1!n)'
        var_range=[1.d12,1.d15]
        var_log=1
     ENDELSE
