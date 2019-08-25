@@ -17,6 +17,9 @@ including the ```IDL_PATH``` in your ```PATH```:
 setenv PATH $PATH":"$IDL_PATH
 ```
 
+In addition to that, you need to have installed Solar Soft IDL (SSWIDL). 
+Check the documentation in [SSWIDL](https://dnobrega.github.io/DNS/sswidl/)
+
 ## Terminal configuration to use the IDL routines of Bifrost
 
 Modify your .login file to add the following system variables.
