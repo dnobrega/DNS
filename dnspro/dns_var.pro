@@ -129,7 +129,7 @@ ENDIF
            STOP
            END
  ENDCASE
- ENDIF
+ ENDIF ELSE sim3d=0
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION

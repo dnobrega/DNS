@@ -62,8 +62,8 @@ PRO DNS_COLORBAR,lev2vel, $
               END
  ENDCASE
 
- titposy=postitle[0]
- titposx=postitle[1]
+ titposy=postitle[1]
+ titposx=postitle[0]
  axcol=0
  xyouts,titposx,titposy,varname, $
         col=axcol,charthick=tit_charthick,chars=tit_charsize,/norm

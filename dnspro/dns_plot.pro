@@ -4,9 +4,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ;Plot options
                    nwin=nwin, $
                    xsize=xsize, ysize=ysize, setplot=setplot,$
-                   pbackground=pbackground, pcolor=pcolor,$
-                   pcharthick=pcharthick, pcharsize=pcharsize, $
-                   pthick=pthick, pticklen=pticklen, pmulti=pmulti,$
+                   background=background, color=color,$
+                   charthick=charthick, charsize=charsize, $
+                   thick=thick, ticklen=ticklen, multi=multi,$
                    xthick=xthick, ythick=ythick, $
                    position=position, $
                    bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
@@ -43,27 +43,53 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDIF
   br_getsnapind,idlparam,snaps
 ;---------------------------------------------------------------------------------
-; Configuration file
-;---------------------------------------------------------------------------------
-  IF (NOT (KEYWORD_SET(dns_confi)))    THEN dns_confi="dns_confi"
-  IF file_test(dns_confi+".sav") THEN RESTORE, dns_confi+".sav"
-;---------------------------------------------------------------------------------
 ; Default values
 ;---------------------------------------------------------------------------------
-  IF (NOT (KEYWORD_SET(swap)))         THEN swap=0  
-  IF (NOT (KEYWORD_SET(dim)))          THEN dim='xz'
-  IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=800
-  IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=600                 
-  IF (NOT (KEYWORD_SET(pbackground)))  THEN pbackground=255
-  IF (NOT (KEYWORD_SET(pcolor)))       THEN pcolor=255
-  IF (NOT (KEYWORD_SET(pcharthick)))   THEN pcharthick=2.0
-  IF (NOT (KEYWORD_SET(pcharsize)))    THEN pcharsize=2.0
-  IF (NOT (KEYWORD_SET(pthick)))       THEN pthick=2.0
-  IF (NOT (KEYWORD_SET(pticklen)))     THEN pticklen=-0.02
-  IF (NOT (KEYWORD_SET(pmulti)))       THEN pmulti=0
-  IF (NOT (KEYWORD_SET(xthick)))       THEN xthick=2.0
-  IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=2.0
-  IF (NOT (KEYWORD_SET(position)))     THEN position=[0.14, 0.12, 0.88, 0.74]
+  IF (NOT (KEYWORD_SET(dns_confi)))    THEN dns_confi="dns_confi"
+  IF file_test(dns_confi+".sav") THEN RESTORE, dns_confi+".sav" ELSE BEGIN
+     dswap=0
+     dxsize=600
+     dysize=600
+     dbackground=255
+     dcolor=255
+     dcharthick=2.0
+     dcharsize=2.0
+     dthick=2.0
+     dticklen=-0.02
+     dmulti=0
+     dxthick=2.0
+     dythick=2.0
+     dposition=[0.14, 0.12, 0.88, 0.74]
+     dbar_pos =  fltarr(4)
+     dbar_pos(0)=dposition(0)
+     dbar_pos(1)=dposition(3)+0.09
+     dbar_pos(2)=dposition(2)
+     dbar_pos(3)=dbar_pos(1)+0.02
+     dbar_titlepos=[0.43,0.94]
+     dbar_orient="xtop"
+     dbar_charthick=dcharthick-0.5
+     dbar_thick=dcharthick
+     dbar_charsize=dcharsize
+     dbar_titchart=dcharthick-0.5
+     dbar_titchars=dcharsize
+     dload=39
+     dreverse=0
+     dnwin=0
+  ENDELSE
+
+  IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
+  IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=dxsize
+  IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=dysize              
+  IF (NOT (KEYWORD_SET(background)))   THEN background=dbackground
+  IF (NOT (KEYWORD_SET(color)))        THEN color=dcolor
+  IF (NOT (KEYWORD_SET(charthick)))    THEN charthick=dcharthick
+  IF (NOT (KEYWORD_SET(charsize)))     THEN charsize=dcharsize
+  IF (NOT (KEYWORD_SET(thick)))        THEN thick=dthick
+  IF (NOT (KEYWORD_SET(ticklen)))      THEN ticklen=dticklen
+  IF (NOT (KEYWORD_SET(multi)))        THEN multi=dmulti
+  IF (NOT (KEYWORD_SET(xthick)))       THEN xthick=dxthick
+  IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=dythick
+  IF (NOT (KEYWORD_SET(position)))     THEN position=dposition
   IF (NOT (KEYWORD_SET(bar_pos)))      THEN BEGIN
      bar_pos =  fltarr(4)
      bar_pos(0)=position(0)
@@ -71,32 +97,59 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      bar_pos(2)=position(2)
      bar_pos(3)=bar_pos(1)+0.02
   ENDIF
-  IF (NOT (KEYWORD_SET(bar_titlepos))) THEN bar_titlepos=[0.94,0.43]
-  IF (NOT (KEYWORD_SET(bar_orient)))   THEN bar_orient="xtop"
-  IF (NOT (KEYWORD_SET(bar_charthick)))THEN bar_charthick=pcharthick-0.5
-  IF (NOT (KEYWORD_SET(bar_thick)))    THEN bar_thick=pcharthick
-  IF (NOT (KEYWORD_SET(bar_charsize))) THEN bar_charsize=pcharsize
-  IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=pcharthick-0.5
-  IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=pcharsize
-  IF (N_ELEMENTS(load) EQ 0)           THEN MYCOLOR
-  IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=0
-  IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
+  IF (NOT (KEYWORD_SET(bar_titlepos))) THEN bar_titlepos=dbar_titlepos
+  IF (NOT (KEYWORD_SET(bar_orient)))   THEN bar_orient=dbar_orient
+  IF (NOT (KEYWORD_SET(bar_charthick)))THEN bar_charthick=dbar_charthick
+  IF (NOT (KEYWORD_SET(bar_thick)))    THEN bar_thick=dbar_thick
+  IF (NOT (KEYWORD_SET(bar_charsize))) THEN bar_charsize=dbar_charsize
+  IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=dbar_titchart
+  IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=dbar_titchars
+  IF (N_ELEMENTS(load) EQ 0)           THEN load=dload
+  IF (N_ELEMENTS(reverse) EQ 0)        THEN reverse=dreverse
+  IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
+
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
-     save, swap, nwin, $ 
-           xsize, ysize, $
-           pbackground, pcolor,$
-           pcharthick, pcharsize, $
-           pthick, pticklen, pmulti,$
-           xthick, ythick, $
-           position, $
-           bar_pos, bar_titlepos, $
-           bar_orient, bar_charthick, $
-           bar_thick, bar_charsize,$
-           bar_titchart,$
-           bar_titchars,$
-           load, reverse, $
+     dswap=swap
+     dxsize=xsize
+     dysize=ysize
+     dbackground=background
+     dcolor=color
+     dcharthick=charthick
+     dcharsize=charsize
+     dthick=thick
+     dticklen=ticklen
+     dmulti=multi
+     dxthick=xthick
+     dythick=ythick
+     dposition=position
+     dbar_titlepos=bar_titlepos
+     dbar_orient=bar_orient
+     dbar_charthick=bar_charthick
+     dbar_thick=bar_charthick
+     dbar_charsize=bar_charsize
+     dbar_titchart=bar_titchart
+     dbar_titchars=bar_titchars
+     dload=load
+     dreverse=reverse
+     dnwin=nwin
+     save, dswap, $ 
+           dxsize, dysize, $
+           dbackground, dcolor,$
+           dcharthick, dcharsize, $
+           dthick, dticklen, dmulti,$
+           dxthick, dythick, $
+           dposition, $
+           dbar_titlepos, $
+           dbar_orient, dbar_charthick, $
+           dbar_thick, dbar_charsize,$
+           dbar_titchart,$
+           dbar_titchars,$
+           dload, dreverse, dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
+
+  IF (NOT (KEYWORD_SET(dim)))          THEN dim='xz'
+  IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
 
 ;---------------------------------------------------------------------------------
   SPAWN, 'echo $DNS_PROJECTS', projects
@@ -119,32 +172,25 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      DEVICE, SET_RESOLUTION=[xsize,ysize],SET_PIXEL_DEPTH=24,DECOMPOSED=0
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  !P.Background=pbackground
-  !P.color=pcolor
-  !P.charthick=pcharthick
-  !P.charsize=pcharsize
-  !P.thick=pthick
-  !P.ticklen=pticklen
-  !P.MULTI=pmulti
+  load, load
+  !P.Background=background
+  !P.color=color
+  !P.charthick=charthick
+  !P.charsize=charsize
+  !P.thick=thick
+  !P.ticklen=ticklen
+  !P.MULTI=multi
   !x.thick=xthick
   !y.thick=ythick
   !P.position=position      
 ;---------------------------------------------------------------------------------
-  IF (N_ELEMENTS(load) NE 0) THEN BEGIN
-     IF load LT 0 THEN BEGIN
-        RESTORE, "/Users/dnobrega/Bifrost/IDL/data/ancillary/bluewhitered.sav"
-        tvlct, r,g,b
-     ENDIF ELSE LOADCT,load,/SILENT
-  ENDIF
   tvlct, rgb, /get
-  IF (KEYWORD_SET(REVERSE)) THEN BEGIN
-     IF reverse EQ 1 THEN BEGIN 
-        rgb=reverse(rgb,1)
-        rgb(0,*)=255
-        rgb(255,*)=0
-        !P.Background=0
-        !P.color=255
-     ENDIF
+  IF reverse EQ 1 THEN BEGIN 
+     rgb=reverse(rgb,1)
+     rgb(0,*)=255
+     rgb(255,*)=0
+     !P.Background=0
+     !P.color=255
   ENDIF ELSE BEGIN
      rgb(0,*)=0
      rgb(255,*)=255
@@ -180,10 +226,16 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                        im0=im0, imf=imf, imstep=imstep,$
                        sim3d=sim3d, mm=mm, dim=dim
                IF (KEYWORD_SET(keep_var)) THEN BEGIN
-                  svar={d:d,var:var, $
-                        var_title:var_title,var_range:var_range, var_log:var_log,$
-                        im0:im0, imf:imf, imstep:imstep,$
-                        sim3d:sim3d, mm:mm, dim:dim}
+                  IF (sim3d EQ 1) THEN BEGIN
+                     svar={d:d,var:var, $
+                           var_title:var_title,var_range:var_range, var_log:var_log,$
+                           im0:im0, imf:imf, imstep:imstep,$
+                           sim3d:sim3d, mm:mm, dim:dim}
+                  ENDIF ELSE BEGIN
+                     svar={d:d,var:var, $
+                           var_title:var_title,var_range:var_range, var_log:var_log,$
+                           sim3d:sim3d,dim:dim}
+                  ENDELSE
                ENDIF
             ENDIF ELSE BEGIN
                d=svar.d
@@ -191,10 +243,13 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                var_title=svar.var_title
                IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.var_range
                IF (N_ELEMENTS(var_log) EQ 0) THEN  var_log=svar.var_log
-               im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
-               sim3d=svar.sim3d &  mm=svar.mm & dim=svar.dim
+               IF (svar.sim3d EQ 1) THEN BEGIN
+                  im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
+                  sim3d=svar.sim3d &  mm=svar.mm 
+               ENDIF ELSE sim3d=svar.sim3d
+               dim=svar.dim
             ENDELSE
-            IF (KEYWORD_SET(sim3d)) THEN BEGIN
+            IF (sim3d EQ 1) THEN BEGIN
                FOR m=im0,imf,imstep DO BEGIN
                    IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
                    IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
