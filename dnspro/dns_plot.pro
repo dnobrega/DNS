@@ -1,5 +1,6 @@
 
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
+              keep_var=keep_var, svar=svar,$
                    ;Plot options
                    nwin=nwin, $
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -37,7 +38,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ; Basic parameters
 ;---------------------------------------------------------------------------------
   br_select_idlparam,idlparam
-  d=obj_new('br_data',idlparam)
+  IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN  
+     d=obj_new('br_data',idlparam)
+  ENDIF
   br_getsnapind,idlparam,snaps
 ;---------------------------------------------------------------------------------
 ; Configuration file
@@ -104,9 +107,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
   IF NOT (KEYWORD_SET(step))  THEN step=1 
   IF N_ELEMENTS(snapt) NE 0 THEN BEGIN
-     snaps=snapt & snap0=snaps & snapf=snaps
+     snap0=snapt & snapf=snapt
   ENDIF
-  n_snaps=N_ELEMENTS(snaps)
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
      SET_PLOT, 'X'
@@ -168,15 +170,30 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (STRLEN(dim) EQ 2) THEN BEGIN
       FOR k=snap0,snapf,step DO BEGIN
-            dns_var,d,name,snaps,swap,var,$
-                    var_title=var_title, var_range=var_range, var_log=var_log,$
-                    ixt=ixt,iyt=iyt,izt=izt, $                   
-                    ix0=ix0,iy0=iy0,iz0=iz0, $
-                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
-                    ixf=ixf,iyf=iyf,izf=izf,$
-                    im0=im0, imf=imf, imstep=imstep,$
-                    sim3d=sim3d, mm=mm, dim=dim
-
+            IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
+               dns_var,d,name,k,swap,var,$
+                       var_title=var_title, var_range=var_range, var_log=var_log,$
+                       ixt=ixt,iyt=iyt,izt=izt, $                   
+                       ix0=ix0,iy0=iy0,iz0=iz0, $
+                       ixstep=ixstep, iystep=iystep, izstep=izstep,$
+                       ixf=ixf,iyf=iyf,izf=izf,$
+                       im0=im0, imf=imf, imstep=imstep,$
+                       sim3d=sim3d, mm=mm, dim=dim
+               IF (KEYWORD_SET(keep_var)) THEN BEGIN
+                  svar={d:d,var:var, $
+                        var_title:var_title,var_range:var_range, var_log:var_log,$
+                        im0:im0, imf:imf, imstep:imstep,$
+                        sim3d:sim3d, mm:mm, dim:dim}
+               ENDIF
+            ENDIF ELSE BEGIN
+               d=svar.d
+               var=svar.var
+               var_title=svar.var_title
+               IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.var_range
+               IF (N_ELEMENTS(var_log) EQ 0) THEN  var_log=svar.var_log
+               im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
+               sim3d=svar.sim3d &  mm=svar.mm & dim=svar.dim
+            ENDELSE
             IF (KEYWORD_SET(sim3d)) THEN BEGIN
                FOR m=im0,imf,imstep DO BEGIN
                    IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
