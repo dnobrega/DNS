@@ -307,9 +307,45 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        DNS
+      </label>
+    
     <a href="./" title="DNS" class="md-nav__link md-nav__link--active">
       DNS
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-dns-package" title="Getting DNS package" class="md-nav__link">
+    Getting DNS package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
+    Terminal configuration
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -355,6 +391,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-dns-package" title="Getting DNS package" class="md-nav__link">
+    Getting DNS package
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-configuration" title="Terminal configuration" class="md-nav__link">
+    Terminal configuration
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -367,7 +426,38 @@
                 
                 
                 <h1 id="dns">DNS<a class="headerlink" href="#dns" title="Permanent link">&para;</a></h1>
-<p>Documentation in process...</p>
+<h2 id="getting-dns-package">Getting DNS package<a class="headerlink" href="#getting-dns-package" title="Permanent link">&para;</a></h2>
+<p>You can clone the repository through HTTPS like this:</p>
+<div class="codehilite"><pre><span></span>git clone https://username@github.com/dnobrega/DNS.git
+</pre></div>
+
+
+<p>replacing "username" with your github username.</p>
+<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
+<p>It is necessary to modify your .login file in your home directory to add the following system variables.
+In case of working with tcsh:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>DNS <span class="s2">&quot;/folder/DNS&quot;</span> 
+<span class="nb">setenv </span>IDL_DNS <span class="nv">$DNS</span><span class="s2">&quot;/dnspro&quot;</span>
+</pre></div>
+
+
+<p>where <em>folder</em> is in this case the location where you have cloned the DNS package. </p>
+<p>Then you need to add <code>IDL_DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
+in case of using tcsh and Mac:</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$IDL_DNS</span>
+</pre></div>
+
+
+<p>Finally, you need to define a variable called <code>DNS_PROJECTS</code> with the default
+location where you want to save the plots and movies you are going
+to create with the DNS package, e.g.,</p>
+<div class="codehilite"><pre><span></span><span class="nb">setenv </span>DNS_PROJECTS <span class="s2">&quot;~/dns_plots&quot;</span>
+</pre></div>
+
+
+<p>Obviously, you will also need to create that folder. 
+Within <code>DNS_PROJECTS</code>, other folders will be automatically 
+created with the name of the simulation when you save a image or movie.</p>
                 
                   
                 
