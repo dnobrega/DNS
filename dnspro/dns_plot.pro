@@ -12,7 +12,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
-                   load=load, reverse=reverse, $
+                   load=load, reverse_load=reverse_load, $
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namef=namef,$                   
@@ -73,7 +73,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dbar_titchart=dcharthick-0.5
      dbar_titchars=dcharsize
      dload=39
-     dreverse=0
+     dreverse_load=0
      dnwin=0
   ENDELSE
 
@@ -105,7 +105,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=dbar_titchart
   IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=dbar_titchars
   IF (N_ELEMENTS(load) EQ 0)           THEN load=dload
-  IF (N_ELEMENTS(reverse) EQ 0)        THEN reverse=dreverse
+  IF (N_ELEMENTS(reverse_load) EQ 0)        THEN reverse_load=dreverse_load
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
@@ -130,7 +130,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dbar_titchart=bar_titchart
      dbar_titchars=bar_titchars
      dload=load
-     dreverse=reverse
+     dreverse_load=reverse_load
      dnwin=nwin
      save, dswap, $ 
            dxsize, dysize, $
@@ -144,7 +144,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
            dbar_titchars,$
-           dload, dreverse, dnwin, $
+           dload, dreverse_load, dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
 
@@ -185,8 +185,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   !P.position=position      
 ;---------------------------------------------------------------------------------
   tvlct, rgb, /get
-  IF reverse EQ 1 THEN BEGIN 
-     rgb=reverse(rgb,1)
+  IF reverse_load EQ 1 THEN BEGIN 
+     help, rgb
+     rgb=REVERSE(rgb,1)
      rgb(0,*)=255
      rgb(255,*)=0
      !P.Background=0

@@ -62,13 +62,12 @@ PRO DNS_COLORBAR,lev2vel, $
               END
  ENDCASE
 
+ axcol=!P.color
  titposy=postitle[1]
  titposx=postitle[0]
- axcol=0
  xyouts,titposx,titposy,varname, $
         col=axcol,charthick=tit_charthick,chars=tit_charsize,/norm
 
- IF n_elements(axcol) LT 1 THEN IF n_elements(red) GT 0 THEN axcol=red ELSE axcol=0
 
  rang=[min(lev2vel),max(lev2vel)] & IF keyword_set(log) THEN rang=10^rang
 
@@ -129,7 +128,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
             +'mm=mm, coord=coord,'$
             +'var_title=var_title, var_range=var_range, var_log=var_log,'$
             +'xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,'$
-            +'fmipos=fmipos, fmititle=fmititle, axcol=axcol',/info
+            +'fmipos=fmipos, fmititle=fmititle',/info
       RETURN
   ENDIF
 
