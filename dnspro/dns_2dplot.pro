@@ -114,8 +114,8 @@ END
 
 PRO DNS_2DPLOT, d,var_plot,dim,$
                 mm=mm, coord=coord,$
-                var_title=var_title, var_range=var_range, var_log=var_log,  $
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                bar_name=bar_name, bar_range=bar_range, bar_log=bar_log,  $
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
@@ -126,7 +126,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
   IF (n_params() LT 3) THEN BEGIN
      message,'d,var_plot,dim,'$
             +'mm=mm, coord=coord,'$
-            +'var_title=var_title, var_range=var_range, var_log=var_log,'$
+            +'bar_name=bar_name, bar_range=bar_range, bar_log=bar_log,'$
             +'xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,'$
             +'fmipos=fmipos, fmititle=fmititle',/info
       RETURN
@@ -242,15 +242,15 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
               origin=origin, scale=scale, $
               title=title,  $
               xtitle=xtitle, ytitle=ytitle, $
-              min=var_range[0],max=var_range[1], $
+              min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
               isotropic=isotropic,$
               bottom=0, top=255
   nlev=256
-  lev2vel=var_range[0]+findgen(nlev)*(var_range[1]-var_range[0])/(nlev-1)
+  lev2vel=bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
   DNS_COLORBAR, lev2vel,$
-                varname=var_title, $
-                log=var_log,  $
+                varname=bar_name, $
+                log=bar_log,  $
                 charthick=bar_charthick,$
                 thick=bar_thick, $
                 chars=bar_charsize,$

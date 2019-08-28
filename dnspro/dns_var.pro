@@ -11,7 +11,8 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
-            sim3d=sim3d, mm=mm, dim=dim
+            sim3d=sim3d, mm=mm, dim=dim, $
+            bar_range=bar_range
 
 ;---------------------------------------------------------------------------------  
 
@@ -41,7 +42,7 @@ ENDIF
  file_exists=STRLEN(file_which(dnsvar_name+".pro"))
  IF (file_exists GT 0) THEN BEGIN 
     CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
-                    var_title=dnsvar_title, var_range=dnsvar_range, var_log=dnsvar_log
+                    var_title=var_title, var_range=bvar_range, var_log=var_log
  ENDIF ELSE BEGIN
     print, "Variable not found in dnsvar folder"
     print, "Trying in Bifrost folder..."
@@ -51,15 +52,15 @@ ENDIF
        print, "Variable not found in Bifrost folder"
        STOP
     ENDIF ELSE BEGIN
-       dnsvar_log = 0
-       dnsvar_title = ''
-       dnsvar_range = [var_min,var_max]
+       var_log = 0
+       var_title = ''
+       bar_range = [var_min,var_max]
     ENDELSE
  ENDELSE
 
- IF (NOT (KEYWORD_SET(var_log)))   THEN var_log   = dnsvar_log
- IF (NOT (KEYWORD_SET(var_title))) THEN var_title = dnsvar_title
- IF (NOT (KEYWORD_SET(var_range))) THEN var_range = dnsvar_range
+; IF (NOT (KEYWORD_SET(var_log)))   THEN var_log   = bar_log
+; IF (NOT (KEYWORD_SET(var_title))) THEN var_title = bar_title
+ IF (KEYWORD_SET(var_range)) THEN bar_range = var_range
 
 ;---------------------------------------------------------------------------------  
 ; SCANNING 3D VARIABLES
@@ -140,12 +141,13 @@ ENDIF
  PRINT, "------------------------------------------"
 
 ;---------------------------------------------------------------------------------  
-; DEFAULT VALUES IF NOT DEFINED PREVIOUSLY
+; VAR IN LOG SCALE
 ;---------------------------------------------------------------------------------  
+
  IF (var_log GT 0) THEN BEGIN
     var=alog10(var)
-    IF (var_range(0) EQ 0) THEN var_range(0)=1d-30
-    var_range=alog10(var_range)
+    IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
+    bar_range=alog10(bar_range)
  ENDIF
 
 END
