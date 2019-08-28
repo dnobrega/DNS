@@ -12,18 +12,22 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
             sim3d=sim3d, mm=mm, dim=dim, $
-            bar_range=bar_range
+            bar_range=bar_range, bar_log=bar_log, bar_title=bar_title
 
 ;---------------------------------------------------------------------------------  
 
 IF (n_params() LT 5) THEN BEGIN
     message,$
-    'dns_var,d,snaps,var,name,swap,'$
+    'dns_var,d,name,snaps,swap,var,'$
               +'var_title=var_title, var_range=var_range, var_log=var_log,'$
+              +'ixt=ixt,iyt=iyt,izt=izt,'$
               +'ix0=ix0,iy0=iy0,iz0=iz0,'$
               +'ixstep=ixstep, iystep=iystep, izstep=izstep,$'$
               +'ixf=ixf,iyf=iyf,izf=izf,'$
-              +'im0=im0, imf=imf, imstep=imstep',/info
+              +'im0=im0, imf=imf, imstep=imstep'$
+              +'sim3d=sim3d, mm=mm, dim=dim,' $
+              +'bar_range=bar_range, bar_log=bar_log, bar_title=bar_title',$
+               /info
     RETURN
 ENDIF
   
@@ -42,7 +46,9 @@ ENDIF
  file_exists=STRLEN(file_which(dnsvar_name+".pro"))
  IF (file_exists GT 0) THEN BEGIN 
     CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
-                    var_title=var_title, var_range=bvar_range, var_log=var_log
+                    var_title=dnsvar_title, $
+                    var_range=dnsvar_range, $
+                    var_log=dnsvar_log
  ENDIF ELSE BEGIN
     print, "Variable not found in dnsvar folder"
     print, "Trying in Bifrost folder..."
@@ -52,15 +58,21 @@ ENDIF
        print, "Variable not found in Bifrost folder"
        STOP
     ENDIF ELSE BEGIN
-       var_log = 0
-       var_title = ''
-       bar_range = [var_min,var_max]
+       dnsvar_log = 0
+       dnsvar_title = ''
+       dnsvar_range = [var_min,var_max]
     ENDELSE
  ENDELSE
 
-; IF (NOT (KEYWORD_SET(var_log)))   THEN var_log   = bar_log
-; IF (NOT (KEYWORD_SET(var_title))) THEN var_title = bar_title
- IF (KEYWORD_SET(var_range)) THEN bar_range = var_range
+ IF (N_ELEMENTS(var_log) GT 0)    $
+    THEN bar_log   = var_log  $
+    ELSE bar_log = dnsvar_log
+ IF (KEYWORD_SET(var_title))   $
+    THEN bar_title = var_title $
+    ELSE bar_title = dnsvar_title
+ IF (KEYWORD_SET(var_range))   $
+    THEN bar_range = var_range $
+    ELSE bar_range=dnsvar_range
 
 ;---------------------------------------------------------------------------------  
 ; SCANNING 3D VARIABLES
@@ -143,8 +155,7 @@ ENDIF
 ;---------------------------------------------------------------------------------  
 ; VAR IN LOG SCALE
 ;---------------------------------------------------------------------------------  
-
- IF (var_log GT 0) THEN BEGIN
+ IF (bar_log GT 0) THEN BEGIN
     var=alog10(var)
     IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
     bar_range=alog10(bar_range)
