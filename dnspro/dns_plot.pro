@@ -1,6 +1,6 @@
 
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
-              keep_var=keep_var, svar=svar,$
+               keep_var=keep_var, svar=svar,$
                    ;Plot options
                    nwin=nwin, $
                    xsize=xsize, ysize=ysize, setplot=setplot,$
