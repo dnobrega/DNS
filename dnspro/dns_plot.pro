@@ -153,7 +153,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 
 ;---------------------------------------------------------------------------------
   SPAWN, 'echo $DNS_PROJECTS', projects
-  IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/Plots/'+idlparam+'/' 
+  IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/'+idlparam+'/' 
   file_mkdir,folder
 ;---------------------------------------------------------------------------------
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
