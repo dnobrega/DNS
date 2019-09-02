@@ -3,7 +3,8 @@ PRO EXTRACT_AND_COMBINE_MOVIES, folder=folder,$
                                 input_format=input_format,$
                                 output_format=output_format,$
                                 ncol=ncol, nrow=nrow, $
-                                moviename=moviename, fps=fps
+                                moviename=moviename, fps=fps, $
+                                save_array=save_array
   
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -61,6 +62,12 @@ FOR jj=0, n_list-1 DO BEGIN
       ENDIF
    ENDELSE
    
+   IF KEYWORD_SET(save_array) THEN BEGIN
+      array = (SCOPE_VARFETCH('temp_'+STRTRIM(STRING(jj),2), /ENTER, LEVEL=1))
+      print, jj, " Saving "+list[jj]+'.sav'
+      SAVE, array, filename=list[jj]+'.sav'
+   ENDIF
+
 ENDFOR
 
 xsize=xsize_old
