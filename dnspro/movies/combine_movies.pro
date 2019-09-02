@@ -1,7 +1,8 @@
 
 PRO COMBINE_MOVIES, folder=folder, $
                     ncol=ncol, nrow=nrow, $
-                    moviename=moviename, fps=fps
+                    moviename=moviename, fps=fps, $
+                    format=format
   
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -10,10 +11,12 @@ PRO COMBINE_MOVIES, folder=folder, $
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 IF (KEYWORD_SET(folder))    THEN CD, folder
-SPAWN, 'ls *.mp4.sav', list
+IF (NOT KEYWORD_SET(format))  THEN format='.mp4'
+SPAWN, 'ls *'+format+'.sav', list
 n_list = N_ELEMENTS(list)
 FOR ii=0, n_list-1 DO BEGIN
    RESTORE, list[ii], /VERBOSE
+   help, array
    (SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii),2), /ENTER, LEVEL=1)) = array
    xsize  = (size(SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii),2),level=1)))[2]
    ysize  = (size(SCOPE_VARFETCH('temp_'+STRTRIM(STRING(ii),2),level=1)))[3]

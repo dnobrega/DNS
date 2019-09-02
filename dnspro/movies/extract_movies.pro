@@ -1,5 +1,5 @@
 
-PRO EXTRACT_MOVIES, folder=folder
+PRO EXTRACT_MOVIES, folder=folder, format=format
   
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -7,8 +7,9 @@ PRO EXTRACT_MOVIES, folder=folder
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-IF (KEYWORD_SET(folder))         THEN CD, folder
-SPAWN, 'ls *.mp4', list
+IF (KEYWORD_SET(folder))      THEN CD, folder
+IF (NOT KEYWORD_SET(format))  THEN format='.mp4'
+SPAWN, 'ls *'+format, list
 nel = n_elements(list)
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
