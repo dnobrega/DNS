@@ -13,6 +13,7 @@ nav:
   - IDL: idl.md
   - DNS: dns.md
   - Unix: unix.md
+  - SST: SST.md
   - About: about.md
 
 theme:
