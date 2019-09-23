@@ -1,5 +1,5 @@
 
-PRO EXTRACT_AND_COMBINE_MOVIES, folder=folder,$
+PRO EXTRACT_AND_COMBINE_MOVIES, list=list, folder=folder,$
                                 input_format=input_format,$
                                 output_format=output_format,$
                                 ncol=ncol, nrow=nrow, $
@@ -17,8 +17,8 @@ IF (NOT KEYWORD_SET(input_format))   THEN input_format='.mp4'
 IF (NOT KEYWORD_SET(output_format))  THEN output_format='.mp4'
 IF (NOT KEYWORD_SET(fps))            THEN fps=10
 IF (NOT KEYWORD_SET(moviename))      THEN moviename='moviename'
+IF (NOT KEYWORD_SET(list))           THEN SPAWN, 'ls *'+input_format, list
 
-SPAWN, 'ls *'+input_format, list
 n_list = n_elements(list)
 
 IF (NOT KEYWORD_SET(nrow))           THEN nrow=1
