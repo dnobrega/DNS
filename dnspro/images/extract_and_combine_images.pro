@@ -1,5 +1,5 @@
 
-PRO EXTRACT_AND_COMBINE_IMAGES, folder=folder,$
+PRO EXTRACT_AND_COMBINE_IMAGES, list=list, folder=folder,$
                                 input_format=input_format,$
                                 output_format=output_format,$
                                 ncol=ncol, nrow=nrow, $
@@ -16,8 +16,9 @@ IF (KEYWORD_SET(folder))             THEN CD, folder
 IF (NOT KEYWORD_SET(input_format))   THEN input_format='.jpeg'
 IF (NOT KEYWORD_SET(output_format))  THEN output_format=input_format
 IF (NOT KEYWORD_SET(imagename))      THEN imagename='imagename'
+IF (NOT KEYWORD_SET(list))           THEN  SPAWN, 'ls *'+input_format, list
 
-SPAWN, 'ls *'+input_format, list
+
 n_list = n_elements(list)
 
 IF (NOT KEYWORD_SET(nrow))           THEN nrow=1
