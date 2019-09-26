@@ -128,7 +128,7 @@ ENDIF
               IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
               IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
               IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
-              var=var(im0 : imf,*,*)
+              var=var(*,*,im0 : imf)
               IF (im0 EQ imf) THEN BEGIN
                  mm=im0 & imf=0 & im0=0 & imstep=1
               ENDIF ELSE BEGIN
