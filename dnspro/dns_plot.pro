@@ -186,7 +186,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   tvlct, rgb, /get
   IF reverse_load EQ 1 THEN BEGIN 
-     help, rgb
      rgb=REVERSE(rgb,1)
      rgb(0,*)=255
      rgb(255,*)=0
