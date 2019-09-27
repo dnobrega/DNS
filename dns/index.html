@@ -522,23 +522,23 @@ snapshot 0 to snapshot 500 each 10 snapshots.</p>
 <p>That will create a movie in your <code>DNS_PROJECTS</code> folder. The <code>setplot</code> flag is
 to create the movie using the Z buffer device.</p>
 <p>In 3D experiments you can plot different planes, for example,</p>
-<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;YZ&quot;</span>, ixstep<span class="o">=</span><span class="mi">10</span>
+<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;yz&quot;</span>, ixstep<span class="o">=</span><span class="mi">10</span>
 </pre></div>
 
 
 <p>which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,</p>
-<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;XY&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>
+<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>
 </pre></div>
 
 
 <p>You can customize your window size, thickness, colors, position of the plot... For instance,</p>
-<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;XY&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>]
+<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>]
 </pre></div>
 
 
 <p>Once you are happy with your plot setup, you can save it, so you will not need to write
 all the commands again. To do that, use </p>
-<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;XY&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>], <span class="o">/</span>save_dns_confi
+<div class="codehilite"><pre><span></span>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>], <span class="o">/</span>save_dns_confi
 </pre></div>
 
 
