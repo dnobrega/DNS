@@ -87,25 +87,25 @@ to create the movie using the Z buffer device.
 In 3D experiments you can plot different planes, for example,
 
 ``` IDL
-dns_plot, "r",snapt=100, dim="YZ", ixstep=10
+dns_plot, "r",snapt=100, dim="yz", ixstep=10
 ```
 which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,
 
 ``` IDL
-dns_plot, "r",snapt=100, dim="XY", izstep=10
+dns_plot, "r",snapt=100, dim="xy", izstep=10
 ```
 
 You can customize your window size, thickness, colors, position of the plot... For instance,
 
 ``` IDL
-dns_plot, "r",snapt=100, dim="XY", izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74]
+dns_plot, "r",snapt=100, dim="xy", izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74]
 ```
 
 Once you are happy with your plot setup, you can save it, so you will not need to write
 all the commands again. To do that, use 
 
 ``` IDL
-dns_plot, "r",snapt=100, dim="XY", izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74], /save_dns_confi
+dns_plot, "r",snapt=100, dim="xy", izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74], /save_dns_confi
 ```
 That will create a file in your current directory called ```dns_confi.sav``` with the plot parameters you have
 defined.
