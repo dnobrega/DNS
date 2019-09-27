@@ -1,24 +1,19 @@
 PRO units, units
 
  units={$
-   ul:1.e8,$
-   ut:100.,$
-   ur:1.00000e-07,$
-   uu:1.00000e+06,$
-   up:100000.,$
-   uee:1.00000e+12,$
-   ue:100000.,$
-   mu:0.630000,$
-   bk:1.38000e-16,$
-   mh:1.67000e-24,$
-   mm:1.05210e-24,$
-   me:9.10953e-28,$
-   kr:0.100000,$
-   te:1.00000e+11,$
-   re:8.31000e+07,$
-   cl:2.99800e+10,$
-   qe:4.80321e-10,$
-   ub:1121.00,$
-   tg:9681.00}
+   ul:1.e8,$         ; Lenght units: [Mm] -> [cm]
+   ut:100.,$         ; Time units: [hs] -> [s]
+   ur:1.00000e-07,$  ; Density units: [..]  ->  [g/cm^3]
+   uu:1.00000e+06,$  ; Velocity units: [Mm/hs] -> [cm/s]
+   up:100000.,$      ; Pressure units: [..] -> [erg/cm^3]
+   uee:1.00000e+12,$ ; Internal energer per grams [..] -> [erg/g]
+   ue:100000.,$      ; Internal energy per unit volume units [..] -> [erg/cm^3]
+   bk:1.38000e-16,$  ; Boltzmann constant [erg/K]
+   mh:1.67000e-24,$  ; Hydrogen mass [g]
+   me:9.10953e-28,$  ; Electron mass [g]
+   kr:0.100000,$     ; Rosseland opacity [..] -> [cm2/g]
+   cl:2.997925e+10,$ ; Speed of light [cm/s]
+   qe:4.80321e-10,$  ; Electron charge [Statcoulomb]
+   ub:1121.00}       ; Magnetic field units [..] -> [G]
 
 END
