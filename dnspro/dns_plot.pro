@@ -15,7 +15,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    load=load, reverse_load=reverse_load, $
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
-                   namef=namef,$                   
+                   namefile=namefile,$                   
                    folder=folder,movie=movie,png=png,$
                    ; Variable options
                    dim=dim,$
