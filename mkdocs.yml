@@ -7,14 +7,16 @@ repo_url: https://github.com/dnobrega/DNS
 edit_uri: ""
 
 nav:
-  - Introduction: index.md
-  - Bifrost: bifrost.md
+  - INTRODUCTION: index.md
+  - BIFROST: bifrost.md
   - SSWIDL: sswidl.md
   - IDL: idl.md
   - DNS: dns.md
-  - Unix: unix.md
   - SST: SST.md
-  - About: about.md
+  - IRIS: IRIS.md
+  - SDO: SDO.md
+  - UNIX: unix.md
+  - ABOUT: about.md
 
 theme:
   name: 'material'
