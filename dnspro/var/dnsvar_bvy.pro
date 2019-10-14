@@ -1,4 +1,4 @@
-PRO dnsvar_by, d, name, snaps, swap, var, $
+PRO dnsvar_bvy, d, name, snaps, swap, var, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
