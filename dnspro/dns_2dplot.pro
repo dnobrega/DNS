@@ -151,10 +151,10 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     newz=minz+dz*FINDGEN(nelz)
     FOR i=0,nelx-1 DO var_plot(i,*)=INTERPOL(var_plot(i,*),z,newz)
     var_plot=reverse(var_plot,2)
-    IF KEYWORD_SET(xmin) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
-    IF KEYWORD_SET(xmax) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
-    IF KEYWORD_SET(zmin) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
-    IF KEYWORD_SET(zmax) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
+    IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
+    IF (N_ELEMENTS(xmin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
+    IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
+    IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
     x=x(minix:maxix)
     dx=(max(x)-min(x))/(n_elements(x)-1)
     z=newz(miniz:maxiz)
@@ -182,10 +182,10 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     newz=minz+dz*FINDGEN(nelz)
     FOR i=0,nely-1 DO var_plot(i,*)=INTERPOL(var_plot(i,*),z,newz)
     var_plot=reverse(var_plot,2)
-    IF KEYWORD_SET(ymin) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
-    IF KEYWORD_SET(ymax) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
-    IF KEYWORD_SET(zmin) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
-    IF KEYWORD_SET(zmax) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
+    IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
+    IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
+    IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
+    IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
     y=y(miniy:maxiy)
     dy=(max(y)-min(y))/(n_elements(y)-1)
     z=newz(miniz:maxiz)
@@ -208,10 +208,10 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     coord='Z'
     coord_array=d->getz()    
     y=d->gety() & nely=n_elements(y)
-    IF KEYWORD_SET(xmin) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
-    IF KEYWORD_SET(xmax) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
-    IF KEYWORD_SET(ymin) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
-    IF KEYWORD_SET(ymax) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
+    IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
+    IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
+    IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
+    IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
     x=x(minix:maxix)
     dx=(max(x)-min(x))/(nelx-1)
     y=y(miniy:maxiy)
