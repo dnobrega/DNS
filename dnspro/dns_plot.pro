@@ -13,6 +13,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
                    load=load, reverse_load=reverse_load, $
+                   bottom=bottom, top=top,$
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
@@ -51,7 +52,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dxsize=600
      dysize=600
      dbackground=255
-     dcolor=255
+     dcolor=0
      dcharthick=2.0
      dcharsize=2.0
      dthick=2.0
@@ -74,14 +75,16 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dbar_titchars=dcharsize
      dload=39
      dreverse_load=0
+     dbottom=0
+     dtop=255
      dnwin=0
   ENDELSE
 
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=dxsize
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=dysize              
-  IF (NOT (KEYWORD_SET(background)))   THEN background=dbackground
-  IF (NOT (KEYWORD_SET(color)))        THEN color=dcolor
+  IF (N_ELEMENTS(background) EQ 0)     THEN background=dbackground
+  IF (N_ELEMENTS(color) EQ 0)          THEN color=dcolor
   IF (NOT (KEYWORD_SET(charthick)))    THEN charthick=dcharthick
   IF (NOT (KEYWORD_SET(charsize)))     THEN charsize=dcharsize
   IF (NOT (KEYWORD_SET(thick)))        THEN thick=dthick
@@ -105,7 +108,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=dbar_titchart
   IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=dbar_titchars
   IF (N_ELEMENTS(load) EQ 0)           THEN load=dload
-  IF (N_ELEMENTS(reverse_load) EQ 0)        THEN reverse_load=dreverse_load
+  IF (N_ELEMENTS(reverse_load) EQ 0)   THEN reverse_load=dreverse_load
+  IF (N_ELEMENTS(bottom) EQ 0)         THEN bottom=dbottom
+  IF (N_ELEMENTS(top) EQ 0)            THEN top=dtop
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
@@ -131,6 +136,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dbar_titchars=bar_titchars
      dload=load
      dreverse_load=reverse_load
+     dbottom=bottom
+     dtop=top
      dnwin=nwin
      save, dswap, $ 
            dxsize, dysize, $
@@ -144,7 +151,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
            dbar_titchars,$
-           dload, dreverse_load, dnwin, $
+           dload, dreverse_load, dbottom, dtop, dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
 
@@ -173,8 +180,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDELSE
 ;---------------------------------------------------------------------------------     
   load, load
-  !P.Background=background
-  !P.color=color
   !P.charthick=charthick
   !P.charsize=charsize
   !P.thick=thick
@@ -189,21 +194,21 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      rgb=REVERSE(rgb,1)
      rgb(0,*)=255
      rgb(255,*)=0
-     !P.Background=0
-     !P.color=255
   ENDIF ELSE BEGIN
      rgb(0,*)=0
      rgb(255,*)=255
-     !P.Background=255
-     !P.color=0
   ENDELSE
   tvlct, rgb
+  !P.Background=background
+  !P.color=color
 ;---------------------------------------------------------------------------------
   IF (KEYWORD_SET(movie)) THEN BEGIN
      video=IDLffVideoWrite(folder+idlparam+'_'+namefile+'_'+dim+'.mp4')
      stream=video.AddVideoStream(xsize,ysize,10,BIT_RATE=24E5)
   ENDIF
 ;---------------------------------------------------------------------------------  
+
+print, bottom, top
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -277,7 +282,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                                bar_orient=bar_orient, bar_charthick=bar_charthick, $
                                bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                               bar_titchart=bar_titchart, bar_titchars=bar_titchars
+                               bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
+                               bottom=bottom, top=top
                    wait, 0.0001
                    IF (KEYWORD_SET(png)) THEN $
                       WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
@@ -291,7 +297,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                            bar_orient=bar_orient, bar_charthick=bar_charthick, $
                            bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                           bar_titchart=bar_titchart, bar_titchars=bar_titchars
+                           bar_titchart=bar_titchart, bar_titchars=bar_titchars, $
+                           bottom=bottom, top=top
                IF (KEYWORD_SET(png)) THEN $
                   WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'.png', TVRD(TRUE=1)
                IF (KEYWORD_SET(movie)) THEN $
