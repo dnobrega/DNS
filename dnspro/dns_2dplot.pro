@@ -119,18 +119,9 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                bar_titchars=bar_titchars, bar_titchart=bar_titchart
+                bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
+                bottom=bottom, top=top
   
-;--------------------------------------------------------------------------------- 
-
-  IF (n_params() LT 3) THEN BEGIN
-     message,'d,var_plot,dim,'$
-            +'mm=mm, coord=coord,'$
-            +'bar_name=bar_name, bar_range=bar_range, bar_log=bar_log,'$
-            +'xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,'$
-            +'fmipos=fmipos, fmititle=fmititle',/info
-      RETURN
-  ENDIF
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
@@ -245,7 +236,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
               isotropic=isotropic,$
-              bottom=0, top=255
+              bottom=bottom, top=top
   nlev=256
   lev2vel=bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
   DNS_COLORBAR, lev2vel,$
