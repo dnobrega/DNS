@@ -219,6 +219,13 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
   t=d->gett()
   t=t(0)*100./60
   stt=STRING(t,format='(F10.1)')
+  IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
+     IF (bar_log EQ 1) THEN BEGIN
+        var_plot=alog10(var_plot)
+        IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
+        bar_range=alog10(bar_range)
+     ENDIF
+  ENDIF
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;---------------------------------------------------------------------------------
