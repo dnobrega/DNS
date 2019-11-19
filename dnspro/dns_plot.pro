@@ -244,30 +244,16 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
             ENDIF ELSE BEGIN
                d=svar.d
                var=svar.var
-               bar_range=svar.bar_range
-               IF (NOT KEYWORD_SET(var_title))  $
-                  THEN bar_title=svar.bar_title $
-                  ELSE bar_title=var_title
-               IF (N_ELEMENTS(var_log) EQ 0)    $
-                  THEN  bar_log=svar.bar_log    $
-                  ELSE BEGIN
-                  IF (svar.bar_log EQ 1) AND (var_log EQ 0) THEN BEGIN                     
-                     var=10^var
-                     IF (NOT KEYWORD_SET(var_range)) THEN BEGIN
-                        bar_range=10^svar.bar_range 
-                     ENDIF ELSE bar_range=var_range 
-                  ENDIF
-                  IF (svar.bar_log EQ var_log) THEN BEGIN
-                     IF (KEYWORD_SET(var_range)) THEN bar_range=var_range 
-                  ENDIF
-                  bar_log=var_log
-               ENDELSE
+               IF (NOT KEYWORD_SET(var_title)) THEN bar_title=svar.bar_title ELSE bar_title=var_title
+               IF (NOT KEYWORD_SET(var_range)) THEN bar_range=svar.bar_range ELSE bar_range=var_range
+               IF (N_ELEMENTS(var_log) EQ 0)   THEN bar_log=svar.bar_log     ELSE bar_log=var_log
                IF (svar.sim3d EQ 1) THEN BEGIN
                   im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
-                  sim3d=svar.sim3d &  mm=svar.mm 
+                  sim3d=svar.sim3d &  mm=svar.mm
                ENDIF ELSE sim3d=svar.sim3d
                dim=svar.dim
             ENDELSE
+
             IF (sim3d EQ 1) THEN BEGIN
                FOR m=im0,imf,imstep DO BEGIN
                    IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
