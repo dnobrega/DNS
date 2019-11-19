@@ -152,13 +152,4 @@ ENDIF
  PRINT, " ",name, snaps, var_min, var_max
  PRINT, "------------------------------------------"
 
-;---------------------------------------------------------------------------------  
-; VAR IN LOG SCALE
-;---------------------------------------------------------------------------------  
- IF (bar_log GT 0) THEN BEGIN
-    var=alog10(var)
-    IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
-    bar_range=alog10(bar_range)
- ENDIF
-
 END
