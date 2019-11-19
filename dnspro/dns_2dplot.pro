@@ -120,7 +120,10 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
                 bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
-                bottom=bottom, top=top
+                bottom=bottom, top=top, $
+                oline=oline,$
+                ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                ox=ox, oy=oy
   
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -258,5 +261,12 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
                 tit_chart=bar_titchart,$ 
                 tit_chars=bar_titchars
 
+
+
+  IF (KEYWORD_SET(oline)) THEN BEGIN
+     DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
+               ox=ox, oy=oy, $
+               dim=dim, x=x, y=y, z=z
+  ENDIF
 
 END
