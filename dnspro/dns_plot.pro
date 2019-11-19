@@ -27,8 +27,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ixt=ixt,iyt=iyt,izt=izt, $
                    ix0=ix0,iy0=iy0,iz0=iz0, $
                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
-                   ixf=ixf,iyf=iyf,izf=izf
+                   ixf=ixf,iyf=iyf,izf=izf,$
                    ; Oplot options
+                   oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                   ox=ox, oy=oy
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -267,7 +269,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                bar_orient=bar_orient, bar_charthick=bar_charthick, $
                                bar_thick=bar_thick, bar_charsize=bar_charsize, $
                                bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
-                               bottom=bottom, top=top
+                               bottom=bottom, top=top,$
+                               oline=oline,$
+                               ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                               ox=ox, oy=oy
                    wait, 0.0001
                    IF (KEYWORD_SET(png)) THEN $
                       WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
@@ -282,7 +287,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            bar_orient=bar_orient, bar_charthick=bar_charthick, $
                            bar_thick=bar_thick, bar_charsize=bar_charsize, $
                            bar_titchart=bar_titchart, bar_titchars=bar_titchars, $
-                           bottom=bottom, top=top
+                           bottom=bottom, top=top, $
+                           oline=oline,$
+                           ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                           ox=ox, oy=oy
                IF (KEYWORD_SET(png)) THEN $
                   WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'.png', TVRD(TRUE=1)
                IF (KEYWORD_SET(movie)) THEN $
