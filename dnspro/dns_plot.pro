@@ -4,7 +4,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ;Plot options
                    nwin=nwin, $
                    xsize=xsize, ysize=ysize, setplot=setplot,$
-                   background=background, color=color,$
                    charthick=charthick, charsize=charsize, $
                    thick=thick, ticklen=ticklen, multi=multi,$
                    xthick=xthick, ythick=ythick, $
@@ -53,8 +52,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dswap=0
      dxsize=600
      dysize=600
-     dbackground=255
-     dcolor=0
      dcharthick=2.0
      dcharsize=2.0
      dthick=2.0
@@ -85,8 +82,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=dxsize
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=dysize              
-  IF (N_ELEMENTS(background) EQ 0)     THEN background=dbackground
-  IF (N_ELEMENTS(color) EQ 0)          THEN color=dcolor
   IF (NOT (KEYWORD_SET(charthick)))    THEN charthick=dcharthick
   IF (NOT (KEYWORD_SET(charsize)))     THEN charsize=dcharsize
   IF (NOT (KEYWORD_SET(thick)))        THEN thick=dthick
@@ -119,8 +114,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dswap=swap
      dxsize=xsize
      dysize=ysize
-     dbackground=background
-     dcolor=color
      dcharthick=charthick
      dcharsize=charsize
      dthick=thick
@@ -143,7 +136,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dnwin=nwin
      save, dswap, $ 
            dxsize, dysize, $
-           dbackground, dcolor,$
            dcharthick, dcharsize, $
            dthick, dticklen, dmulti,$
            dxthick, dythick, $
@@ -199,10 +191,12 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDIF ELSE BEGIN
      rgb(0,*)=0
      rgb(255,*)=255
+     !P.background=255
+     !P.color=0
   ENDELSE
   tvlct, rgb
-  !P.Background=background
-  !P.color=color
+
+
 ;---------------------------------------------------------------------------------
   IF (KEYWORD_SET(movie)) THEN BEGIN
      video=IDLffVideoWrite(folder+idlparam+'_'+namefile+'_'+dim+'.mp4')
