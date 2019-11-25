@@ -115,7 +115,7 @@ END
 PRO DNS_2DPLOT, d,var_plot,dim,$
                 mm=mm, coord=coord,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                bar_name=bar_name, bar_range=bar_range, bar_log=bar_log,  $
+                bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
@@ -222,11 +222,12 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
   t=d->gett()
   t=t(0)*100./60
   stt=STRING(t,format='(F10.1)')
+  bar_range=var_range
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
      IF (bar_log EQ 1) THEN BEGIN
         var_plot=alog10(var_plot)
         IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
-        bar_range=alog10(bar_range)
+        bar_range=alog10(var_range)
      ENDIF
   ENDIF
 

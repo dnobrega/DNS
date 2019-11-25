@@ -224,16 +224,16 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                        ixf=ixf,iyf=iyf,izf=izf,$
                        im0=im0, imf=imf, imstep=imstep,$
                        sim3d=sim3d, mm=mm, dim=dim, $
-                       bar_range=bar_range, bar_log=bar_log, bar_title=bar_title
+                       bar_log=bar_log, bar_title=bar_title
                IF (KEYWORD_SET(keep_var)) THEN BEGIN
                   IF (sim3d EQ 1) THEN BEGIN
                      svar={d:d,var:var, $
-                           bar_title:bar_title,bar_range:bar_range, bar_log:bar_log,$
+                           bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
                            im0:im0, imf:imf, imstep:imstep,$
                            sim3d:sim3d, mm:mm, dim:dim}
                   ENDIF ELSE BEGIN
                      svar={d:d,var:var, $
-                           bar_title:bar_title,bar_range:bar_range, bar_log:bar_log,$
+                           bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
                            sim3d:sim3d,dim:dim}
                   ENDELSE
                ENDIF
@@ -241,7 +241,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                d=svar.d
                var=svar.var
                IF (NOT KEYWORD_SET(var_title)) THEN bar_title=svar.bar_title ELSE bar_title=var_title
-               IF (NOT KEYWORD_SET(var_range)) THEN bar_range=svar.bar_range ELSE bar_range=var_range
+               IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.bar_range 
                IF (N_ELEMENTS(var_log) EQ 0)   THEN bar_log=svar.bar_log     ELSE bar_log=var_log
                IF (svar.sim3d EQ 1) THEN BEGIN
                   im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
@@ -258,7 +258,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    dns_2dplot, d,var_plot,dim, $
                                mm=mm+m, coord=coord,$
                                xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                               bar_name=bar_title, bar_range=bar_range, bar_log=bar_log,  $
+                               bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                                bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                                bar_orient=bar_orient, bar_charthick=bar_charthick, $
                                bar_thick=bar_thick, bar_charsize=bar_charsize, $
@@ -276,7 +276,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
             ENDIF ELSE BEGIN
                dns_2dplot, d,var,dim, $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                           bar_name=bar_title, bar_range=bar_range, bar_log=bar_log,  $
+                           bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                            bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                            bar_orient=bar_orient, bar_charthick=bar_charthick, $
                            bar_thick=bar_thick, bar_charsize=bar_charsize, $

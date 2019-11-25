@@ -12,7 +12,7 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
             sim3d=sim3d, mm=mm, dim=dim, $
-            bar_range=bar_range, bar_log=bar_log, bar_title=bar_title
+            bar_log=bar_log, bar_title=bar_title
 
 ;---------------------------------------------------------------------------------  
 
@@ -26,7 +26,7 @@ IF (n_params() LT 5) THEN BEGIN
               +'ixf=ixf,iyf=iyf,izf=izf,'$
               +'im0=im0, imf=imf, imstep=imstep'$
               +'sim3d=sim3d, mm=mm, dim=dim,' $
-              +'bar_range=bar_range, bar_log=bar_log, bar_title=bar_title',$
+              +'bar_log=bar_log, bar_title=bar_title',$
                /info
     RETURN
 ENDIF
@@ -70,9 +70,7 @@ ENDIF
  IF (KEYWORD_SET(var_title))   $
     THEN bar_title = var_title $
     ELSE bar_title = dnsvar_title
- IF (KEYWORD_SET(var_range))   $
-    THEN bar_range = var_range $
-    ELSE bar_range=dnsvar_range
+ IF (NOT (KEYWORD_SET(var_range))) THEN var_range=dnsvar_range
 
 ;---------------------------------------------------------------------------------  
 ; SCANNING 3D VARIABLES
