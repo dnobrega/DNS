@@ -4,7 +4,7 @@ PRO DNS_OLINE, ostyle=ostyle, othick=othick, ocolor=ocolor,$
 
 
 
-   IF (NOT KEYWORD_SET(ocolor)) THEN ocolor=255
+   IF (N_ELEMENTS(ocolor) EQ 0) THEN ocolor=255
    IF (NOT KEYWORD_SET(othick)) THEN othick=3
    IF (NOT KEYWORD_SET(ostyle)) THEN ostyle=2
 
