@@ -200,7 +200,7 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
  IF (dim EQ "xy") THEN BEGIN
     x=d->getx() & nelx=n_elements(x)   
     coord='Z'
-    coord_array=d->getz()    
+    coord_array=-d->getz()    
     y=d->gety() & nely=n_elements(y)
     IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
     IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
