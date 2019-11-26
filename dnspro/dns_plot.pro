@@ -30,7 +30,11 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ixf=ixf,iyf=iyf,izf=izf,$
                    ; Oplot options
                    oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                   ox=ox, oy=oy
+                   ox=ox, oy=oy, $
+                   ; Contour options
+                   contour=contour, c_var=c_var,$
+                   c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
+                   c_thick=c_thick, c_linestyle=c_linestyle
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -257,7 +261,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
                    IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
                    IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
-                   dns_2dplot, d,var_plot,dim, $
+                   dns_2dplot, d,k,var_plot,dim, $
                                mm=mm+m, coord=coord,$
                                xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                                bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
@@ -268,7 +272,13 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                bottom=bottom, top=top,$
                                oline=oline,$
                                ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                               ox=ox, oy=oy
+                               ox=ox, oy=oy,$
+                               contour=contour, c_var=c_var,$
+                               c_levels=c_levels,$
+                               c_load=c_load,$
+                               c_colors=c_colors,$
+                               c_thick=c_thick, $
+                               c_linestyle=c_linestyle
                    wait, 0.0001
                    IF (KEYWORD_SET(png)) THEN $
                       WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
@@ -276,7 +286,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                       makingmp4=video.Put(stream,TVRD(TRUE=1))
                 ENDFOR
             ENDIF ELSE BEGIN
-               dns_2dplot, d,var,dim, $
+               dns_2dplot, d,k,var,dim, $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                            bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                            bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
@@ -286,7 +296,13 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            bottom=bottom, top=top, $
                            oline=oline,$
                            ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                           ox=ox, oy=oy
+                           ox=ox, oy=oy,$
+                           contour=contour, c_var=c_var,$
+                           c_levels=c_levels,$
+                           c_load=c_load,$
+                           c_colors=c_colors,$
+                           c_thick=c_thick, $
+                           c_linestyle=c_linestyle
                IF (KEYWORD_SET(png)) THEN $
                   WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'.png', TVRD(TRUE=1)
                IF (KEYWORD_SET(movie)) THEN $

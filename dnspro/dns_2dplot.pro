@@ -112,7 +112,7 @@ PRO DNS_COLORBAR,lev2vel, $
 
 END
 
-PRO DNS_2DPLOT, d,var_plot,dim,$
+PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 mm=mm, coord=coord,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
@@ -121,10 +121,18 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
                 bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
                 bottom=bottom, top=top, $
+                ; Oplot Line
                 oline=oline,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                ox=ox, oy=oy
-  
+                ox=ox, oy=oy,$
+                ; Contour
+                contour=contour,$
+                c_var=c_var,$
+                c_levels=c_levels,$
+                c_load=c_load,$
+                c_colors=c_colors,$
+                c_thick=c_thick, $
+                c_linestyle=c_linestyle
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
@@ -149,16 +157,16 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     IF (N_ELEMENTS(xmin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
     IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
     IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
-    x=x(minix:maxix)
-    dx=(max(x)-min(x))/(n_elements(x)-1)
-    z=newz(miniz:maxiz)
-    originz=min(-z)
+    xx=x(minix:maxix)
+    dx=(max(xx)-min(xx))/(n_elements(xx)-1)
+    zz=newz(miniz:maxiz)
+    originz=min(-zz)
     temp1=nelz-maxiz
     temp2=nelz-miniz
     miniz=temp1-1
     maxiz=temp2-1
     scale=[dx,dz]
-    origin=[min(x),originz]
+    origin=[min(xx),originz]
     var_plot=var_plot(minix:maxix,miniz:maxiz)
     xtitle='X (Mm)' & ytitle='Z (Mm)'
  ENDIF
@@ -180,16 +188,16 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
     IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
     IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
-    y=y(miniy:maxiy)
-    dy=(max(y)-min(y))/(n_elements(y)-1)
-    z=newz(miniz:maxiz)
-    originz=min(-z)
+    yy=y(miniy:maxiy)
+    dy=(max(yy)-min(yy))/(n_elements(yy)-1)
+    zz=newz(miniz:maxiz)
+    originz=min(-zz)
     temp1=nelz-maxiz
     temp2=nelz-miniz
     miniz=temp1-1
     maxiz=temp2-1
     scale=[dy,dz]
-    origin=[min(y),originz]
+    origin=[min(yy),originz]
     var_plot=var_plot(miniy:maxiy,miniz:maxiz)
     xtitle='Y (Mm)' & ytitle='Z (Mm)'
  ENDIF
@@ -206,12 +214,12 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
     IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
     IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
     IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
-    x=x(minix:maxix)
-    dx=(max(x)-min(x))/(nelx-1)
-    y=y(miniy:maxiy)
-    dy=(max(y)-min(y))/(nely-1)
+    xx=x(minix:maxix)
+    dx=(max(xx)-min(xx))/(nelx-1)
+    yy=y(miniy:maxiy)
+    dy=(max(yy)-min(yy))/(nely-1)
     scale=[dx,dy]
-    origin=[min(x),min(y)]
+    origin=[min(xy),min(yy)]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
     xtitle='X (Mm)' & ytitle='Y (Mm)'
  ENDIF
@@ -267,7 +275,22 @@ PRO DNS_2DPLOT, d,var_plot,dim,$
   IF (KEYWORD_SET(oline)) THEN BEGIN
      DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
                ox=ox, oy=oy, $
-               dim=dim, x=x, y=y, z=z
+               dim=dim, x=xx, y=yy, z=zz
   ENDIF
+
+  IF (KEYWORD_SET(contour)) THEN BEGIN
+     DNS_CONTOUR, d, snaps, 0, $
+                  c_var, c_levels,$
+                  dim=dim, x=x,y=y,z=z, $
+                  ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
+                  c_load=c_load,$
+                  c_colors=c_colors,$
+                  c_thick=c_thick, $
+                  c_linestyle=c_linestyle
+
+  ENDIF
+
+
+
 
 END
