@@ -219,7 +219,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     yy=y(miniy:maxiy)
     dy=(max(yy)-min(yy))/(nely-1)
     scale=[dx,dy]
-    origin=[min(xy),min(yy)]
+    origin=[min(xx),min(yy)]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
     xtitle='X (Mm)' & ytitle='Y (Mm)'
  ENDIF
