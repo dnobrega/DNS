@@ -17,6 +17,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
                    folder=folder,movie=movie,png=png,$
+                   save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
                    ; Variable options
                    dim=dim,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
@@ -224,7 +225,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                        ixf=ixf,iyf=iyf,izf=izf,$
                        im0=im0, imf=imf, imstep=imstep,$
                        sim3d=sim3d, mm=mm, dim=dim, $
-                       bar_log=bar_log, bar_title=bar_title
+                       bar_log=bar_log, bar_title=bar_title,$
+                       save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
                IF (KEYWORD_SET(keep_var)) THEN BEGIN
                   IF (sim3d EQ 1) THEN BEGIN
                      svar={d:d,var:var, $

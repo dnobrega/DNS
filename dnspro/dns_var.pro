@@ -12,7 +12,8 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
             sim3d=sim3d, mm=mm, dim=dim, $
-            bar_log=bar_log, bar_title=bar_title
+            bar_log=bar_log, bar_title=bar_title, $
+            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
 ;---------------------------------------------------------------------------------  
 
@@ -43,26 +44,40 @@ ENDIF
 ; LOADING VARIABLES
 ;---------------------------------------------------------------------------------  
  dnsvar_name="dnsvar_"+name
- file_exists=STRLEN(file_which(dnsvar_name+".pro"))
- IF (file_exists GT 0) THEN BEGIN 
-    CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
-                    var_title=dnsvar_title, $
-                    var_range=dnsvar_range, $
-                    var_log=dnsvar_log
+ IF (NOT KEYWORD_SET(save_dnsfolder)) THEN save_dnsfolder='dnsvar'
+ saved_dnsvar_name=save_dnsfolder+'/'+name+'_'+strtrim(string(snaps),2)+'_'+dim+'.sav'
+
+ IF file_test(saved_dnsvar_name) EQ 1 THEN BEGIN
+    print, "Restoring variable"
+    restore, saved_dnsvar_name,/verbose
  ENDIF ELSE BEGIN
-    print, "Variable not found in dnsvar folder"
-    print, "Trying in Bifrost folder..."
-    var=d->getvar(name,snaps,swap=swap)
-    var_max = MAX(var, min=var_min, /NAN)
-    IF (var_min EQ var_max) THEN BEGIN
-       print, "Variable not found in Bifrost folder"
-       STOP
+    file_exists=STRLEN(file_which(dnsvar_name+".pro"))
+    IF (file_exists GT 0) THEN BEGIN 
+       CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
+                       var_title=dnsvar_title, $
+                       var_range=dnsvar_range, $
+                       var_log=dnsvar_log
     ENDIF ELSE BEGIN
-       dnsvar_log = 0
-       dnsvar_title = ''
-       dnsvar_range = [var_min,var_max]
+       print, "Variable not found in dnsvar folder"
+       print, "Trying in Bifrost folder..."
+       var=d->getvar(name,snaps,swap=swap)
+       var_max = MAX(var, min=var_min, /NAN)
+       IF (var_min EQ var_max) THEN BEGIN
+          print, "Variable not found in Bifrost folder"
+          STOP
+       ENDIF ELSE BEGIN
+          dnsvar_log = 0
+          dnsvar_title = ''
+          dnsvar_range = [var_min,var_max]
+       ENDELSE
     ENDELSE
  ENDELSE
+
+ IF (KEYWORD_SET(save_dnsvar)) THEN BEGIN
+    file_mkdir,save_dnsfolder             
+    save, d, var, dnsvar_log, dnsvar_title, dnsvar_range, FILENAME=saved_dnsvar_name
+ ENDIF
+
 
  IF (N_ELEMENTS(var_log) GT 0)    $
     THEN bar_log   = var_log  $
