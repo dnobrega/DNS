@@ -115,6 +115,7 @@ END
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 mm=mm, coord=coord,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                xshift=xshift, yshift=yshift, zshift=zshift,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
@@ -148,13 +149,15 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     coord='Y'
     coord_array=d->gety()    
     z=d->getz() & nelz=n_elements(z)
+    IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
+    IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
     maxz=MAX(z, MIN=minz)
     dz=(maxz-minz)/(nelz-1)
     newz=minz+dz*FINDGEN(nelz)
     FOR i=0,nelx-1 DO var_plot(i,*)=INTERPOL(var_plot(i,*),z,newz)
     var_plot=reverse(var_plot,2)
     IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
-    IF (N_ELEMENTS(xmin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
+    IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
     IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
     IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
     xx=x(minix:maxix)
@@ -179,6 +182,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     coord='X'
     coord_array=d->getx()    
     z=d->getz() & nelz=n_elements(z)
+    IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
+    IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
     maxz=MAX(z, MIN=minz)
     dz=(maxz-minz)/(nelz-1)
     newz=minz+dz*FINDGEN(nelz)
@@ -210,6 +215,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     coord='Z'
     coord_array=-d->getz()    
     y=d->gety() & nely=n_elements(y)
+    IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
+    IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
     IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
     IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
     IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
