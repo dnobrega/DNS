@@ -28,6 +28,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ix0=ix0,iy0=iy0,iz0=iz0, $
                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
                    ixf=ixf,iyf=iyf,izf=izf,$
+                   xshift=xshift, yshift=yshift,zshift=zshift,$
                    ; Oplot options
                    oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
                    ox=ox, oy=oy, $
@@ -264,6 +265,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    dns_2dplot, d,k,var_plot,dim, $
                                mm=mm+m, coord=coord,$
                                xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                               xshift=xshift, yshift=yshift,zshift=zshift,$
                                bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                                bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                                bar_orient=bar_orient, bar_charthick=bar_charthick, $
@@ -288,6 +290,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
             ENDIF ELSE BEGIN
                dns_2dplot, d,k,var,dim, $
                            xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                           xshift=xshift, yshift=yshift,zshift=zshift,$
                            bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                            bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                            bar_orient=bar_orient, bar_charthick=bar_charthick, $
