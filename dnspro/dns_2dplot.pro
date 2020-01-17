@@ -222,9 +222,9 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
     IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
     xx=x(minix:maxix)
-    dx=(max(xx)-min(xx))/(nelx-1)
+    dx=(max(xx)-min(xx))/(n_elements(xx)-1)
     yy=y(miniy:maxiy)
-    dy=(max(yy)-min(yy))/(nely-1)
+    dy=(max(yy)-min(yy))/(n_elements(yy)-1)
     scale=[dx,dy]
     origin=[min(xx),min(yy)]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
