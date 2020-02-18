@@ -96,13 +96,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(xthick)))       THEN xthick=dxthick
   IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=dythick
   IF (NOT (KEYWORD_SET(position)))     THEN position=dposition
-  IF (NOT (KEYWORD_SET(bar_pos)))      THEN BEGIN
-     bar_pos =  fltarr(4)
-     bar_pos(0)=position(0)
-     bar_pos(1)=position(3)+0.09
-     bar_pos(2)=position(2)
-     bar_pos(3)=bar_pos(1)+0.02
-  ENDIF
+  IF (NOT (KEYWORD_SET(bar_pos)))      THEN bar_pos=dbar_pos
   IF (NOT (KEYWORD_SET(bar_titlepos))) THEN bar_titlepos=dbar_titlepos
   IF (NOT (KEYWORD_SET(bar_orient)))   THEN bar_orient=dbar_orient
   IF (NOT (KEYWORD_SET(bar_charthick)))THEN bar_charthick=dbar_charthick
@@ -128,6 +122,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dxthick=xthick
      dythick=ythick
      dposition=position
+     dbar_pos=bar_pos
      dbar_titlepos=bar_titlepos
      dbar_orient=bar_orient
      dbar_charthick=bar_charthick
@@ -146,7 +141,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dthick, dticklen, dmulti,$
            dxthick, dythick, $
            dposition, $
-           dbar_titlepos, $
+           dbar_pos,dbar_titlepos, $
            dbar_orient, dbar_charthick, $
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
