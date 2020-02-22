@@ -8,11 +8,12 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    thick=thick, ticklen=ticklen, multi=multi,$
                    xthick=xthick, ythick=ythick, $
                    position=position, $
-                   bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                   bar_pos=bar_pos, $
+                   bar_titlepos=bar_titlepos, bar_titchart=bar_titchart,$
                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
                    load=load, reverse_load=reverse_load, $
-                   bottom=bottom, top=top,$
+                   bottom=bottom, top=top, smooth=smooth,$
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
@@ -82,6 +83,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=0
      dbottom=0
      dtop=255
+     dsmooth=0
      dnwin=0
   ENDELSE
 
@@ -108,6 +110,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (N_ELEMENTS(reverse_load) EQ 0)   THEN reverse_load=dreverse_load
   IF (N_ELEMENTS(bottom) EQ 0)         THEN bottom=dbottom
   IF (N_ELEMENTS(top) EQ 0)            THEN top=dtop
+  IF (N_ELEMENTS(smooth) EQ 0)         THEN smooth=dsmooth
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
@@ -134,6 +137,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=reverse_load
      dbottom=bottom
      dtop=top
+     dsmooth=smooth
      dnwin=nwin
      save, dswap, $ 
            dxsize, dysize, $
@@ -146,7 +150,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
            dbar_titchars,$
-           dload, dreverse_load, dbottom, dtop, dnwin, $
+           dload, dreverse_load, dbottom, dtop, dsmooth,dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
 
@@ -266,7 +270,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                bar_orient=bar_orient, bar_charthick=bar_charthick, $
                                bar_thick=bar_thick, bar_charsize=bar_charsize, $
                                bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
-                               bottom=bottom, top=top,$
+                               bottom=bottom, top=top, smooth=smooth,$
                                oline=oline,$
                                ostyle=ostyle, othick=othick, ocolor=ocolor,$
                                ox=ox, oy=oy,$
@@ -291,7 +295,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            bar_orient=bar_orient, bar_charthick=bar_charthick, $
                            bar_thick=bar_thick, bar_charsize=bar_charsize, $
                            bar_titchart=bar_titchart, bar_titchars=bar_titchars, $
-                           bottom=bottom, top=top, $
+                           bottom=bottom, top=top, smooth=smooth,$
                            oline=oline,$
                            ostyle=ostyle, othick=othick, ocolor=ocolor,$
                            ox=ox, oy=oy,$
