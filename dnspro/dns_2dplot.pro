@@ -115,7 +115,7 @@ END
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 mm=mm, coord=coord,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                xshift=xshift, yshift=yshift, zshift=zshift,$
+                xshift=xshift, yshift=yshift, zshift=zshift, ishift=ishift, jshift=jshift,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
@@ -171,6 +171,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     scale=[dx,dz]
     origin=[min(xx),originz]
     var_plot=var_plot(minix:maxix,miniz:maxiz)
+    IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
     xtitle='X (Mm)' & ytitle='Z (Mm)'
  ENDIF
 
@@ -204,6 +205,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     scale=[dy,dz]
     origin=[min(yy),originz]
     var_plot=var_plot(miniy:maxiy,miniz:maxiz)
+    IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,jshift,0)
     xtitle='Y (Mm)' & ytitle='Z (Mm)'
  ENDIF
 
@@ -228,6 +230,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
     scale=[dx,dy]
     origin=[min(xx),min(yy)]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
+    IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
+    IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,0,jshift)
     xtitle='X (Mm)' & ytitle='Y (Mm)'
  ENDIF
 
