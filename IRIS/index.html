@@ -356,6 +356,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#creating-lvl3-data" title="Creating LVL3 data" class="md-nav__link">
+    Creating LVL3 data
+  </a>
+  
+</li>
+      
       
       
       
@@ -430,6 +437,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#creating-lvl3-data" title="Creating LVL3 data" class="md-nav__link">
+    Creating LVL3 data
+  </a>
+  
+</li>
+      
       
       
       
@@ -451,13 +465,38 @@
 <ul>
 <li>IRIS home webpage: <a href="https://iris.lmsal.com/">IRIS</a></li>
 <li>IRIS Science Highlights: <a href="http://iris.lmsal.com/science_highlights/">IRIS Higlights</a></li>
-<li>IRIS Event Search: <a href="http://www.lmsal.com/heksearch/">HEK Search</a></li>
+<li>IRIS Event Search: <a href="https://iris.lmsal.com/search/">IRIS Search</a></li>
+<li>IRIS Event Search + Other Telescopes/Observations: <a href="http://www.lmsal.com/heksearch/">HEK Search</a></li>
 </ul>
 <h2 id="analyzing-iris-data">Analyzing IRIS data<a class="headerlink" href="#analyzing-iris-data" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Data Analysis Tutorials by Tiago Pereira: <a href="https://folk.uio.no/tiago/iris9/exercises/index.html">Data Analysis Tutorials</a></li>
 <li>IRIS2: <a href="https://iris.lmsal.com/iris2/">IRIS2</a></li>
 </ul>
+<h2 id="creating-lvl3-data">Creating LVL3 data<a class="headerlink" href="#creating-lvl3-data" title="Permanent link">&para;</a></h2>
+<p>These are the steps to create LVL3 data to analyze, for instance, IRIS+SDO/AIA data.</p>
+<ul>
+<li>Download IRIS raster data + SDO data in the same folder.</li>
+<li>Open a SSWIDL session in that folder</li>
+<li>Write </li>
+</ul>
+<div class="codehilite"><pre><span></span>iris_xfiles
+</pre></div>
+
+
+<p>and choose the folder with the data, choose one of the .fits and then create LVL3. </p>
+<ul>
+<li>After that, we make a list with the name of the IRIS and SDO files:</li>
+</ul>
+<div class="codehilite"><pre><span></span>f<span class="o">=</span>iris_files()
+</pre></div>
+
+
+<ul>
+<li>Finally,</li>
+</ul>
+<div class="codehilite"><pre><span></span>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
+</pre></div>
                 
                   
                 
