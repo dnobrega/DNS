@@ -14,21 +14,21 @@
 
 These are the steps to create LVL3 data to analyze, for instance, IRIS+SDO/AIA data.
 
-- Download IRIS raster data + SDO data.
-- Open a SSWIDL session
--  
+- Download IRIS raster data + SDO data in the same folder.
+- Open a SSWIDL session in that folder
+- Write 
 ``` IDL
-iris_xfiles, choose folder, choose one file and create it. 
+iris_xfiles
 ```
-where ...
+and choose the folder with the data, choose one of the .fits and then create LVL3. 
 
-- We create a list with the name of the IRIS files:
+- After that, we make a list with the name of the IRIS and SDO files:
 ``` IDL
 f=iris_files()
 ```
 
-- We open a CRISPEX session:
+- Finally,
 
 ``` IDL
-crispex, f(im), f(sp), sji=f(AIA? STS?),/win
+crispex, f(im), f(sp), sji=f(AIA),/win
 ```
