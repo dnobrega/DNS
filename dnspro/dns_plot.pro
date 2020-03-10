@@ -5,15 +5,17 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    nwin=nwin, $
                    xsize=xsize, ysize=ysize, setplot=setplot,$
                    charthick=charthick, charsize=charsize, $
-                   thick=thick, ticklen=ticklen, multi=multi,$
+                   thick=thick, ticklen=ticklen, $
                    xthick=xthick, ythick=ythick, $
                    position=position, $
                    bar_pos=bar_pos, $
-                   bar_titlepos=bar_titlepos, bar_titchart=bar_titchart,$
+                   bar_titlepos=bar_titlepos,$
+                   bar_titchart=bar_titchart,bar_titchars=bar_titchars,$
                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
                    load=load, reverse_load=reverse_load, $
                    bottom=bottom, top=top, smooth=smooth,$
+                   nosquare=nosquare,$
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
@@ -63,7 +65,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dcharsize=2.0
      dthick=2.0
      dticklen=-0.02
-     dmulti=0
      dxthick=2.0
      dythick=2.0
      dposition=[0.14, 0.12, 0.88, 0.74]
@@ -83,6 +84,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=0
      dbottom=0
      dtop=255
+     dnosquare=1
      dsmooth=0
      dnwin=0
   ENDELSE
@@ -94,7 +96,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(charsize)))     THEN charsize=dcharsize
   IF (NOT (KEYWORD_SET(thick)))        THEN thick=dthick
   IF (NOT (KEYWORD_SET(ticklen)))      THEN ticklen=dticklen
-  IF (NOT (KEYWORD_SET(multi)))        THEN multi=dmulti
   IF (NOT (KEYWORD_SET(xthick)))       THEN xthick=dxthick
   IF (NOT (KEYWORD_SET(ythick)))       THEN ythick=dythick
   IF (NOT (KEYWORD_SET(position)))     THEN position=dposition
@@ -110,6 +111,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (N_ELEMENTS(reverse_load) EQ 0)   THEN reverse_load=dreverse_load
   IF (N_ELEMENTS(bottom) EQ 0)         THEN bottom=dbottom
   IF (N_ELEMENTS(top) EQ 0)            THEN top=dtop
+  IF (N_ELEMENTS(nosquare) EQ 0)       THEN nosquare=1
   IF (N_ELEMENTS(smooth) EQ 0)         THEN smooth=dsmooth
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
 
@@ -121,7 +123,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dcharsize=charsize
      dthick=thick
      dticklen=ticklen
-     dmulti=multi
      dxthick=xthick
      dythick=ythick
      dposition=position
@@ -137,12 +138,13 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=reverse_load
      dbottom=bottom
      dtop=top
+     dnosquare=nosquare
      dsmooth=smooth
      dnwin=nwin
      save, dswap, $ 
            dxsize, dysize, $
            dcharthick, dcharsize, $
-           dthick, dticklen, dmulti,$
+           dthick, dticklen, $
            dxthick, dythick, $
            dposition, $
            dbar_pos,dbar_titlepos, $
@@ -150,7 +152,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
            dbar_titchars,$
-           dload, dreverse_load, dbottom, dtop, dsmooth,dnwin, $
+           dload, dreverse_load, dbottom, dtop, $
+           dnosquare,dsmooth,dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
 
@@ -171,11 +174,15 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
      SET_PLOT, 'X'
-     DEVICE, DECOMPOSED=0, RETAIN=2
-     WINDOW, nwin, XSIZE=xsize,YSIZE=ysize
+     IF (!D.WINDOW EQ -1) THEN BEGIN
+        DEVICE, DECOMPOSED=0, RETAIN=2
+        WINDOW, nwin, XSIZE=xsize,YSIZE=ysize
+     ENDIF
   ENDIF ELSE BEGIN
-     SET_PLOT,'Z'
-     DEVICE, SET_RESOLUTION=[xsize,ysize],SET_PIXEL_DEPTH=24,DECOMPOSED=0
+     IF (setplot EQ 1) THEN BEGIN 
+        SET_PLOT,'Z'
+        DEVICE, SET_RESOLUTION=[xsize,ysize],SET_PIXEL_DEPTH=24,DECOMPOSED=0
+     ENDIF
   ENDELSE
 ;---------------------------------------------------------------------------------     
   load, load
@@ -183,7 +190,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   !P.charsize=charsize
   !P.thick=thick
   !P.ticklen=ticklen
-  !P.MULTI=multi
   !x.thick=xthick
   !y.thick=ythick
   !P.position=position      
@@ -271,6 +277,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                bar_thick=bar_thick, bar_charsize=bar_charsize, $
                                bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
                                bottom=bottom, top=top, smooth=smooth,$
+                               nosquare=nosquare,$
                                oline=oline,$
                                ostyle=ostyle, othick=othick, ocolor=ocolor,$
                                ox=ox, oy=oy,$
@@ -296,6 +303,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            bar_thick=bar_thick, bar_charsize=bar_charsize, $
                            bar_titchart=bar_titchart, bar_titchars=bar_titchars, $
                            bottom=bottom, top=top, smooth=smooth,$
+                           nosquare=nosquare,$
                            oline=oline,$
                            ostyle=ostyle, othick=othick, ocolor=ocolor,$
                            ox=ox, oy=oy,$
