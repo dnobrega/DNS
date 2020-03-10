@@ -66,7 +66,7 @@ PRO DNS_COLORBAR,lev2vel, $
  titposy=postitle[1]
  titposx=postitle[0]
  xyouts,titposx,titposy,varname, $
-        col=axcol,charthick=tit_charthick,chars=tit_charsize,/norm
+        col=axcol,charthick=tit_charthick,chars=tit_chars,/norm
 
 
  rang=[min(lev2vel),max(lev2vel)] & IF keyword_set(log) THEN rang=10^rang
@@ -122,6 +122,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
                 bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
                 bottom=bottom, top=top, smooth=smooth,$
+                nosquare=nosquare,$
                 ; Oplot Line
                 oline=oline,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
@@ -265,7 +266,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
               xtitle=xtitle, ytitle=ytitle, $
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
-              isotropic=isotropic,$
+              nosquare=nosquare,$
               bottom=bottom, top=top,$
               smooth=smooth
   nlev=256
