@@ -36,7 +36,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
                    ox=ox, oy=oy, $
                    ; Contour options
-                   contour=contour, c_var=c_var,$
+                   c_var=c_var,$
                    c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
                    c_thick=c_thick, c_linestyle=c_linestyle
 
@@ -281,7 +281,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                                oline=oline,$
                                ostyle=ostyle, othick=othick, ocolor=ocolor,$
                                ox=ox, oy=oy,$
-                               contour=contour, c_var=c_var,$
+                               c_var=c_var,$
                                c_levels=c_levels,$
                                c_load=c_load,$
                                c_colors=c_colors,$
@@ -307,7 +307,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                            oline=oline,$
                            ostyle=ostyle, othick=othick, ocolor=ocolor,$
                            ox=ox, oy=oy,$
-                           contour=contour, c_var=c_var,$
+                           c_var=c_var,$
                            c_levels=c_levels,$
                            c_load=c_load,$
                            c_colors=c_colors,$
