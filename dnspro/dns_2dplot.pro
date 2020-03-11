@@ -128,7 +128,6 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
                 ox=ox, oy=oy,$
                 ; Contour
-                contour=contour,$
                 c_var=c_var,$
                 c_levels=c_levels,$
                 c_load=c_load,$
@@ -291,10 +290,11 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                dim=dim, x=xx, y=yy, z=zz
   ENDIF
 
-  IF (KEYWORD_SET(contour)) THEN BEGIN
+  IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
      DNS_CONTOUR, d, snaps, 0, $
                   c_var, c_levels,$
                   dim=dim, x=x,y=y,z=z, $
+                  ishift=ishift, jshift=jshift,$
                   ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
                   c_load=c_load,$
                   c_colors=c_colors,$
