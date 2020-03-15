@@ -343,9 +343,38 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        ALMA
+      </label>
+    
     <a href="./" title="ALMA" class="md-nav__link md-nav__link--active">
       ALMA
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-synthetic-alma-data-from-bifrost-simulations" title="Analyzing synthetic ALMA data from Bifrost simulations" class="md-nav__link">
+    Analyzing synthetic ALMA data from Bifrost simulations
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -403,6 +432,22 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-synthetic-alma-data-from-bifrost-simulations" title="Analyzing synthetic ALMA data from Bifrost simulations" class="md-nav__link">
+    Analyzing synthetic ALMA data from Bifrost simulations
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -415,7 +460,63 @@
                 
                 
                 <h1 id="alma">ALMA<a class="headerlink" href="#alma" title="Permanent link">&para;</a></h1>
-<p>Documentation in process...</p>
+<ul>
+<li>ALMA home webpage: <a href="https://almascience.nrao.edu/">ALMA</a></li>
+<li>SSALMON home webpage: <a href="https://www.ssalmon.uio.no/">SSALMON</a></li>
+</ul>
+<h2 id="analyzing-synthetic-alma-data-from-bifrost-simulations">Analyzing synthetic ALMA data from Bifrost simulations<a class="headerlink" href="#analyzing-synthetic-alma-data-from-bifrost-simulations" title="Permanent link">&para;</a></h2>
+<ul>
+<li><em>It is necessary to clone the Bifrost code and DNS package for the following instructions.</em></li>
+<li>To get a list of the existing synthetic files (int.h5) within a folder, type:</li>
+</ul>
+<div class="codehilite"><pre><span></span>f<span class="o">=</span>alma_synthfiles()
+</pre></div>
+
+
+<ul>
+<li>To get a list of the existing model files (model.h5) that generated those synthetic files within a folder, type:</li>
+</ul>
+<div class="codehilite"><pre><span></span>g<span class="o">=</span>alma_modelfiles()
+</pre></div>
+
+
+<ul>
+<li>The synthetic files contain the following variables: </li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Stokes_I&#39;</span>,<span class="s1">&#39;Tau1&#39;</span>,<span class="s1">&#39;Wavelength&#39;</span>]
+</pre></div>
+
+
+<p>For instance, to read <em>Stokes_I</em>, type:</p>
+<div class="codehilite"><pre><span></span>stokes_i<span class="o">=</span>alma_readsynth(f(<span class="mi">0</span>),Stokes_I)
+</pre></div>
+
+
+<p>The units of the output variables are changed in the DNS routines.</p>
+<div class="codehilite"><pre><span></span><span class="c c-Singleline">; Stokes_I   : Stokes Intensity in erg/cm^2</span>
+<span class="c c-Singleline">             ; We convert it in temperature:</span>
+<span class="c c-Singleline">             ; Stokes_I * lambda^2/Kb</span>
+<span class="c c-Singleline">; Tau1       : Optical depth in cm</span>
+<span class="c c-Singleline">             ; We convert it in Mm</span>
+<span class="c c-Singleline">; Wavelength : Wavelength in Angstrom</span>
+</pre></div>
+
+
+<ul>
+<li>The model files contain the following variables: </li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Pgas&#39;</span>,<span class="s1">&#39;temperature&#39;</span>,<span class="s1">&#39;dens&#39;</span>,<span class="s1">&#39;dx&#39;</span>,<span class="s1">&#39;dy&#39;</span>,<span class="s1">&#39;z&#39;</span>]
+</pre></div>
+
+
+<p>The units of the output variables are as follows:</p>
+<div class="codehilite"><pre><span></span><span class="c c-Singleline">;Pgas         : Gas pressure in CGS</span>
+<span class="c c-Singleline">;temperature  : Temperature in K</span>
+<span class="c c-Singleline">;dens         : Total density in CGS</span>
+<span class="c c-Singleline">;dx           : X axis in Mm</span>
+<span class="c c-Singleline">;dy           : Y axis in Mm</span>
+<span class="c c-Singleline">;z            : Z azis in Mm </span>
+</pre></div>
                 
                   
                 
