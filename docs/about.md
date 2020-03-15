@@ -9,7 +9,16 @@ since the 1st of Agust 2018.
 
 ## Papers
 
-6. _Signatures of Magnetic Reconnection at the Footpoints of Fan-shaped Jets on a Light Bridge Driven by Photospheric Convective Motions._  
+9. _Ion─neutral Interactions and Nonequilibrium Ionization in the Solar Chromosphere._  
+[Martínez-Sykora et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020ApJ...889...95M/abstract)
+
+- _Nonequilibrium ionization and ambipolar diffusion in solar magnetic flux emergence processes._  
+[Nóbrega-Siverio et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...633A..66N/abstract)
+
+- _Ellerman bombs and UV bursts: reconnection at different atmospheric layers._  
+[Ortiz et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...633A..58O/abstract)
+
+- _Signatures of Magnetic Reconnection at the Footpoints of Fan-shaped Jets on a Light Bridge Driven by Photospheric Convective Motions._  
 [Bai et al. (2019)](http://adsabs.harvard.edu/abs/2019ApJ...870...90B)
 
 - _On the Importance of the Nonequilibrium Ionization of Si IV and O IV and the Line of Sight in Solar Surges._  
@@ -26,6 +35,11 @@ since the 1st of Agust 2018.
 
 - _The Cool Surge Following Flux Emergence in a Radiation-MHD Experiment._  
 [Nóbrega-Siverio et al. (2016)](http://adsabs.harvard.edu/abs/2016ApJ...822...18N)
+
+## Invited talks
+
+1. _Modeling UV bursts._ 
+10th IRIS meeting. 4-8 November 2019 (Bangalore, India).
 
 ## Education
 
