@@ -174,7 +174,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
      SET_PLOT, 'X'
-     IF (!D.WINDOW EQ -1) THEN BEGIN
+     IF (!D.WINDOW NE nwin) THEN BEGIN
         DEVICE, DECOMPOSED=0, RETAIN=2
         WINDOW, nwin, XSIZE=xsize,YSIZE=ysize
      ENDIF
