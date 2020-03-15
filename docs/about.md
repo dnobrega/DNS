@@ -9,7 +9,9 @@ since the 1st of Agust 2018.
 
 ## Papers
 
-9. _Ion─neutral Interactions and Nonequilibrium Ionization in the Solar Chromosphere._  
+9 papers in refereed journals. 107 citations. H-index: 5.
+
+- _Ion─neutral Interactions and Nonequilibrium Ionization in the Solar Chromosphere._  
 [Martínez-Sykora et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020ApJ...889...95M/abstract)
 
 - _Nonequilibrium ionization and ambipolar diffusion in solar magnetic flux emergence processes._  
