@@ -22,11 +22,12 @@ stokes_i=alma_readsynth(f(0),Stokes_I)
 The units of the output variables are changed in the DNS routines.
 ``` IDL
 ; Stokes_I   : Stokes Intensity in erg/cm^2
-             ; We convert it in temperature:
+             ; We convert it to temperature:
              ; Stokes_I * lambda^2/Kb
 ; Tau1       : Optical depth in cm
-             ; We convert it in Mm
+             ; We convert it to Mm
 ; Wavelength : Wavelength in Angstrom
+             ; We convert it to mm
 ```
 This is the list of wavelengths and their correspondence with the different ALMA bands:
 ```
@@ -52,7 +53,7 @@ Band 6 // 1.30 -> 1.20 [mm]
 11 : (lambda): 12137346.47773, (freq)    246999999999.99585, (to K) 5.334998e+13
 12 : (lambda): 12039857.75100, (freq)    249000000000.00040, (to K) 5.249639e+13
 
-Band 7 // 0.88 -> 0.84 [mm
+Band 7 // 0.88 -> 0.84 [mm]
 
 13 : (lambda):  8853882.39811, (freq)    338599999999.99500, (to K) 2.838927e+13
 14 : (lambda):  8801892.48385, (freq)    340600000000.00104, (to K) 2.805685e+13
