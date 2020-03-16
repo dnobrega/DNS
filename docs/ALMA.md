@@ -80,8 +80,8 @@ The units of the output variables are as follows:
 ;Pgas         : Gas pressure in CGS
 ;temperature  : Temperature in K
 ;dens         : Total density in CGS
-;dx           : X axis in Mm
-;dy           : Y axis in Mm
-;z            : Z azis in Mm 
+;dx           : X axis in cm. Converted to Mm.
+;dy           : Y axis in Mm. Converted to Mm.
+;z            : Z azis in Mm. Converted to Mm.
 ```
 
