@@ -20,8 +20,7 @@ PRO dnsvar_alma_stokes_i, d, name, snaps, swap, var, $
        ENDIF ELSE BEGIN
           var=transpose(alma_readsynth(f(wh), "Stokes_I"),[1,2,0])
           wv=alma_readsynth(f(wh), "Wavelength")
-          tmp=d->getvar('r',snaps)
-          FOR i=0,n_elements(wv)-1 DO print, strtrim(string(i),2),"  lambda: ",strtrim(string(wv(i)),2)
+          FOR i=0,n_elements(wv)-1 DO print, strtrim(string(i),2),"  lambda: ",strtrim(string(wv(i),format='(F10.4)'),2)+" mm"
           var_title='Stokes I (K)'
           var_range=[1d3,1d5]
           var_log=1
