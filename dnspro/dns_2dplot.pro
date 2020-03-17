@@ -1,5 +1,62 @@
 
 
+PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
+                    origin,scale,ishift=ishift,jshift=jshift,$
+                    xmin=xmin,xmax=xmax,$
+                    ymin=ymin,ymax=ymax,$
+                    zmin=zmin,zmax=zmax
+
+
+  
+    nelx=n_elements(xx)
+    nely=n_elements(yy)
+    ;------------------------------------------------------------------------------------------------
+    ; X
+    ;------------------------------------------------------------------------------------------------
+    IF (strpos(dim,"x") EQ 0) THEN BEGIN
+       ;X is X
+       IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,xmin)) ELSE minix=0
+       IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,xmax)) ELSE maxix=nelx-1
+    ENDIF ELSE BEGIN
+       ;X is Y
+       IF (N_ELEMENTS(ymin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,ymin)) ELSE minix=0
+       IF (N_ELEMENTS(ymax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,ymax)) ELSE maxix=nelx-1
+    ENDELSE
+    xx=xx(minix:maxix)
+    dx=(max(xx)-min(xx))/(n_elements(xx)-1)
+    originx=min(xx)
+    ;------------------------------------------------------------------------------------------------
+    ; Y
+    ;------------------------------------------------------------------------------------------------    
+    IF (strpos(dim,"z") EQ 1) THEN BEGIN
+       ;Y is Z
+       IF (N_ELEMENTS(zmin) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,-zmin)) ELSE maxiy=nely-1
+       IF (N_ELEMENTS(zmax) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,-zmax)) ELSE miniy=0  
+       yy=yy(miniy:maxiy)
+       originy=min(-yy)
+       temp1=nely-maxiy & temp2=nely-miniy
+       miniy=temp1-1
+       maxiy=temp2-1
+    ENDIF ELSE BEGIN
+       ;Y is Y
+       IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,ymin)) ELSE miniy=0
+       IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,ymax)) ELSE maxiy=nely-1
+       yy=yy(miniy:maxiy)
+       originy=min(yy)
+    ENDELSE
+    dy=(max(yy)-min(yy))/(n_elements(yy)-1)
+
+    ;------------------------------------------------------------------------------------------------
+    ; OUTPUT
+    ;------------------------------------------------------------------------------------------------    
+    origin=[originx,originy]
+    scale=[dx,dy]
+    var_plot=var_plot(minix:maxix,miniy:maxiy)
+    IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
+    IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,0,jshift)
+
+END
+
 PRO DNS_COLORBAR,lev2vel, $
                  varname=varname, $
                  log=log,  $
@@ -113,7 +170,8 @@ PRO DNS_COLORBAR,lev2vel, $
 END
 
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
-                mm=mm, coord=coord,$
+                xx=xx, yy=yy, zz=zz,$
+                xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, title=title,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 xshift=xshift, yshift=yshift, zshift=zshift, ishift=ishift, jshift=jshift,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
@@ -126,123 +184,33 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 ; Oplot Line
                 oline=oline,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                ox=ox, oy=oy,$
+                ox=ox, oy=oy;,$
                 ; Contour
-                c_var=c_var,$
-                c_levels=c_levels,$
-                c_load=c_load,$
-                c_colors=c_colors,$
-                c_thick=c_thick, $
-                c_linestyle=c_linestyle
+;                c_var=c_var,$
+;                c_levels=c_levels,$
+;                c_load=c_load,$
+;                c_colors=c_colors,$
+;                c_thick=c_thick, $
+;                c_linestyle=c_linestyle
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
 ;                                  MAIN
 ;---------------------------------------------------------------------------------
 
- d->readpars, snaps
- d->readmesh
 
-;---------------------------------------------------------------------------------  
-; XZ-plane
-;---------------------------------------------------------------------------------
- IF (dim EQ "xz") THEN BEGIN
-    x=d->getx() & nelx=n_elements(x)
-    coord='Y'
-    coord_array=d->gety()    
-    z=d->getz() & nelz=n_elements(z)
-    IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
-    IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
-    maxz=MAX(z, MIN=minz)
-    dz=(maxz-minz)/(nelz-1)
-    newz=minz+dz*FINDGEN(nelz)
-    FOR i=0,nelx-1 DO var_plot(i,*)=INTERPOL(var_plot(i,*),z,newz)
-    var_plot=reverse(var_plot,2)
-    IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
-    IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
-    IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
-    IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
-    xx=x(minix:maxix)
-    dx=(max(xx)-min(xx))/(n_elements(xx)-1)
-    zz=newz(miniz:maxiz)
-    originz=min(-zz)
-    temp1=nelz-maxiz
-    temp2=nelz-miniz
-    miniz=temp1-1
-    maxiz=temp2-1
-    scale=[dx,dz]
-    origin=[min(xx),originz]
-    var_plot=var_plot(minix:maxix,miniz:maxiz)
-    IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
-    xtitle='X (Mm)' & ytitle='Z (Mm)'
- ENDIF
-
-;---------------------------------------------------------------------------------  
-; YZ-plane
-;---------------------------------------------------------------------------------
- IF (dim EQ "yz") THEN BEGIN
-    y=d->gety() & nely=n_elements(y)   
-    coord='X'
-    coord_array=d->getx()    
-    z=d->getz() & nelz=n_elements(z)
-    IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
-    IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
-    maxz=MAX(z, MIN=minz)
-    dz=(maxz-minz)/(nelz-1)
-    newz=minz+dz*FINDGEN(nelz)
-    FOR i=0,nely-1 DO var_plot(i,*)=INTERPOL(var_plot(i,*),z,newz)
-    var_plot=reverse(var_plot,2)
-    IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
-    IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
-    IF (N_ELEMENTS(zmin) GT 0) THEN maxiz=ROUND(interpol(findgen(nelz),newz,-zmin)) ELSE maxiz=nelz-1
-    IF (N_ELEMENTS(zmax) GT 0) THEN miniz=ROUND(interpol(findgen(nelz),newz,-zmax)) ELSE miniz=0
-    yy=y(miniy:maxiy)
-    dy=(max(yy)-min(yy))/(n_elements(yy)-1)
-    zz=newz(miniz:maxiz)
-    originz=min(-zz)
-    temp1=nelz-maxiz
-    temp2=nelz-miniz
-    miniz=temp1-1
-    maxiz=temp2-1
-    scale=[dy,dz]
-    origin=[min(yy),originz]
-    var_plot=var_plot(miniy:maxiy,miniz:maxiz)
-    IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,jshift,0)
-    xtitle='Y (Mm)' & ytitle='Z (Mm)'
- ENDIF
-
-;---------------------------------------------------------------------------------  
-; XY-plane
-;---------------------------------------------------------------------------------
- IF (dim EQ "xy") THEN BEGIN
-    x=d->getx() & nelx=n_elements(x)   
-    coord='Z'
-    coord_array=-d->getz()    
-    y=d->gety() & nely=n_elements(y)
-    IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
-    IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
-    IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),x,xmin)) ELSE minix=0 
-    IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),x,xmax)) ELSE maxix=nelx-1
-    IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),y,ymin)) ELSE miniy=0 
-    IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),y,ymax)) ELSE maxiy=nely-1
-    xx=x(minix:maxix)
-    dx=(max(xx)-min(xx))/(n_elements(xx)-1)
-    yy=y(miniy:maxiy)
-    dy=(max(yy)-min(yy))/(n_elements(yy)-1)
-    scale=[dx,dy]
-    origin=[min(xx),min(yy)]
-    var_plot=var_plot(minix:maxix,miniy:maxiy)
-    IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
-    IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,0,jshift)
-    xtitle='X (Mm)' & ytitle='Y (Mm)'
- ENDIF
+ dns_pre_2dplot,var_plot,xx,yy,zz,dim,$
+                origin,scale,ishift=ishift,jshift=jshift,$
+                xmin=xmin,xmax=xmax,$
+                ymin=ymin,ymax=ymax,$
+                zmin=zmin,zmax=zmax
 
 ;---------------------------------------------------------------------------------  
 ; Time in minutes
 ;---------------------------------------------------------------------------------         
-  t=d->gett()
-  t=t(0)*100./60
-  stt=STRING(t,format='(F10.1)')
+;  t=d->gett()
+;  t=t(0)*100./60
+;  stt=STRING(t,format='(F10.1)')
   bar_range=var_range
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
      IF (bar_log EQ 1) THEN BEGIN
@@ -257,9 +225,9 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
 ;                                     PLOT                               
 ;--------------------------------------------------------------------------------- 
 
-  IF (N_ELEMENTS(mm) EQ 1) THEN BEGIN
-     title=coord+': '+STRTRIM(STRING(coord_array(mm),format='(F10.1)'),2)+' (Mm)   t='+STRTRIM(stt,2)+' min'
-  ENDIF ELSE title='t='+STRTRIM(stt,2)+' min' 
+;  IF (N_ELEMENTS(mm) EQ 1) THEN BEGIN
+;     title=coord+': '+STRTRIM(STRING(coord_array(mm),format='(F10.1)'),2)+' (Mm)   t='+STRTRIM(stt,2)+' min'
+;  ENDIF ELSE title='t='+STRTRIM(stt,2)+' min' 
 
   plot_image, var_plot, $
               origin=origin, scale=scale, $
@@ -292,18 +260,18 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                dim=dim, x=xx, y=yy, z=zz
   ENDIF
 
-  IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
-     DNS_CONTOUR, d, snaps, 0, $
-                  c_var, c_levels,$
-                  dim=dim, x=x,y=y,z=z, $
-                  ishift=ishift, jshift=jshift,$
-                  ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
-                  c_load=c_load,$
-                  c_colors=c_colors,$
-                  c_thick=c_thick, $
-                  c_linestyle=c_linestyle
-
-  ENDIF
+;  IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
+;     DNS_CONTOUR, d, snaps, 0, $
+;                  c_var, c_levels,$
+;                  dim=dim, x=x,y=y,z=z, $
+;                  ishift=ishift, jshift=jshift,$
+;                  ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
+;                  c_load=c_load,$
+;                  c_colors=c_colors,$
+;                  c_thick=c_thick, $
+;                  c_linestyle=c_linestyle
+;
+;  ENDIF
 
 
 
