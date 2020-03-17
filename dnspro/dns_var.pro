@@ -12,26 +12,13 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
             sim3d=sim3d, mm=mm, dim=dim, $
+            xx=xx, yy=yy, zz=zz,$
+            xshift=xshift, yshift=yshift, zshift=zshift, $
+            xtitle=xtitle, ytitle=ytitle, $
+            title=title, $
             bar_log=bar_log, bar_title=bar_title, $
             save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-;---------------------------------------------------------------------------------  
-
-IF (n_params() LT 5) THEN BEGIN
-    message,$
-    'dns_var,d,name,snaps,swap,var,'$
-              +'var_title=var_title, var_range=var_range, var_log=var_log,'$
-              +'ixt=ixt,iyt=iyt,izt=izt,'$
-              +'ix0=ix0,iy0=iy0,iz0=iz0,'$
-              +'ixstep=ixstep, iystep=iystep, izstep=izstep,$'$
-              +'ixf=ixf,iyf=iyf,izf=izf,'$
-              +'im0=im0, imf=imf, imstep=imstep'$
-              +'sim3d=sim3d, mm=mm, dim=dim,' $
-              +'bar_log=bar_log, bar_title=bar_title',$
-               /info
-    RETURN
-ENDIF
-  
 ;--------------------------------------------------------------------------------- 
  
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -90,16 +77,25 @@ ENDIF
 ;---------------------------------------------------------------------------------  
 ; SCANNING 3D VARIABLES
 ;---------------------------------------------------------------------------------  
- var=reform(var)
+
+ d->readpars, snaps
+ d->readmesh
+
+ x=d->getx()
+ y=d->gety()
+ z=d->getz()
+ nelx=d->getmx()
+ nely=d->getmy()
+ nelz=d->getmz()
+
+ var=reform(var,nelx,nely,nelz)
  sizevar=size(var)
 
- IF sizevar(0) EQ 3 THEN BEGIN
+ sim3d=1
 
-    sim3d=1
+ CASE dim OF
 
-    CASE dim OF
-
-    "yz" : BEGIN  
+    "yz" : BEGIN 
            IF N_ELEMENTS(ixt) GT 0 THEN BEGIN
               var=var(ixt,*,*)
               mm=ixt & imf=0 & im0=0 & imstep=1
@@ -114,6 +110,8 @@ ENDIF
                  mm=im0 & imf=imf-im0 & im0=0
               ENDELSE
            ENDELSE
+
+           IF (sizevar(1) GT 1) THEN coord="X"
            END
 
     "xz" : BEGIN  
@@ -131,9 +129,29 @@ ENDIF
                  mm=im0 & imf=imf-im0 & im0=0
               ENDELSE
            ENDELSE
+           ;-------------------------------------------------------------------
+           IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
+           IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
+           maxz=MAX(z, MIN=minz)
+           dz=(maxz-minz)/(nelz-1)
+           dz1d=d->getdz1d()
+           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN 
+              zz=minz+dz*FINDGEN(nelz)
+              newsize=size(var)
+              FOR j=0,newsize(2)-1 DO BEGIN
+                 FOR i=0,nelx-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
+              ENDFOR
+           ENDIF ELSE BEGIN
+              zz=z
+           ENDELSE
+           var=reverse(var,3)
+           xtitle='X (Mm)' & ytitle='Z (Mm)'
+           IF (sizevar(2) GT 1) THEN coord="Y"
+           xx=x & yy=z & zz=y
            END
 
     "xy" : BEGIN  
+           IF (sizevar(3) GT 1) THEN coord="Z"
            IF N_ELEMENTS(izt) GT 0 THEN BEGIN
               var=var(*,*,izt)
               mm=izt & imf=0 & im0=0 & imstep=1
@@ -155,14 +173,22 @@ ENDIF
            STOP
            END
  ENDCASE
- ENDIF ELSE sim3d=0
+ 
+;ENDIF ELSE sim3d=0
+
+ t=d->gett()
+ t=t(0)*100./60
+ stt=STRING(t,format='(F10.1)')
+ title='t='+STRTRIM(stt,2)+' min'
+ IF N_ELEMENTS(coord) GT 0 THEN $
+    title=coord+': '+STRTRIM(STRING(zz,format='(F10.1)'),2)+' (Mm)   '+title
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION
 ;---------------------------------------------------------------------------------  
  var_max = MAX(var, min=var_min, /NAN)
- PRINT, "------------------------------------------"
+ PRINT, "----------------------------------------------------"
  PRINT, " ",name, snaps, var_min, var_max
- PRINT, "------------------------------------------"
+ PRINT, "----------------------------------------------------"
 
 END
