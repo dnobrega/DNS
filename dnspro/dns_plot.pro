@@ -272,7 +272,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                     ox=ox, oy=oy
         
         IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
-           DNS_CONTOUR, d, k, 0, $
+           DNS_CONTOUR, d, k, m, 0,$
                         c_var, c_levels,$
                         dim=dim, xx=xx,y=yy,$
                         ishift=ishift, jshift=jshift,$
