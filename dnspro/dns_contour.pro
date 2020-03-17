@@ -1,4 +1,4 @@
-PRO  DNS_CONTOUR, d, snaps, swap, $
+PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_var, c_levels,$
                   dim=dim, xx=xx,yy=yy,$
                   ishift=ishift, jshift=jshift, $
@@ -18,10 +18,13 @@ PRO  DNS_CONTOUR, d, snaps, swap, $
 
    dns_var,d,c_var,snaps,swap,var,$
            ixt=ixt,iyt=iyt,izt=izt, $
-           dim=dim,$
-           xx=xx,yy=yy
+           dim=dim
 
    IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+
+   IF (dim EQ "yz") THEN var = reform(var(m,*,*))
+   IF (dim EQ "xz") THEN var = reform(var(*,m,*))
+   IF (dim EQ "xy") THEN var = reform(var(*,*,m))
 
    CONTOUR, reform(var),xx,yy,$
             levels=c_levels,c_colors=c_colors,$
