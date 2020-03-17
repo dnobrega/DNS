@@ -2,7 +2,7 @@ PRO  DNS_CONTOUR, d, snaps, swap, $
                   c_var, c_levels,$
                   dim=dim, xx=xx,yy=yy,$
                   ishift=ishift, jshift=jshift, $
-                  ixt=ixt,iyt=iyt,izt=izt,sim3d=sim3d,$
+                  ixt=ixt,iyt=iyt,izt=izt,$
                   c_load=c_load,$
                   c_colors=c_colors,$
                   c_thick=c_thick, $
@@ -18,7 +18,7 @@ PRO  DNS_CONTOUR, d, snaps, swap, $
 
    dns_var,d,c_var,snaps,swap,var,$
            ixt=ixt,iyt=iyt,izt=izt, $
-           sim3d=sim3d, dim=dim,$
+           dim=dim,$
            xx=xx,yy=yy
 
    IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
