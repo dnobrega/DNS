@@ -220,95 +220,81 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
+  FOR k=snap0,snapf,step DO BEGIN
+     IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
+        dns_var,d,name,k,swap,var,$
+                var_title=var_title, var_range=var_range, var_log=var_log,$
+                ixt=ixt,iyt=iyt,izt=izt, $                   
+                ix0=ix0,iy0=iy0,iz0=iz0, $
+                ixstep=ixstep, iystep=iystep, izstep=izstep,$
+                ixf=ixf,iyf=iyf,izf=izf,$
+                im0=im0, imf=imf, imstep=imstep,$
+                dim=dim, $
+                xx=xx, yy=yy, zz=zz,$
+                xshift=xshift, yshift=yshift, zshift=zshift, $
+                xtitle=xtitle, ytitle=ytitle, title=title,$
+                bar_log=bar_log, bar_title=bar_title,$
+                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+        IF (KEYWORD_SET(keep_var)) THEN BEGIN
+           svar={d:d,var:var, $
+                 bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
+                 im0:im0, imf:imf, imstep:imstep,$
+                 dim:dim}
+        ENDIF
+     ENDIF ELSE BEGIN
+        d=svar.d
+        var=svar.var
+        IF (NOT KEYWORD_SET(var_title)) THEN bar_title=svar.bar_title ELSE bar_title=var_title
+        IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.bar_range 
+        IF (N_ELEMENTS(var_log) EQ 0)   THEN bar_log=svar.bar_log     ELSE bar_log=var_log
+        im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
+        dim=svar.dim
+     ENDELSE
+     
+     FOR m=im0,imf,imstep DO BEGIN
+        IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
+        IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
+        IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
+        dns_2dplot, d,k,var_plot,dim, $
+                    xx=xx, yy=yy, zz=zz,$
+                    xtitle=xtitle, ytitle=ytitle, title=title(m),$
+                    xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                    ishift=ishift,jshift=jshift,$
+                    bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
+                    bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
+                    bar_thick=bar_thick, bar_charsize=bar_charsize, $
+                    bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
+                    bottom=bottom, top=top, smooth=smooth,$
+                    nosquare=nosquare,$
+                    oline=oline,$
+                    ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                    ox=ox, oy=oy
+        
+        IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
+           DNS_CONTOUR, d, k, 0, $
+                        c_var, c_levels,$
+                        dim=dim, xx=xx,y=yy,$
+                        ishift=ishift, jshift=jshift,$
+                        ixt=ixt,iyt=iyt,izt=izt,$
+                        c_load=c_load,$
+                        c_colors=c_colors,$
+                        c_thick=c_thick, $
+                        c_linestyle=c_linestyle
+        ENDIF
+        
+        wait, 0.0001
+        IF (KEYWORD_SET(png)) THEN $
+           WRITE_PNG,folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_('+STRCOMPRESS(title(m),/remove_all)+').png', TVRD(TRUE=1)
+        IF (KEYWORD_SET(movie)) THEN $
+           makingmp4=video.Put(stream,TVRD(TRUE=1))
+        
+     ENDFOR
+  ENDFOR
 ;---------------------------------------------------------------------------------
-; 2D PLOTS
-;---------------------------------------------------------------------------------
-;  IF (STRLEN(dim) EQ 2) THEN BEGIN
-      FOR k=snap0,snapf,step DO BEGIN
-            IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
-               dns_var,d,name,k,swap,var,$
-                       var_title=var_title, var_range=var_range, var_log=var_log,$
-                       ixt=ixt,iyt=iyt,izt=izt, $                   
-                       ix0=ix0,iy0=iy0,iz0=iz0, $
-                       ixstep=ixstep, iystep=iystep, izstep=izstep,$
-                       ixf=ixf,iyf=iyf,izf=izf,$
-                       im0=im0, imf=imf, imstep=imstep,$
-                       sim3d=sim3d, mm=mm, dim=dim, $
-                       xx=xx, yy=yy, zz=zz,$
-                       xshift=xshift, yshift=yshift, zshift=zshift, $
-                       xtitle=xtitle, ytitle=ytitle, title=title,$
-                       bar_log=bar_log, bar_title=bar_title,$
-                       save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
-               IF (KEYWORD_SET(keep_var)) THEN BEGIN
-                  IF (sim3d EQ 1) THEN BEGIN
-                     svar={d:d,var:var, $
-                           bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
-                           im0:im0, imf:imf, imstep:imstep,$
-                           sim3d:sim3d, mm:mm, dim:dim}
-                  ENDIF ELSE BEGIN
-                     svar={d:d,var:var, $
-                           bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
-                           sim3d:sim3d,dim:dim}
-                  ENDELSE
-               ENDIF
-            ENDIF ELSE BEGIN
-               d=svar.d
-               var=svar.var
-               IF (NOT KEYWORD_SET(var_title)) THEN bar_title=svar.bar_title ELSE bar_title=var_title
-               IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.bar_range 
-               IF (N_ELEMENTS(var_log) EQ 0)   THEN bar_log=svar.bar_log     ELSE bar_log=var_log
-               IF (svar.sim3d EQ 1) THEN BEGIN
-                  im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
-                  sim3d=svar.sim3d &  mm=svar.mm
-               ENDIF ELSE sim3d=svar.sim3d
-               dim=svar.dim
-            ENDELSE
-
-            FOR m=im0,imf,imstep DO BEGIN
-               IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
-               IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
-               IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
-               dns_2dplot, d,k,var_plot,dim, $
-                           xx=xx, yy=yy, zz=zz,$
-                           xtitle=xtitle, ytitle=ytitle, title=title(m),$
-                           xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                           ishift=ishift,jshift=jshift,$
-                           bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
-                           bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
-                           bar_orient=bar_orient, bar_charthick=bar_charthick, $
-                           bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                           bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
-                           bottom=bottom, top=top, smooth=smooth,$
-                           nosquare=nosquare,$
-                           oline=oline,$
-                           ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                           ox=ox, oy=oy
-
-               IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
-                  DNS_CONTOUR, d, k, 0, $
-                               c_var, c_levels,$
-                               dim=dim, xx=xx,y=yy,$
-                               ishift=ishift, jshift=jshift,$
-                               ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
-                               c_load=c_load,$
-                               c_colors=c_colors,$
-                               c_thick=c_thick, $
-                               c_linestyle=c_linestyle
-               ENDIF
-
-;              wait, 0.0001
-               IF (KEYWORD_SET(png)) THEN $
-                  WRITE_PNG,folder+idlparam+'_'+namefile+'_'+STRTRIM(k,2)+'_'+dim+'_'+'i'+coord+STRTRIM(mm+m,2)+'.png', TVRD(TRUE=1)
-               IF (KEYWORD_SET(movie)) THEN $
-                  makingmp4=video.Put(stream,TVRD(TRUE=1))
-               
-            ENDFOR
-         ENDFOR
-;   ENDIF
-;---------------------------------------------------------------------------------
-
-IF (KEYWORD_SET(movie)) THEN video.cleanup 
-
+  
+  IF (KEYWORD_SET(movie)) THEN video.cleanup 
+  
 ;---------------------------------------------------------------------------------
 ;                                     END                                            
 ;---------------------------------------------------------------------------------
