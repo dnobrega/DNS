@@ -505,11 +505,12 @@
 
 <p>The units of the output variables are changed in the DNS routines.</p>
 <div class="codehilite"><pre><span></span><span class="c c-Singleline">; Stokes_I   : Stokes Intensity in erg/cm^2</span>
-<span class="c c-Singleline">             ; We convert it in temperature:</span>
+<span class="c c-Singleline">             ; We convert it to temperature:</span>
 <span class="c c-Singleline">             ; Stokes_I * lambda^2/Kb</span>
 <span class="c c-Singleline">; Tau1       : Optical depth in cm</span>
-<span class="c c-Singleline">             ; We convert it in Mm</span>
+<span class="c c-Singleline">             ; We convert it to Mm</span>
 <span class="c c-Singleline">; Wavelength : Wavelength in Angstrom</span>
+<span class="c c-Singleline">             ; We convert it to mm</span>
 </pre></div>
 
 
@@ -536,7 +537,7 @@ Band 6 // 1.30 -&gt; 1.20 [mm]
 11 : (lambda): 12137346.47773, (freq)    246999999999.99585, (to K) 5.334998e+13
 12 : (lambda): 12039857.75100, (freq)    249000000000.00040, (to K) 5.249639e+13
 
-Band 7 // 0.88 -&gt; 0.84 [mm
+Band 7 // 0.88 -&gt; 0.84 [mm]
 
 13 : (lambda):  8853882.39811, (freq)    338599999999.99500, (to K) 2.838927e+13
 14 : (lambda):  8801892.48385, (freq)    340600000000.00104, (to K) 2.805685e+13
@@ -571,9 +572,9 @@ Band 7 // 0.88 -&gt; 0.84 [mm
 <div class="codehilite"><pre><span></span><span class="c c-Singleline">;Pgas         : Gas pressure in CGS</span>
 <span class="c c-Singleline">;temperature  : Temperature in K</span>
 <span class="c c-Singleline">;dens         : Total density in CGS</span>
-<span class="c c-Singleline">;dx           : X axis in Mm</span>
-<span class="c c-Singleline">;dy           : Y axis in Mm</span>
-<span class="c c-Singleline">;z            : Z azis in Mm </span>
+<span class="c c-Singleline">;dx           : X axis in cm. Converted to Mm.</span>
+<span class="c c-Singleline">;dy           : Y axis in Mm. Converted to Mm.</span>
+<span class="c c-Singleline">;z            : Z azis in Mm. Converted to Mm.</span>
 </pre></div>
                 
                   
