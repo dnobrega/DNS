@@ -184,14 +184,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 ; Oplot Line
                 oline=oline,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                ox=ox, oy=oy;,$
-                ; Contour
-;                c_var=c_var,$
-;                c_levels=c_levels,$
-;                c_load=c_load,$
-;                c_colors=c_colors,$
-;                c_thick=c_thick, $
-;                c_linestyle=c_linestyle
+                ox=ox, oy=oy
+
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
@@ -206,11 +200,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 zmin=zmin,zmax=zmax
 
 ;---------------------------------------------------------------------------------  
-; Time in minutes
+; Applying log
 ;---------------------------------------------------------------------------------         
-;  t=d->gett()
-;  t=t(0)*100./60
-;  stt=STRING(t,format='(F10.1)')
   bar_range=var_range
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
      IF (bar_log EQ 1) THEN BEGIN
@@ -224,10 +215,6 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
 ;---------------------------------------------------------------------------------
 ;                                     PLOT                               
 ;--------------------------------------------------------------------------------- 
-
-;  IF (N_ELEMENTS(mm) EQ 1) THEN BEGIN
-;     title=coord+': '+STRTRIM(STRING(coord_array(mm),format='(F10.1)'),2)+' (Mm)   t='+STRTRIM(stt,2)+' min'
-;  ENDIF ELSE title='t='+STRTRIM(stt,2)+' min' 
 
   plot_image, var_plot, $
               origin=origin, scale=scale, $
@@ -253,27 +240,11 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 tit_chars=bar_titchars
 
 
-
   IF (KEYWORD_SET(oline)) THEN BEGIN
      DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
                ox=ox, oy=oy, $
                dim=dim, x=xx, y=yy, z=zz
   ENDIF
-
-;  IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
-;     DNS_CONTOUR, d, snaps, 0, $
-;                  c_var, c_levels,$
-;                  dim=dim, x=x,y=y,z=z, $
-;                  ishift=ishift, jshift=jshift,$
-;                  ixt=mm,iyt=mm,izt=mm,sim3d=sim3d,$
-;                  c_load=c_load,$
-;                  c_colors=c_colors,$
-;                  c_thick=c_thick, $
-;                  c_linestyle=c_linestyle
-;
-;  ENDIF
-
-
 
 
 END
