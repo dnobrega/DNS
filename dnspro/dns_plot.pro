@@ -2,7 +2,7 @@
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
               keep_var=keep_var, svar=svar,$
                    ;Plot options
-                   nwin=nwin, $
+                   nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
                    charthick=charthick, charsize=charsize, $
                    thick=thick, ticklen=ticklen, $
@@ -174,9 +174,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
      SET_PLOT, 'X'
-     IF (!D.WINDOW NE nwin) THEN BEGIN
+     IF ((!D.WINDOW NE nwin) OR (!D.x_size NE xsize) OR (!D.y_size NE ysize)) THEN BEGIN
         DEVICE, DECOMPOSED=0, RETAIN=2
         WINDOW, nwin, XSIZE=xsize,YSIZE=ysize
+        ERASE
      ENDIF
   ENDIF ELSE BEGIN
      IF (setplot EQ 1) THEN BEGIN 
@@ -186,6 +187,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDELSE
 ;---------------------------------------------------------------------------------     
   load, load
+  IF (NOT KEYWORD_SET(multi)) THEN !P.multi=0
   !P.charthick=charthick
   !P.charsize=charsize
   !P.thick=thick
