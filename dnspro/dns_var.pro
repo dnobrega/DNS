@@ -88,7 +88,21 @@ PRO dns_var,d,name,snaps,swap,var,$
  nely=d->getmy()
  nelz=d->getmz()
 
- var=reform(var,nelx,nely,nelz)
+ IF STRPOS(name,"alma") EQ -1 THEN BEGIN
+    var=reform(var,nelx,nely,nelz)
+    sizevar=size(var)
+ ENDIF ELSE BEGIN
+    dim="xy"
+    f=alma_synthfiles()
+    ssnaps=strtrim(string(snaps),2)
+    wh=where(strpos(f, ssnaps+"_int") GT -1)
+    wv=alma_readsynth(f(wh), "Wavelength")
+    FOR i=0,n_elements(wv)-1 DO print, strtrim(string(i),2),"  lambda: ",strtrim(string(wv(i),format='(F10.4)'),2)+" mm"
+    sizevar=size(var)
+    z=-wv
+    coord="!4k!3"
+    units_coord="(mm)"
+ ENDELSE
  sizevar=size(var)
 
  CASE dim OF
@@ -122,7 +136,9 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            var=reverse(var,3)
            xtitle='Y (Mm)' & ytitle='Z (Mm)'
-           IF (sizevar(1) GT 1) THEN coord="X"
+           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+              coord="X" & units_coords="(Mm)"
+           ENDIF
            xx=y & yy=z & zz=x
            END
 
@@ -154,13 +170,15 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            var=reverse(var,3)
            xtitle='X (Mm)' & ytitle='Z (Mm)'
-           IF (sizevar(2) GT 1) THEN coord="Y"
+           IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+              coord="Y" & units_coords="(Mm)"
+           ENDIF
            xx=x & yy=z & zz=y
            END
 
     "xy" : BEGIN  
            IF N_ELEMENTS(izt) GT 0 THEN BEGIN
-              imf=0 & im0=0 & imstep=1
+              imf=izt & im0=izt & imstep=1
            ENDIF ELSE BEGIN
               IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
               IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
@@ -174,8 +192,10 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
            xtitle='X (Mm)' & ytitle='Y (Mm)'
-           IF (sizevar(3) GT 1) THEN coord="Z"
-           xx=x & yy=y & zz=z
+           IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+              coord="Z" & units_coords="(Mm)"
+           ENDIF
+           xx=x & yy=y & zz=-z
            END
 
     ELSE : BEGIN
@@ -193,7 +213,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  stt=STRING(t,format='(F10.1)')
  title='t='+STRTRIM(stt,2)+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
-    title=coord+': '+STRTRIM(STRING(zz,format='(F10.1)'),2)+' (Mm)   '+title
+    title=coord+': '+STRTRIM(STRING(zz,format='(F10.1)'),2)+' '+units_coord+'   '+title
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION
