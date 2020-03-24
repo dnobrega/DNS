@@ -137,7 +137,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            var=reverse(var,3)
            xtitle='Y (Mm)' & ytitle='Z (Mm)'
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="X" & units_coords="(Mm)"
+              coord="X" & units_coord="(Mm)"
            ENDIF
            xx=y & yy=z & zz=x
            END
@@ -171,7 +171,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            var=reverse(var,3)
            xtitle='X (Mm)' & ytitle='Z (Mm)'
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Y" & units_coords="(Mm)"
+              coord="Y" & units_coord="(Mm)"
            ENDIF
            xx=x & yy=z & zz=y
            END
@@ -193,7 +193,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
            xtitle='X (Mm)' & ytitle='Y (Mm)'
            IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Z" & units_coords="(Mm)"
+              coord="Z" & units_coord="(Mm)"
            ENDIF
            xx=x & yy=y & zz=-z
            END
