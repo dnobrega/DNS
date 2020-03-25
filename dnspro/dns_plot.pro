@@ -24,6 +24,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ; Variable options
                    dim=dim,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
+                   time_units=time_units,$
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
@@ -226,6 +227,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
         dns_var,d,name,k,swap,var,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
+                time_units=time_units,$
                 ixt=ixt,iyt=iyt,izt=izt, $                   
                 ix0=ix0,iy0=iy0,iz0=iz0, $
                 ixstep=ixstep, iystep=iystep, izstep=izstep,$
