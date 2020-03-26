@@ -15,7 +15,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
                    load=load, reverse_load=reverse_load, $
                    bottom=bottom, top=top, smooth=smooth,$
-                   nosquare=nosquare,$
+                   isotropic=isotropic,$
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
@@ -85,7 +85,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=0
      dbottom=0
      dtop=255
-     dnosquare=1
+     disotropic=0
      dsmooth=0
      dnwin=0
   ENDELSE
@@ -112,7 +112,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (N_ELEMENTS(reverse_load) EQ 0)   THEN reverse_load=dreverse_load
   IF (N_ELEMENTS(bottom) EQ 0)         THEN bottom=dbottom
   IF (N_ELEMENTS(top) EQ 0)            THEN top=dtop
-  IF (N_ELEMENTS(nosquare) EQ 0)       THEN nosquare=1
+  IF (N_ELEMENTS(isotropic) EQ 0)      THEN isotropic=0
   IF (N_ELEMENTS(smooth) EQ 0)         THEN smooth=dsmooth
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
 
@@ -139,7 +139,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      dreverse_load=reverse_load
      dbottom=bottom
      dtop=top
-     dnosquare=nosquare
+     disotropic=isotropic
      dsmooth=smooth
      dnwin=nwin
      save, dswap, $ 
@@ -154,7 +154,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
            dbar_titchart,$
            dbar_titchars,$
            dload, dreverse_load, dbottom, dtop, $
-           dnosquare,dsmooth,dnwin, $
+           disotropic,dsmooth,dnwin, $
            FILENAME=dns_confi+".sav"
   ENDIF
 
@@ -270,7 +270,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                     bar_thick=bar_thick, bar_charsize=bar_charsize, $
                     bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
                     bottom=bottom, top=top, smooth=smooth,$
-                    nosquare=nosquare,$
+                    isotropic=isotropic,$
                     oline=oline,$
                     ostyle=ostyle, othick=othick, ocolor=ocolor,$
                     ox=ox, oy=oy
