@@ -194,7 +194,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   !P.ticklen=ticklen
   !x.thick=xthick
   !y.thick=ythick
-  !P.position=position      
 ;---------------------------------------------------------------------------------
   tvlct, rgb, /get
   IF reverse_load EQ 1 THEN BEGIN 
@@ -262,6 +261,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                     xtitle=xtitle, ytitle=ytitle, title=title(m),$
                     xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                     ishift=ishift,jshift=jshift,$
+                    position=position,$
                     bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                     bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                     bar_orient=bar_orient, bar_charthick=bar_charthick, $
