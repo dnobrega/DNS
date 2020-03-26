@@ -210,7 +210,7 @@ PRO dns_var,d,name,snaps,swap,var,$
 ; TIME (By default in minutes)
 ;---------------------------------------------------------------------------------  
  t=d->gett()
- IF (NOT (KEYBOARD_SET(time_units))) time_units=100./60.
+ IF (NOT (KEYWORD_SET(time_units))) THEN time_units=100./60.
  t=t(0)*time_units 
  stt=STRING(t,format='(F10.1)')
  title='t='+STRTRIM(stt,2)+' min'
