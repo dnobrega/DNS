@@ -140,7 +140,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="X" & units_coord="(Mm)"
            ENDIF
-           xx=y & yy=z & zz=x
+           xx=y & yy=zz & zz=x
            END
 
     "xz" : BEGIN  
@@ -174,7 +174,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="Y" & units_coord="(Mm)"
            ENDIF
-           xx=x & yy=z & zz=y
+           xx=x & yy=zz & zz=y
            END
 
     "xy" : BEGIN  
