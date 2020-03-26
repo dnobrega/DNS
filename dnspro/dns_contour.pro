@@ -1,6 +1,9 @@
 PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_var, c_levels,$
                   dim=dim, xx=xx,yy=yy,$
+                  xmin=xmin,xmax=xmax,$
+                  ymin=ymin, ymax=ymax,$
+                  zmin=zmin, zmax=zmax,$
                   ishift=ishift, jshift=jshift, $
                   ixt=ixt,iyt=iyt,izt=izt,$
                   c_load=c_load,$
@@ -18,14 +21,25 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
 
    dns_var,d,c_var,snaps,swap,var,$
            ixt=ixt,iyt=iyt,izt=izt, $
+           xx=xx,yy=yy,zz=zz,$
            dim=dim
 
-   IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+
 
    IF (dim EQ "yz") THEN var = reform(var(m,*,*))
    IF (dim EQ "xz") THEN var = reform(var(*,m,*))
    IF (dim EQ "xy") THEN var = reform(var(*,*,m))
 
+   DNS_PRE_2DPLOT, var,xx,yy,zz,dim,$
+                   origin,scale,ishift=ishift,jshift=jshift,$
+                   xmin=xmin,xmax=xmax,$
+                   ymin=ymin,ymax=ymax,$
+                   zmin=zmin,zmax=zmax
+
+
+   IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+   help, reform(var)
+   help, xx, yy
    CONTOUR, reform(var),xx,yy,$
             levels=c_levels,c_colors=c_colors,$
             c_thick=c_thick,c_linestyle=c_linestyle,$
