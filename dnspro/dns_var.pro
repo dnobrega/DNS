@@ -6,6 +6,7 @@
 
 PRO dns_var,d,name,snaps,swap,var,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
+            time_units=time_units,$
             ixt=ixt,iyt=iyt,izt=izt, $
             ix0=ix0,iy0=iy0,iz0=iz0, $
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
@@ -209,7 +210,8 @@ PRO dns_var,d,name,snaps,swap,var,$
 ; TIME (By default in minutes)
 ;---------------------------------------------------------------------------------  
  t=d->gett()
- t=t(0)*100./60 
+ IF (NOT (KEYBOARD_SET(time_units))) time_units=100./60.
+ t=t(0)*time_units 
  stt=STRING(t,format='(F10.1)')
  title='t='+STRTRIM(stt,2)+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
