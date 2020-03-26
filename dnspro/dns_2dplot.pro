@@ -181,7 +181,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 bar_thick=bar_thick, bar_charsize=bar_charsize, $
                 bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
                 bottom=bottom, top=top, smooth=smooth,$
-                nosquare=nosquare,$
+                isotropic=isotropic,$
                 ; Oplot Line
                 oline=oline,$
                 ostyle=ostyle, othick=othick, ocolor=ocolor,$
@@ -224,7 +224,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
               xtitle=xtitle, ytitle=ytitle, $
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
-              nosquare=nosquare,$
+              isotropic=isotropic,$
               bottom=bottom, top=top,$
               smooth=smooth
   nlev=256
