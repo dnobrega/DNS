@@ -38,8 +38,7 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
 
 
    IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
-   help, reform(var)
-   help, xx, yy
+
    CONTOUR, reform(var),xx,yy,$
             levels=c_levels,c_colors=c_colors,$
             c_thick=c_thick,c_linestyle=c_linestyle,$
