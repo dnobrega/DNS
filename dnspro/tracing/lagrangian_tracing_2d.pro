@@ -1,5 +1,6 @@
 PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
-                           step=step, filename=filename, folder=folder
+                           step=step, filename=filename, folder=folder,$
+                           amb=amb
 
 
    ;--------------------------------------------------------------------------------- 
@@ -11,6 +12,7 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
        filename=folder+filename
        seeds=folder+seeds
     ENDIF
+    IF (KEYWORD_SET(amb))            THEN filename=filename+'_amb_'
     IF snap0 GT snapf THEN BEGIN
        step=-step
     ENDIF
@@ -62,6 +64,15 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
         ux2=reform(d->getvar("ux",snaps+2,swap=swap))
         uz2=reform(d->getvar("uz",snaps+2,swap=swap))
 
+        IF (KEYWORD_SET(amb)) THEN BEGIN
+            ux=reform(d->getvar("uamb_x",snaps,swap=swap)) + ux
+            uz=reform(d->getvar("uamb_z",snaps,swap=swap)) + uz
+            ux1=reform(d->getvar("uamb_x",snaps+1,swap=swap)) + ux1
+            uz1=reform(d->getvar("uamb_z",snaps+1,swap=swap)) + uz1
+            ux2=reform(d->getvar("uamb_x",snaps+2,swap=swap)) + ux2
+            uz2=reform(d->getvar("uamb_z",snaps+2,swap=swap)) + uz2
+        ENDIF 
+
         IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
            zz=minz+dz*FINDGEN(nelz)
            FOR i=0,nelx-1 DO BEGIN
@@ -77,7 +88,6 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
         RK4, xx, zz, $
              xp, zp, hh, $
              ux, uz, ux1, uz1, ux2, uz2
-
 
     ENDFOR
 
