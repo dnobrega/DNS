@@ -7,7 +7,10 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
    ;--------------------------------------------------------------------------------- 
     IF (NOT (KEYWORD_SET(step)))     THEN step=2
     IF (NOT (KEYWORD_SET(filename))) THEN filename='tracers'
-    IF (KEYWORD_SET(folder))         THEN filename=folder+'tracers'
+    IF (KEYWORD_SET(folder))         THEN BEGIN
+       filename=folder+filename
+       seeds=folder+seeds
+    ENDIF
     IF snap0 GT snapf THEN BEGIN
        step=-step
     ENDIF
