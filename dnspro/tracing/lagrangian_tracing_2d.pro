@@ -28,7 +28,7 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
     d->readpars, min(snapshots)
     d->readmesh
     xx=d->getx()
-    zz=d->getz()
+    zz=d->getz() & z=zz
 
     maxx=MAX(xx,MIN=minx)
     maxz=MAX(zz,MIN=minz)
@@ -44,7 +44,7 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
    ;--------------------------------------------------------------------------------- 
     FOR snaps=snap0,snapf-step,step DO BEGIN
 
-        save, xp, zp, filename=filename+STRTRIM(snaps,2)+'.sav'
+        save, xp, zp, filename=filename+'_'+STRTRIM(snaps,2)+'.sav'
         print, "Integrating snapshot: ", snaps
         spawn, "free -m"
         d->readpars, snaps
