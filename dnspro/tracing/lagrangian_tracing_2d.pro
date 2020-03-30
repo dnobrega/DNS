@@ -12,7 +12,7 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
        step=-step
     ENDIF
     PRINT, "-----------------------------------------------------------------------"
-    PRINT, "For a RK4 integration, we need snapshtos at t, t+1 and t+2."
+    PRINT, "For a RK4 integration, we need snapshots at t, t+1 and t+2."
     PRINT, "We integrate then from ", STRTRIM(snap0,2), " to ", STRTRIM(snapf-step,2)
     PRINT, "with a step of ", STRTRIM(step,2)
     PRINT, "-----------------------------------------------------------------------"
@@ -64,10 +64,10 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
            FOR i=0,nelx-1 DO BEGIN
               ux(i,*)  = INTERPOL( ux(i,*), z, zz )
               uz(i,*)  = INTERPOL( uz(i,*), z, zz )
-              ux1(i,*) = INTERPOL( ux(i,*), z, zz )
-              uz1(i,*) = INTERPOL( uz(i,*), z, zz )
-              ux2(i,*) = INTERPOL( ux(i,*), z, zz )
-              uz2(i,*) = INTERPOL( uz(i,*), z, zz )
+              ux1(i,*) = INTERPOL( ux1(i,*), z, zz )
+              uz1(i,*) = INTERPOL( uz1(i,*), z, zz )
+              ux2(i,*) = INTERPOL( ux2(i,*), z, zz )
+              uz2(i,*) = INTERPOL( uz2(i,*), z, zz )
            ENDFOR
         ENDIF
         
