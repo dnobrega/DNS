@@ -12,7 +12,7 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
        filename=folder+filename
        seeds=folder+seeds
     ENDIF
-    IF (KEYWORD_SET(amb))            THEN filename=filename+'_amb_'
+    IF (KEYWORD_SET(amb))            THEN filename=filename+'_amb'
     IF snap0 GT snapf THEN BEGIN
        step=-step
     ENDIF
