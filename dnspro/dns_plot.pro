@@ -281,7 +281,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 
 
         IF (N_ELEMENTS(l_var) GT 0) THEN BEGIN
-           LAGRANGIAN_OPLOT, k, l_var=l_var, l_folder=l_folder, $
+           LAGRANGIAN_OPLOT, k, l_var, l_folder=l_folder, $
                                 l_color=l_color, l_load=l_load,$
                                 l_psym=l_psym,l_size=l_size
         ENDIF        
