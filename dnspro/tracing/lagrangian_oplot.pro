@@ -4,9 +4,9 @@ PRO LAGRANGIAN_OPLOT, kk, l_var=l_var, l_folder=l_folder, $
 
 
 
-    IF (NOT (KEYWORD_SET(l_var)))      THEN l_var='tracers'
+    IF (NOT (KEYWORD_SET(l_var)))      THEN filename='tracers'
     IF (KEYWORD_SET(l_folder))         THEN BEGIN
-       l_var=l_folder+l_var
+       filename=l_folder+l_var
     ENDIF
     IF (NOT (KEYWORD_SET(l_size)))     THEN l_size=0.5 
     IF (NOT (KEYWORD_SET(l_psym)))     THEN l_psym=4 
@@ -17,7 +17,7 @@ PRO LAGRANGIAN_OPLOT, kk, l_var=l_var, l_folder=l_folder, $
        load, l_load, /silent
     ENDIF
     
-    RESTORE, l_var+'_'+STRTRIM(kk,2)+'.sav', /VERBOSE
+    RESTORE, filename+'_'+STRTRIM(kk,2)+'.sav', /VERBOSE
 
     OPLOT, xp, -zp, psym=l_psym, symsize=l_size, color=l_color
 
