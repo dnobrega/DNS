@@ -1,10 +1,9 @@
-PRO LAGRANGIAN_OPLOT, kk, l_var=l_var, l_folder=l_folder, $
+PRO LAGRANGIAN_OPLOT, kk, l_var, l_folder=l_folder, $
                           l_color=l_color, l_load=l_load,$
                           l_psym=l_psym, l_size=l_size
 
 
-
-    IF (NOT (KEYWORD_SET(l_var)))      THEN filename='tracers'
+    filename=l_var
     IF (KEYWORD_SET(l_folder))         THEN BEGIN
        filename=l_folder+l_var
     ENDIF
