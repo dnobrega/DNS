@@ -58,19 +58,19 @@ PRO lagrangian_tracing_2d, seeds, snap0, snapf, $
         ux=reform(d->getvar("ux",snaps,swap=swap))
         uz=reform(d->getvar("uz",snaps,swap=swap))
 
-        ux1=reform(d->getvar("ux",snaps+1,swap=swap))
-        uz1=reform(d->getvar("uz",snaps+1,swap=swap))
+        ux1=reform(d->getvar("ux",snaps+step/2,swap=swap))
+        uz1=reform(d->getvar("uz",snaps+step/2,swap=swap))
 
-        ux2=reform(d->getvar("ux",snaps+2,swap=swap))
-        uz2=reform(d->getvar("uz",snaps+2,swap=swap))
+        ux2=reform(d->getvar("ux",snaps+step,swap=swap))
+        uz2=reform(d->getvar("uz",snaps+step,swap=swap))
 
         IF (KEYWORD_SET(amb)) THEN BEGIN
             ux=reform(d->getvar("uamb_x",snaps,swap=swap)) + ux
             uz=reform(d->getvar("uamb_z",snaps,swap=swap)) + uz
-            ux1=reform(d->getvar("uamb_x",snaps+1,swap=swap)) + ux1
-            uz1=reform(d->getvar("uamb_z",snaps+1,swap=swap)) + uz1
-            ux2=reform(d->getvar("uamb_x",snaps+2,swap=swap)) + ux2
-            uz2=reform(d->getvar("uamb_z",snaps+2,swap=swap)) + uz2
+            ux1=reform(d->getvar("uamb_x",snaps+step/2,swap=swap)) + ux1
+            uz1=reform(d->getvar("uamb_z",snaps+step/2,swap=swap)) + uz1
+            ux2=reform(d->getvar("uamb_x",snaps+step,swap=swap)) + ux2
+            uz2=reform(d->getvar("uamb_z",snaps+step,swap=swap)) + uz2
         ENDIF 
 
         IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
