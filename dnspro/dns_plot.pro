@@ -39,7 +39,11 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ; Contour options
                    c_var=c_var,$
                    c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
-                   c_thick=c_thick, c_linestyle=c_linestyle
+                   c_thick=c_thick, c_linestyle=c_linestyle,$
+                   ; Lagrangian tracing oplot
+                   l_var=l_var, l_folder=l_folder, $
+                   l_color=l_color, l_load=l_load,$
+                   l_psym=l_psym, l_size=l_size
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -274,7 +278,14 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                     oline=oline,$
                     ostyle=ostyle, othick=othick, ocolor=ocolor,$
                     ox=ox, oy=oy
-        
+
+
+        IF (N_ELEMENTS(l_var) GT 0) THEN BEGIN
+           LAGRANGIAN_OPLOT, k, l_var=l_var, l_folder=l_folder, $
+                                l_color=l_color, l_load=l_load,$
+                                l_psym=l_psym,l_size=l_size
+        ENDIF        
+
         IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
            DNS_CONTOUR, d, k, m, 0,$
                         c_var, c_levels,$
