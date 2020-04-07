@@ -215,7 +215,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  stt=STRING(t,format='(F10.1)')
  title='t='+STRTRIM(stt,2)+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
-    title=coord+': '+STRTRIM(STRING(zz,format='(F10.1)'),2)+' '+units_coord+'   '+title
+    title=coord+': '+STRTRIM(STRING(zz,format='(F10.2)'),2)+' '+units_coord+'   '+title
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION
