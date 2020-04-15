@@ -210,10 +210,11 @@ PRO dns_var,d,name,snaps,swap,var,$
 ; TIME (By default in minutes)
 ;---------------------------------------------------------------------------------  
  t=d->gett()
- IF (NOT (KEYWORD_SET(time_units))) THEN time_units=100./60.
- t=t(0)*time_units 
- stt=STRING(t,format='(F10.1)')
- title='t='+STRTRIM(stt,2)+' min'
+ IF (NOT (KEYWORD_SET(time_units))) THEN t_units=100./60. ELSE t_units=time_units
+ t=t(0)*t_units 
+ stt=STRING(t,format='(F10.3)')
+ title='t='+STRTRIM(stt,2)
+ IF (NOT (KEYWORD_SET(time_units))) THEN title=title+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
     title=coord+': '+STRTRIM(STRING(zz,format='(F10.2)'),2)+' '+units_coord+'   '+title
 
