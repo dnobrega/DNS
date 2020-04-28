@@ -4,7 +4,7 @@ FUNCTION ALMA_READSYNTH, file, parameter
  list=['Stokes_I','Tau1','Wavelength']
  ; Stokes_I   : Stokes Intensity in erg/cm^2
               ; We convert it to temperature:
-              ; Stokes_I * lambda^2/Kb
+              ; Stokes_I * lambda^2/(2 *Kb)
  ; Tau1       : Optical depth in cm
               ; We convert it to Mm
  ; Wavelength : Wavelength in Angstrom
@@ -31,7 +31,7 @@ FUNCTION ALMA_READSYNTH, file, parameter
                      wave = H5D_READ(ss)*1e-8 ;angstrom -> cm
                      Kb   = 1.381e-16         ; erg/K
                      FOR ii=0,(size(var))[1]-1 DO BEGIN
-                        var(ii,*,*)=var(ii,*,*)*wave(ii)^2./Kb
+                        var(ii,*,*)=var(ii,*,*)*wave(ii)^2./(2*Kb)
                      ENDFOR
                      END
       ;--------------------------------------------------------
