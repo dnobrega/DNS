@@ -20,7 +20,8 @@ PRO ALMA_CALC_TG_TB_TAU1
    d->readmesh
    x=d->getx() & nelx=N_ELEMENTS(x)
    y=d->gety() & nely=N_ELEMENTS(y)
-   z=-reverse(d->getz())
+   newz=-reverse(d->getz())
+
 
 
    tb=reform(si(*,*,index),nelx,nely,nsnaps)
@@ -28,7 +29,8 @@ PRO ALMA_CALC_TG_TB_TAU1
    tg=fltarr(nelx,nely,nsnaps)
 
    FOR kk=0, nsnaps-1 DO BEGIN
-       dns_var,d,'tg',snaps(kk),swap,var,dim="xz"
+       dns_var,d,'tg',snaps(kk),swap,var,dim="xz", yy=z
+       z=-reverse(z)
        FOR ii=0, nelx-1 DO BEGIN
            FOR jj=0, nely-1 DO  tg(ii,jj,kk) = INTERPOL(reform(var(ii,jj,*)), z, tau1(ii,jj,kk))
        ENDFOR
