@@ -1,4 +1,4 @@
-PRO ALMA_CALC_TG_TB_ZTAU
+PRO ALMA_CALC_TG_TB_TAU1
 
 
    f=alma_synthfiles()
