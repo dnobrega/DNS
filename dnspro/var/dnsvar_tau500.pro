@@ -11,7 +11,7 @@ PRO dnsvar_tau500, d, name, snaps, swap, var, $
           RETURN
        ENDIF
        var=d->getvar('tau',snaps,swap=swap)
-       var_title='!4t!3'
+       var_title='!4s!3'
        var_range=[1d-3,1d3]
        var_log=1
     ENDELSE
