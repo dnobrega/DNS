@@ -6,7 +6,7 @@ PRO dnsvar_man, d, name, snaps, swap, var, $
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 5 THEN BEGIN
-          message,'dnsvar_mn, d, name, snaps, swap, var' $
+          message,'dnsvar_man, d, name, snaps, swap, var' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
