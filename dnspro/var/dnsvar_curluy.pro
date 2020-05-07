@@ -11,7 +11,7 @@ PRO dnsvar_curluy, d, name, snaps, swap, var, $
           RETURN
        ENDIF
        UNITS, units
-       var=d->getvar(name,snaps,swap=swap)*units.ut
+       var=-d->getvar(name,snaps,swap=swap)*units.ut
        var_title='!4x!3!dy!n (s!u-1!n)'
        var_range=[-100.0,100.0]
        var_log=0
