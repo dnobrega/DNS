@@ -1,27 +1,13 @@
 PRO DNS_OLINE, ostyle=ostyle, othick=othick, ocolor=ocolor,$
                ox=ox, oy=oy, $
-               dim=dim, x=x, y=y, z=z
-
-
+               dim=dim, x=x, y=y
 
    IF (N_ELEMENTS(ocolor) EQ 0) THEN ocolor=255
    IF (NOT KEYWORD_SET(othick)) THEN othick=3
    IF (NOT KEYWORD_SET(ostyle)) THEN ostyle=2
 
-   IF (dim EQ 'xz') THEN BEGIN
-      xx=x
-      yy=-z
-   ENDIF
-
-   IF (dim EQ 'yz') THEN BEGIN
-      xx=y
-      yy=-z
-   ENDIF
-
-   IF (dim EQ 'xy') THEN BEGIN
-      xx=x
-      yy=y
-   ENDIF
+   xx=x
+   IF (dim EQ 'xy') THEN yy=y ELSE yy=-y
 
    nox=N_ELEMENTS(ox)
    noy=N_ELEMENTS(oy)
@@ -31,6 +17,7 @@ PRO DNS_OLINE, ostyle=ostyle, othick=othick, ocolor=ocolor,$
          IF (N_ELEMENTS(ocolor) EQ 1) THEN ocolor=ocolor+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(othick) EQ 1) THEN othick=othick+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(ostyle) EQ 1) THEN ostyle=ostyle+fltarr(sz.n_elements/sz.n_dimensions)
+         print, [min(yy),max(yy)]
          FOR kk=0, sz.n_elements/sz.n_dimensions-1 DO BEGIN
             IF (sz.n_dimensions EQ 1) THEN BEGIN
                oplot, ox(kk)*[1,1], [min(yy),max(yy)], color=ocolor(kk), line=ostyle(kk),thick=othick(kk)
