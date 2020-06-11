@@ -1,4 +1,6 @@
 
+
+
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
               keep_var=keep_var, svar=svar,$
                    ;Plot options
@@ -39,7 +41,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ; Contour options
                    c_var=c_var,$
                    c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
-                   c_thick=c_thick, c_linestyle=c_linestyle,$
+                   c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
+                   c_charsize=c_charsize,c_charthick=c_charthick, $
                    ; Lagrangian tracing oplot
                    l_var=l_var, l_folder=l_folder, $
                    l_color=l_color, l_load=l_load,$
@@ -298,7 +301,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                         c_load=c_load,$
                         c_colors=c_colors,$
                         c_thick=c_thick, $
-                        c_linestyle=c_linestyle
+                        c_linestyle=c_linestyle, $
+                        c_labels=c_labels, $
+                        c_charsize=c_charsize,$
+                        c_charthick=c_charthick
         ENDIF
         
         wait, 0.0001
