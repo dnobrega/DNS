@@ -9,7 +9,10 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_load=c_load,$
                   c_colors=c_colors,$
                   c_thick=c_thick, $
-                  c_linestyle=c_linestyle
+                  c_linestyle=c_linestyle, $
+                  c_labels=c_labels, $
+                  c_charsize=c_charsize,$
+                  c_charthick=c_charthick
 
   
    nel=N_ELEMENTS(c_levels)
@@ -41,8 +44,9 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
 
    CONTOUR, reform(var),xx,yy,$
             levels=c_levels,c_colors=c_colors,$
-            c_thick=c_thick,c_linestyle=c_linestyle,$
-            /overplot
+            c_thick=c_thick,c_linestyle=c_linestyle, $
+            c_labels=c_labels,c_charsize=c_charsize,$
+            c_charthick=c_charthick, /overplot
    tvlct, rgb
 
 END
