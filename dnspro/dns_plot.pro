@@ -9,6 +9,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    charthick=charthick, charsize=charsize, $
                    thick=thick, ticklen=ticklen, $
                    xthick=xthick, ythick=ythick, $
+                   xcharsize=xcharsize, ycharsize=ycharsize, $
                    position=position, $
                    bar_pos=bar_pos, $
                    bar_titlepos=bar_titlepos,$
@@ -271,6 +272,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                     xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                     ishift=ishift,jshift=jshift,$
                     position=position,$
+                    xcharsize=xcharsize, ycharsize=ycharsize,$
                     bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
                     bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                     bar_orient=bar_orient, bar_charthick=bar_charthick, $
