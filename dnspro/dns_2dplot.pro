@@ -175,6 +175,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 xshift=xshift, yshift=yshift, zshift=zshift, ishift=ishift, jshift=jshift,$
                 position=position,$
+                xcharsize=xcharsize, ycharsize=ycharsize,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
                 bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
                 bar_orient=bar_orient, bar_charthick=bar_charthick, $
@@ -222,6 +223,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
               origin=origin, scale=scale, $
               title=title,  $
               xtitle=xtitle, ytitle=ytitle, $
+              xcharsize=xcharsize, ycharsize=ycharsize,$
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
               isotropic=isotropic,$
