@@ -13,7 +13,7 @@ PRO dnsvar_ldivb, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        var=d->getvar('modb',snaps,swap=swap)
        var=abs((d->getvar('divb',snaps,swap=swap)))/var
-       var_title='L!ddivB!n'
+       var_title='L!ddivB!n!u-1!n'
        IF (units EQ "solar") THEN var_title=var_title+" (Mm!u-1!n)"
        var_range=[1d-3,1d3]
        var_log=1

@@ -5,7 +5,7 @@ PRO dnsvar_tauqthin, d, name, snaps, swap, var, units, $
        message, 'Characteristic time of the Optically thin losses: tau_qthin',/info
        RETURN
     ENDIF ELSE BEGIN
-       IF n_params() LT 5 THEN BEGIN
+       IF n_params() LT 6 THEN BEGIN
           message,'dnsvar_tauqthin, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
