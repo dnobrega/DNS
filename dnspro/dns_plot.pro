@@ -1,7 +1,8 @@
 
 
 
-PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
+PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+              t0=t0,tf=tf,tt=tt,$     
               keep_var=keep_var, svar=svar,$
                    ;Plot options
                    nwin=nwin, multi=multi,$
@@ -177,6 +178,34 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/'+idlparam+'/' 
   file_mkdir,folder
 ;---------------------------------------------------------------------------------
+  IF ((N_ELEMENTS(t0) NE 0) OR (N_ELEMENTS(tf) NE 0) $
+      OR (N_ELEMENTS(tt) NE 0)) THEN BEGIN
+     idl_time_format=' t ='
+     SPAWN, "grep ' t =' *.idl", idl_times
+     n_idl_times = n_elements(idl_times)
+     array_times = fltarr(n_idl_times)
+     FOR ii=0,n_idl_times-1 DO $
+        array_times[ii]=float((strsplit(idl_times[ii], "=", /EXTRACT))[1])
+     IF (units EQ "solar") THEN t_units=100./60. ELSE t_units=1.0
+     idl_times=array_times*t_units
+     IF (n_idl_times NE n_elements(snaps)) THEN BEGIN
+        PRINT, "Number of .idl files different to the number of .snap files"
+        STOP
+     ENDIF ELSE BEGIN
+        IF (N_ELEMENTS(t0) NE 0) THEN BEGIN
+           temporary=MIN(abs(idl_times-t0),snap0)
+           snap0=FIX(snap0)
+        ENDIF
+        IF (N_ELEMENTS(tf) NE 0) THEN BEGIN
+           temporary=MIN(abs(idl_times-tf),snapf)
+           snapf=FIX(snapf)
+        ENDIF
+        IF (N_ELEMENTS(tt) NE 0) THEN BEGIN
+           temporary=MIN(abs(idl_times-tt),snapt)
+           snapt=FIX(snapt)
+        ENDIF
+     ENDELSE
+  ENDIF 
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
   IF NOT (KEYWORD_SET(step))  THEN step=1 
