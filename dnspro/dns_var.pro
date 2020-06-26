@@ -227,7 +227,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  IF (units EQ "solar") THEN title=title+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
     title=coord+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
-          +units_coord+title
+          units_coord+title
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION
