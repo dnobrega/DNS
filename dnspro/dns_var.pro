@@ -130,7 +130,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            dz1d=d->getdz1d()
            IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
               zz=minz+dz*FINDGEN(nelz)
-              FOR i=0,sizevar(1)-1 DO BEGIN
+              FOR i=im0,imf,imstep DO BEGIN
                  FOR j=0,nely-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
               ENDFOR
            ENDIF ELSE BEGIN
@@ -164,7 +164,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            dz1d=d->getdz1d()
            IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN 
               zz=minz+dz*FINDGEN(nelz)
-              FOR j=0,sizevar(2)-1 DO BEGIN
+              FOR j=im0,imf,imstep DO BEGIN
                  FOR i=0,nelx-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
               ENDFOR
            ENDIF ELSE BEGIN
