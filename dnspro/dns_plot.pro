@@ -314,7 +314,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
         
         wait, 0.0001
         IF (KEYWORD_SET(png)) THEN $
-           WRITE_PNG,folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_('+STRCOMPRESS(title(m),/remove_all)+').png', TVRD(TRUE=1)
+           WRITE_PNG,folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_['+STRCOMPRESS(title(m))+'].png', TVRD(TRUE=1)
         IF (KEYWORD_SET(movie)) THEN $
            makingmp4=video.Put(stream,TVRD(TRUE=1))
         
