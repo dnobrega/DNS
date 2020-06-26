@@ -6,7 +6,7 @@
 
 PRO dns_var,d,name,snaps,swap,var,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
-            time_units=time_units,$
+            units=units,$
             ixt=ixt,iyt=iyt,izt=izt, $
             ix0=ix0,iy0=iy0,iz0=iz0, $
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
@@ -19,6 +19,7 @@ PRO dns_var,d,name,snaps,swap,var,$
             title=title, $
             bar_log=bar_log, bar_title=bar_title, $
             save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+
 
 ;--------------------------------------------------------------------------------- 
  
@@ -41,7 +42,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  ENDIF ELSE BEGIN
     file_exists=STRLEN(file_which(dnsvar_name+".pro"))
     IF (file_exists GT 0) THEN BEGIN 
-       CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, $
+       CALL_PROCEDURE, dnsvar_name, d, name, snaps, swap, var, units, $
                        var_title=dnsvar_title, $
                        var_range=dnsvar_range, $
                        var_log=dnsvar_log
@@ -136,9 +137,9 @@ PRO dns_var,d,name,snaps,swap,var,$
               zz=z
            ENDELSE
            var=reverse(var,3)
-           xtitle='Y (Mm)' & ytitle='Z (Mm)'
+           xtitle="Y" & ytitle="Z"
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="X" & units_coord="(Mm)"
+              coord="X" & units_coord=""
            ENDIF
            xx=y & yy=zz & zz=x
            END
@@ -170,9 +171,9 @@ PRO dns_var,d,name,snaps,swap,var,$
               zz=z
            ENDELSE
            var=reverse(var,3)
-           xtitle='X (Mm)' & ytitle='Z (Mm)'
+           xtitle="X" & ytitle="Z"
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Y" & units_coord="(Mm)"
+              coord="Y" & units_coord=""
            ENDIF
            xx=x & yy=zz & zz=y
            END
@@ -192,9 +193,9 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
-           xtitle='X (Mm)' & ytitle='Y (Mm)'
+           xtitle="X" & ytitle="Y"
            IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Z" & units_coord="(Mm)"
+              coord="Z" & units_coord=""
            ENDIF
            xx=x & yy=y & zz=-z
            END
@@ -205,18 +206,28 @@ PRO dns_var,d,name,snaps,swap,var,$
            END
  ENDCASE
 
+;---------------------------------------------------------------------------------  
+; Coordinates (By default in Mm)
+;---------------------------------------------------------------------------------  
+ IF (units EQ "solar") THEN BEGIN
+    xtitle=xtitle+" (Mm)"
+    ytitle=ytitle+" (Mm)"
+    units_coords="(Mm)"
+ ENDIF
 
 ;---------------------------------------------------------------------------------  
-; TIME (By default in minutes)
+; Time (By default in minutes)
 ;---------------------------------------------------------------------------------  
- t=d->gett()
- IF (NOT (KEYWORD_SET(time_units))) THEN t_units=100./60. ELSE t_units=time_units
+ CALL_PROCEDURE, "units_"+units, u
+ t=d->gett()*u.ut
+ IF (units EQ "solar") THEN t_units=1./60. ELSE t_units=1.0
  t=t(0)*t_units 
  stt=STRING(t,format='(F10.2)')
  title='t='+STRTRIM(stt,2)
- IF (NOT (KEYWORD_SET(time_units))) THEN title=title+' min'
+ IF (units EQ "solar") THEN title=title+' min'
  IF N_ELEMENTS(coord) GT 0 THEN $
-    title=coord+': '+STRTRIM(STRING(zz,format='(F10.2)'),2)+' '+units_coord+'   '+title
+    title=coord+': '+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
+          ' '+units_coord+'   '+title
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION

@@ -2,7 +2,7 @@ PRO units_unity, units
 
  units={$
    ul:1.0,$  ; Lenght units:
-   ut:1.0.,$ ; Time units: 
+   ut:1.0,$ ; Time units: 
    ur:1.0,$  ; Density units:
    uu:1.0,$  ; Velocity units:
    up:1.0,$  ; Pressure units:

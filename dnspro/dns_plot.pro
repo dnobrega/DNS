@@ -27,7 +27,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
                    ; Variable options
                    dim=dim,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
-                   time_units=time_units,$
+                   units=units,$
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
@@ -68,6 +68,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   IF (NOT (KEYWORD_SET(dns_confi)))    THEN dns_confi="dns_confi"
   IF file_test(dns_confi+".sav") THEN RESTORE, dns_confi+".sav" ELSE BEGIN
      dswap=0
+     dunits="solar"
      dxsize=600
      dysize=600
      dcharthick=2.0
@@ -99,6 +100,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
   ENDELSE
 
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
+  IF (NOT (KEYWORD_SET(units)))        THEN units=dunits
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=dxsize
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=dysize              
   IF (NOT (KEYWORD_SET(charthick)))    THEN charthick=dcharthick
@@ -126,6 +128,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
      dswap=swap
+     dunits=unis
      dxsize=xsize
      dysize=ysize
      dcharthick=charthick
@@ -150,7 +153,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      disotropic=isotropic
      dsmooth=smooth
      dnwin=nwin
-     save, dswap, $ 
+     save, dswap, dunits, $ 
            dxsize, dysize, $
            dcharthick, dcharsize, $
            dthick, dticklen, $
@@ -234,7 +237,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt, step=step,$
      IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
         dns_var,d,name,k,swap,var,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
-                time_units=time_units,$
+                units=units,$
                 ixt=ixt,iyt=iyt,izt=izt, $                   
                 ix0=ix0,iy0=iy0,iz0=iz0, $
                 ixstep=ixstep, iystep=iystep, izstep=izstep,$
