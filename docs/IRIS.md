@@ -8,6 +8,7 @@
 ## Analyzing IRIS data
 - Data Analysis Tutorials by Tiago Pereira: [Data Analysis Tutorials](https://folk.uio.no/tiago/iris9/exercises/index.html)
 - IRIS2: [IRIS2](https://iris.lmsal.com/iris2/)
+- A quick-start guide to work with IRIS Level2 data in Python: [IRIS_LMSALPY](https://iris.lmsal.com/itn45/)
 
 
 ## Creating LVL3 data
