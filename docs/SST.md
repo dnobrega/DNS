@@ -80,8 +80,8 @@ paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
 rm saai.txt
 rm saao.txt
 ```
-The input of the script is the following webpage where the IRIS SAA times are extracted from:
-[IRIS_SAA](https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions)
+The input of the script for a given day can be found within TIM in the following webpage:
+[IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
 
 For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
 ```bash
