@@ -2,7 +2,7 @@
 
 
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
-              t0=t0,tf=tf,tt=tt,$     
+              t0=t0,tf=tf,tt=tt,tstep=tstep,$     
               keep_var=keep_var, svar=svar,$
                    ;Plot options
                    nwin=nwin, multi=multi,$
@@ -179,15 +179,20 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
   file_mkdir,folder
 ;---------------------------------------------------------------------------------
   IF ((N_ELEMENTS(t0) NE 0) OR (N_ELEMENTS(tf) NE 0) $
-      OR (N_ELEMENTS(tt) NE 0)) THEN BEGIN
-     idl_time_format=' t ='
+      OR (N_ELEMENTS(tt) NE 0) OR (N_ELEMENTS(tstep) NE 0)) THEN BEGIN
      SPAWN, "grep ' t =' *.idl", idl_times
+     SPAWN, "grep ' dtsnap =' *.idl", idl_dt
      n_idl_times = n_elements(idl_times)
      array_times = fltarr(n_idl_times)
-     FOR ii=0,n_idl_times-1 DO $
+     array_dt = fltarr(n_idl_times)
+     FOR ii=0,n_idl_times-1 DO BEGIN
         array_times[ii]=float((strsplit(idl_times[ii], "=", /EXTRACT))[1])
+        array_dt[ii]=float((strsplit(idl_dt[ii], "=", /EXTRACT))[1])
+     ENDFOR
+     ;If solar: time units are in minutes
      IF (units EQ "solar") THEN t_units=100./60. ELSE t_units=1.0
      idl_times=array_times*t_units
+     idl_dt=array_dt*t_units
      IF (n_idl_times NE n_elements(snaps)) THEN BEGIN
         PRINT, "Number of .idl files different to the number of .snap files"
         STOP
@@ -203,6 +208,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
         IF (N_ELEMENTS(tt) NE 0) THEN BEGIN
            temporary=MIN(abs(idl_times-tt),snapt)
            snapt=FIX(snapt)
+        ENDIF
+        IF (N_ELEMENTS(tstep) NE 0) THEN BEGIN
+           temporary=MIN(ROUND(tstep/idl_dt))
+           IF temporary EQ 0 THEN step=1 ELSE step=temporary
         ENDIF
      ENDELSE
   ENDIF 
