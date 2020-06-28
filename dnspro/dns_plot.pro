@@ -129,7 +129,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
      dswap=swap
-     dunits=unis
+     dunits=units
      dxsize=xsize
      dysize=ysize
      dcharthick=charthick
