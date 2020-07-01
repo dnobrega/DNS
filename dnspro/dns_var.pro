@@ -18,7 +18,8 @@ PRO dns_var,d,name,snaps,swap,var,$
             xtitle=xtitle, ytitle=ytitle, $
             title=title, $
             bar_log=bar_log, bar_title=bar_title, $
-            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
+            var_info=var_info
 
 
 ;--------------------------------------------------------------------------------- 
@@ -34,7 +35,7 @@ PRO dns_var,d,name,snaps,swap,var,$
 ;---------------------------------------------------------------------------------  
  dnsvar_name="dnsvar_"+name
  IF (NOT KEYWORD_SET(save_dnsfolder)) THEN save_dnsfolder='dnsvar'
- saved_dnsvar_name=save_dnsfolder+'/'+name+'_'+strtrim(string(snaps),2)+'_'+dim+'.sav'
+ saved_dnsvar_name=save_dnsfolder+'/'+name+'_'+strtrim(string(snaps),2)+'.sav'
 
  IF file_test(saved_dnsvar_name) EQ 1 THEN BEGIN
     print, "Restoring variable"
@@ -67,7 +68,6 @@ PRO dns_var,d,name,snaps,swap,var,$
     save, d, var, dnsvar_log, dnsvar_title, dnsvar_range, FILENAME=saved_dnsvar_name
  ENDIF
 
-
  IF (N_ELEMENTS(var_log) GT 0)    $
     THEN bar_log   = var_log  $
     ELSE bar_log = dnsvar_log
@@ -82,7 +82,6 @@ PRO dns_var,d,name,snaps,swap,var,$
 
  d->readpars, snaps
  d->readmesh
-
  x=d->getx()
  y=d->gety()
  z=d->getz()
@@ -92,7 +91,18 @@ PRO dns_var,d,name,snaps,swap,var,$
 
  IF STRPOS(name,"alma") EQ -1 THEN BEGIN
     var=reform(var,nelx,nely,nelz)
-    sizevar=size(var)
+    IF (NOT (KEYWORD_SET(dim))) THEN BEGIN
+       dim='xz'
+       IF (nelx EQ 1) THEN BEGIN
+          IF (nely EQ 1) THEN dim='z' ELSE dim="yz"
+          IF (nelz EQ 1) THEN dim='y'
+       ENDIF ELSE BEGIN 
+          IF (nely EQ 1) THEN BEGIN
+             IF (nelz EQ 1) THEN dim='x' ELSE dim="xz"
+          ENDIF ELSE dim="xy"
+       ENDELSE
+    ENDIF
+    units_coord="  "
  ENDIF ELSE BEGIN
     dim="xy"
     f=alma_synthfiles()
@@ -100,7 +110,6 @@ PRO dns_var,d,name,snaps,swap,var,$
     wh=where(strpos(f, ssnaps+"_int") GT -1)
     wv=alma_readsynth(f(wh), "Wavelength")
     FOR i=0,n_elements(wv)-1 DO print, strtrim(string(i),2),"  lambda: ",strtrim(string(wv(i),format='(F10.4)'),2)+" mm"
-    sizevar=size(var)
     z=-wv
     coord="!4k!3"
     units_coord="(mm)"
@@ -139,7 +148,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            var=reverse(var,3)
            xtitle="Y" & ytitle="Z"
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="X" & units_coord=""
+              coord="X"
            ENDIF
            xx=y & yy=zz & zz=x
            END
@@ -173,7 +182,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            var=reverse(var,3)
            xtitle="X" & ytitle="Z"
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Y" & units_coord=""
+              coord="Y"
            ENDIF
            xx=x & yy=zz & zz=y
            END
@@ -195,10 +204,68 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
            xtitle="X" & ytitle="Y"
            IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
-              coord="Z" & units_coord=""
+              coord="Z"
            ENDIF
            xx=x & yy=y & zz=-z
            END
+
+    "x" : BEGIN
+          PRINT, "Not implemented yet"
+          STOP
+          END
+
+    "y" : BEGIN
+          PRINT, "Not implemented yet"
+          STOP
+          END
+
+
+    "z" : BEGIN  
+          IF N_ELEMENTS(ixt) GT 0 THEN BEGIN
+             ix0=ixt & ixf=ixt & ixstep=1
+             IF N_ELEMENTS(iyt) GT 0 THEN BEGIN 
+                iy0=iyt & iyf=iyt & iystep=1
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iy0) EQ 0) THEN iy0=0
+                IF (N_ELEMENTS(iyf) EQ 0) THEN iyf=sizevar(2)-1
+                IF (NOT KEYWORD_SET(iystep)) THEN iystep=1
+             ENDELSE
+          ENDIF ELSE BEGIN
+             IF (N_ELEMENTS(ix0) EQ 0) THEN ix0=0
+             IF (N_ELEMENTS(ixf) EQ 0) THEN ixf=sizevar(1)-1
+             IF (NOT KEYWORD_SET(ixstep)) THEN ixstep=1
+             IF N_ELEMENTS(iyt) GT 0 THEN BEGIN
+                iy0=iyt & iyf=iyt & iystep=1 
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iy0) EQ 0) THEN iy0=0
+                IF (N_ELEMENTS(iyf) EQ 0) THEN iyf=sizevar(2)-1
+                IF (NOT KEYWORD_SET(iystep)) THEN iystep=1
+             ENDELSE                
+          ENDELSE
+          IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
+          maxz=MAX(z, MIN=minz)
+          dz=(maxz-minz)/(nelz-1)
+          dz1d=d->getdz1d()
+          IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
+             zz=minz+dz*FINDGEN(nelz)
+             FOR j=iy0,iyf,iystep DO BEGIN
+                FOR i=ix0,ixf,ixstep DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
+             ENDFOR
+          ENDIF ELSE BEGIN
+             zz=z
+          ENDELSE
+          var=reverse(var,3)
+          IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+             coord="X"
+             IF (sizevar(2) GT 1) THEN BEGIN
+                coord=["X","Y"]
+             ENDIF
+          ENDIF
+          xtitle="Z"
+          ytitle=bar_title
+          xx=zz & yy=x & zz=y
+          END
+
 
     ELSE : BEGIN
            print, "Wrong dim"
@@ -211,8 +278,8 @@ PRO dns_var,d,name,snaps,swap,var,$
 ;---------------------------------------------------------------------------------  
  IF (units EQ "solar") THEN BEGIN
     xtitle=xtitle+" (Mm)"
-    ytitle=ytitle+" (Mm)"
-    units_coords=' Mm  '
+    units_coord=' Mm  '
+    IF (STRLEN(dim) EQ 2) THEN ytitle=ytitle+" (Mm)"
  ENDIF
 
 ;---------------------------------------------------------------------------------  
@@ -225,16 +292,28 @@ PRO dns_var,d,name,snaps,swap,var,$
  stt=STRING(t,format='(F10.2)')
  title='t='+STRTRIM(stt,2)
  IF (units EQ "solar") THEN title=title+' min'
- IF N_ELEMENTS(coord) GT 0 THEN $
-    title=coord+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
-          units_coords+title
+ IF N_ELEMENTS(coord) EQ 1 THEN BEGIN
+    IF (STRLEN(dim) EQ 2) THEN $
+       title=coord+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
+             units_coord+title
+    IF (STRLEN(dim) EQ 1) THEN $
+       title=coord+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+$
+             units_coord+title
+ ENDIF
+ IF N_ELEMENTS(coord) EQ 2 THEN BEGIN
+    title={title1:coord[0]+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+units_coord, $
+           title2:coord[1]+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+units_coord+ $
+           title}
+ ENDIF
 
 ;---------------------------------------------------------------------------------  
 ; PRINTING INFORMATION
 ;---------------------------------------------------------------------------------  
- var_max = MAX(var, min=var_min, /NAN)
- PRINT, "----------------------------------------------------"
- PRINT, " ",name, snaps, var_min, var_max
- PRINT, "----------------------------------------------------"
+ IF (var_info) THEN BEGIN
+    var_max = MAX(var, min=var_min, /NAN)
+    PRINT, "----------------------------------------------------"
+    PRINT, " ",name, snaps, var_min, var_max
+    PRINT, "----------------------------------------------------"
+ ENDIF
 
 END

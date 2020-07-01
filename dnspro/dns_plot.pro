@@ -37,6 +37,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
                    ixf=ixf,iyf=iyf,izf=izf,$
                    xshift=xshift, yshift=yshift,zshift=zshift,ishift=ishift, jshift=jshift,$
+                   var_info=var_info,$
                    ; Oplot options
                    oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
                    ox=ox, oy=oy, $
@@ -98,6 +99,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      disotropic=0
      dsmooth=0
      dnwin=0
+     dvar_info=1
   ENDELSE
 
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
@@ -132,6 +134,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
   IF (N_ELEMENTS(isotropic) EQ 0)      THEN isotropic=0
   IF (N_ELEMENTS(smooth) EQ 0)         THEN smooth=dsmooth
   IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
+  IF (N_ELEMENTS(var_info) EQ 0)       THEN var_info=dvar_info
 
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
      dswap=swap
@@ -160,6 +163,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      disotropic=isotropic
      dsmooth=smooth
      dnwin=nwin
+     dvar_info=var_info
      save, dswap, dunits, $ 
            dxsize, dysize, $
            dcharthick, dcharsize, $
@@ -176,7 +180,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
            FILENAME=dns_confi+".sav"
   ENDIF
 
-  IF (NOT (KEYWORD_SET(dim)))          THEN dim='xz'
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
 
 ;---------------------------------------------------------------------------------
@@ -266,7 +269,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
 
 ;---------------------------------------------------------------------------------
   IF (KEYWORD_SET(movie)) THEN BEGIN
-     video=IDLffVideoWrite(folder+idlparam+'_'+namefile+'_'+dim+'.mp4')
+     video=IDLffVideoWrite(folder+idlparam+'_'+namefile+'.mp4')
      stream=video.AddVideoStream(xsize,ysize,10,BIT_RATE=24E5)
   ENDIF
 ;---------------------------------------------------------------------------------  
@@ -292,7 +295,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                 xshift=xshift, yshift=yshift, zshift=zshift, $
                 xtitle=xtitle, ytitle=ytitle, title=title,$
                 bar_log=bar_log, bar_title=bar_title,$
-                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
+                var_info=var_info
         IF (KEYWORD_SET(keep_var)) THEN BEGIN
            svar={d:d,var:var, $
                  bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
@@ -308,63 +312,124 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
         im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
         dim=svar.dim
      ENDELSE
+
+     IF STRLEN(dim) EQ 2 THEN BEGIN
      
-     FOR m=im0,imf,imstep DO BEGIN
-        IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
-        IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
-        IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
-        dns_2dplot, d,k,var_plot,dim, $
-                    xx=xx, yy=yy, zz=zz,$
-                    xtitle=xtitle, ytitle=ytitle, title=title(m),$
-                    xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
-                    ishift=ishift,jshift=jshift,$
-                    position=position,$
-                    xcharsize=xcharsize, ycharsize=ycharsize,$
-                    bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
-                    bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
-                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
-                    bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                    bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
-                    bottom=bottom, top=top, smooth=smooth,$
-                    isotropic=isotropic,$
-                    oline=oline,$
-                    ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                    ox=ox, oy=oy
-
-
-        IF (N_ELEMENTS(l_var) GT 0) THEN BEGIN
-           LAGRANGIAN_OPLOT, k, l_var, l_folder=l_folder, $
+        FOR m=im0,imf,imstep DO BEGIN
+           IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
+           IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
+           IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
+           dns_2dplot, d,k,var_plot,dim, $
+                       xx=xx, yy=yy, zz=zz,$
+                       xtitle=xtitle, ytitle=ytitle, title=title(m),$
+                       xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                       ishift=ishift,jshift=jshift,$
+                       position=position,$
+                       xcharsize=xcharsize, ycharsize=ycharsize,$
+                       bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
+                       bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
+                       bar_orient=bar_orient, bar_charthick=bar_charthick, $
+                       bar_thick=bar_thick, bar_charsize=bar_charsize, $
+                       bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
+                       bottom=bottom, top=top, smooth=smooth,$
+                       isotropic=isotropic,$
+                       oline=oline,$
+                       ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                       ox=ox, oy=oy
+           
+           
+           IF (N_ELEMENTS(l_var) GT 0) THEN BEGIN
+              LAGRANGIAN_OPLOT, k, l_var, l_folder=l_folder, $
                                 l_color=l_color, l_load=l_load,$
                                 l_psym=l_psym,l_size=l_size
-        ENDIF        
+           ENDIF        
+           
+           IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
+              DNS_CONTOUR, d, k, m, 0,$
+                           c_var, c_levels,$
+                           xmin=xmin,xmax=xmax,$
+                           ymin=ymin,ymax=ymax,$
+                           zmin=zmin,zmax=zmax,$
+                           dim=dim, xx=xx,yy=yy,$
+                           ishift=ishift, jshift=jshift,$
+                           ixt=ixt,iyt=iyt,izt=izt,$
+                           c_load=c_load,$
+                           c_colors=c_colors,$
+                           c_thick=c_thick, $
+                           c_linestyle=c_linestyle, $
+                           c_labels=c_labels, $
+                           c_charsize=c_charsize,$
+                           c_charthick=c_charthick
+           ENDIF
 
-        IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
-           DNS_CONTOUR, d, k, m, 0,$
-                        c_var, c_levels,$
-                        xmin=xmin,xmax=xmax,$
-                        ymin=ymin,ymax=ymax,$
-                        zmin=zmin,zmax=zmax,$
-                        dim=dim, xx=xx,yy=yy,$
-                        ishift=ishift, jshift=jshift,$
-                        ixt=ixt,iyt=iyt,izt=izt,$
-                        c_load=c_load,$
-                        c_colors=c_colors,$
-                        c_thick=c_thick, $
-                        c_linestyle=c_linestyle, $
-                        c_labels=c_labels, $
-                        c_charsize=c_charsize,$
-                        c_charthick=c_charthick
-        ENDIF
+           wait, 0.0001
+           IF (KEYWORD_SET(png)) THEN BEGIN
+              png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
+              WRITE_PNG, png_file, TVRD(TRUE=1)
+           ENDIF
+           IF (KEYWORD_SET(movie)) THEN $
+              makingmp4=video.Put(stream,TVRD(TRUE=1))
         
-        wait, 0.0001
-        IF (KEYWORD_SET(png)) THEN BEGIN
-           png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
-           WRITE_PNG, png_file, TVRD(TRUE=1)
-        ENDIF
-        IF (KEYWORD_SET(movie)) THEN $
-           makingmp4=video.Put(stream,TVRD(TRUE=1))
+        ENDFOR
+
+     ENDIF        
+
+     IF (STRLEN(dim) EQ 1) THEN BEGIN
+        sizevar=size(var)
+        FOR im=ix0,ixf,ixstep DO BEGIN
+           FOR jm=iy0,iyf,iystep DO BEGIN
+              IF (dim EQ "x") THEN BEGIN
+                 var_plot = reform(var(*,jm,im))
+                 IF (sizevar(2) GT 1) THEN BEGIN
+                    IF (sizevar(3) GT 1) $ 
+                    THEN title_1d = (title.title1)[im]+(title.title2)[jm] $
+                    ELSE title_1d = title[im]
+                 ENDIF ELSE title_1d = title[im]
+              ENDIF
+              IF (dim EQ "y") THEN BEGIN
+                 var_plot = reform(var(im,*,jm))        
+                 IF (sizevar(3) GT 1) THEN BEGIN
+                    IF (sizevar(1) GT 1) $
+                    THEN title_1d = (title.title1)[im]+(title.title2)[jm] $
+                    ELSE title_1d = title[im]
+                 ENDIF ELSE title_1d = title[im]
+              ENDIF
+              IF (dim EQ "z") THEN BEGIN
+                 var_plot = reform(var(im,jm,*))
+                 IF (sizevar(1) GT 1) THEN BEGIN
+                    IF (sizevar(2) GT 1) $
+                    THEN title_1d = (title.title1)[im]+(title.title2)[jm] $
+                    ELSE title_1d = title[im]
+                 ENDIF ELSE title_1d = title[im]
+              ENDIF
+
+              dns_1dplot, d,k,var_plot,dim, $
+                          bar_log=bar_log, $
+                          xx=xx, yy=yy, zz=zz,$
+                          xtitle=xtitle, ytitle=ytitle, title=title_1d,$
+                          xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
+                          ishift=ishift,$
+                          position=position,$
+                          xcharsize=xcharsize, ycharsize=ycharsize,$
+                          var_range=var_range,  $
+                          isotropic=isotropic,$
+                          oline=oline,$
+                          ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                          ox=ox, oy=oy
+              wait, 0.0001
+              IF (KEYWORD_SET(png)) THEN BEGIN
+                 png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
+                 WRITE_PNG, png_file, TVRD(TRUE=1)
+              ENDIF
+              IF (KEYWORD_SET(movie)) THEN $
+                 makingmp4=video.Put(stream,TVRD(TRUE=1))
+           ENDFOR
+        ENDFOR
         
-     ENDFOR
+
+     ENDIF
+
+
   ENDFOR
 ;---------------------------------------------------------------------------------
   
