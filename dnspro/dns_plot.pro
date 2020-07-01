@@ -209,15 +209,15 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      ENDIF ELSE BEGIN
         IF (N_ELEMENTS(t0) NE 0) THEN BEGIN
            temporary=MIN(abs(idl_times-t0),snap0)
-           snap0=FIX(snap0)
+           snap0=FIX(snap0)+MIN(snaps)
         ENDIF
         IF (N_ELEMENTS(tf) NE 0) THEN BEGIN
            temporary=MIN(abs(idl_times-tf),snapf)
-           snapf=FIX(snapf)
+           snapf=FIX(snapf)+MIN(snaps)
         ENDIF
         IF (N_ELEMENTS(tt) NE 0) THEN BEGIN
            temporary=MIN(abs(idl_times-tt),snapt)
-           snapt=FIX(snapt)
+           snapt=FIX(snapt)+MIN(snaps)
         ENDIF
         IF (N_ELEMENTS(tstep) NE 0) THEN BEGIN
            temporary=MIN(ROUND(tstep/idl_dt))
