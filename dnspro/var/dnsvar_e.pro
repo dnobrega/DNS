@@ -14,7 +14,7 @@ PRO dnsvar_e, d, name, snaps, swap, var, units, $
        var=d->getvar(name,snaps,swap=swap)*u.ue
        var_title='e'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n)"
-       var_range=[1.d-15,2.d-14]
+       var_range=[1.d-2,2.d8]
        var_log=1
     ENDELSE
 END
