@@ -201,6 +201,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      ;If solar: time units are in minutes
      IF (units EQ "solar") THEN t_units=100./60. ELSE t_units=1.0
      idl_times=array_times*t_units
+     idl_times=idl_times(sort(idl_times))
      idl_dt=array_dt*t_units
      IF (n_idl_times NE n_elements(snaps)) THEN BEGIN
         PRINT, "Number of .idl files different to the number of .snap files"
