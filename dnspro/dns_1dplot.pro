@@ -43,15 +43,6 @@ PRO dns_1dplot, d,k,var_plot,dim, $
 
   var_plot=var_plot(minix:maxix)
 
-  bar_range=var_range
-  IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
-     IF (bar_log EQ 1) THEN BEGIN
-        var_plot=alog10(var_plot)
-        IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
-        bar_range=alog10(var_range)
-     ENDIF
-  ENDIF
-  
   PLOT, xx_plot, var_plot,$
         xtitle=xtitle, ytitle=ytitle, title=title,$
         /xs, /ys, $
