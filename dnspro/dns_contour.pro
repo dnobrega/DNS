@@ -1,5 +1,6 @@
 PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_var, c_levels,$
+                  units=units,$
                   dim=dim, xx=xx,yy=yy,$
                   xmin=xmin,xmax=xmax,$
                   ymin=ymin, ymax=ymax,$
@@ -23,9 +24,10 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
    IF (NOT KEYWORD_SET(c_linestyle)) THEN c_linestyle=fltarr(nel)
 
    dns_var,d,c_var,snaps,swap,var,$
+           units=units,$
            ixt=ixt,iyt=iyt,izt=izt, $
            xx=xx,yy=yy,zz=zz,$
-           dim=dim
+           dim=dim, var_info=0
 
 
 
