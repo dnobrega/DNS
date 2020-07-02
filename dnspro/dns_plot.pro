@@ -189,8 +189,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
 ;---------------------------------------------------------------------------------
   IF ((N_ELEMENTS(t0) NE 0) OR (N_ELEMENTS(tf) NE 0) $
       OR (N_ELEMENTS(tt) NE 0) OR (N_ELEMENTS(tstep) NE 0)) THEN BEGIN
-     SPAWN, "grep ' t =' *.idl", idl_times
-     SPAWN, "grep ' dtsnap =' *.idl", idl_dt
+     SPAWN, "grep ' t =' "+idlparam+"_*.idl", idl_times
+     SPAWN, "grep ' dtsnap =' "+idlparam+"_*.idl", idl_dt
      n_idl_times = n_elements(idl_times)
      array_times = fltarr(n_idl_times)
      array_dt = fltarr(n_idl_times)
@@ -348,6 +348,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
            IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
               DNS_CONTOUR, d, k, m, 0,$
                            c_var, c_levels,$
+                           units=units,$
                            xmin=xmin,xmax=xmax,$
                            ymin=ymin,ymax=ymax,$
                            zmin=zmin,zmax=zmax,$
