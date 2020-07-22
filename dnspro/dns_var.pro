@@ -6,6 +6,7 @@
 
 PRO dns_var,d,name,snaps,swap,var,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
+            var_minmax=var_minmax,$
             units=units,$
             ixt=ixt,iyt=iyt,izt=izt, $
             ix0=ix0,iy0=iy0,iz0=iz0, $
@@ -74,7 +75,8 @@ PRO dns_var,d,name,snaps,swap,var,$
  IF (KEYWORD_SET(var_title))   $
     THEN bar_title = var_title $
     ELSE bar_title = dnsvar_title
- IF (NOT (KEYWORD_SET(var_range))) THEN var_range=dnsvar_range
+ IF (NOT (KEYWORD_SET(var_range)))  THEN var_range=dnsvar_range
+ IF (KEYWORD_SET(var_minmax))       THEN var_range=[min(var,/NAN),max(var,/NAN)]
 
 ;---------------------------------------------------------------------------------  
 ; SCANNING 3D VARIABLES
