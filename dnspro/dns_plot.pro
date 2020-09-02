@@ -41,6 +41,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    var_info=var_info,$
                    ; Oplot options
                    oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                   opsym=opsym, osymsize=osymsize,$
                    ox=ox, oy=oy, $
                    ; Contour options
                    c_var=c_var,$
@@ -418,7 +419,8 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                           var_range=var_range,  $
                           isotropic=isotropic,$
                           oline=oline,$
-                          ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                          ostyle=ostyle, othick=othick, ocolor=ocolor, $
+                          opsym=opsym, osymsize=osymsize, $
                           ox=ox, oy=oy
               wait, 0.0001
               IF (KEYWORD_SET(png)) THEN BEGIN
