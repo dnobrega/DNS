@@ -9,7 +9,8 @@ PRO dns_1dplot, d,k,var_plot,dim, $
                 var_range=var_range,  $
                 isotropic=isotropic,$
                 oline=oline,$
-                ostyle=ostyle, othick=othick, ocolor=ocolor,$
+                ostyle=ostyle, othick=othick, ocolor=ocolor, $
+                opsym=opsym, osymsize=osymsize,$
                 ox=ox, oy=oy
 
 
@@ -41,11 +42,12 @@ PRO dns_1dplot, d,k,var_plot,dim, $
 
   IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift)
 
+
   var_plot=var_plot(minix:maxix)
 
   PLOT, xx_plot, var_plot,$
         xtitle=xtitle, ytitle=ytitle, title=title,$
-        /xs, /ys, $
+        /xs, /ys, psym=opsym, symsize=osymsize,$
         position=position,$
         xcharsize=xcharsize, ycharsize=ycharsize,$
         yrange=var_range, ylog=bar_log, $
