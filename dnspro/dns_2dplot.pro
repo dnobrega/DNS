@@ -258,7 +258,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
   IF (KEYWORD_SET(oline)) THEN BEGIN
      DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
                ox=ox, oy=oy, $
-               dim=dim, x=xx, y=yy
+               dim=dim, x=xx, y=yy, $
+               var_range=var_range
   ENDIF
 
 
