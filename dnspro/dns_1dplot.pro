@@ -54,4 +54,12 @@ PRO dns_1dplot, d,k,var_plot,dim, $
         isotropic=isotropic
 
 
+  IF (KEYWORD_SET(oline)) THEN BEGIN
+     DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
+               ox=ox, oy=oy, $
+               dim=dim, x=xx, y=yy, $
+               var_range=var_range
+  ENDIF
+
+
 END
