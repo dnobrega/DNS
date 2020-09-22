@@ -1,13 +1,12 @@
 
 
-PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,
+PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
                     origin,scale,$
                     nozbifrost=nozbifrost,$
                     ishift=ishift,jshift=jshift,$
                     xmin=xmin,xmax=xmax,$
                     ymin=ymin,ymax=ymax,$
                     zmin=zmin,zmax=zmax
-
 
   
     nelx=n_elements(xx)
