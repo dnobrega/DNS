@@ -27,6 +27,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
                    ; Variable options
                    dim=dim,$
+                   nozbifrost=nozbifrost,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
                    units=units,$
@@ -286,6 +287,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
   FOR k=snap0,snapf,step DO BEGIN
      IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
         dns_var,d,name,k,swap,var,$
+                nozbifrost=nozbifrost,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
                 var_minmax=var_minmax,$
                 units=units,$
@@ -409,6 +411,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
               ENDIF
 
               dns_1dplot, d,k,var_plot,dim, $
+                          nozbifrost=nozbifrost,$
                           bar_log=bar_log, $
                           xx=xx, yy=yy, zz=zz,$
                           xtitle=xtitle, ytitle=ytitle, title=title_1d,$
