@@ -1,4 +1,5 @@
 PRO dns_1dplot, d,k,var_plot,dim, $
+                nozbifrost=nozbifrost,$
                 bar_log=bar_log,$
                 xx=xx, yy=yy, zz=zz,$
                 xtitle=xtitle, ytitle=ytitle, title=title,$
@@ -31,13 +32,19 @@ PRO dns_1dplot, d,k,var_plot,dim, $
   ENDIF
 
   IF (dim EQ "z") THEN BEGIN
-     IF (N_ELEMENTS(zmin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,-zmin)) ELSE maxix=nelx-1
-     IF (N_ELEMENTS(zmax) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,-zmax)) ELSE minix=0
-     xx_plot=xx(minix:maxix)
-     xx_plot=-reverse(xx_plot)
-     temp1=nelx-maxix & temp2=nelx-minix
-     minix=temp1-1
-     maxix=temp2-1
+     IF (N_ELEMENTS(nozbifrost) EQ 0) THEN BEGIN
+        IF (N_ELEMENTS(zmin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,-zmin)) ELSE maxix=nelx-1
+        IF (N_ELEMENTS(zmax) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,-zmax)) ELSE minix=0
+        xx_plot=xx(minix:maxix)
+        xx_plot=-reverse(xx_plot)
+        temp1=nelx-maxix & temp2=nelx-minix
+        minix=temp1-1
+        maxix=temp2-1
+     ENDIF ELSE BEGIN
+        IF (N_ELEMENTS(zmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,zmin)) ELSE minix=0
+        IF (N_ELEMENTS(zmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,zmax)) ELSE maxix=nelx-1
+        xx_plot=xx(minix:maxix)
+     ENDELSE
   ENDIF
 
   IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift)
