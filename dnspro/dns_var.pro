@@ -5,6 +5,7 @@
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 PRO dns_var,d,name,snaps,swap,var,$
+            nozbifrost=nozbifrost,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
             var_minmax=var_minmax,$
             units=units,$
@@ -53,14 +54,9 @@ PRO dns_var,d,name,snaps,swap,var,$
        print, "Trying in Bifrost folder..."
        var=d->getvar(name,snaps,swap=swap)
        var_max = MAX(var, min=var_min, /NAN)
-       IF (var_min EQ var_max) THEN BEGIN
-          print, "Variable not found in Bifrost folder"
-          STOP
-       ENDIF ELSE BEGIN
-          dnsvar_log = 0
-          dnsvar_title = ''
-          dnsvar_range = [var_min,var_max]
-       ENDELSE
+       dnsvar_log = 0
+       dnsvar_title = ''
+       dnsvar_range = [var_min,var_max]
     ENDELSE
  ENDELSE
 
@@ -147,7 +143,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
-           var=reverse(var,3)
+           IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
            xtitle="Y" & ytitle="Z"
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="X"
@@ -181,7 +177,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
-           var=reverse(var,3)
+           IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
            xtitle="X" & ytitle="Z"
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="Y"
@@ -256,7 +252,7 @@ PRO dns_var,d,name,snaps,swap,var,$
           ENDIF ELSE BEGIN
              zz=z
           ENDELSE
-          var=reverse(var,3)
+          IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="X"
              IF (sizevar(2) GT 1) THEN BEGIN
