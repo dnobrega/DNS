@@ -326,6 +326,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
            IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
            IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
            dns_2dplot, d,k,var_plot,dim, $
+                       nozbifrost=nozbifrost,$
                        xx=xx, yy=yy, zz=zz,$
                        xtitle=xtitle, ytitle=ytitle, title=title(m),$
                        xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
