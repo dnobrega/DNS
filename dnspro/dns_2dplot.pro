@@ -1,7 +1,9 @@
 
 
-PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
-                    origin,scale,ishift=ishift,jshift=jshift,$
+PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,
+                    origin,scale,$
+                    nozbifrost=nozbifrost,$
+                    ishift=ishift,jshift=jshift,$
                     xmin=xmin,xmax=xmax,$
                     ymin=ymin,ymax=ymax,$
                     zmin=zmin,zmax=zmax
@@ -30,13 +32,20 @@ PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
     ;------------------------------------------------------------------------------------------------    
     IF (strpos(dim,"z") EQ 1) THEN BEGIN
        ;Y is Z
-       IF (N_ELEMENTS(zmin) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,-zmin)) ELSE maxiy=nely-1
-       IF (N_ELEMENTS(zmax) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,-zmax)) ELSE miniy=0  
-       yy=yy(miniy:maxiy)
-       originy=min(-yy)
-       temp1=nely-maxiy & temp2=nely-miniy
-       miniy=temp1-1
-       maxiy=temp2-1
+       IF (N_ELEMENTS(nozbifrost) EQ 0) THEN BEGIN
+          IF (N_ELEMENTS(zmin) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,-zmin)) ELSE maxiy=nely-1
+          IF (N_ELEMENTS(zmax) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,-zmax)) ELSE miniy=0  
+          yy=yy(miniy:maxiy)
+          originy=min(-yy)
+          temp1=nely-maxiy & temp2=nely-miniy
+          miniy=temp1-1
+          maxiy=temp2-1
+       ENDIF ELSE BEGIN
+          IF (N_ELEMENTS(zmin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,zmin)) ELSE miniy=0
+          IF (N_ELEMENTS(zmax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,zmax)) ELSE maxiy=nely-1
+          yy=yy(miniy:maxiy)
+          originy=min(yy)
+       ENDELSE
     ENDIF ELSE BEGIN
        ;Y is Y
        IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,ymin)) ELSE miniy=0
@@ -170,6 +179,7 @@ PRO DNS_COLORBAR,lev2vel, $
 END
 
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
+                nozbifrost=nozbifrost,$
                 xx=xx, yy=yy, zz=zz,$
                 xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, title=title,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
@@ -196,7 +206,9 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
 
 
  dns_pre_2dplot,var_plot,xx,yy,zz,dim,$
-                origin,scale,ishift=ishift,jshift=jshift,$
+                origin,scale,$
+                ishift=ishift,jshift=jshift,$
+                nozbifrost=nozbifrost,$
                 xmin=xmin,xmax=xmax,$
                 ymin=ymin,ymax=ymax,$
                 zmin=zmin,zmax=zmax
