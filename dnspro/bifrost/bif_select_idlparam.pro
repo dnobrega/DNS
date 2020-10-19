@@ -77,13 +77,11 @@ PRO BIF_SELECT_IDLPARAM, idlparam, snaps
      FOR ii=0,val-1 DO BEGIN
         temp = strmid(g[ii],k0,strlen(g[ii])-k0)
         IF ISA(temp, /NUMBER) THEN BEGIN
-           snap_nr=fix(strmid(g[ii],k0,strlen(g[ii])-k0))
-           dum=file_search(idlparam+'_'+bif_string3(snap_nr)+'.snap',count=count)
-           print, snap_nr, count
-           IF (count EQ 0) THEN dum=file_search(idlparam+bif_string3(snap_nr)+'.snap',count=count)
-           IF (count EQ 1) THEN BEGIN
+           snap_nr=fix(temp)
+           dum=file_search(idlparam+'_'+bif_string3(snap_nr)+'.snap' , count=snapcount)
+           IF (snapcount EQ 0) THEN dum=file_search(idlparam+bif_string3(snap_nr)+'.snap',count=snapcount)
+           IF (snapcount EQ 1) THEN BEGIN
               snaps[j]=snap_nr
-              print, snaps[j]
               j=j+1
            ENDIF
         ENDIF
