@@ -1,5 +1,4 @@
 
-
 PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
                     origin,scale,$
                     nozbifrost=nozbifrost,$
@@ -184,19 +183,17 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 xshift=xshift, yshift=yshift, zshift=zshift, ishift=ishift, jshift=jshift,$
                 position=position,$
-                xcharsize=xcharsize, ycharsize=ycharsize,$
-                bar_name=bar_name, var_range=var_range, bar_log=bar_log,  $
-                bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
-                bar_orient=bar_orient, bar_charthick=bar_charthick, $
-                bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                bar_titchars=bar_titchars, bar_titchart=bar_titchart, $
-                bottom=bottom, top=top, smooth=smooth,$
-                isotropic=isotropic,$
-                ; Oplot Line
-                oline=oline,$
-                ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                ox=ox, oy=oy
+                bar_name=bar_name, var_range=var_range, bar_log=bar_log
 
+
+COMMON BIFPLT_COMMON,  $
+       bar_pos,bar_titlepos, $
+       bar_orient, bar_charthick, $
+       bar_thick, bar_charsize,$
+       bar_titchart,$
+       bar_titchars,$
+       bottom, top, $
+       isotropic, smooth
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
@@ -234,7 +231,6 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
               origin=origin, scale=scale, $
               title=title,  $
               xtitle=xtitle, ytitle=ytitle, $
-              xcharsize=xcharsize, ycharsize=ycharsize,$
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
               isotropic=isotropic,$
@@ -264,14 +260,6 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 postitle=bar_titlepos,$
                 tit_chart=bar_titchart,$ 
                 tit_chars=bar_titchars
-
-
-  IF (KEYWORD_SET(oline)) THEN BEGIN
-     DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
-               ox=ox, oy=oy, $
-               dim=dim, x=xx, y=yy, $
-               var_range=var_range
-  ENDIF
 
 
 END
