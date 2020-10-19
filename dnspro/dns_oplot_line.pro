@@ -18,8 +18,9 @@ PRO DNS_OPLOT_LINE, o_x=o_x, o_y=o_y, $
          IF (N_ELEMENTS(o_color) EQ 1) THEN o_color=o_color+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(o_thick) EQ 1) THEN o_thick=o_thick+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(o_linestyle) EQ 1) THEN o_linestyle=o_linestyle+fltarr(sz.n_elements/sz.n_dimensions)
+         IF (!y.type EQ 0) THEN yrange=!Y.crange ELSE yrange=10^(!Y.crange)
          FOR kk=0, sz.n_elements/sz.n_dimensions-1 DO BEGIN
-               oplot, o_x(kk)*[1,1], !Y.crange, $
+               oplot, o_x(kk)*[1,1], yrange, $
                       color=o_color(kk), line=o_linestyle(kk), thick=o_thick(kk)
          ENDFOR
       ENDIF
@@ -28,8 +29,9 @@ PRO DNS_OPLOT_LINE, o_x=o_x, o_y=o_y, $
          IF (N_ELEMENTS(o_color) EQ 1) THEN o_color=o_color+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(o_thick) EQ 1) THEN o_thick=o_thick+fltarr(sz.n_elements/sz.n_dimensions)
          IF (N_ELEMENTS(o_linestyle) EQ 1) THEN o_linestyle=o_linestyle+fltarr(sz.n_elements/sz.n_dimensions)
+         IF (!x.type EQ 0) THEN xrange=!X.crange ELSE xrange=10^(!X.crange)
          FOR kk=0, sz.n_elements/sz.n_dimensions-1 DO BEGIN
-               oplot, !X.crange, o_y(kk)*[1,1], $
+               oplot, xrange, o_y(kk)*[1,1], $
                       color=o_color(kk), line=o_linestyle(kk), thick=o_thick(kk)
          ENDFOR
       ENDIF
