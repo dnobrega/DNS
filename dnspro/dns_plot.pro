@@ -1,25 +1,26 @@
 
-
-
 PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
-              t0=t0,tf=tf,tt=tt,tstep=tstep,$     
-              keep_var=keep_var, svar=svar,$
-                   ;Plot options
+                   ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
                    charthick=charthick, charsize=charsize, $
                    thick=thick, ticklen=ticklen, $
                    xthick=xthick, ythick=ythick, $
-                   xcharsize=xcharsize, ycharsize=ycharsize, $
                    position=position, $
+                   isotropic=isotropic,$
+                   load=load, reverse_load=reverse_load, $
+                   ; Specific options for 1D plot
+                   linestyle=linestyle, $
+                   psym=psym, symsize=symsize, $
+                   ; Specific options for 2D plots
+                   smooth=smooth, $
+                   bottom=bottom, top=top, $
+                   ; Bar options for 2D plots
                    bar_pos=bar_pos, $
                    bar_titlepos=bar_titlepos,$
                    bar_titchart=bar_titchart,bar_titchars=bar_titchars,$
                    bar_orient=bar_orient, bar_charthick=bar_charthick, $
                    bar_thick=bar_thick, bar_charsize=bar_charsize,$
-                   load=load, reverse_load=reverse_load, $
-                   bottom=bottom, top=top, smooth=smooth,$
-                   isotropic=isotropic,$
                    ; Saving options
                    dns_confi=dns_confi, save_dns_confi=save_dns_confi,$
                    namefile=namefile,$                   
@@ -27,10 +28,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
                    ; Variable options
                    dim=dim,$
+                   swap=swap, units=units,$
                    nozbifrost=nozbifrost,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
-                   units=units,$
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
@@ -39,20 +40,30 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ixstep=ixstep, iystep=iystep, izstep=izstep,$
                    ixf=ixf,iyf=iyf,izf=izf,$
                    xshift=xshift, yshift=yshift,zshift=zshift,ishift=ishift, jshift=jshift,$
-                   var_info=var_info,$
                    ; Oplot options
-                   oline=oline, ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                   opsym=opsym, osymsize=osymsize,$
-                   ox=ox, oy=oy, $
+                   o_x=o_x, o_y=o_y, $
+                   o_linestyle=o_linestyle, o_thick=o_thick, $
+                   o_load=o_load, o_color=o_color, $
                    ; Contour options
                    c_var=c_var,$
-                   c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
+                   c_levels=c_levels,c_load=c_load,c_color=c_color,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
-                   c_charsize=c_charsize,c_charthick=c_charthick, $
-                   ; Lagrangian tracing oplot
-                   l_var=l_var, l_folder=l_folder, $
-                   l_color=l_color, l_load=l_load,$
-                   l_psym=l_psym, l_size=l_size
+                   c_charsize=c_charsize,c_charthick=c_charthick
+
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+;
+;                                COMMON
+;
+;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+COMMON BIFPLT_COMMON,  $
+       cb_bar_pos, cb_bar_titlepos, $
+       cb_bar_orient, cb_bar_charthick, $
+       cb_bar_thick, cb_bar_charsize,$
+       cb_bar_titchart,$
+       cb_bar_titchars,$
+       cb_bottom, cb_top, $
+       cb_isotropic, cb_smooth
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -62,18 +73,19 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
 ;---------------------------------------------------------------------------------
 ; Basic parameters
 ;---------------------------------------------------------------------------------
+
   br_select_idlparam,idlparam
-  IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN  
-     d=obj_new('br_data',idlparam)
-  ENDIF
+  d=obj_new('br_data',idlparam)
   br_getsnapind,idlparam,snaps
+
 ;---------------------------------------------------------------------------------
 ; Default values
 ;---------------------------------------------------------------------------------
-  IF (NOT (KEYWORD_SET(dns_confi)))    THEN dns_confi="dns_confi"
-  IF file_test(dns_confi+".sav") THEN RESTORE, dns_confi+".sav" ELSE BEGIN
-     dswap=0
-     dunits="solar"
+  IF (NOT (KEYWORD_SET(dns_confi)))  THEN dns_confi="dns_confi"
+  IF file_test(dns_confi+".sav")     THEN RESTORE, dns_confi+".sav" ELSE BEGIN
+
+     ; General plot options 
+     dnwin=0
      dxsize=600
      dysize=800
      dcharthick=2.0
@@ -83,6 +95,21 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      dxthick=2.0
      dythick=2.0
      dposition=[0.20, 0.10, 0.90, 0.78]
+     dload=39
+     dreverse_load=0
+     disotropic=0
+
+     ; Specific options for 1D plot 
+     dlinestyle=0
+     dpsym=0
+     dsymsize=1
+
+     ; Specific options for 2D plots  
+     dsmooth=0
+     dbottom=0
+     dtop=255
+
+     ; Bar options for 2D plots  
      dbar_pos =  fltarr(4)
      dbar_pos(0)=dposition(0)
      dbar_pos(1)=dposition(3)+0.08
@@ -95,18 +122,15 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      dbar_charsize=dcharsize
      dbar_titchart=dcharthick-0.5
      dbar_titchars=dcharsize
-     dload=39
-     dreverse_load=0
-     dbottom=0
-     dtop=255
-     disotropic=0
-     dsmooth=0
-     dnwin=0
-     dvar_info=1
+
+     ; Variable options
+     dswap=0
+     dunits="solar"
+
   ENDELSE
 
-  IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
-  IF (NOT (KEYWORD_SET(units)))        THEN units=dunits
+  ; General plot options 
+  IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
   IF (NOT (KEYWORD_SET(xsize)))        THEN xsize=dxsize
   IF (NOT (KEYWORD_SET(ysize)))        THEN ysize=dysize              
   IF (NOT (KEYWORD_SET(charthick)))    THEN charthick=dcharthick
@@ -122,26 +146,38 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      dbar_pos(2)=position(2)
      dbar_pos(3)=dbar_pos(1)+0.02
   ENDELSE
-  IF (NOT (KEYWORD_SET(bar_pos)))      THEN bar_pos=dbar_pos
-  IF (NOT (KEYWORD_SET(bar_titlepos))) THEN bar_titlepos=dbar_titlepos
-  IF (NOT (KEYWORD_SET(bar_orient)))   THEN bar_orient=dbar_orient
-  IF (NOT (KEYWORD_SET(bar_charthick)))THEN bar_charthick=dbar_charthick
-  IF (NOT (KEYWORD_SET(bar_thick)))    THEN bar_thick=dbar_thick
-  IF (NOT (KEYWORD_SET(bar_charsize))) THEN bar_charsize=dbar_charsize
-  IF (NOT (KEYWORD_SET(bar_titchart))) THEN bar_titchart=dbar_titchart
-  IF (NOT (KEYWORD_SET(bar_titchars))) THEN bar_titchars=dbar_titchars
   IF (N_ELEMENTS(load) EQ 0)           THEN load=dload
   IF (N_ELEMENTS(reverse_load) EQ 0)   THEN reverse_load=dreverse_load
-  IF (N_ELEMENTS(bottom) EQ 0)         THEN bottom=dbottom
-  IF (N_ELEMENTS(top) EQ 0)            THEN top=dtop
-  IF (N_ELEMENTS(isotropic) EQ 0)      THEN isotropic=0
-  IF (N_ELEMENTS(smooth) EQ 0)         THEN smooth=dsmooth
-  IF (NOT (KEYWORD_SET(nwin)))         THEN nwin=dnwin
-  IF (N_ELEMENTS(var_info) EQ 0)       THEN var_info=dvar_info
+  IF (N_ELEMENTS(isotropic) EQ 0)      THEN cb_isotropic=disotropic         ELSE cb_isotropic=isotropic
 
+  ; Specific options for 1D plots  
+  IF (N_ELEMENTS(linestyle) EQ 0)      THEN linestyle=dlinestyle
+  IF (N_ELEMENTS(psym) EQ 0)           THEN psym=dpsym
+  IF (N_ELEMENTS(symsize) EQ 0)        THEN symsize=dsymsize
+
+  ; Specific options for 2D plots
+  IF (N_ELEMENTS(bottom) EQ 0)         THEN cb_bottom=dbottom               ELSE cb_bottom=bottom
+  IF (N_ELEMENTS(top) EQ 0)            THEN cb_top=dtop                     ELSE cb_top=top
+  IF (N_ELEMENTS(smooth) EQ 0)         THEN cb_smooth=dsmooth               ELSE cb_smooth=smooth
+
+  ; Bar options for 2D plots 
+  IF (NOT (KEYWORD_SET(bar_pos)))      THEN cb_bar_pos=dbar_pos             ELSE cb_bar_pos = bar_pos
+  IF (NOT (KEYWORD_SET(bar_titlepos))) THEN cb_bar_titlepos=dbar_titlepos   ELSE cb_bar_titlepos=bar_titlepos
+  IF (NOT (KEYWORD_SET(bar_orient)))   THEN cb_bar_orient=dbar_orient       ELSE cb_bar_titlepos=bar_titlepos
+  IF (NOT (KEYWORD_SET(bar_charthick)))THEN cb_bar_charthick=dbar_charthick ELSE cb_bar_charthick=bar_charthick
+  IF (NOT (KEYWORD_SET(bar_thick)))    THEN cb_bar_thick=dbar_thick         ELSE cb_bar_thick=bar_thick 
+  IF (NOT (KEYWORD_SET(bar_charsize))) THEN cb_bar_charsize=dbar_charsize   ELSE cb_bar_charsize=bar_charsize
+  IF (NOT (KEYWORD_SET(bar_titchart))) THEN cb_bar_titchart=dbar_titchart   ELSE cb_bar_titchart=bar_titchart 
+  IF (NOT (KEYWORD_SET(bar_titchars))) THEN cb_bar_titchars=dbar_titchars   ELSE cb_bar_titchars=bar_titchars
+
+  ; Variable options
+  IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
+  IF (NOT (KEYWORD_SET(units)))        THEN units=dunits
+
+  ; Save default values in DNS_CONFI file
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
-     dswap=swap
-     dunits=units
+
+     ; General plot options
      dxsize=xsize
      dysize=ysize
      dcharthick=charthick
@@ -151,37 +187,61 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      dxthick=xthick
      dythick=ythick
      dposition=position
-     dbar_pos=bar_pos
-     dbar_titlepos=bar_titlepos
-     dbar_orient=bar_orient
-     dbar_charthick=bar_charthick
-     dbar_thick=bar_charthick
-     dbar_charsize=bar_charsize
-     dbar_titchart=bar_titchart
-     dbar_titchars=bar_titchars
      dload=load
      dreverse_load=reverse_load
-     dbottom=bottom
-     dtop=top
-     disotropic=isotropic
-     dsmooth=smooth
-     dnwin=nwin
-     dvar_info=var_info
-     save, dswap, dunits, $ 
+     disotropic=cb_isotropic
+
+     ; Specific options for 1D plots  
+     dlinestyle=linestyle
+     dpsym=psym
+     dsymsize=symsize
+
+     ; Specific options for 2D plots  
+     dbottom=cb_bottom
+     dtop=cb_top
+     dsmooth=cb_smooth
+
+     ; Bar options for 2D plots 
+     dbar_pos=cb_bar_pos
+     dbar_titlepos=cb_bar_titlepos
+     dbar_orient=cb_bar_orient
+     dbar_charthick=cb_bar_charthick
+     dbar_thick=cb_bar_charthick
+     dbar_charsize=cb_bar_charsize
+     dbar_titchart=cb_bar_titchart
+     dbar_titchars=cb_bar_titchars
+
+     ;  Variable options  
+     dswap=swap
+     dunits=units
+
+     ; Saving default values
+     save, $
+           ; Gen opt
            dxsize, dysize, $
            dcharthick, dcharsize, $
            dthick, dticklen, $
            dxthick, dythick, $
            dposition, $
+           dload, dreverse_load, $
+           dplt_isotropic, $
+           ; 1D
+           dlinestyle, $
+           dpsym, dsymsize, $
+           ; 2D
+           dbottom, dtop$
+           dplt_smooth, $
+           ; Bar 2D
            dbar_pos,dbar_titlepos, $
            dbar_orient, dbar_charthick, $
            dbar_thick, dbar_charsize,$
            dbar_titchart,$
            dbar_titchars,$
-           dload, dreverse_load, dbottom, dtop, $
-           disotropic,dsmooth,dnwin, $
+           ; Var opt  
+           dswap, dunits, $ 
            FILENAME=dns_confi+".sav"
   ENDIF
+
 
   IF (NOT (KEYWORD_SET(namefile)))     THEN namefile=name
 
@@ -190,44 +250,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
   IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/'+idlparam+'/' 
   file_mkdir,folder
 ;---------------------------------------------------------------------------------
-  IF ((N_ELEMENTS(t0) NE 0) OR (N_ELEMENTS(tf) NE 0) $
-      OR (N_ELEMENTS(tt) NE 0) OR (N_ELEMENTS(tstep) NE 0)) THEN BEGIN
-     SPAWN, "grep ' t =' "+idlparam+"_*.idl", idl_times
-     SPAWN, "grep ' dtsnap =' "+idlparam+"_*.idl", idl_dt
-     n_idl_times = n_elements(idl_times)
-     array_times = fltarr(n_idl_times)
-     array_dt = fltarr(n_idl_times)
-     FOR ii=0,n_idl_times-1 DO BEGIN
-        array_times[ii]=float((strsplit(idl_times[ii], "=", /EXTRACT))[1])
-        array_dt[ii]=float((strsplit(idl_dt[ii], "=", /EXTRACT))[1])
-     ENDFOR
-     ;If solar: time units are in minutes
-     IF (units EQ "solar") THEN t_units=100./60. ELSE t_units=1.0
-     idl_times=array_times*t_units
-     idl_times=idl_times(sort(idl_times))
-     idl_dt=array_dt*t_units
-     IF (n_idl_times NE n_elements(snaps)) THEN BEGIN
-        PRINT, "Number of .idl files different to the number of .snap files"
-        STOP
-     ENDIF ELSE BEGIN
-        IF (N_ELEMENTS(t0) NE 0) THEN BEGIN
-           temporary=MIN(abs(idl_times-t0),snap0)
-           snap0=FIX(snap0)+MIN(snaps)
-        ENDIF
-        IF (N_ELEMENTS(tf) NE 0) THEN BEGIN
-           temporary=MIN(abs(idl_times-tf),snapf)
-           snapf=FIX(snapf)+MIN(snaps)
-        ENDIF
-        IF (N_ELEMENTS(tt) NE 0) THEN BEGIN
-           temporary=MIN(abs(idl_times-tt),snapt)
-           snapt=FIX(snapt)+MIN(snaps)
-        ENDIF
-        IF (N_ELEMENTS(tstep) NE 0) THEN BEGIN
-           temporary=MIN(ROUND(tstep/idl_dt))
-           IF temporary EQ 0 THEN step=1 ELSE step=temporary
-        ENDIF
-     ENDELSE
-  ENDIF 
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
   IF NOT (KEYWORD_SET(step))  THEN step=1 
@@ -249,7 +271,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
      ENDIF
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  load, load
+  load, load, /SILENT
   IF (NOT KEYWORD_SET(multi)) THEN !P.multi=0
   !P.charthick=charthick
   !P.charsize=charsize
@@ -285,7 +307,6 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
   FOR k=snap0,snapf,step DO BEGIN
-     IF (N_ELEMENTS(svar) EQ 0) THEN BEGIN
         dns_var,d,name,k,swap,var,$
                 nozbifrost=nozbifrost,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
@@ -301,23 +322,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                 xshift=xshift, yshift=yshift, zshift=zshift, $
                 xtitle=xtitle, ytitle=ytitle, title=title,$
                 bar_log=bar_log, bar_title=bar_title,$
-                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
-                var_info=var_info
-        IF (KEYWORD_SET(keep_var)) THEN BEGIN
-           svar={d:d,var:var, $
-                 bar_title:bar_title,bar_range:var_range, bar_log:bar_log,$
-                 im0:im0, imf:imf, imstep:imstep,$
-                 dim:dim}
-        ENDIF
-     ENDIF ELSE BEGIN
-        d=svar.d
-        var=svar.var
-        IF (NOT KEYWORD_SET(var_title)) THEN bar_title=svar.bar_title ELSE bar_title=var_title
-        IF (NOT KEYWORD_SET(var_range)) THEN var_range=svar.bar_range 
-        IF (N_ELEMENTS(var_log) EQ 0)   THEN bar_log=svar.bar_log     ELSE bar_log=var_log
-        im0=svar.im0 & imf=svar.imf & imstep=svar.imstep
-        dim=svar.dim
-     ENDELSE
+                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
      IF STRLEN(dim) EQ 2 THEN BEGIN
      
@@ -332,24 +337,15 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                        xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                        ishift=ishift,jshift=jshift,$
                        position=position,$
-                       xcharsize=xcharsize, ycharsize=ycharsize,$
-                       bar_name=bar_title, var_range=var_range, bar_log=bar_log,  $
-                       bar_pos=bar_pos, bar_titlepos=bar_titlepos, $
-                       bar_orient=bar_orient, bar_charthick=bar_charthick, $
-                       bar_thick=bar_thick, bar_charsize=bar_charsize, $
-                       bar_titchart=bar_titchart, bar_titchars=bar_titchars,$
-                       bottom=bottom, top=top, smooth=smooth,$
-                       isotropic=isotropic,$
-                       oline=oline,$
-                       ostyle=ostyle, othick=othick, ocolor=ocolor,$
-                       ox=ox, oy=oy
-           
-           
-           IF (N_ELEMENTS(l_var) GT 0) THEN BEGIN
-              LAGRANGIAN_OPLOT, k, l_var, l_folder=l_folder, $
-                                l_color=l_color, l_load=l_load,$
-                                l_psym=l_psym,l_size=l_size
-           ENDIF        
+                       bar_name=bar_title, var_range=var_range, bar_log=bar_log
+
+
+           IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN
+              DNS_OPLOT_LINE, o_x=o_x, o_y=o_y, $
+                              o_linestyle=o_linestyle, o_thick=o_thick, o_color=o_color, $
+                              o_load=o_load
+           ENDIF
+
            
            IF (N_ELEMENTS(c_var) GT 0) THEN BEGIN
               DNS_CONTOUR, d, k, m, 0,$
@@ -419,13 +415,17 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                           xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                           ishift=ishift,$
                           position=position,$
-                          xcharsize=xcharsize, ycharsize=ycharsize,$
-                          var_range=var_range,  $
-                          isotropic=isotropic,$
-                          oline=oline,$
-                          ostyle=ostyle, othick=othick, ocolor=ocolor, $
-                          opsym=opsym, osymsize=osymsize, $
-                          ox=ox, oy=oy
+                          var_range=var_range, $
+                          isotropic=isotropic, $
+                          linestyle=linestyle, $
+                          psym=psym, symsize=symsize
+
+              IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN
+                 DNS_OPLOT_LINE, o_x=o_x, o_y=o_y, $
+                                 o_linestyle=o_linestyle, o_thick=o_thick, o_color=o_color, $
+                                 o_load=o_load
+              ENDIF
+              
               wait, 0.0001
               IF (KEYWORD_SET(png)) THEN BEGIN
                  png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title_1d)," ", "_")+'.png'
