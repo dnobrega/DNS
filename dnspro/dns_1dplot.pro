@@ -1,3 +1,4 @@
+
 PRO dns_1dplot, d,k,var_plot,dim, $
                 nozbifrost=nozbifrost,$
                 bar_log=bar_log,$
@@ -6,13 +7,10 @@ PRO dns_1dplot, d,k,var_plot,dim, $
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 ishift=ishift,$
                 position=position,$
-                xcharsize=xcharsize, ycharsize=ycharsize,$
                 var_range=var_range,  $
-                isotropic=isotropic,$
-                oline=oline,$
-                ostyle=ostyle, othick=othick, ocolor=ocolor, $
-                opsym=opsym, osymsize=osymsize,$
-                ox=ox, oy=oy
+                isotropic=isotropic, $
+                linestyle=linestyle, $
+                psym=psym, symsize=symsize
 
 
   nelx=n_elements(xx)
@@ -54,19 +52,11 @@ PRO dns_1dplot, d,k,var_plot,dim, $
 
   PLOT, xx_plot, var_plot,$
         xtitle=xtitle, ytitle=ytitle, title=title,$
-        /xs, /ys, psym=opsym, symsize=osymsize,$
+        /xs, /ys, $
         position=position,$
-        xcharsize=xcharsize, ycharsize=ycharsize,$
         yrange=var_range, ylog=bar_log, $
-        isotropic=isotropic
-
-
-  IF (KEYWORD_SET(oline)) THEN BEGIN
-     DNS_OLINE,ostyle=ostyle, othick=othick, ocolor=ocolor,$
-               ox=ox, oy=oy, $
-               dim=dim, x=xx, y=yy, $
-               var_range=var_range
-  ENDIF
-
+        isotropic=isotropic, $
+        linestyle=linestyle, $
+        psym=psym, symsize=symsize
 
 END
