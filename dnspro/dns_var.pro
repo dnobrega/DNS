@@ -20,8 +20,7 @@ PRO dns_var,d,name,snaps,swap,var,$
             xtitle=xtitle, ytitle=ytitle, $
             title=title, $
             bar_log=bar_log, bar_title=bar_title, $
-            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
-            var_info=var_info
+            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
 
 ;--------------------------------------------------------------------------------- 
@@ -302,16 +301,6 @@ PRO dns_var,d,name,snaps,swap,var,$
     title={title1:coord[0]+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+units_coord, $
            title2:coord[1]+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+units_coord+ $
            title}
- ENDIF
-
-;---------------------------------------------------------------------------------  
-; PRINTING INFORMATION
-;---------------------------------------------------------------------------------  
- IF (var_info) THEN BEGIN
-    var_max = MAX(var, min=var_min, /NAN)
-    PRINT, "----------------------------------------------------"
-    PRINT, " ",name, snaps, var_min, var_max
-    PRINT, "----------------------------------------------------"
  ENDIF
 
 END
