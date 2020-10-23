@@ -1,5 +1,5 @@
 
-PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -216,7 +216,7 @@ COMMON BIFPLT_COMMON,  $
      dunits=units
 
      ; Saving default values
-     save, $
+     save, dnwin, $
            ; Gen opt
            dxsize, dysize, $
            dcharthick, dcharsize, $
@@ -224,14 +224,14 @@ COMMON BIFPLT_COMMON,  $
            dxthick, dythick, $
            dposition, $
            dload, dreverse_load, $
-           dplt_isotropic, $
+           disotropic, $
            ; 1D
            dlinestyle, $
            dpsym, dsymsize, $
            ; 2D
-           dbottom, dtop$
-           dplt_smooth, $
-           ; Bar 2D
+           dbottom, dtop, $
+           dsmooth, $
+           ; Bar 2d
            dbar_pos,dbar_titlepos, $
            dbar_orient, dbar_charthick, $
            dbar_thick, dbar_charsize,$
