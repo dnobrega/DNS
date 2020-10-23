@@ -358,7 +358,7 @@ COMMON BIFPLT_COMMON,  $
                            ishift=ishift, jshift=jshift,$
                            ixt=ixt,iyt=iyt,izt=izt,$
                            c_load=c_load,$
-                           c_colors=c_colors,$
+                           c_color=c_color,$
                            c_thick=c_thick, $
                            c_linestyle=c_linestyle, $
                            c_labels=c_labels, $
