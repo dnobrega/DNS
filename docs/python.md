@@ -1,6 +1,7 @@
 # Python
 
-Here you can find some usefull links to install Anaconda and some useful Python libraries.
+Here you can find some useful links to install Anaconda and interesting Python libraries as well as
+specific tutorials.
 
 ## Anaconda
 
