@@ -12,6 +12,7 @@ nav:
   - SSWIDL: sswidl.md
   - IDL: idl.md
   - DNS: dns.md
+  - PYTHON: python.md
   - SST: SST.md
   - IRIS: IRIS.md
   - ALMA: ALMA.md
