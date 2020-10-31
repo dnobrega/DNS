@@ -2,10 +2,10 @@ PRO DNS_OPLOT_LINE, o_x=o_x, o_y=o_y, $
                     o_linestyle=o_linestyle, o_thick=o_thick, $
                     o_load=o_load, o_color=o_color
 
-   IF (NOT KEYWORD_SET(o_load))    THEN o_load=39
-   IF (N_ELEMENTS(o_color) EQ 0)   THEN o_color=255
-   IF (NOT KEYWORD_SET(o_thick))   THEN o_thick=3
-   IF (NOT KEYWORD_SET(o_linestyle))   THEN o_linestyle=2
+   IF (N_ELEMENTS(o_load) EQ 0)       THEN o_load=39
+   IF (N_ELEMENTS(o_color) EQ 0)      THEN o_color=255
+   IF (NOT KEYWORD_SET(o_thick))      THEN o_thick=3
+   IF (N_ELEMENTS(o_linestyle) EQ 0)  THEN o_linestyle=2
 
    tvlct, rgb, /get
    LOAD, o_load, /SILENT
