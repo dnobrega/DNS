@@ -21,13 +21,8 @@ nav:
   - ABOUT: about.md
 
 theme:
-  name: 'material'
-  palette:
-    primary: 'Teal'
-    accent: 'Teal'
+  name: 'readthedocs'
   favicon: 'images/dns.png'
-#  feature:
-#    tabs: true
 
 # Copyright
 copyright: 'Copyright &copy; 2019 - 2020 Daniel Nobrega Siverio'
