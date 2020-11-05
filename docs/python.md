@@ -24,6 +24,17 @@ export PATH=$ANACONDA_DIR":"$PATH
 
 Python library to analyze IRIS Level 2 data: [IRISpy](https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html)
 
+It is probable that to run IRISSpy for the first ime, the only library is missing to install is _pyqtgraph_, so type in the terminal
+```bash
+conda install pyqtgraph
+```
+If everything is properly installed, you should be able to open a python session and type
+```python
+import iris_lmsalpy as iris
+```
+without any problem.
+
+
 ## AIApy
 
 AIApy is a Python package for analyzing data from the Atmospheric Imaging Assembly (AIA) instrument onboard the Solar Dynamics Observatory spacecraft. 
