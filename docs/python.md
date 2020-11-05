@@ -8,6 +8,18 @@ specific tutorials.
 Anaconda is a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages.
 See the instructions for the installation here: [Anaconda](https://docs.anaconda.com/anaconda/install/)
 
+After the installation, typing in the terminal
+```bash
+python --version
+```
+you should get the latest version of Python from Anaconda (3.8.3 at the moment of writing this). If you get an older version, then modify your PATH
+to include Anaconda. For Mac under zsh, modify the _.zlogin_ file in your home directory as follows:
+```bash
+export ANACONDA_DIR="/Users/username/opt/anaconda3/bin"
+export PATH=$ANACONDA_DIR":"$PATH
+```
+
+
 ## IRISpy
 
 Python library to analyze IRIS Level 2 data: [IRISpy](https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html)
