@@ -8,17 +8,17 @@ edit_uri: ""
 
 nav:
   - INTRODUCTION: index.md
+  - PYTHON: python.md  
   - BIFROST: bifrost.md
   - SSWIDL: sswidl.md
   - IDL: idl.md
   - DNS: dns.md
-  - PYTHON: python.md
   - SST: SST.md
   - IRIS: IRIS.md
-  - ALMA: ALMA.md
   - SDO: SDO.md
+  - ALMA: ALMA.md  
   - UNIX: unix.md
-  - ABOUT: about.md
+  - ABOUT ME: about.md
 
 theme:
   name: 'readthedocs'
