@@ -4,7 +4,7 @@ SolarSoft is a set of integrated software libraries, data bases, and system util
 
 
 ## Installation
-SSWIDL can be only used in csh/tcshs terminals. To install it, follow these instructions: [SSWIDL_INSTALL](http://www.lmsal.com/solarsoft/sswdoc/solarsoft/ssw_install_howto.html).  
+SSWIDL can be only used in csh/tcsh terminals. To install it, follow these instructions: [SSWIDL_INSTALL](http://www.lmsal.com/solarsoft/sswdoc/solarsoft/ssw_install_howto.html).  
 Choose, e.g., the following packages to install: _chianti ontology aia iris hmi_
 
 ## Terminal configuration
