@@ -1,10 +1,19 @@
-# Daniel Nóbrega-Siverio 
+# DNS
+
+This is the documentation to the github repository **DNS** developed by Daniel Nóbrega Siverio. 
+The aim of this repository and documentation is to providing guidance to people interested in the installation and configuration of 
+different software like the Bifrost code, IDL packages, among others.
+
+
 
 ## About me
 
-Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) since the 1st of Agust 2018.
 
-## Papers
+I am a Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) since the 1st of Agust 2018.
+
+
+
+### Papers
 
 12 papers in refereed journals. 164 citations. H-index: 7. Updated by 2020-11-06 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc&p=0).
 
@@ -44,7 +53,7 @@ Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) since the 1
 - _The Cool Surge Following Flux Emergence in a Radiation-MHD Experiment._  
 [Nóbrega-Siverio et al. (2016)](http://adsabs.harvard.edu/abs/2016ApJ...822...18N)
 
-## Invited talks
+### Invited talks
 
 1. _Surges: a fundamental piece in the solar atmosphere puzzle._
 XIV.0 Reunión científica de la SEA 2020-07 (online). 
@@ -52,7 +61,7 @@ XIV.0 Reunión científica de la SEA 2020-07 (online).
 2. _Modeling UV bursts._ 
 10th IRIS meeting. 4-8 November 2019-11 (Bangalore, India).
 
-## Education
+### Education
 
 * 2013 – 2018 : Doctorate.  
 > 
