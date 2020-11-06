@@ -45,25 +45,16 @@ git clone https://username@github.com/ITA-Solar/Bifrost.git
 
 replacing "username" with your github username.
 
-## Terminal configuration (zsh)
+## Terminal configuration
 
-It is useful to create (or modify) your _.zlogin_ file in your home directory to add the following system variable.
-In case of working with tcsh:
+It can be useful to create (or modify) your _.login_ (in csh/tcsh) or _.zlogin_ (in zsh) file in your home directory to add a Bifrost system variable.
 
+In case of working with zsh:  
 ```bash
 export BIFROST="/folder/Bifrost"
 ```
-where _folder_ is the location where you have cloned the Bifrost repository.
-
-You can also add an alias so you can go the Bifrost folder easily.
-In case	of working with	tcsh:
-
-``` bash 
-alias bifrost="cd /folder/Bifrost/"
+In case of tcsh:  
+```bash
+setenv BIFROST "/folder/Bifrost"
 ```
-where _folder_ is again the location where you have cloned the Bifrost repository.
-
-
-## Bifrost documentation
-
-For information about how to run Bifrost, check the documentation in [Bifrost](https://github.com/ITA-Solar/Bifrost)
+where _folder_ is the location where you have cloned the Bifrost repository. 
