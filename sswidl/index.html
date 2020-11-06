@@ -62,6 +62,10 @@
                     </li>
                 </ul>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../python/">PYTHON</a>
+                    </li>
+                </ul>
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../bifrost/">BIFROST</a>
                     </li>
                 </ul>
@@ -84,10 +88,6 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../python/">PYTHON</a>
-                    </li>
-                </ul>
-                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../SST/">SST</a>
                     </li>
                 </ul>
@@ -96,11 +96,11 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../ALMA/">ALMA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../SDO/">SDO</a>
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../SDO/">SDO</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../ALMA/">ALMA</a>
                     </li>
                 </ul>
                 <ul>
@@ -108,7 +108,7 @@
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../about/">ABOUT</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../about/">ABOUT ME</a>
                     </li>
                 </ul>
       </div>
@@ -144,11 +144,12 @@
             <div class="section">
               
                 <h1 id="sswidl">SSWIDL<a class="headerlink" href="#sswidl" title="Permanent link">&para;</a></h1>
+<p>SolarSoft is a set of integrated software libraries, data bases, and system utilities which provide a common programming and data analysis environment for Solar Physics. It is primarily an IDL based system, although some instrument teams integrate executables written in other languages. </p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Install Solar Soft IDL (SSWIDL) following those instructions <a href="http://www.lmsal.com/solarsoft/sswdoc/solarsoft/ssw_install_howto.html">SSWIDL_INSTALL</a>.<br />
-Choose the following packages: <em>chianti ontology aia iris hmi</em></p>
+<p>SSWIDL can be only used in csh/tcshs terminals. To install it, follow these instructions: <a href="http://www.lmsal.com/solarsoft/sswdoc/solarsoft/ssw_install_howto.html">SSWIDL_INSTALL</a>.<br />
+Choose, e.g., the following packages to install: <em>chianti ontology aia iris hmi</em></p>
 <h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
-<p>Once installed, configurate your terminal to use SSWIDL.
+<p>Once installed, configurate your csh/tcsh terminal to use SSWIDL.
 In your home directory, in the .login file you need to define 
 the system variable <code>SSW</code> as the location of your
 SSW installation, e.g.: </p>
@@ -159,7 +160,7 @@ SSW installation, e.g.: </p>
 <div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>SSW_INSTR <span class="s2">&quot;chianti ontology aia iris hmi&quot;</span>
 </code></pre></div>
 
-<p>Finally, add the following line in your .log file</p>
+<p>Finally, add the following line in your .login file:</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">source</span> <span class="nv">$SSW</span>/gen/setup/setup.ssw /quiet
 </code></pre></div>
               
