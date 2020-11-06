@@ -8,13 +8,13 @@ Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) since the 1
 
 12 papers in refereed journals. 164 citations. H-index: 7. Updated by 2020-11-06 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc&p=0).
 
-- _High-resolution observations of the solar photosphere, chromosphere, and transition region. A database of coordinated IRIS and SST observations_
+- _High-resolution observations of the solar photosphere, chromosphere, and transition region. A database of coordinated IRIS and SST observations._  
 [Rouppe van der Voort et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A.146R/abstract)
 
-- _Case study of multi-temperature coronal jets for emerging flux MHD models._
+- _Case study of multi-temperature coronal jets for emerging flux MHD models._  
 [Reetika et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...639A..22J/abstract)
 
-- _Ambipolar diffusion in the Bifrost code._
+- _Ambipolar diffusion in the Bifrost code._  
 [Nóbrega-Siverio et al. (2020b)](https://ui.adsabs.harvard.edu/abs/2020A%26A...638A..79N/abstract)
 
 - _Ion─neutral Interactions and Nonequilibrium Ionization in the Solar Chromosphere._  
