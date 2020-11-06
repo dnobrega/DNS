@@ -1,16 +1,7 @@
-# DNS
-
-This is the documentation to the github repository **DNS** developed by Daniel Nóbrega Siverio. 
-The aim of this repository and documentation is to providing guidance to people interested in the installation and configuration of 
-different software like the Bifrost code, IDL packages, among others.
-
-
-
-## About me
+# About me
 
 
 I am a Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) since the 1st of Agust 2018.
-
 
 
 ### Papers
