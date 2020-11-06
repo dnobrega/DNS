@@ -1,7 +1,6 @@
 # Python
 
-Here you can find some useful links to install Anaconda and interesting Python libraries as well as
-specific tutorials.
+Python is an interpreted, high-level and general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python's design philosophy emphasizes code readability with its notable use of significant whitespace. Its language constructs and object-oriented approach aim to help programmers write clear, logical code for small and large-scale projects. In the following, you can find some useful links to install Anaconda and interesting Python libraries as well as specific tutorials.
 
 ## Anaconda
 
@@ -47,7 +46,8 @@ SunPy is an open-source Python library for Solar Physics data analysis and visua
 
 ## scikit-learn 
 
-Machine learning library in Python: [scikit-learn](https://scikit-learn.org/stable/install.html)
+Scikit-learn (formerly scikits.learn and also known as sklearn) is a free software machine learning library for the Python programming language.[2] It features various classification, regression and clustering algorithms including support vector machines, random forests, gradient boosting, k-means and DBSCAN, and is designed to interoperate with the Python numerical and scientific libraries NumPy and SciPy: [scikit-learn](https://scikit-learn.org/stable/install.html)
+
 
 ## SciPy meeting
 
