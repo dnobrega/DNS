@@ -70,9 +70,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#getting-bifrost">Getting Bifrost</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#terminal-configuration-zsh">Terminal configuration (zsh)</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#bifrost-documentation">Bifrost documentation</a>
+    <li class="toctree-l2"><a class="reference internal" href="#terminal-configuration">Terminal configuration</a>
     </li>
     </ul>
                     </li>
@@ -178,21 +176,17 @@ git config --global user.email username@example.com
 </code></pre></div>
 
 <p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration-zsh">Terminal configuration (zsh)<a class="headerlink" href="#terminal-configuration-zsh" title="Permanent link">&para;</a></h2>
-<p>It is useful to create (or modify) your <em>.zlogin</em> file in your home directory to add the following system variable.
-In case of working with tcsh:</p>
+<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
+<p>It can be useful to create (or modify) your <em>.login</em> (in csh/tcsh) or <em>.zlogin</em> (in zsh) file in your home directory to add a Bifrost system variable.</p>
+<p>In case of working with zsh:  </p>
 <div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">BIFROST</span><span class="o">=</span><span class="s2">&quot;/folder/Bifrost&quot;</span>
 </code></pre></div>
 
-<p>where <em>folder</em> is the location where you have cloned the Bifrost repository.</p>
-<p>You can also add an alias so you can go the Bifrost folder easily.
-In case of working with tcsh:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">alias</span> <span class="nv">bifrost</span><span class="o">=</span><span class="s2">&quot;cd /folder/Bifrost/&quot;</span>
+<p>In case of tcsh:  </p>
+<div class="codehilite"><pre><span></span><code>setenv BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
 </code></pre></div>
 
-<p>where <em>folder</em> is again the location where you have cloned the Bifrost repository.</p>
-<h2 id="bifrost-documentation">Bifrost documentation<a class="headerlink" href="#bifrost-documentation" title="Permanent link">&para;</a></h2>
-<p>For information about how to run Bifrost, check the documentation in <a href="https://github.com/ITA-Solar/Bifrost">Bifrost</a></p>
+<p>where <em>folder</em> is the location where you have cloned the Bifrost repository. </p>
               
             </div>
           </div>
