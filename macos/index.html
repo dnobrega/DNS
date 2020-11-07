@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="canonical" href="https://dnobrega.github.io/DNS/IRIS/">
+  <link rel="canonical" href="https://dnobrega.github.io/DNS/macos/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>IRIS - DNS documentation</title>
+  <title>MAC OS - DNS documentation</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "IRIS";
-    var mkdocs_page_input_path = "IRIS.md";
-    var mkdocs_page_url = "/DNS/IRIS/";
+    var mkdocs_page_name = "MAC OS";
+    var mkdocs_page_input_path = "macos.md";
+    var mkdocs_page_url = "/DNS/macos/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -61,8 +61,20 @@
                     <li class="toctree-l1"><a class="reference internal" href="..">INTRODUCTION</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../macos/">MAC OS</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">MAC OS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#xcode">Xcode</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#oh-my-zsh">Oh my zsh</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#emacs">Emacs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#homebrew">Homebrew</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mpich">MPICH</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
                 <ul>
@@ -89,14 +101,8 @@
                     <li class="toctree-l1"><a class="reference internal" href="../SST/">SST</a>
                     </li>
                 </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">IRIS</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#analyzing-iris-data">Analyzing IRIS data</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#creating-lvl3-data">Creating LVL3 data</a>
-    </li>
-    </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../IRIS/">IRIS</a>
                     </li>
                 </ul>
                 <ul>
@@ -136,7 +142,7 @@
     
       
     
-    <li>IRIS</li>
+    <li>MAC OS</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -147,41 +153,31 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="iris">IRIS<a class="headerlink" href="#iris" title="Permanent link">&para;</a></h1>
-<ul>
-<li>IRIS home webpage: <a href="https://iris.lmsal.com/">IRIS</a></li>
-<li>IRIS Science Highlights: <a href="http://iris.lmsal.com/science_highlights/">IRIS Higlights</a></li>
-<li>IRIS Event Search: <a href="https://iris.lmsal.com/search/">IRIS Search</a></li>
-<li>IRIS Event Search + Other Telescopes/Observations: <a href="http://www.lmsal.com/heksearch/">HEK Search</a></li>
-</ul>
-<h2 id="analyzing-iris-data">Analyzing IRIS data<a class="headerlink" href="#analyzing-iris-data" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Data Analysis Tutorials by Tiago Pereira: <a href="https://folk.uio.no/tiago/iris9/exercises/index.html">Data Analysis Tutorials</a></li>
-<li>IRIS2: <a href="https://iris.lmsal.com/iris2/">IRIS2</a></li>
-<li>A quick-start guide to work with IRIS Level2 data in Python: <a href="https://iris.lmsal.com/itn45/">IRIS_LMSALPY</a></li>
-</ul>
-<h2 id="creating-lvl3-data">Creating LVL3 data<a class="headerlink" href="#creating-lvl3-data" title="Permanent link">&para;</a></h2>
-<p>These are the steps to create LVL3 data to analyze, for instance, IRIS+SDO/AIA data.</p>
-<ul>
-<li>Download IRIS raster data + SDO data in the same folder.</li>
-<li>Open a SSWIDL session in that folder</li>
-<li>Write </li>
-</ul>
-<div class="codehilite"><pre><span></span><code>iris_xfiles
+                <h1 id="mac-os">Mac OS<a class="headerlink" href="#mac-os" title="Permanent link">&para;</a></h1>
+<p>This list contains useful software you should install when usinig a Mac for the first time.</p>
+<h2 id="xcode">Xcode<a class="headerlink" href="#xcode" title="Permanent link">&para;</a></h2>
+<p>Xcode is an integrated development environment for macOS containing a suite of software development tools developed by Apple. You can download and install it from the Apple store. You can also check the following link:<br />
+<a href="https://developer.apple.com/xcode/">Xcode</a>.</p>
+<h2 id="oh-my-zsh">Oh my zsh<a class="headerlink" href="#oh-my-zsh" title="Permanent link">&para;</a></h2>
+<p>A delightful community-driven (with 1700+ contributors) framework for managing your zsh configuration. 
+Includes 200+ optional plugins (rails, git, OSX, hub, capistrano, brew, ant, php, python, etc), over 140 
+themes to spice up your morning, and an auto-update tool so that makes it easy to keep up with the latest updates from the community:<br />
+<a href="https://github.com/ohmyzsh/ohmyzsh">ohmyzsh</a></p>
+<h2 id="emacs">Emacs<a class="headerlink" href="#emacs" title="Permanent link">&para;</a></h2>
+<p>Emacs is the extensible, customizable, self-documenting real-time display editor. Download the .dmg file from here:<br />
+<a href="https://emacsformacosx.com/">Emacs</a></p>
+<p>After installing Emacs, it is useful to define a new alias. In case of using zsh, modify your <em>.zshrc</em> file to include</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">alias</span> <span class="nv">emacs</span><span class="o">=</span><span class="s2">&quot;emacs -nw&quot;</span>
 </code></pre></div>
 
-<p>and choose the folder with the data, choose one of the .fits and then create LVL3. </p>
-<ul>
-<li>After that, we make a list with the name of the IRIS and SDO files:</li>
-</ul>
-<div class="codehilite"><pre><span></span><code>f<span class="o">=</span>iris_files()
-</code></pre></div>
-
-<ul>
-<li>Finally,</li>
-</ul>
-<div class="codehilite"><pre><span></span><code>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
-</code></pre></div>
+<p>This will let you open any file in the terminal and not in a new extra annoying and time-consuming window.</p>
+<h2 id="homebrew">Homebrew<a class="headerlink" href="#homebrew" title="Permanent link">&para;</a></h2>
+<p>Homebrew is the Missing Package Manager for macOS: <br />
+<a href="https://brew.sh/">Homebrew</a></p>
+<h2 id="mpich">MPICH<a class="headerlink" href="#mpich" title="Permanent link">&para;</a></h2>
+<p>MPICH is a high performance and widely portable implementation of the Message Passing Interface (MPI) standard. You can install it
+through homebrew following the instructions here:<br />
+<a href="https://formulae.brew.sh/formula/mpich">MPICH</a></p>
               
             </div>
           </div>
@@ -189,10 +185,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../SDO/" class="btn btn-neutral float-right" title="SDO">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../python/" class="btn btn-neutral float-right" title="PYTHON">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../SST/" class="btn btn-neutral" title="SST"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral" title="INTRODUCTION"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -220,10 +216,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../SST/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../SDO/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../python/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
