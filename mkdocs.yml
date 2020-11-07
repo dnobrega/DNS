@@ -8,6 +8,7 @@ edit_uri: ""
 
 nav:
   - INTRODUCTION: index.md
+  - MAC OS: macos.md
   - PYTHON: python.md  
   - BIFROST: bifrost.md
   - SSWIDL: sswidl.md
