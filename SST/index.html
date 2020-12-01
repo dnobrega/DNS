@@ -93,6 +93,14 @@
     <li class="toctree-l2"><a class="reference internal" href="#main-links">Main links</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#quicklook-movies-and-images">Quicklook movies and images</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#script-to-combine-chromis-quicklook-movies-and-images">Script to combine CHROMIS quicklook movies and images:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#script-to-combine-crisp-quicklook-movies-and-images">Script to combine CRISP quicklook movies and images:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#script-to-see-in-the-terminal-a-list-of-dates-with-quicklook-movies-available">Script to see in the terminal a list of dates with quicklook movies available:</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#extracting-iris-saa-times-for-the-sst-log">Extracting IRIS SAA times for the SST log</a>
     </li>
@@ -170,18 +178,15 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 <li>SST Data acquisitions: <a href="https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions">Data acquisitions</a></li>
 </ul>
 <h2 id="quicklook-movies-and-images">Quicklook movies and images<a class="headerlink" href="#quicklook-movies-and-images" title="Permanent link">&para;</a></h2>
-<ul>
-<li>
 <p>ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
 We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/</code> which will then appear under http://tsih3.uio.no/lapalma/
-. For example, the 14-Jun quicklook movies from the LMSAL campaign are now under http://tsih3.uio.no/lapalma/2020/2020-06-14/
-which are linked from the Oslo SST wiki: https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020</p>
-</li>
-<li>
-<p>Script to combine CHROMIS quicklook movies and images:</p>
-</li>
-</ul>
-<div class="codehilite"><pre><span></span><code><span class="nv">quickfile1</span><span class="o">=</span>4861_+0
+- <em>For example, the 14-Jun quicklook movies from the LMSAL campaign are now under</em>  <br />
+ http://tsih3.uio.no/lapalma/2020/2020-06-14/
+<em>which are linked from the Oslo SST wiki:</em> 
+ <a href="https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020">https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020</a></p>
+<h4 id="script-to-combine-chromis-quicklook-movies-and-images">Script to combine CHROMIS quicklook movies and images:<a class="headerlink" href="#script-to-combine-chromis-quicklook-movies-and-images" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">quickfile1</span><span class="o">=</span>4861_+0
 <span class="nv">quickfile2</span><span class="o">=</span>-1371
 <span class="nv">image_format</span><span class="o">=</span>.jpg
 <span class="nv">movie_format</span><span class="o">=</span>.mov
@@ -208,10 +213,9 @@ which are linked from the Oslo SST wiki: https://wiki.uio.no/mn/astro/lapalma/in
 <span class="k">done</span>
 </code></pre></div>
 
-<ul>
-<li>Script to combine CRISP quicklook movies and images:</li>
-</ul>
-<div class="codehilite"><pre><span></span><code><span class="nv">quickfile1</span><span class="o">=</span>6563_+0
+<h4 id="script-to-combine-crisp-quicklook-movies-and-images">Script to combine CRISP quicklook movies and images:<a class="headerlink" href="#script-to-combine-crisp-quicklook-movies-and-images" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">quickfile1</span><span class="o">=</span>6563_+0
 <span class="nv">quickfile2</span><span class="o">=</span>8542_+0
 <span class="nv">quickfile3</span><span class="o">=</span>-1680
 <span class="nv">image_format</span><span class="o">=</span>.jpg
@@ -233,6 +237,25 @@ which are linked from the Oslo SST wiki: https://wiki.uio.no/mn/astro/lapalma/in
               *<span class="nv">$quickfile3</span>*<span class="nv">$movie_format</span>      <span class="se">\</span>
               -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$movie</span> -hide_banner    
     <span class="nb">cd</span> ..       
+<span class="k">done</span>
+</code></pre></div>
+
+<h4 id="script-to-see-in-the-terminal-a-list-of-dates-with-quicklook-movies-available">Script to see in the terminal a list of dates with quicklook movies available:<a class="headerlink" href="#script-to-see-in-the-terminal-a-list-of-dates-with-quicklook-movies-available" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                    </span>
+<span class="k">for</span> year in <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/ <span class="p">|</span>
+                  grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                  sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                  sed <span class="s1">&#39;s/&quot;.*//&#39;</span>
+             <span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="nv">$year</span>
+    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+    <span class="k">for</span> date in <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/<span class="nv">$year</span> <span class="p">|</span>
+                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+        <span class="nb">echo</span> <span class="nv">$date</span>
+    <span class="k">done</span>
 <span class="k">done</span>
 </code></pre></div>
 
