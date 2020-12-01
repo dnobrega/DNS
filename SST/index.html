@@ -100,6 +100,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#script-to-see-in-the-terminal-a-list-of-dates-with-quicklook-movies-available">Script to see in the terminal a list of dates with quicklook movies available:</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#script-to-download-quicklook-movies-by-date">Script to download quicklook movies by date:</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#extracting-iris-saa-times-for-the-sst-log">Extracting IRIS SAA times for the SST log</a>
@@ -257,6 +259,50 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
         <span class="nb">echo</span> <span class="nv">$date</span>
     <span class="k">done</span>
 <span class="k">done</span>
+</code></pre></div>
+
+<h4 id="script-to-download-quicklook-movies-by-date">Script to download quicklook movies by date:<a class="headerlink" href="#script-to-download-quicklook-movies-by-date" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                                                   </span>
+<span class="nv">web</span><span class="o">=</span><span class="s2">&quot;http://tsih3.uio.no/lapalma/&quot;</span>
+<span class="nv">input</span><span class="o">=</span><span class="nv">$1</span>
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web</span>
+    <span class="nb">read</span> -p <span class="s2">&quot;Do you want to download all the available movies from &quot;</span><span class="nv">$folder</span><span class="s2">&quot; [y/n]: &quot;</span> yn
+    <span class="k">case</span> <span class="nv">$yn</span> in
+        <span class="o">[</span>Yy<span class="o">]</span>* <span class="o">)</span> wget -c -r -l <span class="m">3</span> --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="p">;;</span>
+        <span class="o">[</span>Nn<span class="o">]</span>* <span class="o">)</span> break<span class="p">;;</span>
+    <span class="k">esac</span>
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">4</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$input</span><span class="s2">&quot;/&quot;</span>
+    wget -c -r -l <span class="m">2</span> --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">7</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
+    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span>
+    <span class="nb">echo</span> <span class="nv">$folder</span>
+    <span class="nb">echo</span>  <span class="si">${</span><span class="nv">input</span><span class="si">}</span>*
+    <span class="k">for</span> date in <span class="k">$(</span>curl -s <span class="nv">$folder</span> <span class="p">|</span>
+                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$date</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span>* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="nb">echo</span> <span class="nv">$date</span>
+            wget -c -r -l <span class="m">2</span> --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="s2">&quot;/&quot;</span><span class="nv">$date</span>
+        <span class="k">fi</span>
+    <span class="k">done</span>
+<span class="k">fi</span>
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">10</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
+    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$input</span><span class="s2">&quot;/&quot;</span>
+    wget -c -r -l <span class="m">1</span> --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
+<span class="k">fi</span>
 </code></pre></div>
 
 <h2 id="extracting-iris-saa-times-for-the-sst-log">Extracting IRIS SAA times for the SST log<a class="headerlink" href="#extracting-iris-saa-times-for-the-sst-log" title="Permanent link">&para;</a></h2>
