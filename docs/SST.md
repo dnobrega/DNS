@@ -104,8 +104,50 @@ for year in $(curl -s http://tsih3.uio.no/lapalma/ |
     done
 done
 ```
-
-
+#### Script to download quicklook movies by date:
+```bash
+#!/bin/bash                                                                                                                                                   
+web="http://tsih3.uio.no/lapalma/"
+input=$1
+if [ ${#input} -eq 0 ]
+then
+    folder=$web
+    read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
+    case $yn in
+        [Yy]* ) wget -c -r -l 3 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
+        [Nn]* ) break;;
+    esac
+fi
+if [ ${#input} -eq 4 ]
+then
+    folder=$web$input"/"
+    wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+fi
+if [ ${#input} -eq 7 ]
+then
+    temp=(${input//-/ })
+    year=${temp[0]}
+    folder=$web$year"/"
+    echo $folder
+    echo  ${input}*
+    for date in $(curl -s $folder |
+                      grep '\[DIR\]' |
+                      sed 's/.*href="//' |
+                      sed 's/".*//'); do
+        if [[ "$date" == "$input"* ]]; then
+            echo $date
+            wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
+        fi
+    done
+fi
+if [ ${#input} -eq 10 ]
+then
+    temp=(${input//-/ })
+    year=${temp[0]}
+    folder=$web$year"/"$input"/"
+    wget -c -r -l 1 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+fi
+```
 
 ## Extracting IRIS SAA times for the SST log
 
