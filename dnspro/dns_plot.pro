@@ -271,7 +271,7 @@ COMMON BIFPLT_COMMON,  $
      ENDIF
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  load, load, /SILENT
+  IF (load GT 74) THEN aia_lct, r,g, b, wave=load, /load ELSE load, load, /SILENT
   IF (NOT KEYWORD_SET(multi)) THEN !P.multi=0
   !P.charthick=charthick
   !P.charsize=charsize
