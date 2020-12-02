@@ -8,26 +8,22 @@ edit_uri: ""
 
 nav:
   - INTRODUCTION: index.md
+  - MAC OS: macos.md
+  - PYTHON: python.md  
   - BIFROST: bifrost.md
   - SSWIDL: sswidl.md
   - IDL: idl.md
   - DNS: dns.md
-  - PYTHON: python.md
   - SST: SST.md
   - IRIS: IRIS.md
-  - ALMA: ALMA.md
   - SDO: SDO.md
+  - ALMA: ALMA.md  
   - UNIX: unix.md
-  - ABOUT: about.md
+  - ABOUT ME: about.md
 
 theme:
-  name: 'material'
-  palette:
-    primary: 'Teal'
-    accent: 'Teal'
+  name: 'readthedocs'
   favicon: 'images/dns.png'
-#  feature:
-#    tabs: true
 
 # Copyright
 copyright: 'Copyright &copy; 2019 - 2020 Daniel Nobrega Siverio'

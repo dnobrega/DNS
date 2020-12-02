@@ -20,13 +20,16 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 
 ## Quicklook movies and images
 
-- ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
+ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
 We can put the SST quicklook movies at `/mn/stornext/d18/lapalma/quicklook/` which will then appear under http://tsih3.uio.no/lapalma/
-. For example, the 14-Jun quicklook movies from the LMSAL campaign are now under http://tsih3.uio.no/lapalma/2020/2020-06-14/
-which are linked from the Oslo SST wiki: https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020
+- _For example, the 14-Jun quicklook movies from the LMSAL campaign are now under_    
+ http://tsih3.uio.no/lapalma/2020/2020-06-14/
+_which are linked from the Oslo SST wiki:_ 
+ [https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020](https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020)
 
-- Script to combine CHROMIS quicklook movies and images:
+#### Script to combine CHROMIS quicklook movies and images:
 ```bash
+#!/bin/bash
 quickfile1=4861_+0
 quickfile2=-1371
 image_format=.jpg
@@ -54,8 +57,9 @@ for ii in $( ls -d */); do
 done
 ```
 
-- Script to combine CRISP quicklook movies and images:
+#### Script to combine CRISP quicklook movies and images:
 ```bash
+#!/bin/bash
 quickfile1=6563_+0
 quickfile2=8542_+0
 quickfile3=-1680
@@ -79,6 +83,70 @@ for ii in $( ls -d */); do
               -filter_complex hstack=inputs=3 $movie -hide_banner    
     cd ..       
 done
+```
+
+#### Script to see in the terminal a list of dates with quicklook movies available:
+```bash
+#!/bin/bash                                                                                                                    
+for year in $(curl -s http://tsih3.uio.no/lapalma/ |
+                  grep '\[DIR\]' |
+                  sed 's/.*href="//' |
+                  sed 's/".*//'
+             ); do
+    echo "---------------------------"
+    echo $year
+    echo "---------------------------"
+    for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
+                      grep '\[DIR\]' |
+                      sed 's/.*href="//' |
+                      sed 's/".*//'); do
+        echo $date
+    done
+done
+```
+#### Script to download quicklook movies by date:
+```bash
+#!/bin/bash                                                                                                                                                   
+web="http://tsih3.uio.no/lapalma/"
+input=$1
+if [ ${#input} -eq 0 ]
+then
+    folder=$web
+    read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
+    case $yn in
+        [Yy]* ) wget -c -r -l 3 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
+        [Nn]* ) break;;
+    esac
+fi
+if [ ${#input} -eq 4 ]
+then
+    folder=$web$input"/"
+    wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+fi
+if [ ${#input} -eq 7 ]
+then
+    temp=(${input//-/ })
+    year=${temp[0]}
+    folder=$web$year"/"
+    echo $folder
+    echo  ${input}*
+    for date in $(curl -s $folder |
+                      grep '\[DIR\]' |
+                      sed 's/.*href="//' |
+                      sed 's/".*//'); do
+        if [[ "$date" == "$input"* ]]; then
+            echo $date
+            wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
+        fi
+    done
+fi
+if [ ${#input} -eq 10 ]
+then
+    temp=(${input//-/ })
+    year=${temp[0]}
+    folder=$web$year"/"$input"/"
+    wget -c -r -l 1 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+fi
 ```
 
 ## Extracting IRIS SAA times for the SST log

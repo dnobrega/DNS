@@ -1,16 +1,38 @@
 # Python
 
-Here you can find some useful links to install Anaconda and interesting Python libraries as well as
-specific tutorials.
+Python is an interpreted, high-level and general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python's design philosophy emphasizes code readability with its notable use of significant whitespace. Its language constructs and object-oriented approach aim to help programmers write clear, logical code for small and large-scale projects. In the following, you can find some useful links to install Anaconda and interesting Python libraries as well as specific tutorials.
 
 ## Anaconda
 
 Anaconda is a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages.
 See the instructions for the installation here: [Anaconda](https://docs.anaconda.com/anaconda/install/)
 
+After the installation, typing in the terminal
+```bash
+python --version
+```
+you should get the latest version of Python from Anaconda (3.8.3 at the moment of writing this). If you get an older version, then modify your PATH
+to include Anaconda. For Mac under zsh, modify the _.zlogin_ file in your home directory as follows:
+```bash
+export ANACONDA_DIR="/Users/username/opt/anaconda3/bin"
+export PATH=$ANACONDA_DIR":"$PATH
+```
+
+
 ## IRISpy
 
 Python library to analyze IRIS Level 2 data: [IRISpy](https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html)
+
+It is probable that to run IRISSpy for the first ime, the only library is missing to install is _pyqtgraph_, so type in the terminal
+```bash
+conda install pyqtgraph
+```
+If everything is properly installed, you should be able to open a python session and type
+```python
+import iris_lmsalpy as iris
+```
+without any problem.
+
 
 ## AIApy
 
@@ -24,7 +46,8 @@ SunPy is an open-source Python library for Solar Physics data analysis and visua
 
 ## scikit-learn 
 
-Machine learning library in Python: [scikit-learn](https://scikit-learn.org/stable/install.html)
+Scikit-learn (formerly scikits.learn and also known as sklearn) is a free software machine learning library for the Python programming language.[2] It features various classification, regression and clustering algorithms including support vector machines, random forests, gradient boosting, k-means and DBSCAN, and is designed to interoperate with the Python numerical and scientific libraries NumPy and SciPy: [scikit-learn](https://scikit-learn.org/stable/install.html)
+
 
 ## SciPy meeting
 
