@@ -46,7 +46,7 @@ I am a Postdoctoral researcher at Rosseland Centre for Solar Physics (RoCS) sinc
 
 ### Prizes
 
-- SEA prize for the best Astrophysics thesis of 2018 in Spain: [SEA new](https://www.sea-astronomia.es/noticias/daniel-nobrega-siverio-isabel-santos-y-concepcion-cardenas-premios-sea-tesis-2019)
+- SEA prize for the best Astrophysics thesis of 2018 in Spain: [SEA news](https://www.sea-astronomia.es/noticias/daniel-nobrega-siverio-isabel-santos-y-concepcion-cardenas-premios-sea-tesis-2019)
 
 
 ### Invited talks
