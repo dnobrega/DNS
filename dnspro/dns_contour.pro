@@ -27,8 +27,7 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
            units=units,$
            ixt=ixt,iyt=iyt,izt=izt, $
            xx=xx,yy=yy,zz=zz,$
-           dim=dim, var_info=0
-
+           dim=dim
 
 
    IF (dim EQ "yz") THEN var = reform(var(m,*,*))
