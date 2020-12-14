@@ -3,6 +3,13 @@
 The Swedish 1-m Solar Telescope (SST) is a refracting solar telescope at Roque de los Muchachos Observatory, La Palma in the Canary Islands.
 The SST is capable of providing high-quality time series of spectrally resolved photospheric and chromospheric diagnostics that under excellent seeing conditions reach the diffraction limit of 0.1" over the full arcmin^2 FOV. Furthermore, the versatile CRISP instrument can provide spectro-polarimetric data that enable measurement of the magnetic field topology. In addition, the tunable filter system CHROMIS, installed in 2016, can simultaneously provide narrowband filtergrams at several wavelengths in the core of the Ca II K line (Extracted from [Rouppe et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020arXiv200514175R/abstract)).
 
+## SST main links
+
+- Overview of the observation conditions at the ORM in La Palma: [Shahin's website](https://shahin.website/sst/)
+- SST wiki of RoCS: [Wiki](https://wiki.uio.no/mn/astro/lapalma/)
+- SST Observations Schedule: [SST Schedule](https://dubshen.astro.su.se/wiki/index.php/Observations_schedule_2019)
+- SST Data acquisitions: [Data acquisitions](https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions)
+
 ## SST literature
 
 - The SST telescope design and its main optical elements: [Scharmer et al. 2003a](https://ui.adsabs.harvard.edu/abs/2003SPIE.4853..341S/abstract).
@@ -11,12 +18,6 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 - The CRISP imaging spectropolarimeter[Scharmer et al. 2008](https://ui.adsabs.harvard.edu/abs/2008ApJ...689L..69S/abstract)
 - Upgrades of optical components and instrumentation, as well as a thorough evaluation of optical performance: [Scharmer et al. 2019](https://ui.adsabs.harvard.edu/abs/2019A%26A...626A..55S/abstract).
 
-## Main links
-
-- Overview of the observation conditions at the ORM in La Palma: [Shahin's website](https://shahin.website/sst/)
-- SST wiki of RoCS: [Wiki](https://wiki.uio.no/mn/astro/lapalma/)
-- SST Observations Schedule: [SST Schedule](https://dubshen.astro.su.se/wiki/index.php/Observations_schedule_2019)
-- SST Data acquisitions: [Data acquisitions](https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions)
 
 ## Quicklook movies and images
 
