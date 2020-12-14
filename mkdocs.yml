@@ -16,6 +16,7 @@ nav:
   - DNS: dns.md
   - SST: SST.md
   - IRIS: IRIS.md
+  - SOLO: SOLO.md
   - SDO: SDO.md
   - ALMA: ALMA.md  
   - UNIX: unix.md
