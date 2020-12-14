@@ -1,5 +1,9 @@
 # IRIS
 
+The Interface Region Imaging Spectrograph (IRIS), is a NASA solar observation satellite. Launched on 28 June (2013), the mission was funded through the Small Explorer program to investigate the physical conditions of the solar limb, particularly the chromosphere of the Sun. The spacecraft consists of a satellite bus and spectrometer built by the Lockheed Martin Solar and Astrophysics Laboratory (LMSAL), and a telescope provided by the Smithsonian Astrophysical Observatory. IRIS is operated by LMSAL and NASA's Ames Research Center.
+
+## IRIS main links
+
 - IRIS home webpage: [IRIS](https://iris.lmsal.com/)
 - IRIS Science Highlights: [IRIS Higlights](http://iris.lmsal.com/science_highlights/)
 - IRIS Event Search: [IRIS Search](https://iris.lmsal.com/search/)
