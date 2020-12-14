@@ -1,6 +1,7 @@
 
 PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
                     origin,scale,$
+                    bar_name, snaps,$
                     nozbifrost=nozbifrost,$
                     ishift=ishift,jshift=jshift,$
                     xmin=xmin,xmax=xmax,$
@@ -59,6 +60,10 @@ PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
     origin=[originx,originy]
     scale=[dx,dy]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
+    var_max = MAX(var_plot, min=var_min, /NAN)
+    PRINT, "------------------------------------------------------"
+    PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
+    PRINT, "------------------------------------------------------"
     IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
     IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,0,jshift)
 
@@ -203,6 +208,7 @@ COMMON BIFPLT_COMMON,  $
 
  dns_pre_2dplot,var_plot,xx,yy,zz,dim,$
                 origin,scale,$
+                bar_name, snaps,$
                 ishift=ishift,jshift=jshift,$
                 nozbifrost=nozbifrost,$
                 xmin=xmin,xmax=xmax,$
