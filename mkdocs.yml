@@ -9,6 +9,7 @@ edit_uri: ""
 nav:
   - INTRODUCTION: index.md
   - MAC OS: macos.md
+  - TERMINAL: terminal.md
   - PYTHON: python.md  
   - BIFROST: bifrost.md
   - SSWIDL: sswidl.md
@@ -19,7 +20,6 @@ nav:
   - SOLO: SOLO.md
   - SDO: SDO.md
   - ALMA: ALMA.md  
-  - UNIX: unix.md
   - ABOUT ME: about.md
 
 theme:
