@@ -60,10 +60,6 @@ PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
     origin=[originx,originy]
     scale=[dx,dy]
     var_plot=var_plot(minix:maxix,miniy:maxiy)
-    var_max = MAX(var_plot, min=var_min, /NAN)
-    PRINT, "------------------------------------------------------"
-    PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
-    PRINT, "------------------------------------------------------"
     IF (N_ELEMENTS(ishift) GT 0) THEN var_plot=shift(var_plot,ishift,0)
     IF (N_ELEMENTS(jshift) GT 0) THEN var_plot=shift(var_plot,0,jshift)
 
@@ -135,7 +131,7 @@ PRO DNS_COLORBAR,lev2vel, $
  titposy=postitle[1]
  titposx=postitle[0]
  xyouts,titposx,titposy,varname, $
-        col=axcol,charthick=tit_charthick,chars=tit_chars,/norm
+        col=axcol,charthick=tit_charthick,chars=tit_chars,/norm,alignment=0.5
 
 
  rang=[min(lev2vel),max(lev2vel)] & IF keyword_set(log) THEN rang=10^rang
@@ -182,6 +178,7 @@ PRO DNS_COLORBAR,lev2vel, $
 END
 
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
+                var_minmax=var_minmax, $
                 nozbifrost=nozbifrost,$
                 xx=xx, yy=yy, zz=zz,$
                 xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, title=title,$
@@ -216,6 +213,20 @@ COMMON BIFPLT_COMMON,  $
                 zmin=zmin,zmax=zmax
 
 ;---------------------------------------------------------------------------------  
+; Print min/max
+;---------------------------------------------------------------------------------         
+  var_max = MAX(var_plot, min=var_min, /NAN)
+  IF (KEYWORD_SET(var_minmax))       THEN var_range=[var_min,var_max]
+  PRINT, "------------------------------------------------------"
+  PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
+  PRINT, "------------------------------------------------------"
+  ;IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
+  ;   final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
+  ;ENDIF ELSE final_title=title
+
+
+
+;---------------------------------------------------------------------------------  
 ; Applying log
 ;---------------------------------------------------------------------------------         
   bar_range=var_range
@@ -235,7 +246,7 @@ COMMON BIFPLT_COMMON,  $
   plot_image, var_plot, $
               position=position,$
               origin=origin, scale=scale, $
-              title=title,  $
+              title=final_title,  $
               xtitle=xtitle, ytitle=ytitle, $
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $  
