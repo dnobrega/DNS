@@ -32,6 +32,7 @@ Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    nozbifrost=nozbifrost,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
+                   showminmax=showminmax, $
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
@@ -331,6 +332,7 @@ COMMON BIFPLT_COMMON,  $
            IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
            dns_2dplot, d,k,var_plot,dim, $
                        var_minmax=var_minmax,$
+                       showminmax=showminmax, $
                        nozbifrost=nozbifrost,$
                        xx=xx, yy=yy, zz=zz,$
                        xtitle=xtitle, ytitle=ytitle, title=title(m),$
@@ -408,6 +410,8 @@ COMMON BIFPLT_COMMON,  $
               ENDIF
 
               dns_1dplot, d,k,var_plot,dim, $
+                          var_minmax=var_minmax, $
+                          showminmax=showminmax, $
                           nozbifrost=nozbifrost,$
                           bar_log=bar_log, $
                           xx=xx, yy=yy, zz=zz,$
