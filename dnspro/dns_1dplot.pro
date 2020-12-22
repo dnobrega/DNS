@@ -50,6 +50,12 @@ PRO dns_1dplot, d,k,var_plot,dim, $
 
   var_plot=var_plot(minix:maxix)
 
+  var_max = MAX(var_plot, min=var_min, /NAN)
+  IF (KEYWORD_SET(var_minmax))       THEN var_range=[var_min,var_max]
+  PRINT, "------------------------------------------------------"
+  PRINT, " ",ytitle+": "+strtrim(k,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
+  PRINT, "------------------------------------------------------"
+
   PLOT, xx_plot, var_plot,$
         xtitle=xtitle, ytitle=ytitle, title=title,$
         /xs, /ys, $
