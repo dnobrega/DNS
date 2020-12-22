@@ -115,7 +115,7 @@ COMMON BIFPLT_COMMON,  $
      dbar_pos(1)=dposition(3)+0.08
      dbar_pos(2)=dposition(2)
      dbar_pos(3)=dbar_pos(1)+0.02
-     dbar_titlepos=[-0.50,0.95]
+     dbar_titlepos=[0.5*(dposition(0)+dposition(2)),0.95]
      dbar_orient="xtop"
      dbar_charthick=dcharthick-0.5
      dbar_thick=dcharthick
@@ -163,7 +163,7 @@ COMMON BIFPLT_COMMON,  $
   ; Bar options for 2D plots 
   IF (NOT (KEYWORD_SET(bar_pos)))      THEN cb_bar_pos=dbar_pos             ELSE cb_bar_pos = bar_pos
   IF (NOT (KEYWORD_SET(bar_titlepos))) THEN cb_bar_titlepos=dbar_titlepos   ELSE cb_bar_titlepos=bar_titlepos
-  IF (NOT (KEYWORD_SET(bar_orient)))   THEN cb_bar_orient=dbar_orient       ELSE cb_bar_titlepos=bar_titlepos
+  IF (NOT (KEYWORD_SET(bar_orient)))   THEN cb_bar_orient=dbar_orient       ELSE cb_bar_orient=bar_orient
   IF (NOT (KEYWORD_SET(bar_charthick)))THEN cb_bar_charthick=dbar_charthick ELSE cb_bar_charthick=bar_charthick
   IF (NOT (KEYWORD_SET(bar_thick)))    THEN cb_bar_thick=dbar_thick         ELSE cb_bar_thick=bar_thick 
   IF (NOT (KEYWORD_SET(bar_charsize))) THEN cb_bar_charsize=dbar_charsize   ELSE cb_bar_charsize=bar_charsize
@@ -310,7 +310,6 @@ COMMON BIFPLT_COMMON,  $
         dns_var,d,name,k,swap,var,$
                 nozbifrost=nozbifrost,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
-                var_minmax=var_minmax,$
                 units=units,$
                 ixt=ixt,iyt=iyt,izt=izt, $                   
                 ix0=ix0,iy0=iy0,iz0=iz0, $
@@ -331,6 +330,7 @@ COMMON BIFPLT_COMMON,  $
            IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
            IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
            dns_2dplot, d,k,var_plot,dim, $
+                       var_minmax=var_minmax,$
                        nozbifrost=nozbifrost,$
                        xx=xx, yy=yy, zz=zz,$
                        xtitle=xtitle, ytitle=ytitle, title=title(m),$
