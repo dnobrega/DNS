@@ -1,5 +1,7 @@
 
 PRO dns_1dplot, d,k,var_plot,dim, $
+                var_minmax=var_minmax, $
+                showminmax=showminmax, $
                 nozbifrost=nozbifrost,$
                 bar_log=bar_log,$
                 xx=xx, yy=yy, zz=zz,$
@@ -55,9 +57,12 @@ PRO dns_1dplot, d,k,var_plot,dim, $
   PRINT, "------------------------------------------------------"
   PRINT, " ",ytitle+": "+strtrim(k,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "------------------------------------------------------"
+  IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
+     final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
+  ENDIF ELSE final_title=title
 
   PLOT, xx_plot, var_plot,$
-        xtitle=xtitle, ytitle=ytitle, title=title,$
+        xtitle=xtitle, ytitle=ytitle, title=final_title,$
         /xs, /ys, $
         position=position,$
         yrange=var_range, ylog=bar_log, $
