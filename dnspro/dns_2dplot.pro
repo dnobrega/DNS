@@ -179,6 +179,7 @@ END
 
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 var_minmax=var_minmax, $
+                showminmax=showminmax, $
                 nozbifrost=nozbifrost,$
                 xx=xx, yy=yy, zz=zz,$
                 xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, title=title,$
@@ -220,9 +221,9 @@ COMMON BIFPLT_COMMON,  $
   PRINT, "------------------------------------------------------"
   PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "------------------------------------------------------"
-  ;IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
-  ;   final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
-  ;ENDIF ELSE final_title=title
+  IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
+     final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
+  ENDIF ELSE final_title=title
 
 
 
