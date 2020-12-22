@@ -205,8 +205,37 @@ PRO dns_var,d,name,snaps,swap,var,$
            END
 
     "x" : BEGIN
-          PRINT, "Not implemented yet"
-          STOP
+          IF N_ELEMENTS(izt) GT 0 THEN BEGIN
+             ix0=izt & ixf=izt & ixstep=1
+             IF N_ELEMENTS(iyt) GT 0 THEN BEGIN
+                iy0=iyt & iyf=iyt & iystep=1
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iy0) EQ 0) THEN iy0=0
+                IF (N_ELEMENTS(iyf) EQ 0) THEN iyf=sizevar(2)-1
+                IF (NOT KEYWORD_SET(iystep)) THEN iystep=1
+             ENDELSE
+          ENDIF ELSE BEGIN
+             IF (N_ELEMENTS(iz0) EQ 0) THEN ix0=0 ELSE ix0=iz0
+             IF (N_ELEMENTS(izf) EQ 0) THEN ixf=sizevar(3)-1 ELSE ixf=izf
+             IF (NOT KEYWORD_SET(izstep)) THEN ixstep=1 ELSE ixstep=izstep
+             IF N_ELEMENTS(iyt) GT 0 THEN BEGIN
+                iy0=iyt & iyf=iyt & iystep=1
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iy0) EQ 0) THEN iy0=0
+                IF (N_ELEMENTS(iyf) EQ 0) THEN iyf=sizevar(2)-1
+                IF (NOT KEYWORD_SET(iystep)) THEN iystep=1
+             ENDELSE
+          ENDELSE
+          IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
+          IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+             coord="Z"
+             IF (sizevar(2) GT 1) THEN BEGIN
+                coord=["Z","Y"]
+             ENDIF
+          ENDIF
+          xtitle="X"
+          ytitle=bar_title
+          xx=x & yy=-z & zz=y
           END
 
     "y" : BEGIN
