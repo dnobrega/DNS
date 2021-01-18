@@ -32,6 +32,15 @@ This will let you open any file in the terminal and not in a new extra annoying 
 Homebrew is the Missing Package Manager for macOS:   
 [Homebrew](https://brew.sh/)
 
+## GCC
+
+The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...). GCC was originally written as the compiler for the GNU operating system. The GNU system was developed to be 100% free software, free in the sense that it respects the user's freedom.
+
+Install it after having homebrew by typing
+
+```bash
+brew install gcc
+```
 
 ## MPICH
 
