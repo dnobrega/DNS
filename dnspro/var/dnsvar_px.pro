@@ -14,8 +14,7 @@ PRO dnsvar_px, d, name, snaps, swap, var, units, $
        var=d->getvar(name,snaps,swap=swap)*u.ur*u.ul/u.ut
        var_title='p!dx!n'
        IF (units EQ "solar") THEN BEGIN
-          var_title=var_title+" (g km cm!u-3!n s!u-1!n)"
-          var=var/1e5
+          var_title=var_title+" (g cm!u-2!n s!u-1!n)"
        ENDIF
        var_range=[-1.0,1.0]
        var_log=0
