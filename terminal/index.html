@@ -188,7 +188,7 @@ all the configuration is refered to it.</p>
 </code></pre></div>
 
 <h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h3>
-<p>This a find function, so I can, e.g., f(math_mpi.f90) to look for the specific directory of the math_mpi.f90 file avoiding moreover all the <em>Permission denied</em> messages in the output:</p>
+<p>This a find function, so I can, e.g., f math_mpi to look for directories having * math_mpi * files avoiding moreover all the <em>Permission denied</em> messages in the output:</p>
 <div class="codehilite"><pre><span></span><code>f<span class="o">(){</span>
     <span class="nb">echo</span> <span class="s2">&quot;find . -iname \&quot;*</span><span class="nv">$1</span><span class="s2">*\&quot; 2&gt;/dev/null&quot;</span>
     find . -iname <span class="s2">&quot;*</span><span class="nv">$1</span><span class="s2">*&quot;</span> <span class="m">2</span>&gt;/dev/null
