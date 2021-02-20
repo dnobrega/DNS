@@ -229,18 +229,60 @@ PRO dns_var,d,name,snaps,swap,var,$
           IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
           IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="Z"
+             yy=-z
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord=["Z","Y"]
+                zz=y
              ENDIF
-          ENDIF
+          ENDIF ELSE BEGIN
+             IF (sizevar(2) GT 1) THEN BEGIN
+                coord="Y"
+                yy=y
+             ENDIF
+          ENDELSE
           xtitle="X"
           ytitle=bar_title
-          xx=x & yy=-z & zz=y
+          xx=x
           END
 
     "y" : BEGIN
-          PRINT, "Not implemented yet"
-          STOP
+          IF N_ELEMENTS(ixt) GT 0 THEN BEGIN
+             ix0=ixt & ixf=ixt & ixstep=1
+             IF N_ELEMENTS(izt) GT 0 THEN BEGIN
+                iy0=izt & iyf=izt & iystep=1
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iz0) EQ 0) THEN iy0=0 ELSE iy0=iz0
+                IF (N_ELEMENTS(izf) EQ 0) THEN iyf=sizevar(3)-1 ELSE iyf=izf
+                IF (NOT KEYWORD_SET(izstep)) THEN iystep=1 ELSE iystep=izstep
+             ENDELSE
+          ENDIF ELSE BEGIN
+             IF (N_ELEMENTS(ix0) EQ 0) THEN ix0=0
+             IF (N_ELEMENTS(ixf) EQ 0) THEN ixf=sizevar(1)-1
+             IF (NOT KEYWORD_SET(ixstep)) THEN ixstep=1
+             IF N_ELEMENTS(izt) GT 0 THEN BEGIN
+                iy0=izt & iyf=izt & iystep=1
+             ENDIF ELSE BEGIN
+                IF (N_ELEMENTS(iz0) EQ 0) THEN iy0=0 ELSE iy0=iz0
+                IF (N_ELEMENTS(izf) EQ 0) THEN iyf=sizevar(3)-1 ELSE iyf=izf
+                IF (NOT KEYWORD_SET(izstep)) THEN iystep=1 ELSE iystep=izstep
+             ENDELSE
+          ENDELSE
+          IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
+          IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
+             coord="X"
+             yy=x
+             IF (sizevar(3) GT 1) THEN BEGIN
+                coord=["X","Z"]
+                zz=-z
+             ENDIF
+          ENDIF ELSE BEGIN
+             IF (sizevar(3) GT 1) THEN BEGIN
+                coord="Z"
+                yy=-z
+          ENDIF
+          xtitle="Y"
+          ytitle=bar_title
+          xx=y
           END
 
 
@@ -281,13 +323,20 @@ PRO dns_var,d,name,snaps,swap,var,$
           IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="X"
+             yy=x
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord=["X","Y"]
+                zz=y
              ENDIF
-          ENDIF
+          ENDIF ELSE BEGIN
+             IF (sizevar(2) GT 1) THEN BEGIN
+                coord="Y"
+                yy=y
+             ENDIF
+          ENDELSE
           xtitle="Z"
           ytitle=bar_title
-          xx=zz & yy=x & zz=y
+          xx=zz
           END
 
 
