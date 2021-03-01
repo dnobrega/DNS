@@ -84,6 +84,8 @@ PRO dns_var,d,name,snaps,swap,var,$
  nely=d->getmy()
  nelz=d->getmz()
 
+ IF d->getboundarychk() THEN nelz=nelz+(d->getmb())
+ 
  IF STRPOS(name,"alma") EQ -1 THEN BEGIN
     var=reform(var,nelx,nely,nelz)
     IF (NOT (KEYWORD_SET(dim))) THEN BEGIN
@@ -279,7 +281,8 @@ PRO dns_var,d,name,snaps,swap,var,$
              IF (sizevar(3) GT 1) THEN BEGIN
                 coord="Z"
                 yy=-z
-          ENDIF
+             ENDIF
+          ENDELSE
           xtitle="Y"
           ytitle=bar_title
           xx=y
