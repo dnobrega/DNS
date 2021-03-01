@@ -84,7 +84,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  nely=d->getmy()
  nelz=d->getmz()
 
- IF d->getboundarychk() THEN nelz=nelz+(d->getmb())
+ IF d->getboundarychk() THEN nelz=nelz+2.0*(d->getmb())
  
  IF STRPOS(name,"alma") EQ -1 THEN BEGIN
     var=reform(var,nelx,nely,nelz)
