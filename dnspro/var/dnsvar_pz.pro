@@ -11,7 +11,7 @@ PRO dnsvar_pz, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar(name,snaps,swap=swap)*u.ur*u.ul/u.ut
+       var=-d->getvar(name,snaps,swap=swap)*u.ur*u.ul/u.ut
        var_title='p!dz!n'
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (g cm!u-2!n s!u-1!n)"
