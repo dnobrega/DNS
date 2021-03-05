@@ -1,5 +1,5 @@
 
-Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -29,7 +29,7 @@ Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Variable options
                    dim=dim,$
                    swap=swap, units=units,$
-                   nozbifrost=nozbifrost,$
+                   bifrost_coord=bifrost_coord,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
                    showminmax=showminmax, $
@@ -309,7 +309,7 @@ COMMON BIFPLT_COMMON,  $
 
   FOR k=snap0,snapf,step DO BEGIN
         dns_var,d,name,k,swap,var,$
-                nozbifrost=nozbifrost,$
+                bifrost_coord=bifrost_coord,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
                 units=units,$
                 ixt=ixt,iyt=iyt,izt=izt, $                   
@@ -333,7 +333,7 @@ COMMON BIFPLT_COMMON,  $
            dns_2dplot, d,k,var_plot,dim, $
                        var_minmax=var_minmax,$
                        showminmax=showminmax, $
-                       nozbifrost=nozbifrost,$
+                       bifrost_coord=bifrost_coord,$
                        xx=xx, yy=yy, zz=zz,$
                        xtitle=xtitle, ytitle=ytitle, title=title(m),$
                        xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
@@ -412,7 +412,7 @@ COMMON BIFPLT_COMMON,  $
               dns_1dplot, d,k,var_plot,dim, $
                           var_minmax=var_minmax, $
                           showminmax=showminmax, $
-                          nozbifrost=nozbifrost,$
+                          bifrost_coord=bifrost_coord,$
                           bar_log=bar_log, $
                           xx=xx, yy=yy, zz=zz,$
                           xtitle=xtitle, ytitle=ytitle, title=title_1d,$
