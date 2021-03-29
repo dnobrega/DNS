@@ -207,7 +207,7 @@ COMMON BIFPLT_COMMON,  $
      dbar_titlepos=cb_bar_titlepos
      dbar_orient=cb_bar_orient
      dbar_charthick=cb_bar_charthick
-     dbar_thick=cb_bar_charthick
+     dbar_thick=cb_bar_thick
      dbar_charsize=cb_bar_charsize
      dbar_titchart=cb_bar_titchart
      dbar_titchars=cb_bar_titchars
