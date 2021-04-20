@@ -30,7 +30,7 @@ alias sswidl='tcsh -c "sswidl"'
 ```
 
 ### Functions
-This a find function, so I can, e.g., f(math_mpi.f90) to look for the specific directory of the math_mpi.f90 file avoiding moreover all the _Permission denied_ messages in the output:
+This a find function, so I can, e.g., f math_mpi to look for directories having * math_mpi * files avoiding moreover all the _Permission denied_ messages in the output:
 ``` bash
 f(){
     echo "find . -iname \"*$1*\" 2>/dev/null"
