@@ -381,7 +381,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  IF N_ELEMENTS(coord) EQ 1 THEN BEGIN
     IF (STRLEN(dim) EQ 2) THEN $
        title=coord+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
-             units_coord+title
+             units_coord+title+'  snap='+strtrim(string(snaps),2)
     IF (STRLEN(dim) EQ 1) THEN $
        title=coord+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+$
              units_coord+title
