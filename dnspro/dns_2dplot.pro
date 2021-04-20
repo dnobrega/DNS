@@ -2,7 +2,7 @@
 PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
                     origin,scale,$
                     bar_name, snaps,$
-                    nozbifrost=nozbifrost,$
+                    bifrost_coord=bifrost_coord,$
                     ishift=ishift,jshift=jshift,$
                     xmin=xmin,xmax=xmax,$
                     ymin=ymin,ymax=ymax,$
@@ -18,20 +18,32 @@ PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
        ;X is X
        IF (N_ELEMENTS(xmin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,xmin)) ELSE minix=0
        IF (N_ELEMENTS(xmax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,xmax)) ELSE maxix=nelx-1
+       xx=xx(minix:maxix)
+       originx=min(xx)
     ENDIF ELSE BEGIN
        ;X is Y
-       IF (N_ELEMENTS(ymin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,ymin)) ELSE minix=0
-       IF (N_ELEMENTS(ymax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,ymax)) ELSE maxix=nelx-1
+       IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN BEGIN
+          IF (N_ELEMENTS(ymin) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,-ymin)) ELSE maxix=nelx-1
+          IF (N_ELEMENTS(ymax) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,-ymax)) ELSE minix=0
+          xx=xx(minix:maxix)
+          originx=min(-xx)
+          temp1=nelx-maxix & temp2=nelx-minix
+          minix=temp1-1
+          maxix=temp2-1
+       ENDIF ELSE BEGIN
+          IF (N_ELEMENTS(ymin) GT 0) THEN minix=ROUND(interpol(findgen(nelx),xx,ymin)) ELSE minix=0
+          IF (N_ELEMENTS(ymax) GT 0) THEN maxix=ROUND(interpol(findgen(nelx),xx,ymax)) ELSE maxix=nelx-1
+          xx=xx(minix:maxix)
+          originx=min(xx)
+       ENDELSE
     ENDELSE
-    xx=xx(minix:maxix)
     dx=(max(xx)-min(xx))/(n_elements(xx)-1)
-    originx=min(xx)
     ;------------------------------------------------------------------------------------------------
     ; Y
     ;------------------------------------------------------------------------------------------------    
     IF (strpos(dim,"z") EQ 1) THEN BEGIN
        ;Y is Z
-       IF (N_ELEMENTS(nozbifrost) EQ 0) THEN BEGIN
+       IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN BEGIN
           IF (N_ELEMENTS(zmin) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,-zmin)) ELSE maxiy=nely-1
           IF (N_ELEMENTS(zmax) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,-zmax)) ELSE miniy=0  
           yy=yy(miniy:maxiy)
@@ -47,13 +59,23 @@ PRO DNS_PRE_2DPLOT, var_plot,xx,yy,zz,dim,$
        ENDELSE
     ENDIF ELSE BEGIN
        ;Y is Y
-       IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,ymin)) ELSE miniy=0
-       IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,ymax)) ELSE maxiy=nely-1
-       yy=yy(miniy:maxiy)
-       originy=min(yy)
+       IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN BEGIN
+          IF (N_ELEMENTS(ymin) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,-ymin)) ELSE maxiy=nely-1
+          IF (N_ELEMENTS(ymax) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,-ymax)) ELSE miniy=0
+          yy=yy(miniy:maxiy)
+          originy=min(-yy)
+          temp1=nely-maxiy & temp2=nely-miniy
+          miniy=temp1-1
+          maxiy=temp2-1
+       ENDIF ELSE BEGIN
+          IF (N_ELEMENTS(ymin) GT 0) THEN miniy=ROUND(interpol(findgen(nely),yy,ymin)) ELSE miniy=0
+          IF (N_ELEMENTS(ymax) GT 0) THEN maxiy=ROUND(interpol(findgen(nely),yy,ymax)) ELSE maxiy=nely-1
+          yy=yy(miniy:maxiy)
+          originy=min(yy)
+       ENDELSE
     ENDELSE
     dy=(max(yy)-min(yy))/(n_elements(yy)-1)
-
+    
     ;------------------------------------------------------------------------------------------------
     ; OUTPUT
     ;------------------------------------------------------------------------------------------------    
@@ -180,7 +202,7 @@ END
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 var_minmax=var_minmax, $
                 showminmax=showminmax, $
-                nozbifrost=nozbifrost,$
+                bifrost_coord=bifrost_coord,$
                 xx=xx, yy=yy, zz=zz,$
                 xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, title=title,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
@@ -208,7 +230,7 @@ COMMON BIFPLT_COMMON,  $
                 origin,scale,$
                 bar_name, snaps,$
                 ishift=ishift,jshift=jshift,$
-                nozbifrost=nozbifrost,$
+                bifrost_coord=bifrost_coord,$
                 xmin=xmin,xmax=xmax,$
                 ymin=ymin,ymax=ymax,$
                 zmin=zmin,zmax=zmax

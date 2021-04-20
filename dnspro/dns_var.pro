@@ -5,7 +5,7 @@
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 PRO dns_var,d,name,snaps,swap,var,$
-            nozbifrost=nozbifrost,$
+            bifrost_coord=bifrost_coord,$
             var_title=var_title, var_range=var_range, var_log=var_log,$
             units=units,$
             ixt=ixt,iyt=iyt,izt=izt, $
@@ -142,7 +142,10 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
-           IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
+           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN BEGIN
+              var=reverse(var,3)
+              var=reverse(var,2)
+           ENDIF
            xtitle="Y" & ytitle="Z"
            IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="X"
@@ -176,12 +179,13 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
-           IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
+           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN var=reverse(var,3)
            xtitle="X" & ytitle="Z"
            IF ((sizevar(2) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="Y"
            ENDIF
-           xx=x & yy=zz & zz=y
+           xx=x & yy=zz
+           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN zz=-y ELSE zz=y
            END
 
     "xy" : BEGIN  
@@ -199,11 +203,13 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
+           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN var=reverse(var,2)
            xtitle="X" & ytitle="Y"
            IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
               coord="Z"
            ENDIF
-           xx=x & yy=y & zz=-z
+           xx=x & yy=y
+           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN zz=-z ELSE zz=z
            END
 
     "x" : BEGIN
@@ -231,15 +237,15 @@ PRO dns_var,d,name,snaps,swap,var,$
           IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
           IF ((sizevar(3) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="Z"
-             yy=-z
+             IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN yy=-z ELSE yy=z
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord=["Z","Y"]
-                zz=y
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN zz=-y ELSE zz=y
              ENDIF
           ENDIF ELSE BEGIN
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord="Y"
-                yy=y
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN yy=-y ELSE yy=y
              ENDIF
           ENDELSE
           xtitle="X"
@@ -270,17 +276,18 @@ PRO dns_var,d,name,snaps,swap,var,$
              ENDELSE
           ENDELSE
           IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
+          IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN var=reverse(var,2)
           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="X"
              yy=x
              IF (sizevar(3) GT 1) THEN BEGIN
                 coord=["X","Z"]
-                zz=-z
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN zz=-z ELSE zz=z
              ENDIF
           ENDIF ELSE BEGIN
              IF (sizevar(3) GT 1) THEN BEGIN
                 coord="Z"
-                yy=-z
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN yy=-z ELSE yy=z
              ENDIF
           ENDELSE
           xtitle="Y"
@@ -315,6 +322,7 @@ PRO dns_var,d,name,snaps,swap,var,$
           maxz=MAX(z, MIN=minz)
           dz=(maxz-minz)/(nelz-1)
           dz1d=d->getdz1d()
+          pmm, z
           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
              zz=minz+dz*FINDGEN(nelz)
              FOR j=iy0,iyf,iystep DO BEGIN
@@ -323,23 +331,25 @@ PRO dns_var,d,name,snaps,swap,var,$
           ENDIF ELSE BEGIN
              zz=z
           ENDELSE
-          IF (N_ELEMENTS(nozbifrost) EQ 0) THEN var=reverse(var,3)
+          pmm, zz
+          IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN var=reverse(var,3)
           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="X"
              yy=x
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord=["X","Y"]
-                zz=y
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN xx=-y ELSE xx=y
              ENDIF
           ENDIF ELSE BEGIN
              IF (sizevar(2) GT 1) THEN BEGIN
                 coord="Y"
-                yy=y
+                IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN xx=-y ELSE xx=y
              ENDIF
           ENDELSE
           xtitle="Z"
           ytitle=bar_title
-          xx=zz
+          xx_temp=xx
+          xx=zz & zz=xx_temp
           END
 
 
