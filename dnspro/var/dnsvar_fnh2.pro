@@ -19,7 +19,7 @@ PRO dnsvar_fnh2, d, name, snaps, swap, var, units, $
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (cm!u-3!n)"
        ENDIF
-       var_range=[-1.0,1.0]
-       var_log=0
+       var_range=[1d-3,1.0]
+       var_log=1
     ENDELSE
 END
