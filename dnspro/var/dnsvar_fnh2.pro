@@ -16,9 +16,6 @@ PRO dnsvar_fnh2, d, name, snaps, swap, var, units, $
        var=d->getvar('nh2',snaps,swap=swap)
        var=2*var/(2*var+nn)
        var_title='f!dnH2!n'
-       IF (units EQ "solar") THEN BEGIN
-          var_title=var_title+" (cm!u-3!n)"
-       ENDIF
        var_range=[1d-3,1.0]
        var_log=1
     ENDELSE
