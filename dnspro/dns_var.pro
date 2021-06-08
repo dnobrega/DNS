@@ -322,7 +322,6 @@ PRO dns_var,d,name,snaps,swap,var,$
           maxz=MAX(z, MIN=minz)
           dz=(maxz-minz)/(nelz-1)
           dz1d=d->getdz1d()
-          pmm, z
           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
              zz=minz+dz*FINDGEN(nelz)
              FOR j=iy0,iyf,iystep DO BEGIN
@@ -331,7 +330,6 @@ PRO dns_var,d,name,snaps,swap,var,$
           ENDIF ELSE BEGIN
              zz=z
           ENDELSE
-          pmm, zz
           IF (N_ELEMENTS(bifrost_coord) EQ 0) THEN var=reverse(var,3)
           IF ((sizevar(1) GT 1) AND (NOT (KEYWORD_SET(coord)))) THEN BEGIN
              coord="X"
@@ -348,8 +346,7 @@ PRO dns_var,d,name,snaps,swap,var,$
           ENDELSE
           xtitle="Z"
           ytitle=bar_title
-          xx_temp=xx
-          xx=zz & zz=xx_temp
+          xx=zz
           END
 
 
