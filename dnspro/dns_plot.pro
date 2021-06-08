@@ -49,7 +49,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    c_var=c_var,$
                    c_levels=c_levels,c_load=c_load,c_color=c_color,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
-                   c_charsize=c_charsize,c_charthick=c_charthick
+                   c_charsize=c_charsize,c_charthick=c_charthick,c_save=c_save
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -364,8 +364,9 @@ COMMON BIFPLT_COMMON,  $
                            c_thick=c_thick, $
                            c_linestyle=c_linestyle, $
                            c_labels=c_labels, $
-                           c_charsize=c_charsize,$
-                           c_charthick=c_charthick
+                           c_charsize=c_charsize, $
+                           c_charthick=c_charthick, $
+                           c_save=c_save
            ENDIF
 
            wait, 0.0001
