@@ -14,7 +14,7 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_labels=c_labels, $
                   c_charsize=c_charsize, $
                   c_charthick=c_charthick, $
-                  c_save=c_save
+                  c_save=c_save,c_filename=c_filename
 
   
    nel=N_ELEMENTS(c_levels)
@@ -53,8 +53,10 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                PATH_XY=xy, /PATH_DATA_COORDS
       folder = "contours"
       file_mkdir, folder
-      print, folder+"/c_"+c_var+"_"+STRTRIM(snaps,2)+".sav"
-      save, xy, filename=folder+"/c_"+c_var+"_"+STRTRIM(snaps,2)+".sav"
+      IF (N_ELEMENTS(c_filename) EQ 0) THEN filename="/c_"+c_var+"_"+STRTRIM(snaps,2)+".sav" $
+      ELSE filename="/c_"+c_filename+"_"+STRTRIM(snaps,2)+".sav"
+      print, folder+filename
+      save, xy, filename=folder+filename
    ENDIF ELSE BEGIN
       CONTOUR, reform(var),xx,yy,$
                levels=c_levels,c_colors=c_colors,$
