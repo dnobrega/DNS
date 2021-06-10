@@ -1,0 +1,16 @@
+#!/bin/bash
+for year in $(curl -s http://tsih3.uio.no/lapalma/ |
+                  grep '\[DIR\]' |
+                  sed 's/.*href="//' |
+                  sed 's/".*//' 
+    	     ); do
+    echo "---------------------------"
+    echo $year
+    echo "---------------------------"
+    for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
+                      grep '\[DIR\]' |
+                      sed 's/.*href="//' |
+                      sed 's/".*//'); do
+	echo $date
+    done
+done
