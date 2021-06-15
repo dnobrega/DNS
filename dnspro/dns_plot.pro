@@ -15,6 +15,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Specific options for 2D plots
                    smooth=smooth, $
                    bottom=bottom, top=top, $
+                   find_min=find_min, find_max=find_max,$
+                   save_min=save_min, save_max=save_max, $
+		   min_filename=min_filename, max_filename=max_filename, $
                    ; Bar options for 2D plots
                    bar_pos=bar_pos, $
                    bar_titlepos=bar_titlepos,$
@@ -340,7 +343,11 @@ COMMON BIFPLT_COMMON,  $
                        xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                        ishift=ishift,jshift=jshift,$
                        position=position,$
-                       bar_name=bar_title, var_range=var_range, bar_log=bar_log
+                       bar_name=bar_title, var_range=var_range, bar_log=bar_log, $
+                       find_min=find_min, find_max=find_max, $
+                       save_min=save_min, save_max=save_max, $
+                       min_filename=min_filename, max_filename=max_filename, $
+                       var_name=name
 
 
            IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN
