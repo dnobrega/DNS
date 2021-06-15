@@ -252,8 +252,8 @@ COMMON BIFPLT_COMMON,  $
 
 ;---------------------------------------------------------------------------------
   SPAWN, 'echo $DNS_PROJECTS', projects
-  IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/'+idlparam+'/' 
-  file_mkdir,folder
+  IF (NOT (KEYWORD_SET(folder)))         THEN folder=projects+'/'+idlparam+'/' 
+  IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir,folder
 ;---------------------------------------------------------------------------------
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
