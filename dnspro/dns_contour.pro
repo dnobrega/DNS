@@ -52,7 +52,7 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                c_charthick=c_charthick, /overplot, $
                PATH_XY=xy, /PATH_DATA_COORDS
       folder = "contours"
-      file_mkdir, folder
+      IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
       IF (N_ELEMENTS(c_filename) EQ 0) THEN filename="/c_"+c_var+"_"+STRTRIM(snaps,2)+".sav" $
       ELSE filename="/c_"+c_filename+"_"+STRTRIM(snaps,2)+".sav"
       print, folder+filename
