@@ -287,10 +287,12 @@ COMMON BIFPLT_COMMON,  $
   IF ((N_ELEMENTS(find_max) NE 0) OR (N_ELEMENTS(save_max) NE 0)) THEN BEGIN
      ind_max = array_indices(var_plot, pos_max)
      loc_max = ind_max*scale + origin
+     PRINT, " Max at x = "+strtrim(loc_max[0],2)+' and y = '+strtrim(loc_max[1],2)
+     PRINT, "------------------------------------------------------"
      oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=1.0, color=0
      IF (N_ELEMENTS(save_max) NE 0) THEN BEGIN
         folder = "loc_max"
-        file_mkdir, folder
+        IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
         IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
@@ -301,9 +303,12 @@ COMMON BIFPLT_COMMON,  $
   IF ((N_ELEMENTS(find_min) NE 0) OR (N_ELEMENTS(save_min) NE 0)) THEN BEGIN
      ind_min = array_indices(var_plot, pos_min)
      loc_min = ind_min*scale + origin
+     PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
+     PRINT, "------------------------------------------------------"
      oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=1.0,color=255
      IF (N_ELEMENTS(save_min) NE 0) THEN BEGIN
         folder = "loc_min"
+        IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder        
         file_mkdir, folder
         IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
