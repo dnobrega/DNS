@@ -208,7 +208,11 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                 xshift=xshift, yshift=yshift, zshift=zshift, ishift=ishift, jshift=jshift,$
                 position=position,$
-                bar_name=bar_name, var_range=var_range, bar_log=bar_log
+                bar_name=bar_name, var_range=var_range, bar_log=bar_log, $
+                find_min=find_min, find_max=find_max, $
+                save_min=save_min, save_max=save_max, $
+                min_filename=min_filename, max_filename=max_filename, $
+                var_name=var_name
 
 
 COMMON BIFPLT_COMMON,  $
@@ -238,7 +242,7 @@ COMMON BIFPLT_COMMON,  $
 ;---------------------------------------------------------------------------------  
 ; Print min/max
 ;---------------------------------------------------------------------------------         
-  var_max = MAX(var_plot, min=var_min, /NAN)
+  var_max = MAX(var_plot, pos_max, min=var_min, SUBSCRIPT_MIN=pos_min, /NAN)
   IF (KEYWORD_SET(var_minmax))       THEN var_range=[var_min,var_max]
   PRINT, "------------------------------------------------------"
   PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
@@ -277,6 +281,37 @@ COMMON BIFPLT_COMMON,  $
               bottom=bottom, top=top,$
               smooth=smooth
 
+  AA = FINDGEN(17) * (!PI*2/16.)
+  USERSYM, COS(AA), SIN(AA)
+
+  IF ((N_ELEMENTS(find_max) NE 0) OR (N_ELEMENTS(save_max) NE 0)) THEN BEGIN
+     ind_max = array_indices(var_plot, pos_max)
+     loc_max = ind_max*scale + origin
+     oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=1.0, color=0
+     IF (N_ELEMENTS(save_max) NE 0) THEN BEGIN
+        folder = "loc_max"
+        file_mkdir, folder
+        IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
+        ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
+        print, folder+filename
+        save, scale, origin, loc_max, filename=filename
+     ENDIF
+  ENDIF
+
+  IF ((N_ELEMENTS(find_min) NE 0) OR (N_ELEMENTS(save_min) NE 0)) THEN BEGIN
+     ind_min = array_indices(var_plot, pos_min)
+     loc_min = ind_min*scale + origin
+     oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=1.0,color=255
+     IF (N_ELEMENTS(save_min) NE 0) THEN BEGIN
+        folder = "loc_min"
+        file_mkdir, folder
+        IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
+        ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
+        print, folder+filename
+        save, scale, origin, loc_min, filename=folder+filename
+     ENDIF
+  ENDIF
+  
   IF (bar_titlepos(0) LT 0) THEN BEGIN
      ignore = 0
      ignore = ignore + 2*bar_name.Contains('!u')
