@@ -53,7 +53,11 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    c_levels=c_levels,c_load=c_load,c_color=c_color,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
                    c_charsize=c_charsize,c_charthick=c_charthick,$
-                   c_save=c_save,c_filename=c_filename
+                   c_save=c_save,c_filename=c_filename, $
+                   ; Mask command options
+                   mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
+                   mask_colors=mask_colors,$
+                   mask_thick=mask_thick,mask_linestyle=mask_linestyle
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -347,7 +351,10 @@ COMMON BIFPLT_COMMON,  $
                        find_min=find_min, find_max=find_max, $
                        save_min=save_min, save_max=save_max, $
                        min_filename=min_filename, max_filename=max_filename, $
-                       var_name=name
+                       var_name=name, $
+                       mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name, $
+                       mask_colors=mask_colors,$
+                       mask_thick=mask_thick,mask_linestyle=mask_linestyle
 
 
            IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN
