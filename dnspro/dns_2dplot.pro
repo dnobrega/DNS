@@ -212,7 +212,10 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 find_min=find_min, find_max=find_max, $
                 save_min=save_min, save_max=save_max, $
                 min_filename=min_filename, max_filename=max_filename, $
-                var_name=var_name
+                var_name=var_name, $
+                mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
+                mask_colors=mask_colors,$
+                mask_thick=mask_thick,mask_linestyle=mask_linestyle
 
 
 COMMON BIFPLT_COMMON,  $
@@ -283,6 +286,38 @@ COMMON BIFPLT_COMMON,  $
 
   AA = FINDGEN(17) * (!PI*2/16.)
   USERSYM, COS(AA), SIN(AA)
+
+  IF (N_ELEMENTS(mask_fun) NE 0) THEN BEGIN
+     void   = EXECUTE('wh = WHERE(' + mask_fun +', nw)')
+     IF (nw GT 0) THEN BEGIN
+        PRINT, STRING(STRTRIM(nw,2))+" elements found with that mask"
+        ind    = array_indices(var_plot, wh)
+        coords = 0.0*ind
+        values = var_plot(wh)
+        coords[0,*] = ind[0,*]*scale[0] + origin[0]
+        coords[1,*] = ind[1,*]*scale[1] + origin[1]
+        c_var = var_plot*0.0
+        c_var(wh) = 1.0
+        IF (strpos(dim,"z") EQ 1) THEN y_plot=reverse(-yy) ELSE y_plot=yy
+        IF (N_ELEMENTS(mask_colors) EQ 0)    THEN mask_colors=0
+        IF (N_ELEMENTS(mask_thick) EQ 0)     THEN mask_thick=2
+        IF (N_ELEMENTS(mask_linestyle) EQ 0) THEN mask_linestyle=0
+        tvlct, rgb, /get
+        LOAD, 39
+        CONTOUR, c_var, xx, y_plot, levels=1, /overplot,$
+                 c_colors=mask_colors,$
+                 c_thick=mask_thick, c_linestyle=mask_linestyle
+        tvlct, rgb
+        IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
+           folder = "masks"
+           IF (N_ELEMENTS(mask_name) EQ 0) THEN mask_name = var_name
+           IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
+           save, xx, yy, coords, values, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
+        ENDIF
+     ENDIF ELSE BEGIN
+        PRINT, "No elements found with that mask"
+     ENDELSE
+  ENDIF
 
   IF ((N_ELEMENTS(find_max) NE 0) OR (N_ELEMENTS(save_max) NE 0)) THEN BEGIN
      ind_max = array_indices(var_plot, pos_max)
