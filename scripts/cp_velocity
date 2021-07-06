@@ -5,4 +5,4 @@ cp -p $1 $2
 hi2=`gdate +%s.%N`
 ttime=`echo $hi1 $hi2 | awk '{print $2-$1}'`
 velocity=`awk "BEGIN {print 8*$weight/$ttime}"`
-echo "Transfer velocity is" $velocity "Mbs"
+echo "Transfer velocity is" $velocity "Mbps"
