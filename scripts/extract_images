@@ -1,0 +1,2 @@
+#!/bin/bash
+ffmpeg -i $1 -r 24/1 -q:v 1 output_%01d.jpg

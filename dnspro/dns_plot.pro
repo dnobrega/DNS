@@ -1,5 +1,5 @@
 
-Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -15,6 +15,9 @@ Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Specific options for 2D plots
                    smooth=smooth, $
                    bottom=bottom, top=top, $
+                   find_min=find_min, find_max=find_max,$
+                   save_min=save_min, save_max=save_max, $
+		   min_filename=min_filename, max_filename=max_filename, $
                    ; Bar options for 2D plots
                    bar_pos=bar_pos, $
                    bar_titlepos=bar_titlepos,$
@@ -29,7 +32,7 @@ Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Variable options
                    dim=dim,$
                    swap=swap, units=units,$
-                   nozbifrost=nozbifrost,$
+                   bifrost_coord=bifrost_coord,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
                    showminmax=showminmax, $
@@ -49,7 +52,12 @@ Pro DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    c_var=c_var,$
                    c_levels=c_levels,c_load=c_load,c_color=c_color,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
-                   c_charsize=c_charsize,c_charthick=c_charthick
+                   c_charsize=c_charsize,c_charthick=c_charthick,$
+                   c_save=c_save,c_filename=c_filename, $
+                   ; Mask command options
+                   mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
+                   mask_colors=mask_colors,$
+                   mask_thick=mask_thick,mask_linestyle=mask_linestyle
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
@@ -207,7 +215,7 @@ COMMON BIFPLT_COMMON,  $
      dbar_titlepos=cb_bar_titlepos
      dbar_orient=cb_bar_orient
      dbar_charthick=cb_bar_charthick
-     dbar_thick=cb_bar_charthick
+     dbar_thick=cb_bar_thick
      dbar_charsize=cb_bar_charsize
      dbar_titchart=cb_bar_titchart
      dbar_titchars=cb_bar_titchars
@@ -248,8 +256,8 @@ COMMON BIFPLT_COMMON,  $
 
 ;---------------------------------------------------------------------------------
   SPAWN, 'echo $DNS_PROJECTS', projects
-  IF (NOT (KEYWORD_SET(folder)))       THEN folder=projects+'/'+idlparam+'/' 
-  file_mkdir,folder
+  IF (NOT (KEYWORD_SET(folder)))         THEN folder=projects+'/'+idlparam+'/' 
+  IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir,folder
 ;---------------------------------------------------------------------------------
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
@@ -309,7 +317,7 @@ COMMON BIFPLT_COMMON,  $
 
   FOR k=snap0,snapf,step DO BEGIN
         dns_var,d,name,k,swap,var,$
-                nozbifrost=nozbifrost,$
+                bifrost_coord=bifrost_coord,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
                 units=units,$
                 ixt=ixt,iyt=iyt,izt=izt, $                   
@@ -333,13 +341,20 @@ COMMON BIFPLT_COMMON,  $
            dns_2dplot, d,k,var_plot,dim, $
                        var_minmax=var_minmax,$
                        showminmax=showminmax, $
-                       nozbifrost=nozbifrost,$
+                       bifrost_coord=bifrost_coord,$
                        xx=xx, yy=yy, zz=zz,$
                        xtitle=xtitle, ytitle=ytitle, title=title(m),$
                        xmin=xmin,xmax=xmax,ymin=ymin,ymax=ymax,zmin=zmin,zmax=zmax,$
                        ishift=ishift,jshift=jshift,$
                        position=position,$
-                       bar_name=bar_title, var_range=var_range, bar_log=bar_log
+                       bar_name=bar_title, var_range=var_range, bar_log=bar_log, $
+                       find_min=find_min, find_max=find_max, $
+                       save_min=save_min, save_max=save_max, $
+                       min_filename=min_filename, max_filename=max_filename, $
+                       var_name=name, $
+                       mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name, $
+                       mask_colors=mask_colors,$
+                       mask_thick=mask_thick,mask_linestyle=mask_linestyle
 
 
            IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN
@@ -364,8 +379,9 @@ COMMON BIFPLT_COMMON,  $
                            c_thick=c_thick, $
                            c_linestyle=c_linestyle, $
                            c_labels=c_labels, $
-                           c_charsize=c_charsize,$
-                           c_charthick=c_charthick
+                           c_charsize=c_charsize, $
+                           c_charthick=c_charthick, $
+                           c_save=c_save,c_filename=c_filename
            ENDIF
 
            wait, 0.0001
@@ -412,7 +428,7 @@ COMMON BIFPLT_COMMON,  $
               dns_1dplot, d,k,var_plot,dim, $
                           var_minmax=var_minmax, $
                           showminmax=showminmax, $
-                          nozbifrost=nozbifrost,$
+                          bifrost_coord=bifrost_coord,$
                           bar_log=bar_log, $
                           xx=xx, yy=yy, zz=zz,$
                           xtitle=xtitle, ytitle=ytitle, title=title_1d,$
