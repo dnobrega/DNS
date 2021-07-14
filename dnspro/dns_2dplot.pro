@@ -331,7 +331,7 @@ COMMON BIFPLT_COMMON,  $
         IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, scale, origin, loc_max, filename=filename
+        save, scale, origin, loc_max, filename=folder+filename
      ENDIF
   ENDIF
 
