@@ -340,7 +340,7 @@ COMMON BIFPLT_COMMON,  $
         IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, scale, origin, loc_max, filename=filename
+        save, loc_max, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
 
@@ -357,7 +357,7 @@ COMMON BIFPLT_COMMON,  $
         IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, scale, origin, loc_min, filename=folder+filename
+        save, loc_min, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
   
