@@ -215,7 +215,8 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 var_name=var_name, $
                 mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
                 mask_colors=mask_colors,$
-                mask_thick=mask_thick,mask_linestyle=mask_linestyle
+                mask_thick=mask_thick,mask_linestyle=mask_linestyle,$
+                save_2d=save_2d
 
 
 COMMON BIFPLT_COMMON,  $
@@ -231,7 +232,6 @@ COMMON BIFPLT_COMMON,  $
 ;---------------------------------------------------------------------------------
 ;                                  MAIN
 ;---------------------------------------------------------------------------------
-
 
  dns_pre_2dplot,var_plot,xx,yy,zz,dim,$
                 origin,scale,$
@@ -273,6 +273,15 @@ COMMON BIFPLT_COMMON,  $
 ;                                     PLOT                               
 ;--------------------------------------------------------------------------------- 
 
+  IF (KEYWORD_SET(save_2d)) THEN BEGIN
+     help, var_plot, position, origin, scale, final_title, xtitle, ytitle, bar_range
+     folder = "var2d"
+     IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
+     save, var_plot, position, origin, $
+           scale, final_title, xtitle, ytitle, bar_range, $
+           filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+".sav"
+  ENDIF
+  
   plot_image, var_plot, $
               position=position,$
               origin=origin, scale=scale, $
@@ -331,7 +340,7 @@ COMMON BIFPLT_COMMON,  $
         IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, scale, origin, loc_max, filename=filename
+        save, loc_max, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
 
@@ -348,7 +357,7 @@ COMMON BIFPLT_COMMON,  $
         IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, scale, origin, loc_min, filename=folder+filename
+        save, loc_min, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
   
