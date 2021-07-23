@@ -155,7 +155,7 @@ fi
 This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
 ```bash
 curl -s $1 | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' > saai.txt
-curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1 IRIS in SAA <br\>/'  > saao.txt
+curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/'  > saao.txt
 paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
 rm saai.txt
 rm saao.txt
