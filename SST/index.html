@@ -312,7 +312,7 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
 <h2 id="extracting-iris-saa-times-for-the-sst-log">Extracting IRIS SAA times for the SST log<a class="headerlink" href="#extracting-iris-saa-times-for-the-sst-log" title="Permanent link">&para;</a></h2>
 <p>This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.</p>
 <div class="codehilite"><pre><span></span><code>curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> &gt; saai.txt
-curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1 IRIS in SAA &lt;br\&gt;/&#39;</span>  &gt; saao.txt
+curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span>  &gt; saao.txt
 paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
 rm saai.txt
 rm saao.txt
