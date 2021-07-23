@@ -11,11 +11,10 @@ PRO dnsvar_divu, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=(d->getvar('divu',snaps,swap=swap))*u.ul/u.ut
+       var=(d->getvar('divu',snaps,swap=swap))/u.ut
        var_title='divU'
        IF (units EQ "solar") THEN BEGIN
-          var_title=var_title+" (km s!u-1!n)"
-          var=var/1e5
+          var_title=var_title+" (s!u-1!n)"
        ENDIF
        var_range=[-1,1]
        var_log=0
