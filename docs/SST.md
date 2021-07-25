@@ -160,7 +160,7 @@ paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
 rm saai.txt
 rm saao.txt
 ```
-The input of the script for a given day can be found within TIM in the following webpage:
+The input of the script for a given day can be found within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
 [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
 
 For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
