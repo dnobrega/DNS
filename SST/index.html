@@ -186,15 +186,14 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 <li>Upgrades of optical components and instrumentation, as well as a thorough evaluation of optical performance: <a href="https://ui.adsabs.harvard.edu/abs/2019A%26A...626A..55S/abstract">Scharmer et al. 2019</a>.</li>
 </ul>
 <h2 id="connecting-to-sst-computers">Connecting to SST computers<a class="headerlink" href="#connecting-to-sst-computers" title="Permanent link">&para;</a></h2>
-<p>It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end,</p>
-<div class="codehilite"><pre><span></span><code>ssh obs@royac6.royac.iac.es
-</code></pre></div>
-
-<p>the password is </p>
-<blockquote>
-<p>!3skedar</p>
-</blockquote>
-<p>Once inside that, you can type, e.g., <code>ssh -X obs@transport1</code> to login into the transport1 machine.</p>
+<p>It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:</p>
+<p><code>ssh obs@royac6.royac.iac.es</code></p>
+<details><summary>Password</summary>
+<p>
+3skedar
+</p>
+</details>
+<p>Then you can type, e.g., <code>ssh -X obs@transport1</code> to login into the transport1 machine.</p>
 <h2 id="quicklook-movies-and-images">Quicklook movies and images<a class="headerlink" href="#quicklook-movies-and-images" title="Permanent link">&para;</a></h2>
 <p>ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
 We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/</code> which will then appear under http://tsih3.uio.no/lapalma/
