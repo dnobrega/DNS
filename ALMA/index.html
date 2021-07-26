@@ -162,24 +162,18 @@
 <p><em>It is necessary to clone the Bifrost code and DNS package for the following instructions.</em></p>
 </li>
 <li>
-<p>To get a list of the existing synthetic files (int.h5) within a folder, type:</p>
+<p>To get a list of the existing synthetic files (int.h5) within a folder, type:
+<div class="highlight"><pre><span></span><code>f<span class="o">=</span>alma_synthfiles()
+</code></pre></div></p>
 </li>
-</ul>
-<div class="codehilite"><pre><span></span><code>f<span class="o">=</span>alma_synthfiles()
+<li>The synthetic files contain the following variables: 
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Stokes_I&#39;</span>,<span class="s1">&#39;Tau1&#39;</span>,<span class="s1">&#39;Wavelength&#39;</span>]
 </code></pre></div>
-
-<ul>
-<li>The synthetic files contain the following variables: </li>
-</ul>
-<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Stokes_I&#39;</span>,<span class="s1">&#39;Tau1&#39;</span>,<span class="s1">&#39;Wavelength&#39;</span>]
+For instance, to read <em>Stokes_I</em>, type:
+<div class="highlight"><pre><span></span><code>stokes_i<span class="o">=</span>alma_readsynth(f(<span class="mi">0</span>),Stokes_I)
 </code></pre></div>
-
-<p>For instance, to read <em>Stokes_I</em>, type:</p>
-<div class="codehilite"><pre><span></span><code>stokes_i<span class="o">=</span>alma_readsynth(f(<span class="mi">0</span>),Stokes_I)
-</code></pre></div>
-
-<p>The units of the output variables are changed in the DNS routines.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">; Stokes_I   : Stokes Intensity in erg/cm^2</span>
+The units of the output variables are changed in the DNS routines.
+<div class="highlight"><pre><span></span><code><span class="c1">; Stokes_I   : Stokes Intensity in erg/cm^2</span>
 <span class="c1">             ; We convert it to temperature:</span>
 <span class="c1">             ; Stokes_I * lambda^2/Kb</span>
 <span class="c1">; Tau1       : Optical depth in cm</span>
@@ -187,9 +181,8 @@
 <span class="c1">; Wavelength : Wavelength in Angstrom</span>
 <span class="c1">             ; We convert it to mm</span>
 </code></pre></div>
-
-<p>This is the list of wavelengths and their correspondence with the different ALMA bands:</p>
-<div class="codehilite"><pre><span></span><code> 0 : (lambda): 5000.000 for debugging purposes (should looks like a photosphere) 
+This is the list of wavelengths and their correspondence with the different ALMA bands:
+<div class="highlight"><pre><span></span><code> 0 : (lambda): 5000.000 for debugging purposes (should looks like a photosphere) 
 
 Band 3 // 3.2  -&gt; 2.77 [mm]
 
@@ -219,34 +212,30 @@ Band 7 // 0.88 -&gt; 0.84 [mm]
 16 : (lambda):  8550840.21677, (freq)    350600000000.01038, (to K) 2.647917e+13
 17 : (lambda):  8502338.57062, (freq)    352600000000.01105, (to K) 2.617963e+13
 18 : (lambda):  8454384.03835, (freq)    354600000000.00323, (to K) 2.588515e+13
-</code></pre></div>
-
+</code></pre></div></li>
+</ul>
 <h2 id="analyzing-synthetic-alma-data-from-bifrost-simulations-modelh5-files">Analyzing synthetic ALMA data from Bifrost simulations: model.h5 files.<a class="headerlink" href="#analyzing-synthetic-alma-data-from-bifrost-simulations-modelh5-files" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><em>It is necessary to clone the Bifrost code and DNS package for the following instructions.</em></p>
 </li>
 <li>
-<p>To get a list of the existing model files (model.h5) that generated the ALMA synthetic files within a folder, type:</p>
+<p>To get a list of the existing model files (model.h5) that generated the ALMA synthetic files within a folder, type:
+<div class="highlight"><pre><span></span><code>g<span class="o">=</span>alma_modelfiles()
+</code></pre></div></p>
 </li>
-</ul>
-<div class="codehilite"><pre><span></span><code>g<span class="o">=</span>alma_modelfiles()
+<li>The model files contain the following variables: 
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Pgas&#39;</span>,<span class="s1">&#39;temperature&#39;</span>,<span class="s1">&#39;dens&#39;</span>,<span class="s1">&#39;dx&#39;</span>,<span class="s1">&#39;dy&#39;</span>,<span class="s1">&#39;z&#39;</span>]
 </code></pre></div>
-
-<ul>
-<li>The model files contain the following variables: </li>
-</ul>
-<div class="codehilite"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Pgas&#39;</span>,<span class="s1">&#39;temperature&#39;</span>,<span class="s1">&#39;dens&#39;</span>,<span class="s1">&#39;dx&#39;</span>,<span class="s1">&#39;dy&#39;</span>,<span class="s1">&#39;z&#39;</span>]
-</code></pre></div>
-
-<p>The units of the output variables are as follows:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">;Pgas         : Gas pressure in CGS</span>
+The units of the output variables are as follows:
+<div class="highlight"><pre><span></span><code><span class="c1">;Pgas         : Gas pressure in CGS</span>
 <span class="c1">;temperature  : Temperature in K</span>
 <span class="c1">;dens         : Total density in CGS</span>
 <span class="c1">;dx           : X axis in cm. Converted to Mm.</span>
 <span class="c1">;dy           : Y axis in Mm. Converted to Mm.</span>
 <span class="c1">;z            : Z azis in Mm. Converted to Mm.</span>
-</code></pre></div>
+</code></pre></div></li>
+</ul>
               
             </div>
           </div>

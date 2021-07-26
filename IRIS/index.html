@@ -173,22 +173,22 @@
 <ul>
 <li>Download IRIS raster data + SDO data in the same folder.</li>
 <li>Open a SSWIDL session in that folder</li>
-<li>Write </li>
-</ul>
-<div class="codehilite"><pre><span></span><code>iris_xfiles
+<li>
+<p>Write 
+<div class="highlight"><pre><span></span><code>iris_xfiles
 </code></pre></div>
-
-<p>and choose the folder with the data, choose one of the .fits and then create LVL3. </p>
-<ul>
-<li>After that, we make a list with the name of the IRIS and SDO files:</li>
+and choose the folder with the data, choose one of the .fits and then create LVL3. </p>
+</li>
+<li>
+<p>After that, we make a list with the name of the IRIS and SDO files:
+<div class="highlight"><pre><span></span><code>f<span class="o">=</span>iris_files()
+</code></pre></div></p>
+</li>
+<li>
+<p>Finally,</p>
+</li>
 </ul>
-<div class="codehilite"><pre><span></span><code>f<span class="o">=</span>iris_files()
-</code></pre></div>
-
-<ul>
-<li>Finally,</li>
-</ul>
-<div class="codehilite"><pre><span></span><code>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
+<div class="highlight"><pre><span></span><code>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
 </code></pre></div>
               
             </div>
