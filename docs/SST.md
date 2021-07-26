@@ -20,15 +20,17 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 
 ## Connecting to SST computers
 
-It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:
-
+It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:  
 ``` ssh obs@royac6.royac.iac.es ```
-<details><summary>Password</summary>
-<p>
-3skedar
-</p>
+
+<details>
+ <summary>Password</summary>
+ <p>
+ 3skedar
+ </p>
 </details>
-Then you can type, e.g., ```ssh -X obs@transport1``` to login into the transport1 machine.
+
+Then you can type, e.g., ``` ssh -X obs@transport1 ``` to login into the transport1 machine.
 
 ## Quicklook movies and images
 
@@ -38,149 +40,232 @@ We can put the SST quicklook movies at `/mn/stornext/d18/lapalma/quicklook/` whi
  http://tsih3.uio.no/lapalma/2020/2020-06-14/
 _which are linked from the Oslo SST wiki:_ 
  [https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020](https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020)
+ 
+## Scripts
 
-#### Script to combine CHROMIS quicklook movies and images:
-```bash
-#!/bin/bash
-quickfile1=4861_+0
-quickfile2=-1371
-image_format=.jpg
-movie_format=.mov
+A list of useful scripts that may help you. To see the code block, just click in the name:
 
-for ii in $( ls -d */); do
-    jj="${ii///}"
-    cd $jj
-    temp=*$quickfile1*$image_format
-    header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
-    image=$header"${jj//:}"$image_format 
-    movie=$header"${jj//:}"$movie_format
-    echo $image 
-    echo $movie         
-    ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
-    echo $ysize
-    ffmpeg -i *$quickfile1*$image_format -i \
-              *$quickfile2*$image_format    \
-              -q:v 1 -filter_complex vstack=inputs=2 $image -hide_banner    
-    ffmpeg -i *$quickfile1*$movie_format -i \
-              *$quickfile2*$movie_format    \
-              -filter_complex vstack=inputs=2 \
-               $movie -hide_banner    
-    cd ..       
-done
+<details>
+ <summary>Script to transfer all the CRISP and CHROMIS quicklook files from transport1 to Oslo: </summary>
+ <p>
+ 
+ ```bash
+ #!/bin/bash
+
+ #------------------------------------------------------------------------------------------
+ # DATE
+ default_date=`date +"%Y.%m.%d"`
+ read -p "Enter date with format YYYY.MM.DD ($default_date): " userdate
+ : "${userdate:=$default_date}"
+ year=${userdate:0:4}
+ month=${userdate:5:2}
+ day=${userdate:8:2}
+ #------------------------------------------------------------------------------------------
+
+ #------------------------------------------------------------------------------------------
+ # LOCATION OF THE QUICKLOOK MOVIES
+ crisp_folder="/scratch/obs/$userdate/CRISP/quicklook/"
+ chromis_folder="/scratch/obs/$userdate/CHROMIS/quicklook/"
+ echo "Preparing to transfer quicklook files from the following folders: "
+ echo $crisp_folder
+ echo $chromis_folder
+ #------------------------------------------------------------------------------------------
+
+ #------------------------------------------------------------------------------------------
+ # OSLO DESTINATION
+ default_folder="/mn/stornext/d18/lapalma/quicklook/$year/$year-$month-$day/"
+ read -p "Enter destination at ITA ($default_folder): " ita_folder
+ : "${ita_folder:=$default_folder}"
+ #------------------------------------------------------------------------------------------
+
+ #------------------------------------------------------------------------------------------
+ # OSLO USER
+ default_user=desiveri
+ read -p "Enter your UiO username ($default_user): " username
+ : "${username:=$default_user}"
+ #------------------------------------------------------------------------------------------
+
+ #------------------------------------------------------------------------------------------
+ # RSYNC TO OSLO
+ rsync -avzP $crisp_folder $chromis_folder \
+       --rsync-path="mkdir -p $ita_folder && rsync" \
+       $username@tsih.uio.no:$ita_folder
+ #------------------------------------------------------------------------------------------
+ ```
+ </p>
+</details> 
+
+
+<details>
+ <summary>Script to combine CHROMIS quicklook movies and images</summary>
+ <p>
+
+ ```bash
+ #!/bin/bash
+ quickfile1=4861_+0
+ quickfile2=-1371
+ image_format=.jpg
+ movie_format=.mov
+
+ for ii in $( ls -d */); do
+     jj="${ii///}"
+     cd $jj
+     temp=*$quickfile1*$image_format
+     header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
+     image=$header"${jj//:}"$image_format 
+     movie=$header"${jj//:}"$movie_format
+     echo $image 
+     echo $movie         
+     ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
+     echo $ysize
+     ffmpeg -i *$quickfile1*$image_format -i \
+               *$quickfile2*$image_format    \
+               -q:v 1 -filter_complex vstack=inputs=2 $image -hide_banner    
+     ffmpeg -i *$quickfile1*$movie_format -i \
+               *$quickfile2*$movie_format    \
+               -filter_complex vstack=inputs=2 \
+                $movie -hide_banner    
+     cd ..       
+ done
 ```
+ </p>
+</details> 
 
-#### Script to combine CRISP quicklook movies and images:
-```bash
-#!/bin/bash
-quickfile1=6563_+0
-quickfile2=8542_+0
-quickfile3=-1680
-image_format=.jpg
-movie_format=.mov
+<details>
+ <summary>Script to combine CRISP quicklook movies and images:</summary>
+ <p>
 
-for ii in $( ls -d */); do
-    jj="${ii///}"
-    cd $jj
-    temp=*$quickfile1*$image_format
-    header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
-    image=$header"${jj//:}"$image_format 
-    movie=$header"${jj//:}"$movie_format
-    ffmpeg -i *$quickfile1*$image_format -i \
-              *$quickfile2*$image_format -i \
-              *$quickfile3*$image_format      \
-              -q:v 1 -filter_complex hstack=inputs=3 $image -hide_banner    
-    ffmpeg -i *$quickfile1*$movie_format -i \
-              *$quickfile2*$movie_format -i \
-              *$quickfile3*$movie_format      \
-              -filter_complex hstack=inputs=3 $movie -hide_banner    
-    cd ..       
-done
-```
+ ```bash
+ #!/bin/bash
+ quickfile1=6563_+0
+ quickfile2=8542_+0
+ quickfile3=-1680
+ image_format=.jpg
+ movie_format=.mov
 
-#### Script to see in the terminal a list of dates with quicklook movies available:
-```bash
-#!/bin/bash                                                                                                                    
-for year in $(curl -s http://tsih3.uio.no/lapalma/ |
-                  grep '\[DIR\]' |
-                  sed 's/.*href="//' |
-                  sed 's/".*//'
-             ); do
-    echo "---------------------------"
-    echo $year
-    echo "---------------------------"
-    for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
-                      grep '\[DIR\]' |
-                      sed 's/.*href="//' |
-                      sed 's/".*//'); do
-        echo $date
-    done
-done
-```
-#### Script to download quicklook movies by date:
-```bash
-#!/bin/bash                                                                                                                                                   
-web="http://tsih3.uio.no/lapalma/"
-input=$1
-if [ ${#input} -eq 0 ]
-then
-    folder=$web
-    read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
-    case $yn in
-        [Yy]* ) wget -c -r -l 3 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
-        [Nn]* ) break;;
-    esac
-fi
-if [ ${#input} -eq 4 ]
-then
-    folder=$web$input"/"
-    wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
-fi
-if [ ${#input} -eq 7 ]
-then
-    temp=(${input//-/ })
-    year=${temp[0]}
-    folder=$web$year"/"
-    echo $folder
-    echo  ${input}*
-    for date in $(curl -s $folder |
-                      grep '\[DIR\]' |
-                      sed 's/.*href="//' |
-                      sed 's/".*//'); do
-        if [[ "$date" == "$input"* ]]; then
-            echo $date
-            wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
-        fi
-    done
-fi
-if [ ${#input} -eq 10 ]
-then
-    temp=(${input//-/ })
-    year=${temp[0]}
-    folder=$web$year"/"$input"/"
-    wget -c -r -l 1 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
-fi
-```
+ for ii in $( ls -d */); do
+     jj="${ii///}"
+     cd $jj
+     temp=*$quickfile1*$image_format
+     header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
+     image=$header"${jj//:}"$image_format 
+     movie=$header"${jj//:}"$movie_format
+     ffmpeg -i *$quickfile1*$image_format -i \
+               *$quickfile2*$image_format -i \
+               *$quickfile3*$image_format      \
+               -q:v 1 -filter_complex hstack=inputs=3 $image -hide_banner    
+     ffmpeg -i *$quickfile1*$movie_format -i \
+               *$quickfile2*$movie_format -i \
+               *$quickfile3*$movie_format      \
+               -filter_complex hstack=inputs=3 $movie -hide_banner    
+     cd ..       
+ done
+ ```
+ </p>
+</details> 
+  
+<details>
+ <summary>Script to see in the terminal a list of dates with quicklook movies available at ITA:</summary>
+ <p>
+  
+ ```bash
+ #!/bin/bash                                                                                                                    
+ for year in $(curl -s http://tsih3.uio.no/lapalma/ |
+                   grep '\[DIR\]' |
+                   sed 's/.*href="//' |
+                   sed 's/".*//'
+              ); do
+     echo "---------------------------"
+     echo $year
+     echo "---------------------------"
+     for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
+                       grep '\[DIR\]' |
+                       sed 's/.*href="//' |
+                       sed 's/".*//'); do
+         echo $date
+     done
+ done
+ ```
+  
+ </p>
+</details> 
 
-## Extracting IRIS SAA times for the SST log
+<details>
+ <summary>Script to download quicklook movies from ITA by date:</summary>
+ <p>
 
-This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
-```bash
-curl -s $1 | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' > saai.txt
-curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/'  > saao.txt
-paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
-rm saai.txt
-rm saao.txt
-```
-The input of the script for a given day can be found within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
-[IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
 
-For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
-```bash
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
-```
-or with xclip:
-```bash
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
-```
+ ```bash
+ #!/bin/bash                                                                                                                                                   
+ web="http://tsih3.uio.no/lapalma/"
+ input=$1
+ if [ ${#input} -eq 0 ]
+ then
+     folder=$web
+     read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
+     case $yn in
+         [Yy]* ) wget -c -r -l 3 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
+         [Nn]* ) break;;
+     esac
+ fi
+ if [ ${#input} -eq 4 ]
+ then
+     folder=$web$input"/"
+     wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+ fi
+ if [ ${#input} -eq 7 ]
+ then
+     temp=(${input//-/ })
+     year=${temp[0]}
+     folder=$web$year"/"
+     echo $folder
+     echo  ${input}*
+     for date in $(curl -s $folder |
+                       grep '\[DIR\]' |
+                       sed 's/.*href="//' |
+                       sed 's/".*//'); do
+         if [[ "$date" == "$input"* ]]; then
+             echo $date
+             wget -c -r -l 2 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
+         fi
+     done
+ fi
+ if [ ${#input} -eq 10 ]
+ then
+     temp=(${input//-/ })
+     year=${temp[0]}
+     folder=$web$year"/"$input"/"
+     wget -c -r -l 1 --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+ fi
+ ```
+
+ </p>
+</details> 
+
+<details>
+ <summary>Script to extract IRIS SAA times for the SST log:</summary>
+ <p>
+
+ This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
+ ```bash
+ curl -s $1 | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' > saai.txt
+ curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/'  > saao.txt
+ paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
+ rm saai.txt
+ rm saao.txt
+ ```
+ The input of the script for a given day can be found within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
+ [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
+
+ For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
+ ```bash
+ alias pbcopy='xsel --clipboard --input'
+ alias pbpaste='xsel --clipboard --output'
+ ```
+ or with xclip:
+ ```bash
+ alias pbcopy='xclip -selection clipboard'
+ alias pbpaste='xclip -selection clipboard -o'
+ ```
+ </p>
+</details> 
