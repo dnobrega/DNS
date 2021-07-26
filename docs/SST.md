@@ -20,14 +20,15 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 
 ## Connecting to SST computers
 
-It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end,
-```bash
-ssh obs@royac6.royac.iac.es
-```
-the password is 
->!3skedar
+It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:
 
-Once inside that, you can type, e.g., ```ssh -X obs@transport1``` to login into the transport1 machine.
+``` ssh obs@royac6.royac.iac.es ```
+<details><summary>Password</summary>
+<p>
+3skedar
+</p>
+</details>
+Then you can type, e.g., ```ssh -X obs@transport1``` to login into the transport1 machine.
 
 ## Quicklook movies and images
 
