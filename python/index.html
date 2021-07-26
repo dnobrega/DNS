@@ -164,23 +164,27 @@
 <h2 id="anaconda">Anaconda<a class="headerlink" href="#anaconda" title="Permanent link">&para;</a></h2>
 <p>Anaconda is a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages.
 See the instructions for the installation here: <a href="https://docs.anaconda.com/anaconda/install/">Anaconda</a></p>
-<p>After the installation, typing in the terminal
-<div class="highlight"><pre><span></span><code>python --version
+<p>After the installation, typing in the terminal</p>
+<div class="codehilite"><pre><span></span><code>python --version
 </code></pre></div>
-you should get the latest version of Python from Anaconda (3.8.3 at the moment of writing this). If you get an older version, then modify your PATH
-to include Anaconda. For Mac under zsh, modify the <em>.zlogin</em> file in your home directory as follows:
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">ANACONDA_DIR</span><span class="o">=</span><span class="s2">&quot;/Users/username/opt/anaconda3/bin&quot;</span>
+
+<p>you should get the latest version of Python from Anaconda (3.8.3 at the moment of writing this). If you get an older version, then modify your PATH
+to include Anaconda. For Mac under zsh, modify the <em>.zlogin</em> file in your home directory as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span> <span class="nv">ANACONDA_DIR</span><span class="o">=</span><span class="s2">&quot;/Users/username/opt/anaconda3/bin&quot;</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANACONDA_DIR</span><span class="s2">&quot;:&quot;</span><span class="nv">$PATH</span>
-</code></pre></div></p>
+</code></pre></div>
+
 <h2 id="irispy">IRISpy<a class="headerlink" href="#irispy" title="Permanent link">&para;</a></h2>
 <p>Python library to analyze IRIS Level 2 data: <a href="https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html">IRISpy</a></p>
-<p>It is probable that to run IRISSpy for the first ime, the only library is missing to install is <em>pyqtgraph</em>, so type in the terminal
-<div class="highlight"><pre><span></span><code>conda install pyqtgraph
+<p>It is probable that to run IRISSpy for the first ime, the only library is missing to install is <em>pyqtgraph</em>, so type in the terminal</p>
+<div class="codehilite"><pre><span></span><code>conda install pyqtgraph
 </code></pre></div>
-If everything is properly installed, you should be able to open a python session and type
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">iris_lmsalpy</span> <span class="k">as</span> <span class="nn">iris</span>
+
+<p>If everything is properly installed, you should be able to open a python session and type</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">iris_lmsalpy</span> <span class="k">as</span> <span class="nn">iris</span>
 </code></pre></div>
-without any problem.</p>
+
+<p>without any problem.</p>
 <h2 id="aiapy">AIApy<a class="headerlink" href="#aiapy" title="Permanent link">&para;</a></h2>
 <p>AIApy is a Python package for analyzing data from the Atmospheric Imaging Assembly (AIA) instrument onboard the Solar Dynamics Observatory spacecraft. 
 It includes software for converting AIA images from level 1 to level 1.5, point spread function deconvolution, and computing the wavelength and 

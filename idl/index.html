@@ -160,40 +160,50 @@
 <p>In your home directory, check your .login file to see if you have defined the
 following variables: <code>IDL_DIR</code> and  <code>IDL_PATH</code>.
 In case of using Mac and tcsh, you should have something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;</span>
 <span class="nb">setenv </span>IDL_DIR <span class="s2">&quot;/Applications/exelis/idl85/&quot;</span>
 </code></pre></div>
+
 <p>including the <code>IDL_PATH</code> in your <code>PATH</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>PATH <span class="nv">$PATH</span><span class="s2">&quot;:&quot;</span><span class="nv">$IDL_PATH</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>PATH <span class="nv">$PATH</span><span class="s2">&quot;:&quot;</span><span class="nv">$IDL_PATH</span>
 </code></pre></div>
+
 <p>In addition to that, you need to have installed Solar Soft IDL (SSWIDL). 
 Check the documentation in <a href="https://dnobrega.github.io/DNS/sswidl/">SSWIDL</a></p>
 <h2 id="terminal-configuration-to-use-the-idl-routines-of-bifrost">Terminal configuration to use the IDL routines of Bifrost<a class="headerlink" href="#terminal-configuration-to-use-the-idl-routines-of-bifrost" title="Permanent link">&para;</a></h2>
 <p>Modify your .login file to add the following system variables.
 In case of working with tcsh:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>BIFROST_IDL <span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
 </code></pre></div>
-where <code>BIFROST</code> is a system variable for your Bifrost repository (see Bifrost section).
+
+<p>where <code>BIFROST</code> is a system variable for your Bifrost repository (see Bifrost section).
 Then, modifiy your <code>IDL_PATH</code> to the the Bifrost IDL folder:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span>
 </code></pre></div>
+
 <p>It is also necessary to define a system variable called <code>OSC_CSTAGGER</code>, which
 depends on your operative system. </p>
 <ul>
-<li>If you use a Linux system:<br />
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/linux&quot;</span>
-</code></pre></div></li>
-<li>In case of a intelmac:<br />
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
-</code></pre></div></li>
+<li>If you use a Linux system:  </li>
 </ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/linux&quot;</span>
+</code></pre></div>
+
+<ul>
+<li>In case of a intelmac:  </li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>OSC_CSTAGGER <span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
+</code></pre></div>
+
 <h2 id="stagger-configuration">Stagger configuration<a class="headerlink" href="#stagger-configuration" title="Permanent link">&para;</a></h2>
 <p>Next step is to go to your stagger folder, typing in your terminal</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$OSC_CSTAGGER</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$OSC_CSTAGGER</span>
 </code></pre></div>
+
 <p>and then</p>
-<div class="highlight"><pre><span></span><code>make
+<div class="codehilite"><pre><span></span><code>make
 </code></pre></div>
+
 <p>That would create the following six files:</p>
 <ul>
 <li>cstagger.pro</li>
@@ -210,16 +220,18 @@ This file is going to be executed automatically each time IDL
 is started. For example, you can create it in your
 IDLWorkspace and then add a similar line in your .login file
 (in case of using tcsh) with the location:</p>
-<p><div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_STARTUP <span class="s2">&quot;/Users/yourname/IDLWorkspace85/startup.pro&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">setenv </span>IDL_STARTUP <span class="s2">&quot;/Users/yourname/IDLWorkspace85/startup.pro&quot;</span>
 </code></pre></div>
-Edit the startup.pro file to add the following line</p>
-<p><div class="highlight"><pre><span></span><code>.r $OSC_CSTAGGER<span class="o">/</span>cstagger
+
+<p>Edit the startup.pro file to add the following line</p>
+<div class="codehilite"><pre><span></span><code>.r $OSC_CSTAGGER<span class="o">/</span>cstagger
 </code></pre></div>
-whici will compile the Stagger routines each time you execute
+
+<p>whici will compile the Stagger routines each time you execute
 IDL. With all the information above, you should be able
 to use the IDL routines of Bifrost without any problem.</p>
 <p>I also have the following useful lines in startup.pro</p>
-<div class="highlight"><pre><span></span><code>br_select_idlparam, idlparam
+<div class="codehilite"><pre><span></span><code>br_select_idlparam, idlparam
 d<span class="o">=</span><span class="nb">obj_new</span>(<span class="s1">&#39;br_data&#39;</span>, idlparam)
 br_getsnapind, idlparam, snaps
 <span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
@@ -227,6 +239,7 @@ br_getsnapind, idlparam, snaps
 <span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
 <span class="nb">PRINT</span>, &#39;
 </code></pre></div>
+
 <p>so everytime I run IDL within a folder containing a numerical experiment carried out with
 Bifrost, I get the object to load Bifrost variables (<code>d</code>), the name of the simulation 
 (<code>idlparam</code>) and all the snapshots I have in that folder (<code>snaps</code>). Then I print 
