@@ -18,6 +18,16 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 - The CRISP imaging spectropolarimeter: [Scharmer et al. 2008](https://ui.adsabs.harvard.edu/abs/2008ApJ...689L..69S/abstract)
 - Upgrades of optical components and instrumentation, as well as a thorough evaluation of optical performance: [Scharmer et al. 2019](https://ui.adsabs.harvard.edu/abs/2019A%26A...626A..55S/abstract).
 
+## Connecting to SST computers
+
+It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end,
+```bash
+ssh obs@royac6.royac.iac.es
+```
+the password is 
+>!3skedar
+
+Once inside that, you can type, e.g., ```ssh -X obs@transport1``` to login into the transport1 machine.
 
 ## Quicklook movies and images
 
