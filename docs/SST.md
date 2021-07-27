@@ -166,6 +166,27 @@ A list of useful scripts that may help you (to see the code block, just click in
 </details> 
 <br/>  
 <details>
+ <summary>Transform from pdf to png</summary>
+ <p>
+
+ To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
+  
+ ```bash
+ #!/bin/bash
+
+ echo "-------------------------------------------------"
+ echo "Transforming from pdf to png the following files:"
+ filelist=`find . -type f -name '*.pdf'`
+ for ii in ${filelist}; do
+     echo $ii
+     pdftoppm $ii $ii -png
+ done
+ ```
+ </p>
+</details> 
+<br/>  
+
+<details>
  <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
   
