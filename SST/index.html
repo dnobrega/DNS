@@ -257,7 +257,7 @@ rsync -avzP <span class="se">\</span>
 <span class="nv">movie_format</span><span class="o">=</span>.mov
 
 <span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
-<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_..........\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
 <span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
 <span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
 <span class="nv">ysize</span><span class="o">=</span><span class="k">$(</span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>height -of <span class="nv">csv</span><span class="o">=</span><span class="nv">s</span><span class="o">=</span>x:p<span class="o">=</span><span class="m">0</span> *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span><span class="k">)</span>
@@ -291,7 +291,7 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
 <span class="nv">movie_format</span><span class="o">=</span>.mov
 
 <span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
-<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_..........\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
 <span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
 <span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
 <span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
