@@ -24,6 +24,10 @@ Setting colors as default option for grep:
 ``` bash
 alias grep="grep --colour"
 ```
+Checking empty folders:
+``` bash
+alias empty="find . -type d -empty" #add -delete to remove the empty folders    
+```
 Since SSWIDL only works in _tcsh_, I do the following to avoid changing the terminal:
 ``` bash
 alias sswidl='tcsh -c "sswidl"'
