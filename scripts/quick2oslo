@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------------------------
+# DATE
+default_date=`date +"%Y.%m.%d"`
+read -p "Enter date with format YYYY.MM.DD ($default_date): " userdate
+: "${userdate:=$default_date}"
+year=${userdate:0:4}
+month=${userdate:5:2}
+day=${userdate:8:2}
+
+#------------------------------------------------------------------------------------------
+# LOCATION OF THE QUICKLOOK MOVIES
+crisp_folder="/scratch/obs/$userdate/CRISP/quicklook/"
+chromis_folder="/scratch/obs/$userdate/CHROMIS/quicklook/"
+echo "Preparing to transfer quicklook files from the following folders: "
+echo $crisp_folder
+echo $chromis_folder
+#------------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------------
+# OSLO DESTINATION
+default_folder="/mn/stornext/d18/lapalma/quicklook/$year/$year-$month-$day/"
+read -p "Enter destination at ITA ($default_folder): " ita_folder
+: "${ita_folder:=$default_folder}"
+#------------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------------
+# OSLO USER
+default_user=desiveri
+read -p "Enter your UiO username ($default_user): " username
+: "${username:=$default_user}"
+#------------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------------
+# RSYNC TO OSLO
+rsync -avzP \
+      --prune-empty-dirs \
+      $crisp_folder $chromis_folder \
+      --rsync-path="mkdir -p $ita_folder && rsync" \
+      $username@tsih.uio.no:$ita_folder
+#------------------------------------------------------------------------------------------
