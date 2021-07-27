@@ -87,7 +87,9 @@ A list of useful scripts that may help you. To see the code block, just click in
 
  #------------------------------------------------------------------------------------------
  # RSYNC TO OSLO
- rsync -avzP $crisp_folder $chromis_folder \
+ rsync -avzP \
+       --prune-empty-dirs \
+       $crisp_folder $chromis_folder \
        --rsync-path="mkdir -p $ita_folder && rsync" \
        $username@tsih.uio.no:$ita_folder
  #------------------------------------------------------------------------------------------
