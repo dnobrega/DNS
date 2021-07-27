@@ -250,33 +250,32 @@ rsync -avzP <span class="se">\</span>
  <summary>Combine CHROMIS quicklook movies and images:</summary>
  <p>
 
- ```bash
- #!/bin/bash
- quickfile1=$1
- quickfile2=$2
- image_format=.jpg
- movie_format=.mov
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">image_format</span><span class="o">=</span>.jpg
+<span class="nv">movie_format</span><span class="o">=</span>.mov
 
- temp=*$quickfile1*$image_format
- header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
- image=$header"${jj//:}"$image_format 
- movie=$header"${jj//:}"$movie_format
- ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
+<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_..........\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
+<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
+<span class="nv">ysize</span><span class="o">=</span><span class="k">$(</span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>height -of <span class="nv">csv</span><span class="o">=</span><span class="nv">s</span><span class="o">=</span>x:p<span class="o">=</span><span class="m">0</span> *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span><span class="k">)</span>
 
- echo "---------------------------------------------------------------------"
- echo "Creating $image"
- ffmpeg -i *$quickfile1*$image_format -i \
-           *$quickfile2*$image_format    \
-           -q:v 1 -filter_complex vstack=inputs=2 $image \
-    -hide_banner -loglevel error
- echo "---------------------------------------------------------------------"
- echo "Creating $movie"
- ffmpeg -i *$quickfile1*$movie_format -i \
-           *$quickfile2*$movie_format    \
-           -filter_complex vstack=inputs=2 \
-           $movie \
-    -hide_banner -loglevel error
-```
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span>    <span class="se">\</span>
+          -q:v <span class="m">1</span> -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="nv">$image</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span>    <span class="se">\</span>
+          -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+          <span class="nv">$movie</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+</code></pre></div>
  </p>
 </details>
 <p><br/></p>
