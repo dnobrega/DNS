@@ -236,7 +236,9 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
 
 <span class="c1">#------------------------------------------------------------------------------------------</span>
 <span class="c1"># RSYNC TO OSLO</span>
-rsync -avzP <span class="nv">$crisp_folder</span> <span class="nv">$chromis_folder</span> <span class="se">\</span>
+rsync -avzP <span class="se">\</span>
+      --prune-empty-dirs <span class="se">\</span>
+      <span class="nv">$crisp_folder</span> <span class="nv">$chromis_folder</span> <span class="se">\</span>
       --rsync-path<span class="o">=</span><span class="s2">&quot;mkdir -p </span><span class="nv">$ita_folder</span><span class="s2"> &amp;&amp; rsync&quot;</span> <span class="se">\</span>
       <span class="nv">$username</span>@tsih.uio.no:<span class="nv">$ita_folder</span>
 <span class="c1">#------------------------------------------------------------------------------------------</span>
