@@ -6,7 +6,7 @@ image_format=.jpg
 movie_format=.mov
 
 temp=*$quickfile1*$image_format
-header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
+header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
 image=$header"${jj//:}"$image_format 
 movie=$header"${jj//:}"$movie_format
 echo "---------------------------------------------------------------------"
