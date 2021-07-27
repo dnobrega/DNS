@@ -127,7 +127,7 @@ A list of useful scripts that may help you (to see the code block, just click in
            -filter_complex vstack=inputs=2 \
            $movie \
     -hide_banner -loglevel error
-```
+ ```
  </p>
 </details> 
 <br/>
