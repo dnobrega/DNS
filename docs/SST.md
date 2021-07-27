@@ -43,10 +43,10 @@ _which are linked from the Oslo SST wiki:_
  
 ## Scripts
 
-A list of useful scripts that may help you. To see the code block, just click in the name:
+A list of useful scripts that may help you (to see the code block, just click in the name):
 
 <details>
- <summary>Script to transfer all the CRISP and CHROMIS quicklook files from transport1 to Oslo: </summary>
+ <summary>Transfer all the CRISP and CHROMIS quicklook files from SST transport1 to Oslo: </summary>
  <p>
  
  ```bash
@@ -96,10 +96,9 @@ A list of useful scripts that may help you. To see the code block, just click in
  ```
  </p>
 </details> 
-
-
+<br/>
 <details>
- <summary>Script to combine CHROMIS quicklook movies and images</summary>
+ <summary>Combine CHROMIS quicklook movies and images</summary>
  <p>
 
  ```bash
@@ -132,42 +131,43 @@ A list of useful scripts that may help you. To see the code block, just click in
 ```
  </p>
 </details> 
-
+<br/>
 <details>
- <summary>Script to combine CRISP quicklook movies and images:</summary>
+ <summary>Combine CRISP quicklook movies and images:</summary>
  <p>
 
  ```bash
  #!/bin/bash
- quickfile1=6563_+0
- quickfile2=8542_+0
- quickfile3=-1680
+ quickfile1=$1
+ quickfile2=$2
+ quickfile3=$3
  image_format=.jpg
  movie_format=.mov
 
- for ii in $( ls -d */); do
-     jj="${ii///}"
-     cd $jj
-     temp=*$quickfile1*$image_format
-     header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
-     image=$header"${jj//:}"$image_format 
-     movie=$header"${jj//:}"$movie_format
-     ffmpeg -i *$quickfile1*$image_format -i \
-               *$quickfile2*$image_format -i \
-               *$quickfile3*$image_format      \
-               -q:v 1 -filter_complex hstack=inputs=3 $image -hide_banner    
-     ffmpeg -i *$quickfile1*$movie_format -i \
-               *$quickfile2*$movie_format -i \
-               *$quickfile3*$movie_format      \
-               -filter_complex hstack=inputs=3 $movie -hide_banner    
-     cd ..       
- done
+ temp=*$quickfile1*$image_format
+ header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
+ image=$header"${jj//:}"$image_format 
+ movie=$header"${jj//:}"$movie_format
+ echo "---------------------------------------------------------------------"
+ echo "Creating $image"
+ ffmpeg -i *$quickfile1*$image_format -i \
+           *$quickfile2*$image_format -i \
+           *$quickfile3*$image_format      \
+           -q:v 1 -filter_complex hstack=inputs=3 $image \
+    -hide_banner -loglevel error
+ echo "---------------------------------------------------------------------"
+ echo "Creating $movie"
+ ffmpeg -i *$quickfile1*$movie_format -i \
+           *$quickfile2*$movie_format -i \
+           *$quickfile3*$movie_format      \
+           -filter_complex hstack=inputs=3 $movie \
+    -hide_banner -loglevel error
  ```
  </p>
 </details> 
-  
+<br/>  
 <details>
- <summary>Script to see in the terminal a list of dates with quicklook movies available at ITA:</summary>
+ <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
   
  ```bash
@@ -191,9 +191,9 @@ A list of useful scripts that may help you. To see the code block, just click in
   
  </p>
 </details> 
-
+<br/>
 <details>
- <summary>Script to download quicklook movies from ITA by date:</summary>
+ <summary>Download quicklook movies from ITA by date:</summary>
  <p>
 
 
@@ -247,9 +247,9 @@ A list of useful scripts that may help you. To see the code block, just click in
 
  </p>
 </details> 
-
+<br/>
 <details>
- <summary>Script to extract IRIS SAA times for the SST log:</summary>
+ <summary>Extract IRIS SAA times for the SST log:</summary>
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
