@@ -314,6 +314,25 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
 </details>
 <p><br/>  </p>
 <details>
+ <summary>Transform from pdf to png</summary>
+ <p>
+
+ To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
+
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Transforming from pdf to png the following files:&quot;</span>
+<span class="nv">filelist</span><span class="o">=</span><span class="sb">`</span>find . -type f -name <span class="s1">&#39;*.pdf&#39;</span><span class="sb">`</span>
+<span class="k">for</span> ii in <span class="si">${</span><span class="nv">filelist</span><span class="si">}</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="nv">$ii</span>
+    pdftoppm <span class="nv">$ii</span> <span class="nv">$ii</span> -png
+<span class="k">done</span>
+</code></pre></div>
+ </p>
+</details>
+<p><br/>  </p>
+<details>
  <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
 
