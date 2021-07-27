@@ -194,9 +194,9 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
 <em>which are linked from the Oslo SST wiki:</em> 
  <a href="https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020">https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020</a></p>
 <h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
-<p>A list of useful scripts that may help you. To see the code block, just click in the name:</p>
+<p>A list of useful scripts that may help you (to see the code block, just click in the name):</p>
 <details>
- <summary>Script to transfer all the CRISP and CHROMIS quicklook files from transport1 to Oslo: </summary>
+ <summary>Transfer all the CRISP and CHROMIS quicklook files from SST transport1 to Oslo: </summary>
  <p>
 
  <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
@@ -245,9 +245,9 @@ rsync -avzP <span class="se">\</span>
 </code></pre></div>
  </p>
 </details>
-
+<p><br/></p>
 <details>
- <summary>Script to combine CHROMIS quicklook movies and images</summary>
+ <summary>Combine CHROMIS quicklook movies and images</summary>
  <p>
 
  ```bash
@@ -280,41 +280,42 @@ rsync -avzP <span class="se">\</span>
 ```
  </p>
 </details>
-
+<p><br/></p>
 <details>
- <summary>Script to combine CRISP quicklook movies and images:</summary>
+ <summary>Combine CRISP quicklook movies and images:</summary>
  <p>
 
  <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">quickfile1</span><span class="o">=</span>6563_+0
-<span class="nv">quickfile2</span><span class="o">=</span>8542_+0
-<span class="nv">quickfile3</span><span class="o">=</span>-1680
+<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">quickfile3</span><span class="o">=</span><span class="nv">$3</span>
 <span class="nv">image_format</span><span class="o">=</span>.jpg
 <span class="nv">movie_format</span><span class="o">=</span>.mov
 
-<span class="k">for</span> ii in <span class="k">$(</span> ls -d */<span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nv">jj</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ii</span><span class="p">///</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="nb">cd</span> <span class="nv">$jj</span>
-    <span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
-    <span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_..........\).*/\1/&#39;</span><span class="k">)</span><span class="s2">&quot;_&quot;</span>
-    <span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
-    <span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
-    ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
-              *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
-              *<span class="nv">$quickfile3</span>*<span class="nv">$image_format</span>      <span class="se">\</span>
-              -q:v <span class="m">1</span> -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$image</span> -hide_banner    
-    ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
-              *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
-              *<span class="nv">$quickfile3</span>*<span class="nv">$movie_format</span>      <span class="se">\</span>
-              -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$movie</span> -hide_banner    
-    <span class="nb">cd</span> ..       
-<span class="k">done</span>
+<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_..........\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
+<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile3</span>*<span class="nv">$image_format</span>      <span class="se">\</span>
+          -q:v <span class="m">1</span> -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$image</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile3</span>*<span class="nv">$movie_format</span>      <span class="se">\</span>
+          -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$movie</span> <span class="se">\</span>
+   -hide_banner -loglevel error
 </code></pre></div>
  </p>
 </details>
-
+<p><br/>  </p>
 <details>
- <summary>Script to see in the terminal a list of dates with quicklook movies available at ITA:</summary>
+ <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
 
  <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                    </span>
@@ -337,9 +338,9 @@ rsync -avzP <span class="se">\</span>
 
  </p>
 </details>
-
+<p><br/></p>
 <details>
- <summary>Script to download quicklook movies from ITA by date:</summary>
+ <summary>Download quicklook movies from ITA by date:</summary>
  <p>
 
 
@@ -392,9 +393,9 @@ rsync -avzP <span class="se">\</span>
 
  </p>
 </details>
-
+<p><br/></p>
 <details>
- <summary>Script to extract IRIS SAA times for the SST log:</summary>
+ <summary>Extract IRIS SAA times for the SST log:</summary>
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
