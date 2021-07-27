@@ -100,25 +100,25 @@ A list of useful scripts that may help you (to see the code block, just click in
 <details>
  <summary>Combine CHROMIS quicklook movies and images:</summary>
  <p>
-
+ 
  ```bash
  #!/bin/bash
  quickfile1=$1
  quickfile2=$2
  image_format=.jpg
  movie_format=.mov
-
+ 	
  temp=*$quickfile1*$image_format
  header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
  image=$header"${jj//:}"$image_format 
  movie=$header"${jj//:}"$movie_format
  ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
-
+ 
  echo "---------------------------------------------------------------------"
  echo "Creating $image"
  ffmpeg -i *$quickfile1*$image_format -i \
            *$quickfile2*$image_format    \
-           -q:v 1 -filter_complex vstack=inputs=2 $image \
+	   -q:v 1 -filter_complex vstack=inputs=2 $image \
     -hide_banner -loglevel error
  echo "---------------------------------------------------------------------"
  echo "Creating $movie"
