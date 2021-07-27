@@ -98,7 +98,7 @@ A list of useful scripts that may help you (to see the code block, just click in
 </details> 
 <br/>
 <details>
- <summary>Combine CHROMIS quicklook movies and images</summary>
+ <summary>Combine CHROMIS quicklook movies and images:</summary>
  <p>
 
  ```bash
@@ -166,7 +166,7 @@ A list of useful scripts that may help you (to see the code block, just click in
 </details> 
 <br/>  
 <details>
- <summary>Transform from pdf to png</summary>
+ <summary>Transform from pdf to png:</summary>
  <p>
 
  To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
