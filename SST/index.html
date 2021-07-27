@@ -266,7 +266,7 @@ rsync -avzP <span class="se">\</span>
 <span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
 ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
           *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span>    <span class="se">\</span>
-          -q:v <span class="m">1</span> -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="nv">$image</span> <span class="se">\</span>
+      -q:v <span class="m">1</span> -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="nv">$image</span> <span class="se">\</span>
    -hide_banner -loglevel error
 <span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
 <span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
