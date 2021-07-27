@@ -23,5 +23,3 @@ ffmpeg -i *$quickfile1*$movie_format -i \
           -filter_complex vstack=inputs=2 \
           $movie \
 	  -hide_banner -loglevel error
-done
-
