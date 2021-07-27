@@ -109,7 +109,7 @@ A list of useful scripts that may help you (to see the code block, just click in
  movie_format=.mov
  	
  temp=*$quickfile1*$image_format
- header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
+ header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
  image=$header"${jj//:}"$image_format 
  movie=$header"${jj//:}"$movie_format
  ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
@@ -144,7 +144,7 @@ A list of useful scripts that may help you (to see the code block, just click in
  movie_format=.mov
 
  temp=*$quickfile1*$image_format
- header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')
+ header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
  image=$header"${jj//:}"$image_format 
  movie=$header"${jj//:}"$movie_format
  echo "---------------------------------------------------------------------"
