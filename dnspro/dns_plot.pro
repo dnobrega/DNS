@@ -50,7 +50,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    o_load=o_load, o_color=o_color, $
                    ; Contour options
                    c_var=c_var,$
-                   c_levels=c_levels,c_load=c_load,c_color=c_color,$
+                   c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
                    c_charsize=c_charsize,c_charthick=c_charthick,$
                    c_save=c_save,c_filename=c_filename, $
@@ -377,7 +377,7 @@ COMMON BIFPLT_COMMON,  $
                            ishift=ishift, jshift=jshift,$
                            ixt=ixt,iyt=iyt,izt=izt,$
                            c_load=c_load,$
-                           c_color=c_color,$
+                           c_colors=c_colors,$
                            c_thick=c_thick, $
                            c_linestyle=c_linestyle, $
                            c_labels=c_labels, $
