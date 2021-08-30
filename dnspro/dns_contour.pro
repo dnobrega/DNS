@@ -16,7 +16,6 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                   c_charthick=c_charthick, $
                   c_save=c_save,c_filename=c_filename
 
-  
    nel=N_ELEMENTS(c_levels)
    tvlct, rgb, /get
    IF (N_ELEMENTS(c_load) EQ 0)      THEN LOAD, 39 ELSE LOAD, c_load
@@ -42,8 +41,9 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                    zmin=zmin,zmax=zmax
 
 
-   IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+   ;IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
 
+   yy=reverse(-yy) 
    IF (N_ELEMENTS(c_save) GT 0) THEN BEGIN
       CONTOUR, reform(var),xx,yy,$
                levels=c_levels,c_colors=c_colors,$
