@@ -1,25 +1,27 @@
 #!/bin/bash
-quickfile1=6563_+0
-quickfile2=8542_+0
-quickfile3=-1680
+quickfile1=$1
+quickfile2=$2
+quickfile3=$3
 image_format=.jpg
 movie_format=.mov
 
-for ii in $( ls -d */); do
-    jj="${ii///}"
-    cd $jj
-    temp=*$quickfile1*$image_format
-    header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
-    image=$header"${jj//:}"$image_format 
-    movie=$header"${jj//:}"$movie_format
-    ffmpeg -i *$quickfile1*$image_format -i \
-              *$quickfile2*$image_format -i \
-              *$quickfile3*$image_format      \
-              -q:v 1 -filter_complex hstack=inputs=3 $image -hide_banner    
-    ffmpeg -i *$quickfile1*$movie_format -i \
-              *$quickfile2*$movie_format -i \
-              *$quickfile3*$movie_format      \
-              -filter_complex hstack=inputs=3 $movie -hide_banner    
-    cd ..	
-done
+temp=*$quickfile1*$image_format
+header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
+image=$header"${jj//:}"$image_format 
+movie=$header"${jj//:}"$movie_format
+echo "---------------------------------------------------------------------"
+echo "Creating $image"
+ffmpeg -i *$quickfile1*$image_format -i \
+          *$quickfile2*$image_format -i \
+          *$quickfile3*$image_format      \
+          -q:v 1 -filter_complex hstack=inputs=3 $image \
+	  -hide_banner -loglevel error
+echo "---------------------------------------------------------------------"
+echo "Creating $movie"
+ffmpeg -i *$quickfile1*$movie_format -i \
+          *$quickfile2*$movie_format -i \
+          *$quickfile3*$movie_format      \
+          -filter_complex hstack=inputs=3 $movie \
+	  -hide_banner -loglevel error
+
 

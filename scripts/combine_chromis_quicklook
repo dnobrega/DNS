@@ -1,27 +1,25 @@
 #!/bin/bash
-quickfile1=4861_+0
-quickfile2=-1371
+quickfile1=$1
+quickfile2=$2
 image_format=.jpg
 movie_format=.mov
 
-for ii in $( ls -d */); do
-    jj="${ii///}"
-    cd $jj
-    temp=*$quickfile1*$image_format
-    header=$( echo $temp | sed -e 's/\(quick_..........\).*/\1/')"_"
-    image=$header"${jj//:}"$image_format 
-    movie=$header"${jj//:}"$movie_format
-    echo $image	
-    echo $movie		
-    ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
-    echo $ysize
-    ffmpeg -i *$quickfile1*$image_format -i \
-              *$quickfile2*$image_format    \
-              -q:v 1 -filter_complex vstack=inputs=2 $image -hide_banner    
-    ffmpeg -i *$quickfile1*$movie_format -i \
-              *$quickfile2*$movie_format    \
-              -filter_complex vstack=inputs=2 \
-               $movie -hide_banner    
-    cd ..	
-done
+temp=*$quickfile1*$image_format
+header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
+image=$header"${jj//:}"$image_format 
+movie=$header"${jj//:}"$movie_format
+ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
 
+echo "---------------------------------------------------------------------"
+echo "Creating $image"
+ffmpeg -i *$quickfile1*$image_format -i \
+          *$quickfile2*$image_format    \
+          -q:v 1 -filter_complex vstack=inputs=2 $image \
+	  -hide_banner -loglevel error
+echo "---------------------------------------------------------------------"
+echo "Creating $movie"
+ffmpeg -i *$quickfile1*$movie_format -i \
+          *$quickfile2*$movie_format    \
+          -filter_complex vstack=inputs=2 \
+          $movie \
+	  -hide_banner -loglevel error

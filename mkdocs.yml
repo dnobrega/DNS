@@ -41,6 +41,9 @@ google_analytics:
 # Extensions
 markdown_extensions:
   - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
   - codehilite:
       guess_lang: false
   - toc:

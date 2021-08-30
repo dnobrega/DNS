@@ -1,4 +1,4 @@
-FUNCTION ALMA_MODELFILES, folder
+PRO ALMA_MODELFILES, model_list, folder=folder
  
  ; --------------------------------------------
  ; Function to create a list of strings
@@ -7,6 +7,5 @@ FUNCTION ALMA_MODELFILES, folder
  IF (KEYWORD_SET(folder)) THEN CD, folder
  model_format='model.h5'
  SPAWN, 'ls *'+model_format, model_list
- RETURN, model_list
 
 END

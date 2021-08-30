@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "-------------------------------------------------"
+echo "Transforming from pdf to png the following files:"
+filelist=`find . -type f -name '*.pdf'`
+for ii in ${filelist}; do
+    echo $ii
+    pdftoppm $ii $ii -png
+done

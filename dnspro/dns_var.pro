@@ -102,7 +102,7 @@ PRO dns_var,d,name,snaps,swap,var,$
     units_coord="  "
  ENDIF ELSE BEGIN
     dim="xy"
-    f=alma_synthfiles()
+    alma_synthfiles, f
     ssnaps=strtrim(string(snaps),2)
     wh=where(strpos(f, ssnaps+"_int") GT -1)
     wv=alma_readsynth(f(wh), "Wavelength")
