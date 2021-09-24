@@ -13,7 +13,7 @@ PRO dnsvar_spz_idealemer, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        
        uz=-d->getvar("uz",snaps,swap=swap)*u.uu
-       b2=d->getvar("b2",snaps,swap=swap)*u.ub*ub
+       b2=d->getvar("b2",snaps,swap=swap)*u.ub*u.ub
        var=zup(uz)*b2
 
        var_title='S!dpz ideal,emer!n'
