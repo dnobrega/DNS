@@ -18,7 +18,7 @@ PRO dnsvar_spz, d, name, snaps, swap, var, units, $
        bx=d->getvar("bx",snaps,swap=swap)*u.ub
        by=d->getvar("by",snaps,swap=swap)*u.ub
 
-       var=ydn(ex)*by-xdn(ey)*bx
+       var=-(ydn(ex)*by-xdn(ey)*bx)
 
        var_title='S!dpz!n'
        IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
