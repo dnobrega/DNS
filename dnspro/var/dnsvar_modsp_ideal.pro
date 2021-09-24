@@ -30,7 +30,7 @@ PRO dnsvar_modsp_ideal, d, name, snaps, swap, var, units, $
        
        var=sqrt(varx*varx+vary*vary+varz*varz)
 
-       var_title='S!dp!n'
+       var_title='S!dp ideal!n'
        IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
        var_range=[1.d6,1.d12]
        var_log=1
