@@ -26,9 +26,9 @@ PRO dnsvar_modsp_hyp, d, name, snaps, swap, var, units, $
 
        vari=xup(vari)
        varj=yup(varj)
-       varz=zup(varz)
+       vark=zup(vark)
 
-       var=sqrt(vari*vari + varj*varj + varz*varz)
+       var=sqrt(vari*vari + varj*varj + vark*vark)
        
        var_title='S!dp hyp!n'
        IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
