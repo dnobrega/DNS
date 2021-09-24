@@ -23,8 +23,12 @@ PRO dnsvar_modsp_ideal, d, name, snaps, swap, var, units, $
        vari=yup(uy)*zup(bz)-zup(uz)*yup(by)
        varj=zup(uz)*xup(bx)-xup(ux)*zup(bz)
        vark=xup(ux)*yup(by)-yup(uy)*xup(bx)
+
+       varx=varj*zup(bz)-vark*yup(by)
+       vary=vark*xup(bx)-vari*zup(bz)
+       varz=vari*yup(by)-varj*xup(bx)
        
-       var=sqrt(vari*vari+varj*varj+vark*vark)
+       var=sqrt(varx*varx+vary*vary+varz*varz)
 
        var_title='S!dp!n'
        IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
