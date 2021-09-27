@@ -27,7 +27,7 @@ PRO dnsvar_taudivsp, d, name, snaps, swap, var, units, $
        var=(ddxup(vari)+ddyup(varj)+ddzup(vark))/u.ul
 
        e=d->getvar("ez",snaps,swap=swap)*u.ue
-       var=var/e
+       var=e/ABS(var + 1d-30)
        
        var_title='!4s!3!ddiv(Sp)!n'
        IF (units EQ "solar") THEN var_title=var_title+" (s)"
