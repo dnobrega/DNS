@@ -27,7 +27,7 @@ PRO dnsvar_divsp_hyp, d, name, snaps, swap, var, units, $
        var=(ddxup(vari)+ddyup(varj)+ddzup(vark))/u.ul
 
        var_title='div(S!dp hyp!n)'
-       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n s!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
        var_range=[-1.0,1.0]*1d-1
        var_log=0
     ENDELSE
