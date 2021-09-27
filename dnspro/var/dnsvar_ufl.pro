@@ -30,9 +30,9 @@ PRO dnsvar_ufl, d, name, snaps, swap, var, units, $
 
        var=(ddxup(vari*ux)+ddyup(varj*uy)+ddzup(vark*uz))
        
-       var_title='u·(JXB)'
+       var_title='u*(JXB)'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
-       var_range=[1d-1,1.d3]
-       var_log=1
+       var_range=[-1,1]*1d-2
+       var_log=0
     ENDELSE
 END
