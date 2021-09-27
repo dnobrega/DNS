@@ -20,9 +20,9 @@ PRO dnsvar_tauufl, d, name, snaps, swap, var, units, $
        by=d->getvar("by",snaps,swap=swap)*u.ub
        bz=d->getvar("bz",snaps,swap=swap)*u.ub
 
-       vari=zdn(ey)*bz-ydn(ez)*by
-       varj=xdn(ez)*bx-zdn(ex)*bz
-       vark=ydn(ex)*by-xdn(ey)*bx
+       vari=zdn(jy)*bz-ydn(jz)*by
+       varj=xdn(jz)*bx-zdn(jx)*bz
+       vark=ydn(jx)*by-xdn(jy)*bx
 
        ux=d->getvar("ux",snaps,swap=swap)*u.uu
        uy=d->getvar("uy",snaps,swap=swap)*u.uu
