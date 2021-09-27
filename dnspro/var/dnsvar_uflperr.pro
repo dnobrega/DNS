@@ -28,7 +28,7 @@ PRO dnsvar_uflperr, d, name, snaps, swap, var, units, $
        uy=d->getvar("uy",snaps,swap=swap)*u.uu
        uz=d->getvar("uz",snaps,swap=swap)*u.uu
 
-       r=d->getvar("uz",snaps,swap=swap)*u.ur
+       r=d->getvar("r",snaps,swap=swap)*u.ur
        
        var=(ddxup(vari*ux)+ddyup(varj*uy)+ddzup(vark*uz))
        var=var/r
