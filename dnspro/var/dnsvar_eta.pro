@@ -11,7 +11,7 @@ PRO dnsvar_eta, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('qjoule',snaps,swap=swap);*u.ue/u.ut
+       qjoule=d->getvar('qjoule',snaps,swap=swap);*u.ue/u.ut
        var=d->getvar('iy',snaps,swap=swap)
        var=var*var
        var=qjoule/var*u.ul*u.ul/u*ut
