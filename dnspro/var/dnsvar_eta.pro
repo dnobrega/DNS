@@ -16,7 +16,10 @@ PRO dnsvar_eta, d, name, snaps, swap, var, units, $
        var=var*var
        var=(qjoule/var)*u.ul*u.ul/u.ut
        var_title="eta"
-       IF (units EQ "solar") THEN var_title=var_title+" (km!u2!n s!u-1!n)"
+       IF (units EQ "solar") THEN BEGIN
+          var_title=var_title+" (km!u2!n s!u-1!n)"
+          var=var/1d10
+       ENDIF
        var_range=[1d-5, 1d5]
        var_log=1
     ENDELSE
