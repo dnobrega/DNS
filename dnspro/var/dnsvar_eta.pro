@@ -14,7 +14,7 @@ PRO dnsvar_eta, d, name, snaps, swap, var, units, $
        qjoule=d->getvar('qjoule',snaps,swap=swap);*u.ue/u.ut
        var=d->getvar('iy',snaps,swap=swap)
        var=var*var
-       var=qjoule/var*u.ul*u.ul/u*ut
+       var=(qjoule/var)*u.ul*u.ul/u.ut
        var_title="eta"
        IF (units EQ "solar") THEN var_title=var_title+" (km!u2!n s!u-1!n)"
        var_range=[1d-5, 1d5]
