@@ -1,12 +1,12 @@
-PRO dnsvar_eta, d, name, snaps, swap, var, units, $
+PRO dnsvar_lundquist, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Estimation of the diffusion coefficient: eta',/info
+       message, 'Lundquist number: S',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_eta, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_lundquist, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
