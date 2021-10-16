@@ -2,6 +2,7 @@
 
 The Solar Orbiter mission is a M-class ESA mission from the COSMIC Vision Program, launched successfully on February 2020. Following the commissioning during spring 2020, all instruments are now working nominally. The cruise phase of the mission will extend until the end of 2021.
 
+## Solar Orbiter main links
 
 - Solar Orbiter ESA webpage: [ESA](https://www.esa.int/Science_Exploration/Space_Science/Solar_Orbiter)
 - Solar Orbiter conferences: [CONF](https://solarorbiter.sciencesconf.org/)
