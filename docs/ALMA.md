@@ -1,5 +1,11 @@
 # ALMA
 
+The Atacama Large Millimeter/submillimeter Array (ALMA) is a radio interferometer constructed in the Atacama Desert at 5,000 meters above sea level in the northern Republic of Chile in South America. This radio telescope is composed of 66 high-precision antennas, which operate on wavelengths of 0.32 to 3.6 mm. Its main array has fifty antennas, each with 12-meter diameters, which act together as a single telescope: an interferometer. This is complemented by a compact array of four antennas with 12-meter diameters and 12 antennas with 7-meter diameters. ALMA’s antennas can be configured in different ways, spacing them at distances from 150 meters to 16 kilometers, giving ALMA a powerful “zoom” variable, which results in images clearer than the images from the Hubble Space Telescope ([ALMA basics](https://almascience.nrao.edu/about-alma/alma-basics)).
+
+
+## ALMA main links
+
+
 - ALMA home webpage: [ALMA](https://almascience.nrao.edu/)
 - SSALMON home webpage: [SSALMON](https://www.ssalmon.uio.no/)
 
