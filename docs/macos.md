@@ -1,6 +1,6 @@
 # Mac OS
 
-This list contains useful software you should install when usinig a Mac for the first time.
+This list contains useful software you should install when using a Mac for the first time.
 
 
 ## Xcode
