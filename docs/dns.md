@@ -13,10 +13,10 @@ replacing "username" with your github username.
 ## Terminal configuration
 
 It is necessary to modify your .login file in your home directory to add the following system variables.
-In case of working with tcsh:
+In case of working with zsh:
 
-``` csh 
-setenv DNS "/folder/DNS" 
+``` zsh 
+export DNS="/folder/DNS" 
 ```
 
 where _folder_ is in this case the location where you have cloned the DNS package. 
@@ -24,16 +24,16 @@ where _folder_ is in this case the location where you have cloned the DNS packag
 Then you need to add ```DNS``` path to the ```IDL_PATH```. You should have something like this
 in case of using tcsh and Mac:
 
-``` csh
-setenv IDL_PATH "/Applications/exelis/idl85/bin"":+"$BIFROST_IDL":+"$DNS
+``` zsh
+export IDL_PATH="/Applications/exelis/idl85/bin"":+"$BIFROST_IDL":+"$DNS
 ```
 
 Finally, you need to define a variable called ```DNS_PROJECTS``` with the default
 location where you want to save the plots and movies you are going
 to create with the DNS package, e.g.,
 
-``` csh
-setenv DNS_PROJECTS "~/dns_plots"
+``` zsh
+export DNS_PROJECTS="~/dns_plots"
 ```
 
 Obviously, you will also need to create that folder. 
@@ -174,5 +174,7 @@ so,
 ``` IDL
 crispex, f[0], f[1], refcube=f[2]
 ```
-will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference.
+will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
+file has to be an image file and the second file has to be a sp (spectral) file. They are actually the same array, but 
+ordered differently. 
 
