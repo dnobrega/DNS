@@ -163,18 +163,18 @@
 <p>replacing "username" with your github username.</p>
 <h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
 <p>It is necessary to modify your .login file in your home directory to add the following system variables.
-In case of working with tcsh:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>DNS <span class="s2">&quot;/folder/DNS&quot;</span> 
+In case of working with zsh:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS</span><span class="o">=</span><span class="s2">&quot;/folder/DNS&quot;</span> 
 </code></pre></div>
 <p>where <em>folder</em> is in this case the location where you have cloned the DNS package. </p>
 <p>Then you need to add <code>DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
 in case of using tcsh and Mac:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$DNS</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">IDL_PATH</span><span class="o">=</span><span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$DNS</span>
 </code></pre></div>
 <p>Finally, you need to define a variable called <code>DNS_PROJECTS</code> with the default
 location where you want to save the plots and movies you are going
 to create with the DNS package, e.g.,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>DNS_PROJECTS <span class="s2">&quot;~/dns_plots&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS_PROJECTS</span><span class="o">=</span><span class="s2">&quot;~/dns_plots&quot;</span>
 </code></pre></div>
 <p>Obviously, you will also need to create that folder. 
 Within <code>DNS_PROJECTS</code>, other folders will be automatically 
@@ -270,7 +270,9 @@ That will give you an array <code>f</code> of files that can be fcubes (floating
 so, 
 <div class="highlight"><pre><span></span><code>crispex, f[<span class="mi">0</span>], f[<span class="mi">1</span>], refcube<span class="o">=</span>f[<span class="mi">2</span>]
 </code></pre></div>
-will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference.</p>
+will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
+file has to be an image file and the second file has to be a sp (spectral) file. They are actually the same array, but 
+ordered differently. </p>
               
             </div>
           </div>

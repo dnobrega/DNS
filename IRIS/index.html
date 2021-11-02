@@ -98,9 +98,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#iris-main-links">IRIS main links</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#analyzing-iris-data">Analyzing IRIS data</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#creating-lvl3-data">Creating LVL3 data</a>
+    <li class="toctree-l2"><a class="reference internal" href="#inspecting-iris-lvl3-data-with-crispex">Inspecting IRIS LVL3 data with CRISPEX</a>
     </li>
     </ul>
                     </li>
@@ -159,17 +157,13 @@
 <ul>
 <li>IRIS home webpage: <a href="https://iris.lmsal.com/">IRIS</a></li>
 <li>IRIS Science Highlights: <a href="http://iris.lmsal.com/science_highlights/">IRIS Higlights</a></li>
+<li>IRIS tutorials: <a href="https://iris.lmsal.com/tutorials.html">Tutorials</a></li>
 <li>IRIS Event Search: <a href="https://iris.lmsal.com/search/">IRIS Search</a></li>
 <li>IRIS Event Search + Other Telescopes/Observations: <a href="http://www.lmsal.com/heksearch/">HEK Search</a></li>
+<li>IRIS2 (a machine learning inversion tool): <a href="https://iris.lmsal.com/iris2/">IRIS2</a></li>
 </ul>
-<h2 id="analyzing-iris-data">Analyzing IRIS data<a class="headerlink" href="#analyzing-iris-data" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Data Analysis Tutorials by Tiago Pereira: <a href="https://folk.uio.no/tiago/iris9/exercises/index.html">Data Analysis Tutorials</a></li>
-<li>IRIS2: <a href="https://iris.lmsal.com/iris2/">IRIS2</a></li>
-<li>A quick-start guide to work with IRIS Level2 data in Python: <a href="https://iris.lmsal.com/itn45/">IRIS_LMSALPY</a></li>
-</ul>
-<h2 id="creating-lvl3-data">Creating LVL3 data<a class="headerlink" href="#creating-lvl3-data" title="Permanent link">&para;</a></h2>
-<p>These are the steps to create LVL3 data to analyze, for instance, IRIS+SDO/AIA data.</p>
+<h2 id="inspecting-iris-lvl3-data-with-crispex">Inspecting IRIS LVL3 data with CRISPEX<a class="headerlink" href="#inspecting-iris-lvl3-data-with-crispex" title="Permanent link">&para;</a></h2>
+<p>These are the to create and analyze LVL3 data with CRISPEX, for instance, IRIS+SDO/AIA data.</p>
 <ul>
 <li>Download IRIS raster data + SDO data in the same folder.</li>
 <li>Open a SSWIDL session in that folder</li>
@@ -185,11 +179,12 @@ and choose the folder with the data, choose one of the .fits and then create LVL
 </code></pre></div></p>
 </li>
 <li>
-<p>Finally,</p>
+<p>Finally,
+<div class="highlight"><pre><span></span><code>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
+</code></pre></div></p>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><code>crispex, f(im), f(sp), sji<span class="o">=</span>f(AIA),<span class="o">/</span>win
-</code></pre></div>
+<p>For more details abour CRISPEX, please check this link: <a href="https://www.lmsal.com/iris_science/doc?cmd=dcur&amp;proj_num=IS0561&amp;file_type=pdf">CRISPEX TUTORIAL</a>.</p>
               
             </div>
           </div>
