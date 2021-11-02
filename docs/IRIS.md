@@ -6,18 +6,15 @@ The Interface Region Imaging Spectrograph (IRIS), is a NASA solar observation sa
 
 - IRIS home webpage: [IRIS](https://iris.lmsal.com/)
 - IRIS Science Highlights: [IRIS Higlights](http://iris.lmsal.com/science_highlights/)
+- IRIS tutorials: [Tutorials](https://iris.lmsal.com/tutorials.html)
 - IRIS Event Search: [IRIS Search](https://iris.lmsal.com/search/)
 - IRIS Event Search + Other Telescopes/Observations: [HEK Search](http://www.lmsal.com/heksearch/)
-
-## Analyzing IRIS data
-- Data Analysis Tutorials by Tiago Pereira: [Data Analysis Tutorials](https://folk.uio.no/tiago/iris9/exercises/index.html)
-- IRIS2: [IRIS2](https://iris.lmsal.com/iris2/)
-- A quick-start guide to work with IRIS Level2 data in Python: [IRIS_LMSALPY](https://iris.lmsal.com/itn45/)
+- IRIS2 (a machine learning inversion tool): [IRIS2](https://iris.lmsal.com/iris2/)
 
 
-## Creating LVL3 data
+## Inspecting IRIS LVL3 data with CRISPEX
 
-These are the steps to create LVL3 data to analyze, for instance, IRIS+SDO/AIA data.
+These are the to create and analyze LVL3 data with CRISPEX, for instance, IRIS+SDO/AIA data.
 
 - Download IRIS raster data + SDO data in the same folder.
 - Open a SSWIDL session in that folder
@@ -33,7 +30,9 @@ f=iris_files()
 ```
 
 - Finally,
-
 ``` IDL
 crispex, f(im), f(sp), sji=f(AIA),/win
 ```
+
+
+For more details abour CRISPEX, please check this link: [CRISPEX TUTORIAL](https://www.lmsal.com/iris_science/doc?cmd=dcur&proj_num=IS0561&file_type=pdf).
