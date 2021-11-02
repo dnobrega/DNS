@@ -92,7 +92,9 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#terminal-configuration">Terminal configuration</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#using-dns-routines">Using DNS routines</a>
+    <li class="toctree-l2"><a class="reference internal" href="#using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-dns-routines-for-sst-observations">Using DNS routines for SST observations</a>
     </li>
     </ul>
                     </li>
@@ -163,12 +165,11 @@
 <p>It is necessary to modify your .login file in your home directory to add the following system variables.
 In case of working with tcsh:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">setenv </span>DNS <span class="s2">&quot;/folder/DNS&quot;</span> 
-<span class="nb">setenv </span>IDL_DNS <span class="nv">$DNS</span><span class="s2">&quot;/dnspro&quot;</span>
 </code></pre></div>
 <p>where <em>folder</em> is in this case the location where you have cloned the DNS package. </p>
-<p>Then you need to add <code>IDL_DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
+<p>Then you need to add <code>DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
 in case of using tcsh and Mac:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$IDL_DNS</span>
+<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>IDL_PATH <span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$DNS</span>
 </code></pre></div>
 <p>Finally, you need to define a variable called <code>DNS_PROJECTS</code> with the default
 location where you want to save the plots and movies you are going
@@ -178,7 +179,7 @@ to create with the DNS package, e.g.,</p>
 <p>Obviously, you will also need to create that folder. 
 Within <code>DNS_PROJECTS</code>, other folders will be automatically 
 created with the name of the simulation when you save a image or movie.</p>
-<h2 id="using-dns-routines">Using DNS routines<a class="headerlink" href="#using-dns-routines" title="Permanent link">&para;</a></h2>
+<h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations<a class="headerlink" href="#using-dns-routines-for-bifrost-simulations" title="Permanent link">&para;</a></h2>
 <p>Within a folder with a Bifrost experiment, run <code>SSWIDL</code>. 
 The first plot we are going to create is a density plot:</p>
 <p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>
@@ -223,21 +224,22 @@ defined.</p>
 <p>Concerning the variables you can plot with DNS package, check <code>dnspro/var</code> folder.
 There you will see a list of routines containg each one a variable. For example, for
 the density, you will see a file called <code>dnsvar_r.pro</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">PRO</span> dnsvar_r, d, name, snaps, swap, var, $
+<div class="highlight"><pre><span></span><code><span class="k">PRO</span> dnsvar_r, d, name, snaps, swap, var, units, $
     var_title<span class="o">=</span>var_title, var_range<span class="o">=</span>var_range, var_log<span class="o">=</span>var_log, $
     info<span class="o">=</span>info
     <span class="k">IF</span> <span class="nb">KEYWORD_SET</span>(info) <span class="k">THEN</span> <span class="k">BEGIN</span>
-       <span class="nb">message</span>, <span class="s1">&#39;Density: rho (g/cm^3)&#39;</span>,<span class="o">/</span>info
+       <span class="nb">message</span>, <span class="s1">&#39;Density: rho&#39;</span>,<span class="o">/</span>info
        <span class="nb">RETURN</span>
     <span class="k">ENDIF</span> <span class="k">ELSE</span> <span class="k">BEGIN</span>
-       <span class="k">IF</span> <span class="nb">n_params</span>() <span class="k">LT</span> <span class="mi">5</span> <span class="k">THEN</span> <span class="k">BEGIN</span>
-          <span class="nb">message</span>,<span class="s1">&#39;dnsvar_r, d, name, snaps, swap, var&#39;</span> $
+       <span class="k">IF</span> <span class="nb">n_params</span>() <span class="k">LT</span> <span class="mi">6</span> <span class="k">THEN</span> <span class="k">BEGIN</span>
+          <span class="nb">message</span>,<span class="s1">&#39;dnsvar_r, d, name, snaps, swap, var, units, &#39;</span> $
                  <span class="o">+</span><span class="s1">&#39;var_title=var_title, var_range=var_range, var_log=var_log&#39;</span>,<span class="o">/</span>info
           <span class="nb">RETURN</span>
        <span class="k">ENDIF</span>
-       UNITS, units
-       var<span class="o">=</span>d<span class="o">-&gt;</span>getvar(name,snaps,swap<span class="o">=</span>swap)<span class="o">*</span>units.ur
-       var_title<span class="o">=</span><span class="s1">&#39;!4q!3 (g cm!u-3!n)&#39;</span>
+       <span class="nb">CALL_PROCEDURE</span>, <span class="s2">&quot;units_&quot;</span><span class="o">+</span>units, u
+       var<span class="o">=</span>d<span class="o">-&gt;</span>getvar(name,snaps,swap<span class="o">=</span>swap)<span class="o">*</span>u.ur
+       var_title<span class="o">=</span><span class="s1">&#39;!4q!3&#39;</span>
+       <span class="k">IF</span> (units <span class="k">EQ</span> <span class="s2">&quot;solar&quot;</span>) <span class="k">THEN</span> var_title<span class="o">=</span>var_title<span class="o">+</span><span class="s2">&quot; (g cm!u-3!n)&quot;</span>
        var_range<span class="o">=</span>[<span class="mf">1.d-15</span>,<span class="mf">1.d-11</span>]
        var_log<span class="o">=</span><span class="mi">1</span>
     ENDELSE
@@ -251,6 +253,24 @@ with the meaning of each variable, in the IDL prompt you can type, e.g.,</p>
 which will show the information about the variable of that routine, in this case,</p>
 <div class="highlight"><pre><span></span><code>% DNSVAR_MODB: Module of the magnetic field: B <span class="o">(</span>G<span class="o">)</span>
 </code></pre></div>
+<h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations<a class="headerlink" href="#using-dns-routines-for-sst-observations" title="Permanent link">&para;</a></h2>
+<p>Within a folder with reduced SST observations, run <code>SSWIDL</code>. </p>
+<p>Then create a string list with the names of the cube files within that folder. To that end, type
+<div class="highlight"><pre><span></span><code>fcube, f
+</code></pre></div>
+That will give you an array <code>f</code> of files that can be fcubes (floating-point cubes) or icubes (integer cubes).</p>
+<p>The following step is, e.g., to read the first cube of the list by writting
+<div class="highlight"><pre><span></span><code>cube<span class="o">=</span>lp_read(f(<span class="mi">0</span>),header<span class="o">=</span>header)
+</code></pre></div></p>
+<p>You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:
+<div class="highlight"><pre><span></span><code> <span class="mi">0</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>icube
+ <span class="mi">1</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_sp.icube
+ <span class="mi">2</span> hmimag_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>fcube
+</code></pre></div>
+so, 
+<div class="highlight"><pre><span></span><code>crispex, f[<span class="mi">0</span>], f[<span class="mi">1</span>], refcube<span class="o">=</span>f[<span class="mi">2</span>]
+</code></pre></div>
+will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference.</p>
               
             </div>
           </div>
