@@ -2,19 +2,19 @@
 
 ## First steps
 
-In your home directory, check your .login file to see if you have defined the
+In your home directory, check your .zlogin file to see if you have defined the
 following variables: ```IDL_DIR``` and  ```IDL_PATH```.
 In case of using Mac and tcsh, you should have something like this:
 
-``` csh
-setenv IDL_PATH "/Applications/exelis/idl85/bin"
-setenv IDL_DIR "/Applications/exelis/idl85/"
+``` zsh
+export IDL_PATH="/Applications/exelis/idl85/bin"
+export IDL_DIR="/Applications/exelis/idl85/"
 ```
 
 including the ```IDL_PATH``` in your ```PATH```:
 
-``` csh
-setenv PATH $PATH":"$IDL_PATH
+``` zsh
+export PATH=$PATH":"$IDL_PATH
 ```
 
 In addition to that, you need to have installed Solar Soft IDL (SSWIDL). 
@@ -22,42 +22,42 @@ Check the documentation in [SSWIDL](https://dnobrega.github.io/DNS/sswidl/)
 
 ## Terminal configuration to use the IDL routines of Bifrost
 
-Modify your .login file to add the following system variables.
+Modify your .zlogin file to add the following system variables.
 In case of working with tcsh:
 
-``` csh
-setenv BIFROST_IDL $BIFROST"/IDL"
+``` zsh
+export BIFROST_IDL=$BIFROST"/IDL"
 ```
 where ```BIFROST``` is a system variable for your Bifrost repository (see Bifrost section).
 Then, modifiy your ```IDL_PATH``` to the the Bifrost IDL folder:
 
-``` csh
-setenv IDL_PATH "/Applications/exelis/idl85/bin"":+"$BIFROST_IDL
+``` zsh
+export IDL_PATH="/Applications/exelis/idl85/bin"":+"$BIFROST_IDL
 ```
 
 It is also necessary to define a system variable called ```OSC_CSTAGGER```, which
 depends on your operative system. 
 
 - If you use a Linux system:  
-``` tcsh 
-setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/linux"
+``` zsh 
+export OSC_CSTAGGER=$BIFROST_IDL"/cstagger/linux"
 ``` 
 - In case of a intelmac:  
-``` tcsh 
-setenv OSC_CSTAGGER $BIFROST_IDL"/cstagger/intelmac"
+``` zsh 
+export OSC_CSTAGGER=$BIFROST_IDL"/cstagger/intelmac"
 ```
 
 ## Stagger configuration
 
 Next step is to go to your stagger folder, typing in your terminal
 
-``` tcsh
+``` zsh
 cd $OSC_CSTAGGER
 ```
 
 and then
 
-``` tcsh 
+``` zsh 
 make
 ```
 
@@ -80,8 +80,8 @@ is started. For example, you can create it in your
 IDLWorkspace and then add a similar line in your .login file
 (in case of using tcsh) with the location:
 
-``` csh
-setenv IDL_STARTUP "/Users/yourname/IDLWorkspace85/startup.pro"
+``` zsh
+export IDL_STARTUP="/Users/yourname/IDLWorkspace85/startup.pro"
 ```
 Edit the startup.pro file to add the following line
 
@@ -108,5 +108,3 @@ so everytime I run IDL within a folder containing a numerical experiment carried
 Bifrost, I get the object to load Bifrost variables (```d```), the name of the simulation 
 (```idlparam```) and all the snapshots I have in that folder (```snaps```). Then I print 
 on the screen some of that information.
-
-
