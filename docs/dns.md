@@ -17,16 +17,15 @@ In case of working with tcsh:
 
 ``` csh 
 setenv DNS "/folder/DNS" 
-setenv IDL_DNS $DNS"/dnspro"
 ```
 
 where _folder_ is in this case the location where you have cloned the DNS package. 
 
-Then you need to add ```IDL_DNS``` path to the ```IDL_PATH```. You should have something like this
+Then you need to add ```DNS``` path to the ```IDL_PATH```. You should have something like this
 in case of using tcsh and Mac:
 
 ``` csh
-setenv IDL_PATH "/Applications/exelis/idl85/bin"":+"$BIFROST_IDL":+"$IDL_DNS
+setenv IDL_PATH "/Applications/exelis/idl85/bin"":+"$BIFROST_IDL":+"$DNS
 ```
 
 Finally, you need to define a variable called ```DNS_PROJECTS``` with the default
@@ -41,7 +40,7 @@ Obviously, you will also need to create that folder.
 Within ```DNS_PROJECTS```, other folders will be automatically 
 created with the name of the simulation when you save a image or movie.
 
-## Using DNS routines
+## Using DNS routines for Bifrost simulations
 
 Within a folder with a Bifrost experiment, run ```SSWIDL```. 
 The first plot we are going to create is a density plot:
@@ -115,21 +114,22 @@ There you will see a list of routines containg each one a variable. For example,
 the density, you will see a file called ```dnsvar_r.pro```
 
 ``` IDL 
-PRO dnsvar_r, d, name, snaps, swap, var, $
+PRO dnsvar_r, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Density: rho (g/cm^3)',/info
+       message, 'Density: rho',/info
        RETURN
     ENDIF ELSE BEGIN
-       IF n_params() LT 5 THEN BEGIN
-          message,'dnsvar_r, d, name, snaps, swap, var' $
+       IF n_params() LT 6 THEN BEGIN
+          message,'dnsvar_r, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
-       UNITS, units
-       var=d->getvar(name,snaps,swap=swap)*units.ur
-       var_title='!4q!3 (g cm!u-3!n)'
+       CALL_PROCEDURE, "units_"+units, u
+       var=d->getvar(name,snaps,swap=swap)*u.ur
+       var_title='!4q!3'
+       IF (units EQ "solar") THEN var_title=var_title+" (g cm!u-3!n)"
        var_range=[1.d-15,1.d-11]
        var_log=1
     ENDELSE
@@ -149,4 +149,30 @@ which will show the information about the variable of that routine, in this case
 % DNSVAR_MODB: Module of the magnetic field: B (G)
 ```
 
+## Using DNS routines for SST observations
+
+Within a folder with reduced SST observations, run ```SSWIDL```. 
+
+Then create a string list with the names of the cube files within that folder. To that end, type
+``` IDL
+fcube, f
+```
+That will give you an array ```f``` of files that can be fcubes (floating-point cubes) or icubes (integer cubes).
+
+The following step is, e.g., to read the first cube of the list by writting
+``` IDL
+cube=lp_read(f(0),header=header)
+```
+
+You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:
+``` IDL
+ 0 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube
+ 1 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37_sp.icube
+ 2 hmimag_2017-05-25T08:07:37_aligned_3950_2017-05-25T08:07:37.fcube
+```
+so, 
+``` IDL
+crispex, f[0], f[1], refcube=f[2]
+```
+will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference.
 
