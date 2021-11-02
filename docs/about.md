@@ -8,7 +8,7 @@ ___
 ### Papers
 
 
-18 papers in refereed journals. 262 citations. H-index: 10. Updated by 2021-11-16 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc&p_=0).
+18 papers in refereed journals. 267 citations. H-index: 10. Updated by 2021-11-02 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc&p_=0).
 
 > - _Solar surges related to UV bursts: Characterization through k-means, inversions, and density diagnosticsg._  
 [Nóbrega-Siverio et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021arXiv210813960N/abstract) 
@@ -58,7 +58,7 @@ ___
 ___
 ### Invited talks
 
-> - _Modeling coronal jets and surges._  
+> - _Modeling solar coronal jets and surges._  
 HINODE-14/IRIS-11 meeting. 25-29 October 2021-10 (Washington, USA).  (online).  
 > - _Surges: a fundamental piece in the solar atmosphere puzzle._  
 XIV.0 Reunión científica de la SEA 2020-07 (online).   
