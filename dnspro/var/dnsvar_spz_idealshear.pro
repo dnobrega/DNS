@@ -23,7 +23,7 @@ PRO dnsvar_spz_idealshear, d, name, snaps, swap, var, units, $
        var=-bz*(zdn( xup(ux*bx) + yup(uy*by)) + uz*bz )
 
        var_title='S!dpz ideal,shear!n'
-       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
        var_range=[-1,1]*1d6
        var_log=0
     ENDELSE
