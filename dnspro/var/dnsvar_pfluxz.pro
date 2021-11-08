@@ -13,7 +13,7 @@ PRO dnsvar_pfluxz, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        var=d->getvar("p",snaps,swap=swap)*u.ue
        uz=-d->getvar("uz",snaps,swap=swap)*u.ul/u.ut
-       var=var*uz
+       var=zdn(var)*uz
        var_title='Fp!dz!n'
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
