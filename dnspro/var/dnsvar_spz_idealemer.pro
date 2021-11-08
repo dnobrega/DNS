@@ -16,8 +16,9 @@ PRO dnsvar_spz_idealemer, d, name, snaps, swap, var, units, $
        bx=d->getvar('bx',snaps,swap=swap)*u.ub
        by=d->getvar('by',snaps,swap=swap)*u.ub
        bz=d->getvar('bz',snaps,swap=swap)*u.ub
-       
-       var=zup(uz)*( xup(bx*bx) + yup(by*by) + zup(bz*bz) )
+
+       var = ( xup(bx*bx) + yup(by*by) + zup(bz*bz) )
+       var = uz*zdn(var) ; in the z-face
 
        var_title='S!dpz ideal,emer!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
