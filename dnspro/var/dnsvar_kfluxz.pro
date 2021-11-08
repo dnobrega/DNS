@@ -14,7 +14,7 @@ PRO dnsvar_kfluxz, d, name, snaps, swap, var, units, $
        var=-d->getvar("uz",snaps,swap=swap)*u.ul/u.ut
        r=d->getvar("r",snaps,swap=swap)*u.ur
        u2=d->getvar("u2",snaps,swap=swap)*u.uu*u.uu
-       var=0.5*r*u2*var
+       var=0.5*zdn(r*u2)*var
        var_title='Fk!dz!n'
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
