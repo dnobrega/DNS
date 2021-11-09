@@ -273,14 +273,14 @@ COMMON BIFPLT_COMMON,  $
   DNS_COLORBAR, bar_range, nlev=nlev,$
                 varname=bar_title, $
                 log=bar_log,  $
-                charthick=bar_charthick,$
-                thick=bar_thick, $
-                chars=bar_charsize,$
-                orient=bar_orient, $
-                position=bar_pos,$
-                postitle=bar_titlepos,$
-                tit_chart=bar_titchart,$
-                tit_chars=bar_titchars
+                charthick=cb_bar_charthick,$
+                thick=cb_bar_thick, $
+                chars=cb_bar_charsize,$
+                orient=cb_bar_orient, $
+                position=cb_bar_pos,$
+                postitle=cb_bar_titlepos,$
+                tit_chart=cb_bar_titchart,$
+                tit_chars=cb_bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
       png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
