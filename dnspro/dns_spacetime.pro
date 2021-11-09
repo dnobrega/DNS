@@ -259,15 +259,40 @@ COMMON BIFPLT_COMMON,  $
   y0 = min(tv)
   dy = tv(1)-tv(0)
 
+  bar_range=var_range
   plot_image, scr1, $
               position=position,$
               origin=[x0,y0], scale=[dx,dy], $
               xtitle=xtitle, ytitle=ytitle, $
-              min=var_range[0],max=var_range[1], $
+              min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $
               isotropic=isotropic,$
               bottom=bottom, top=top,$
               smooth=smooth
+  
+  IF (bar_titlepos(0) LT 0) THEN BEGIN
+     ignore = 0
+     ignore = ignore + 2*bar_name.Contains('!u')
+     ignore = ignore + 2*bar_name.Contains('!n')
+     ignore = ignore + 2*bar_name.Contains('!d')
+     ignore = ignore + 2*bar_name.Contains('!4')
+     ignore = ignore + 2*bar_name.Contains('!3')
+     title_len=STRLEN(bar_title)-ignore
+     bar_titlepos(0)=(bar_pos[2]+bar_pos[0])/2.0 - (title_len - 1)*0.01
+  ENDIF
+  nlev=256
+  lev2vel=bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
+  DNS_COLORBAR, lev2vel,$
+                varname=bar_title, $
+                log=bar_log,  $
+                charthick=bar_charthick,$
+                thick=bar_thick, $
+                chars=bar_charsize,$
+                orient=bar_orient, $
+                position=bar_pos,$
+                postitle=bar_titlepos,$
+                tit_chart=bar_titchart,$
+                tit_chars=bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
       png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
