@@ -1,4 +1,4 @@
-PRO DNS_COLORBAR,lev2vel, $
+PRO DNS_COLORBAR,bar_range, nlev=nlev,$
                  varname=varname, $
                  log=log,  $
                  charthick=charthick,thick=thick,chars=chars,$
@@ -30,8 +30,9 @@ PRO DNS_COLORBAR,lev2vel, $
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
- nlev=n_elements(lev2vel)
- colarr=findgen(nlev)
+ IF (NOT(KEYWORD_SET(nlev))) THEN nlev=256
+ lev2vel = bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
+ colarr  = findgen(nlev)
  nn=320/nlev & nnlong=nn*nlev & nnshort = 5
  aa = findgen(nn*nlev,nnshort)
  FOR i=0,nlev-1 DO FOR jj=0,nn-1 DO FOR kk=0,nnshort-1 DO aa(i*nn+jj,kk)=lev2vel(i) 
