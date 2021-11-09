@@ -173,14 +173,20 @@ COMMON BIFPLT_COMMON,  $
   IF dim EQ "x" THEN BEGIN
      wh   = min(where(z ge coord))
      scr1 = FLTARR(nx, ns)
+     dx   = x(1)-x(0)
+     x0   = x(0)
   ENDIF
   IF dim EQ "y" THEN BEGIN
      wh   = min(where(z ge coord))
      scr1 = FLTARR(ny, ns)
+     dx   = y(1)-y(0)
+     x0   = y(0)
   ENDIF
   IF dim EQ "z" THEN BEGIN
      wh   = min(where(x ge coord))
      scr1 = FLTARR(nz, ns)
+     dx   = z(1)-z(0)
+     x0   = z(0)
   ENDIF
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
@@ -243,18 +249,26 @@ COMMON BIFPLT_COMMON,  $
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-        ytitle = "t (min)" 
         IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
         IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
         IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
         tv(jj) = tt
         jj = jj + 1
    ENDFOR     
+  IF (units EQ "solar") THEN ytitle = "t (min)" ELSE ytitle="t"
+  y0 = min(tv)
+  dy = tv(1)-tv(0)
 
-   
-
+  plot_image, scr1, $
+              position=position,$
+              origin=[x0,y0], scale=[dx,dy], $
+              xtitle=xtitle, ytitle=ytitle, $
+              min=var_range[0],max=var_range[1], $
+              xminor=5, yminor=5, $
+              isotropic=isotropic,$
+              bottom=bottom, top=top,$
+              smooth=smooth
   
-
    IF (KEYWORD_SET(png)) THEN BEGIN
       png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
       WRITE_PNG, png_file, TVRD(TRUE=1)
