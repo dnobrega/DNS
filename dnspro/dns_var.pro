@@ -13,7 +13,7 @@ PRO dns_var,d,name,snaps,swap,var,$
             ixstep=ixstep, iystep=iystep, izstep=izstep,$
             ixf=ixf,iyf=iyf,izf=izf,$
             im0=im0, imf=imf, imstep=imstep,$
-            dim=dim, $
+            dim=dim, tt=tt, $
             xx=xx, yy=yy, zz=zz,$
             xshift=xshift, yshift=yshift, zshift=zshift, $
             xtitle=xtitle, ytitle=ytitle, $
@@ -371,8 +371,8 @@ PRO dns_var,d,name,snaps,swap,var,$
  CALL_PROCEDURE, "units_"+units, u
  t=d->gett()*u.ut
  IF (units EQ "solar") THEN t_units=1./60. ELSE t_units=1.0
- t=t(0)*t_units 
- stt=STRING(t,format='(F10.2)')
+ tt=t(0)*t_units
+ stt=STRING(tt,format='(F10.2)')
  title='t='+STRTRIM(stt,2)
  IF (units EQ "solar") THEN title=title+' min'
  IF N_ELEMENTS(coord) EQ 1 THEN BEGIN
