@@ -248,17 +248,6 @@ COMMON BIFPLT_COMMON,  $
         save, loc_min, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
-  
-  IF (bar_titlepos(0) LT 0) THEN BEGIN
-     ignore = 0
-     ignore = ignore + 2*bar_name.Contains('!u')
-     ignore = ignore + 2*bar_name.Contains('!n')
-     ignore = ignore + 2*bar_name.Contains('!d')
-     ignore = ignore + 2*bar_name.Contains('!4')
-     ignore = ignore + 2*bar_name.Contains('!3')
-     title_len=STRLEN(bar_name)-ignore
-     bar_titlepos(0)=(bar_pos[2]+bar_pos[0])/2.0 - (title_len - 1)*0.01
-  ENDIF
 
   DNS_COLORBAR, bar_range, nlev=nlev,$
                 varname=bar_name, $
