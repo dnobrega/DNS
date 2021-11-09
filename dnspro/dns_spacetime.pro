@@ -158,9 +158,9 @@ COMMON BIFPLT_COMMON,  $
      snap0=snapt & snapf=snapt
   ENDIF
   ns = FLOOR((snapf-snap0)/step) + 1
-  tt = FLTARR(ns)
+  tv = FLTARR(ns)
 ;---------------------------------------------------------------------------------
-  IF NOT (KEYWORD_SET(dim)) THEN dim="z"
+  IF NOT (KEYWORD_SET(dim)) THEN dim="x"
   d->readpars, snap0
   d->readmesh
   x     = d->getx()
@@ -171,16 +171,16 @@ COMMON BIFPLT_COMMON,  $
   nz    = d->getmz()
   IF ny EQ 1 THEN iyt=0 ELSE STOP
   IF dim EQ "x" THEN BEGIN
-     wh   = min(where(x ge coord))
-     scr1 = FLTARR(nz, ns)
-  ENDIF
-  IF dim EQ "y" THEN BEGIN
-     wh   = min(where(y ge coord))
-     scr1 = FLTARR(nz, ns)
-  ENDIF
-  IF dim EQ "z" THEN BEGIN
      wh   = min(where(z ge coord))
      scr1 = FLTARR(nx, ns)
+  ENDIF
+  IF dim EQ "y" THEN BEGIN
+     wh   = min(where(z ge coord))
+     scr1 = FLTARR(ny, ns)
+  ENDIF
+  IF dim EQ "z" THEN BEGIN
+     wh   = min(where(x ge coord))
+     scr1 = FLTARR(nz, ns)
   ENDIF
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
@@ -236,20 +236,24 @@ COMMON BIFPLT_COMMON,  $
                 ixstep=ixstep, iystep=iystep, izstep=izstep,$
                 ixf=ixf,iyf=iyf,izf=izf,$
                 im0=im0, imf=imf, imstep=imstep,$
-                dim=dim, $
+                dim=dim, tt=tt,$
                 xx=xx, yy=yy, zz=zz,$
                 xshift=xshift, yshift=yshift, zshift=zshift, $
-                xtitle=xtitle, ytitle=ytitle, title=title,$
+                xtitle=xtitle, $
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-        IF (dim EQ "x") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+        ytitle = "t (min)" 
+        IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
         IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
-        IF (dim EQ "z") THEN scr1[*,jj] = reform(var[*, iyt, wh])
+        IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+        tv(jj) = tt
         jj = jj + 1
    ENDFOR     
 
-   stop
+   
+
+  
 
    IF (KEYWORD_SET(png)) THEN BEGIN
       png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
