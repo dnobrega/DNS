@@ -160,6 +160,7 @@ COMMON BIFPLT_COMMON,  $
   ns = FLOOR((snapf-snap0)/step) + 1
   tt = FLTARR(ns)
 ;---------------------------------------------------------------------------------
+  IF NOT (KEYWORD_SET(dim)) THEN dim="z"
   d->readpars, snap0
   d->readmesh
   x     = d->getx()
@@ -168,6 +169,7 @@ COMMON BIFPLT_COMMON,  $
   nx    = d->getmx()
   ny    = d->getmy()
   nz    = d->getmz()
+  IF ny EQ 1 THEN iyt=0 ELSE STOP
   IF dim EQ "x" THEN BEGIN
      wh   = min(where(x ge coord))
      scr1 = FLTARR(nz, ns)
