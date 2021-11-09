@@ -283,7 +283,7 @@ COMMON BIFPLT_COMMON,  $
                 tit_chars=cb_bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
-      png_file=folder+idlparam+'_'+namefile+'_'+dim+'_'+STRTRIM(k,2)+'_'+repstr(STRCOMPRESS(title(m))," ", "_")+'.png'
+      png_file=folder+idlparam+'_'+namefile+'_spacetime.png'
       WRITE_PNG, png_file, TVRD(TRUE=1)
    ENDIF
         
