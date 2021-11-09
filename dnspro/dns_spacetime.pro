@@ -270,19 +270,7 @@ COMMON BIFPLT_COMMON,  $
               bottom=bottom, top=top,$
               smooth=smooth
   
-  IF (bar_titlepos(0) LT 0) THEN BEGIN
-     ignore = 0
-     ignore = ignore + 2*bar_name.Contains('!u')
-     ignore = ignore + 2*bar_name.Contains('!n')
-     ignore = ignore + 2*bar_name.Contains('!d')
-     ignore = ignore + 2*bar_name.Contains('!4')
-     ignore = ignore + 2*bar_name.Contains('!3')
-     title_len=STRLEN(bar_title)-ignore
-     bar_titlepos(0)=(bar_pos[2]+bar_pos[0])/2.0 - (title_len - 1)*0.01
-  ENDIF
-  nlev=256
-  lev2vel=bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
-  DNS_COLORBAR, lev2vel,$
+  DNS_COLORBAR, bar_range, nlev=nlev,$
                 varname=bar_title, $
                 log=bar_log,  $
                 charthick=bar_charthick,$
