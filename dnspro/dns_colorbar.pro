@@ -7,6 +7,10 @@ PRO DNS_COLORBAR,bar_range, nlev=nlev,$
                  position=position,$
                  postitle=postitle
 
+
+  IF (NOT(KEYWORD_SET(nlev)))   THEN nlev=256
+  IF (NOT(KEYWORD_SET(orient))) THEN orient="xtop"
+  
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 ;
 ;                                  HELP
@@ -30,7 +34,6 @@ PRO DNS_COLORBAR,bar_range, nlev=nlev,$
 
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
- IF (NOT(KEYWORD_SET(nlev))) THEN nlev=256
  lev2vel = bar_range[0]+findgen(nlev)*(bar_range[1]-bar_range[0])/(nlev-1)
  colarr  = findgen(nlev)
  nn=320/nlev & nnlong=nn*nlev & nnshort = 5
