@@ -267,10 +267,10 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
      ENDIF
 
      IF (KEYWORD_SET(save_spacetime)) THEN BEGIN
-        help, scr1, position, origin, scale, title, xtitle, ytitle, bar_range
+        help, scr1, position, origin, scale, title, xtitle, ytitle, bar_range, bar_title
         IF (NOT FILE_TEST(stfolder, /DIRECTORY)) THEN file_mkdir, stfolder
         save, scr1, position, origin, $
-              scale, title, xtitle, ytitle, bar_range, $
+              scale, title, xtitle, ytitle, bar_range, bar_title, $
               filename=saved_stvar_name
      ENDIF
 
