@@ -22,6 +22,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                    namefile=namefile,$                   
                    folder=folder,png=png,$
                    save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
+                   save_spacetime=save_spacetime,$
                    ; Variable options
                    swap=swap, units=units,$
                    bifrost_coord=bifrost_coord,$
@@ -135,6 +136,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
   SPAWN, 'echo $DNS_PROJECTS', projects
   IF (NOT (KEYWORD_SET(folder)))         THEN folder=projects+'/'+idlparam+'/' 
   IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir,folder
+  stfolder = "spacetime"
 ;---------------------------------------------------------------------------------
   IF NOT (KEYWORD_SET(snap0)) THEN snap0=MIN(snaps) 
   IF NOT (KEYWORD_SET(snapf)) THEN snapf=MAX(snaps)
@@ -216,9 +218,15 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-  jj = 0
-  FOR k=snap0,snapf,step DO BEGIN
-      dns_var,d,name,k,swap,var,$
+  save_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+".sav"
+  IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
+     print, "Restoring variable"
+     restore, saved_stvar_name, /verbose
+  ENDIF ELSE BEGIN
+  
+     jj = 0
+     FOR k=snap0,snapf,step DO BEGIN
+        dns_var,d,name,k,swap,var,$
                 bifrost_coord=bifrost_coord,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
                 units=units,$
@@ -234,29 +242,41 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-      IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
-      IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
-      IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
-      tv(jj) = tt
-      jj = jj + 1
-  ENDFOR     
-  IF (units EQ "solar") THEN ytitle = "t (min)" ELSE ytitle="t"
-  y0 = min(tv)
-  dy = tv(1)-tv(0)
-
-
-  bar_range=var_range
-  IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
-     IF (bar_log EQ 1) THEN BEGIN
-        scr1=alog10(scr1)
-        IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
-        bar_range=alog10(var_range)
+        IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
+        IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
+        IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+        tv(jj) = tt
+        jj = jj + 1
+     ENDFOR     
+     IF (units EQ "solar") THEN ytitle = "t (min)" ELSE ytitle="t"
+     y0 = min(tv)
+     dy = tv(1)-tv(0)
+     origin = [x0,y0]
+     scale  = [dx,dy]
+     
+     bar_range=var_range
+     IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
+        IF (bar_log EQ 1) THEN BEGIN
+           scr1=alog10(scr1)
+           IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
+           bar_range=alog10(var_range)
+        ENDIF
      ENDIF
-  ENDIF
 
+     IF (KEYWORD_SET(save_spacetime)) THEN BEGIN
+        help, scr1, position, origin, scale, title, xtitle, ytitle, bar_range
+        IF (NOT FILE_TEST(stfolder, /DIRECTORY)) THEN file_mkdir, stfolder
+        save, scr1, position, origin, $
+              scale, title, xtitle, ytitle, bar_range, $
+              filename=saved_stvar_name
+     ENDIF
+
+  ENDELSE
+  
   plot_image, scr1, $
               position=position,$
-              origin=[x0,y0], scale=[dx,dy], $
+              origin=origin, scale=scale, $
+              title=title, $
               xtitle=xtitle, ytitle=ytitle, $
               min=bar_range[0],max=bar_range[1], $
               xminor=5, yminor=5, $
