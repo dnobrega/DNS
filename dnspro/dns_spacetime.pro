@@ -225,6 +225,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
   IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
      print, "Restoring variable"
      restore, saved_stvar_name, /verbose
+     IF KEYWORD_SET(var_log) THEN bar_log=var_log
   ENDIF ELSE BEGIN
   
      jj = 0
@@ -257,24 +258,25 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
      origin = [x0,y0]
      scale  = [dx,dy]
      
-     bar_range=var_range
-     IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
-        IF (bar_log EQ 1) THEN BEGIN
-           scr1=alog10(scr1)
-           IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
-           bar_range=alog10(var_range)
-        ENDIF
-     ENDIF
-
      IF (KEYWORD_SET(save_spacetime)) THEN BEGIN
-        help, scr1, position, origin, scale, title, xtitle, ytitle, bar_range, bar_title
+        help, scr1, position, origin, scale, title, xtitle, ytitle, var_range, bar_log, bar_title
         IF (NOT FILE_TEST(stfolder, /DIRECTORY)) THEN file_mkdir, stfolder
         save, scr1, position, origin, $
-              scale, title, xtitle, ytitle, bar_range, bar_title, $
+              scale, title, xtitle, ytitle, var_range, bar_log, bar_title, $
               filename=saved_stvar_name
      ENDIF
 
   ENDELSE
+
+
+  bar_range=var_range
+  IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
+     IF (bar_log EQ 1) THEN BEGIN
+        scr1=alog10(scr1)
+        IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
+        bar_range=alog10(var_range)
+     ENDIF
+  ENDIF
   
   plot_image, scr1, $
               position=position,$
