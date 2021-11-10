@@ -38,21 +38,6 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                    xshift=xshift, yshift=yshift,zshift=zshift,ishift=ishift, jshift=jshift
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
-;                                COMMON
-;
-;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-
-COMMON BIFPLT_COMMON,  $
-       cb_bar_pos, cb_bar_titlepos, $
-       cb_bar_orient, cb_bar_charthick, $
-       cb_bar_thick, cb_bar_charsize,$
-       cb_bar_titchart,$
-       cb_bar_titchars,$
-       cb_bottom, cb_top, $
-       cb_isotropic, cb_smooth
-
-;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-;
 ;                             INPUT PARAMETERS                                   
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -233,7 +218,7 @@ COMMON BIFPLT_COMMON,  $
 
   jj = 0
   FOR k=snap0,snapf,step DO BEGIN
-        dns_var,d,name,k,swap,var,$
+      dns_var,d,name,k,swap,var,$
                 bifrost_coord=bifrost_coord,$
                 var_title=var_title, var_range=var_range, var_log=var_log,$
                 units=units,$
@@ -249,17 +234,26 @@ COMMON BIFPLT_COMMON,  $
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-        IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
-        IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
-        IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
-        tv(jj) = tt
-        jj = jj + 1
-   ENDFOR     
+      IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
+      IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
+      IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+      tv(jj) = tt
+      jj = jj + 1
+  ENDFOR     
   IF (units EQ "solar") THEN ytitle = "t (min)" ELSE ytitle="t"
   y0 = min(tv)
   dy = tv(1)-tv(0)
 
+
   bar_range=var_range
+  IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
+     IF (bar_log EQ 1) THEN BEGIN
+        scr1=alog10(scr1)
+        IF (bar_range(0) EQ 0) THEN bar_range(0)=1d-30
+        bar_range=alog10(var_range)
+     ENDIF
+  ENDIF
+
   plot_image, scr1, $
               position=position,$
               origin=[x0,y0], scale=[dx,dy], $
