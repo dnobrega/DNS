@@ -224,8 +224,10 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
   saved_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)+".sav"
   IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
      print, "Restoring variable"
+     IF KEYWORD_SET(var_range) THEN keep_var_range=var_range
      restore, saved_stvar_name, /verbose
-     IF KEYWORD_SET(var_log) THEN bar_log=var_log
+     IF KEYWORD_SET(var_log)   THEN bar_log=var_log
+     IF KEYWORD_SET(keep_var_range) THEN var_range=keep_var_range
   ENDIF ELSE BEGIN
   
      jj = 0
