@@ -304,7 +304,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                 tit_chars=cb_bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
-      png_file=folder+idlparam+'_'+namefile+'_spacetime_'+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+'.png'
+      png_file=folder+idlparam+'_'+namefile+'_spacetime_'+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)+".png"
       WRITE_PNG, png_file, TVRD(TRUE=1)
    ENDIF
         
