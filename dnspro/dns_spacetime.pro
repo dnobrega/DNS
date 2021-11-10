@@ -158,22 +158,25 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
   nz    = d->getmz()
   IF ny EQ 1 THEN iyt=0 ELSE STOP
   IF dim EQ "x" THEN BEGIN
-     wh   = min(where(z ge coord))
+     tm   = min( ABS(-z-coord), wh) 
      scr1 = FLTARR(nx, ns)
      dx   = x(1)-x(0)
      x0   = x(0)
+     title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "y" THEN BEGIN
-     wh   = min(where(z ge coord))
+     tm   = min( ABS(-z-coord), wh)
      scr1 = FLTARR(ny, ns)
      dx   = y(1)-y(0)
      x0   = y(0)
+     title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "z" THEN BEGIN
-     wh   = min(where(x ge coord))
+     tm   = min( ABS(x-coord), wh)
      scr1 = FLTARR(nz, ns)
      dx   = z(1)-z(0)
      x0   = z(0)
+     title = "Cut at X = "+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
@@ -218,7 +221,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-  save_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+".sav"
+  saved_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+".sav"
   IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
      print, "Restoring variable"
      restore, saved_stvar_name, /verbose
@@ -297,7 +300,7 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                 tit_chars=cb_bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
-      png_file=folder+idlparam+'_'+namefile+'_spacetime.png'
+      png_file=folder+idlparam+'_'+namefile+'_spacetime_'+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+'.png'
       WRITE_PNG, png_file, TVRD(TRUE=1)
    ENDIF
         
