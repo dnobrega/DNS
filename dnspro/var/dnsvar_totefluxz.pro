@@ -11,13 +11,18 @@ PRO dnsvar_totefluxz, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar("e",snaps,swap=swap)*u.ue
-       var=d->getvar("pg",snaps,swap=swap)*u.ue + var
+       uz=-d->getvar("uz",snaps,swap=swap)*u.ul/u.ut
+
        r=d->getvar("r",snaps,swap=swap)*u.ur
        u2=d->getvar("u2",snaps,swap=swap)*u.uu*u.uu
-       var=0.5*r*u2 + var
-       uz=-d->getvar("uz",snaps,swap=swap)*u.ul/u.ut
-       var=zdn(var)*uz
+       var=zdn(0.5*r*u2)
+
+       e=d->getvar("e",snaps,swap=swap)*u.ue
+       var = zdn(e)*uz + var
+       
+       pg=d->getvar("pg",snaps,swap=swap)*u.ue 
+       var = zdn(pg)*uz + var
+   
        var_title='F!dEz!n'
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
