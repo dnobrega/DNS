@@ -15,7 +15,7 @@ PRO dnsvar_totefluxz, d, name, snaps, swap, var, units, $
 
        r=d->getvar("r",snaps,swap=swap)*u.ur
        u2=d->getvar("u2",snaps,swap=swap)*u.uu*u.uu
-       var=zdn(0.5*r*u2)
+       var=zdn(0.5*r*u2)*uz
 
        e=d->getvar("e",snaps,swap=swap)*u.ue
        var = zdn(e)*uz + var
