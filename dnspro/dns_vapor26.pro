@@ -65,7 +65,8 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
            writeu,lu,float(var)
            close,lu
            free_lun,lu
-           spawn,'raw2vdf -ts '+string(isnaps)+' -varname ' +name +' '+vdffile+' var.dat'
+           pmm, var
+           spawn,'raw2vdf -ts '+STRTRIM(string(isnaps),2)+' -varname ' +name +' '+vdffile+' var.dat'
            spawn,'rm -f var.dat'
         ENDIF
     ENDFOR
