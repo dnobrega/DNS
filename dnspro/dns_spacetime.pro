@@ -162,6 +162,7 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
      scr1 = FLTARR(nx, ns)
      dx   = x(1)-x(0)
      x0   = x(0)
+     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm" ELSE $
      title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "y" THEN BEGIN
@@ -169,6 +170,7 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
      scr1 = FLTARR(ny, ns)
      dx   = y(1)-y(0)
      x0   = y(0)
+     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm" ELSE $
      title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "z" THEN BEGIN
@@ -176,6 +178,7 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
      scr1 = FLTARR(nz, ns)
      dx   = z(1)-z(0)
      x0   = z(0)
+     IF KEYWORD_SET(integration) THEN  title = "Integrated up to X = "+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm" ELSE $
      title = "Cut at X = "+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
 ;---------------------------------------------------------------------------------
