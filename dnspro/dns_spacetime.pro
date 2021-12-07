@@ -285,7 +285,7 @@ PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,
   var_max = MAX(scr1, pos_max, min=var_min, SUBSCRIPT_MIN=pos_min, /NAN)
   IF (KEYWORD_SET(var_minmax))       THEN bar_range=[var_min,var_max] ELSE bar_range=var_range
   PRINT, "------------------------------------------------------"
-  PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
+  PRINT, " ",name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "------------------------------------------------------"
 
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
