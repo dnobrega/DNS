@@ -282,7 +282,12 @@ PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,
   ENDELSE
 
 
-  bar_range=var_range
+  var_max = MAX(scr1, pos_max, min=var_min, SUBSCRIPT_MIN=pos_min, /NAN)
+  IF (KEYWORD_SET(var_minmax))       THEN bar_range=[var_min,var_max] ELSE bar_range=var_range
+  PRINT, "------------------------------------------------------"
+  PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
+  PRINT, "------------------------------------------------------"
+
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
      IF (bar_log EQ 1) THEN BEGIN
         scr1=alog10(scr1)
@@ -290,6 +295,9 @@ PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,
         bar_range=alog10(var_range)
      ENDIF
   ENDIF
+
+
+
   
   plot_image, scr1, $
               position=position,$
