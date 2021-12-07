@@ -1,5 +1,5 @@
 
-PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -283,11 +283,11 @@ PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,
 
 
   var_max = MAX(scr1, pos_max, min=var_min, SUBSCRIPT_MIN=pos_min, /NAN)
-  IF (KEYWORD_SET(var_minmax))       THEN bar_range=[var_min,var_max] ELSE bar_range=var_range
+  IF (KEYWORD_SET(var_minmax))       THEN var_range=[var_min,var_max] 
   PRINT, "-------------------------------------------------------------------------------------"
   PRINT, " ",name+": "+strtrim(snap0,2)+","+strtrim(snapf,2)+","+strtrim(step,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "-------------------------------------------------------------------------------------"
-
+  bar_range=var_range
   IF N_ELEMENTS(bar_log) NE 0 THEN BEGIN
      IF (bar_log EQ 1) THEN BEGIN
         scr1=alog10(scr1)
