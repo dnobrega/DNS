@@ -1,5 +1,5 @@
 
-PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+PRO DNS_SPACETIME, name, coord, integration=integratation, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -221,7 +221,8 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
 ;
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-  saved_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)+".sav"
+  saved_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)
+  IF KEYWORD_SET(integration) THEN saved_stvar_name=saved_stvar_name+"_integrated.sav" ELSE saved_stvar_name=saved_stvar_name+".sav"
   IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
      print, "Restoring variable"
      IF KEYWORD_SET(var_range) THEN keep_var_range=var_range
@@ -248,9 +249,16 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
-        IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
-        IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
-        IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+
+        IF KEYWORD_SET(integration) THEN BEGIN
+           IF (dim EQ "x") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[*, iyt, 0 : wh],3))
+           IF (dim EQ "y") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[ixt, *, 0 : wh],3))
+           IF (dim EQ "z") THEN scr1[*,jj] = 1e8*ABS(x(0)-x(wh))*reform(total(var[wh, iyt, *],1))
+        ENDIF ELSE BEGIN
+           IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
+           IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
+           IF (dim EQ "z") THEN scr1[*,jj] = reform(var[wh, iyt, *])
+        ENDELSE
         tv(jj) = tt
         jj = jj + 1
      ENDFOR     
@@ -259,6 +267,9 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
      dy = tv(1)-tv(0)
      origin = [x0,y0]
      scale  = [dx,dy]
+     
+     bar_title = bar_title.Replace(')', ' cm)')
+
      
      IF (KEYWORD_SET(save_spacetime)) THEN BEGIN
         help, scr1, position, origin, scale, title, xtitle, ytitle, var_range, bar_log, bar_title
@@ -304,7 +315,8 @@ PRO DNS_SPACETIME, name, coord, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,ste
                 tit_chars=cb_bar_titchars
   
    IF (KEYWORD_SET(png)) THEN BEGIN
-      png_file=folder+idlparam+'_'+namefile+'_spacetime_'+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)+".png"
+      png_file=folder+idlparam+'_'+namefile+'_spacetime_'+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)
+      IF KEYWORD_SET(integration) THEN png_file=png_file+"_integrated.png" ELSE png_file=png_file+".png"
       WRITE_PNG, png_file, TVRD(TRUE=1)
    ENDIF
         
