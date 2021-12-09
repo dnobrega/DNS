@@ -1,5 +1,6 @@
 
-PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
+PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, minval=minval,maxval=maxval,$
+                   snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; General plot options
                    nwin=nwin, multi=multi,$
                    xsize=xsize, ysize=ysize, setplot=setplot,$
@@ -162,24 +163,33 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
      scr1 = FLTARR(nx, ns)
      dx   = x(1)-x(0)
      x0   = x(0)
-     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm" ELSE $
-     title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
+     title = "Cut at Z = "
+     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "
+     IF KEYWORD_SET(minval)      THEN  title = "Min down to Z = "
+     IF KEYWORD_SET(maxval)      THEN  title = "Max down to Z = "  
+     title = title+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "y" THEN BEGIN
      tm   = min( ABS(-z-coord), wh)
      scr1 = FLTARR(ny, ns)
      dx   = y(1)-y(0)
      x0   = y(0)
-     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm" ELSE $
-     title = "Cut at Z = "+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
+     title = "Cut at Z = "
+     IF KEYWORD_SET(integration) THEN  title = "Integrated down to Z = "
+     IF KEYWORD_SET(minval)      THEN  title = "Min down to Z = "
+     IF KEYWORD_SET(maxval)      THEN  title = "Max down to Z = "	
+     title = title+STRTRIM(STRING(-z(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
   IF dim EQ "z" THEN BEGIN
      tm   = min( ABS(x-coord), wh)
      scr1 = FLTARR(nz, ns)
      dx   = z(1)-z(0)
      x0   = z(0)
-     IF KEYWORD_SET(integration) THEN  title = "Integrated up to X = "+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm" ELSE $
-     title = "Cut at X = "+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm"
+     title = "Cut at X = "
+     IF KEYWORD_SET(integration) THEN  title = "Integrated up to X = "
+     IF KEYWORD_SET(minval)      THEN  title = "Min up to X = "
+     IF KEYWORD_SET(maxval)      THEN  title = "Max up to X = "
+     title = title+STRTRIM(STRING(x(wh),format='(F10.2)'),2)+" Mm"
   ENDIF
 ;---------------------------------------------------------------------------------
   IF (NOT KEYWORD_SET(setplot)) THEN BEGIN
@@ -225,7 +235,10 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
   saved_stvar_name=stfolder+'/varst_'+name+"_"+STRTRIM(snap0,2)+"_"+STRTRIM(snapf,2)+"_"+STRTRIM(step,2)+"_"+dim+"_"+STRTRIM(STRING(wh),2)
-  IF KEYWORD_SET(integration) THEN saved_stvar_name=saved_stvar_name+"_integrated.sav" ELSE saved_stvar_name=saved_stvar_name+".sav"
+  IF KEYWORD_SET(integration) THEN saved_stvar_name=saved_stvar_name+"_integrated"
+  IF KEYWORD_SET(minval) THEN saved_stvar_name=saved_stvar_name+"_minval"
+  IF KEYWORD_SET(maxval) THEN saved_stvar_name=saved_stvar_name+"_maxval"
+  saved_stvar_name=saved_stvar_name+".sav"
   IF file_test(saved_stvar_name) EQ 1 THEN BEGIN
      print, "Restoring variable"
      IF KEYWORD_SET(var_range) THEN keep_var_range=var_range
@@ -253,10 +266,22 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
 
 
-        IF KEYWORD_SET(integration) THEN BEGIN
-           IF (dim EQ "x") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[*, iyt, 0 : wh],3))
-           IF (dim EQ "y") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[ixt, *, 0 : wh],3))
-           IF (dim EQ "z") THEN scr1[*,jj] = 1e8*ABS(x(0)-x(wh))*reform(total(var[wh, iyt, *],1))
+        IF (KEYWORD_SET(integration) OR KEYWORD_SET(minval) OR KEYWORD_SET(maxval)) THEN BEGIN
+           IF KEYWORD_SET(integration) THEN BEGIN
+              IF (dim EQ "x") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[*, iyt, 0 : wh],3))
+              IF (dim EQ "y") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[ixt, *, 0 : wh],3))
+              IF (dim EQ "z") THEN scr1[*,jj] = 1e8*ABS(x(0)-x(wh))*reform(total(var[0 : wh, iyt, *],1))
+           ENDIF
+           IF KEYWORD_SET(minval) THEN BEGIN
+              IF (dim EQ "x") THEN scr1[*,jj] = reform(min(var[*, iyt, 0 : wh],dim=3))
+              IF (dim EQ "y") THEN scr1[*,jj] = reform(min(var[ixt, *, 0 : wh],dim=3))
+              IF (dim EQ "z") THEN scr1[*,jj] = reform(min(var[0 : wh, iyt, *],dim=1))
+           ENDIF
+           IF KEYWORD_SET(maxval) THEN BEGIN
+              IF (dim EQ "x") THEN scr1[*,jj] = reform(max(var[*, iyt, 0 : wh],dim=3))
+              IF (dim EQ "y") THEN scr1[*,jj] = reform(max(var[ixt, *, 0 : wh],dim=3))
+              IF (dim EQ "z") THEN scr1[*,jj] = reform(max(var[0 : wh, iyt, *],dim=1))
+           ENDIF
         ENDIF ELSE BEGIN
            IF (dim EQ "x") THEN scr1[*,jj] = reform(var[*, iyt, wh])
            IF (dim EQ "y") THEN scr1[*,jj] = reform(var[ixt, *, wh])
@@ -271,8 +296,7 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, snap0=snap0,sn
      origin = [x0,y0]
      scale  = [dx,dy]
      
-     bar_title = bar_title.Replace(')', ' cm)')
-
+     IF KEYWORD_SET(integration) THEN bar_title = bar_title.Replace(')', ' cm)')
      
      IF (KEYWORD_SET(save_spacetime)) THEN BEGIN
         help, scr1, position, origin, scale, title, xtitle, ytitle, var_range, bar_log, bar_title
