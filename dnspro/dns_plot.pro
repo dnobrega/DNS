@@ -36,6 +36,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
                    var_minmax=var_minmax,$
                    showminmax=showminmax, $
+                   showsnap=showsnap,$
                    xmin=xmin, xmax=xmax, $
                    ymin=ymin, ymax=ymax, $
                    zmin=zmin, zmax=zmax, $
@@ -331,7 +332,8 @@ COMMON BIFPLT_COMMON,  $
                 xshift=xshift, yshift=yshift, zshift=zshift, $
                 xtitle=xtitle, ytitle=ytitle, title=title,$
                 bar_log=bar_log, bar_title=bar_title,$
-                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+                save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
+                showsnap=showsnap
 
      IF STRLEN(dim) EQ 2 THEN BEGIN
      
