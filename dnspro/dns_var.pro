@@ -19,7 +19,8 @@ PRO dns_var,d,name,snaps,swap,var,$
             xtitle=xtitle, ytitle=ytitle, $
             title=title, $
             bar_log=bar_log, bar_title=bar_title, $
-            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder
+            save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
+            showsnap=showsnap
 
 
 ;--------------------------------------------------------------------------------- 
@@ -378,7 +379,7 @@ PRO dns_var,d,name,snaps,swap,var,$
  IF N_ELEMENTS(coord) EQ 1 THEN BEGIN
     IF (STRLEN(dim) EQ 2) THEN $
        title=coord+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+$
-             units_coord+title+'  snap='+strtrim(string(snaps),2)
+             units_coord+title
     IF (STRLEN(dim) EQ 1) THEN $
        title=coord+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+$
              units_coord+title
@@ -387,9 +388,11 @@ PRO dns_var,d,name,snaps,swap,var,$
        title={title1:coord[0]+'='+STRTRIM(STRING(yy,format='(F10.2)'),2)+units_coord, $
               title2:coord[1]+'='+STRTRIM(STRING(zz,format='(F10.2)'),2)+units_coord+ $
               title}
-    ENDIF ELSE BEGIN
-       IF N_ELEMENTS(coord) EQ 0 THEN title=title+'  snap='+strtrim(string(snaps),2)
-    ENDELSE
+    ENDIF
  ENDELSE
 
+ IF (N_ELEMENTS(showsnap) NE 0) THEN BEGIN
+    title=title+'  snap='+strtrim(string(snaps),2)
+ ENDIF
+ 
 END
