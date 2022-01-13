@@ -25,12 +25,13 @@ nav:
   - ALMA: ALMA.md  
   - About me: about.md
 
-#theme:
-#  name: 'readthedocs'
-#  favicon: 'images/dns.png'
 theme:
   name: null
   custom_dir: 'cinder'
+  colorscheme: github
+  highlightjs: true
+  hljs_languages:
+    - yaml
 
 # Customization
 extra:
@@ -41,10 +42,10 @@ extra:
 # Extensions
 markdown_extensions:
   - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight
-  - codehilite:
-      guess_lang: false
-  - toc:
-      permalink: true
+#  - pymdownx.details
+#  - pymdownx.superfences
+#  - pymdownx.highlight
+#  - codehilite:
+#      guess_lang: false
+#  - toc:
+#      permalink: true
