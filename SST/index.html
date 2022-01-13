@@ -1,184 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Documentation about useful software packages, code, telescopes and satellites.">
-    <meta name="author" content="Daniel Nobrega-Siverio">
-    <link rel="canonical" href="https://dnobrega.github.io/DNS/SST/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-
-    
-    <title>SST - DNS</title>
-    
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
-    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../css/base.min.css" rel="stylesheet">
-    <link href="../css/cinder.min.css" rel="stylesheet">
-
-    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
-        
-    
+        <meta name="author" content="Daniel Nobrega-Siverio">
+        <link rel="canonical" href="https://dnobrega.github.io/DNS/SST/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>SST - DNS</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-        <![endif]-->
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-    
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="..">DNS</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-     
-</head>
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link"></a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">About</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../macos/" class="nav-link">Mac OS</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../terminal/" class="nav-link">Terminal</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../bifrost/" class="nav-link">Bifrost</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Programming languages <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../idl/" class="dropdown-item">IDL</a>
+</li>
+                                    
+<li>
+    <a href="../sswidl/" class="dropdown-item">SSWIDL</a>
+</li>
+                                    
+<li>
+    <a href="../dns/" class="dropdown-item">DNSPRO</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Observations <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">SST</a>
+</li>
+                                    
+<li>
+    <a href="../IRIS/" class="dropdown-item">IRIS</a>
+</li>
+                                    
+<li>
+    <a href="../SOLO/" class="dropdown-item">SOLO</a>
+</li>
+                                    
+<li>
+    <a href="../SDO/" class="dropdown-item">SDO</a>
+</li>
+                                    
+<li>
+    <a href="../ALMA/" class="dropdown-item">ALMA</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
 
-<body>
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-
-            <!-- Main title -->
-
-            
-              <a class="navbar-brand" href="..">DNS</a>
-            
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../python/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../IRIS/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dnobrega/DNS" class="nav-link">dnobrega/DNS</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li >
-                        <a href="..">Introduction</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../macos/">Mac OS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../terminal/">Terminal</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../python/">Python</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../bifrost/">Bifrost</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../sswidl/">IDL and SSWIDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../idl/">IDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../dns/">DNSPRO</a>
-                    </li>
-                
-                
-                
-                    <li class="active">
-                        <a href="./">SST</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../IRIS/">IRIS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SOLO/">SOLO</a>
-                    </li>
-                
-                
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                            <i class="fas fa-search"></i> Search
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="../dns/">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="next" href="../IRIS/">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/dnobrega/DNS">dnobrega/DNS</a>
-                    </li>
-            </ul>
-        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
-</div>
 
-    <div class="container">
-        
-        
-        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#sst">SST</a></li>
-            <li class="second-level"><a href="#sst-main-links">SST main links</a></li>
-                
-            <li class="second-level"><a href="#sst-literature">SST literature</a></li>
-                
-            <li class="second-level"><a href="#connecting-to-sst-computers">Connecting to SST computers</a></li>
-                
-            <li class="second-level"><a href="#quicklook-movies-and-images">Quicklook movies and images</a></li>
-                
-            <li class="second-level"><a href="#scripts">Scripts</a></li>
-                
-    </ul>
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#sst" class="nav-link">SST</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#sst-main-links" class="nav-link">SST main links</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sst-literature" class="nav-link">SST literature</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#connecting-to-sst-computers" class="nav-link">Connecting to SST computers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#quicklook-movies-and-images" class="nav-link">Quicklook movies and images</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#scripts" class="nav-link">Scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-        <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="sst">SST<a class="headerlink" href="#sst" title="Permanent link">&para;</a></h1>
 <p>The Swedish 1-m Solar Telescope (SST) is a refracting solar telescope at Roque de los Muchachos Observatory, La Palma in the Canary Islands.
@@ -222,51 +204,50 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <summary>Transfer all the CRISP and CHROMIS quicklook files from SST transport1 to Oslo: </summary>
  <p>
 
- ```bash
- #!/bin/bash
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
- #------------------------------------------------------------------------------------------
- # DATE
- default_date=`date +"%Y.%m.%d"`
- read -p "Enter date with format YYYY.MM.DD ($default_date): " userdate
- : "${userdate:=$default_date}"
- year=${userdate:0:4}
- month=${userdate:5:2}
- day=${userdate:8:2}
- #------------------------------------------------------------------------------------------
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+<span class="c1"># DATE</span>
+<span class="nv">default_date</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%Y.%m.%d&quot;</span><span class="sb">`</span>
+<span class="nb">read</span> -p <span class="s2">&quot;Enter date with format YYYY.MM.DD (</span><span class="nv">$default_date</span><span class="s2">): &quot;</span> userdate
+: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:=</span><span class="nv">$default_date</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">4</span><span class="si">}</span>
+<span class="nv">month</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">5</span><span class="p">:</span><span class="nv">2</span><span class="si">}</span>
+<span class="nv">day</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">8</span><span class="p">:</span><span class="nv">2</span><span class="si">}</span>
+<span class="c1">#------------------------------------------------------------------------------------------</span>
 
- #------------------------------------------------------------------------------------------
- # LOCATION OF THE QUICKLOOK MOVIES
- crisp_folder="/scratch/obs/$userdate/CRISP/quicklook/"
- chromis_folder="/scratch/obs/$userdate/CHROMIS/quicklook/"
- echo "Preparing to transfer quicklook files from the following folders: "
- echo $crisp_folder
- echo $chromis_folder
- #------------------------------------------------------------------------------------------
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+<span class="c1"># LOCATION OF THE QUICKLOOK MOVIES</span>
+<span class="nv">crisp_folder</span><span class="o">=</span><span class="s2">&quot;/scratch/obs/</span><span class="nv">$userdate</span><span class="s2">/CRISP/quicklook/&quot;</span>
+<span class="nv">chromis_folder</span><span class="o">=</span><span class="s2">&quot;/scratch/obs/</span><span class="nv">$userdate</span><span class="s2">/CHROMIS/quicklook/&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Preparing to transfer quicklook files from the following folders: &quot;</span>
+<span class="nb">echo</span> <span class="nv">$crisp_folder</span>
+<span class="nb">echo</span> <span class="nv">$chromis_folder</span>
+<span class="c1">#------------------------------------------------------------------------------------------</span>
 
- #------------------------------------------------------------------------------------------
- # OSLO DESTINATION
- default_folder="/mn/stornext/d18/lapalma/quicklook/$year/$year-$month-$day/"
- read -p "Enter destination at ITA ($default_folder): " ita_folder
- : "${ita_folder:=$default_folder}"
- #------------------------------------------------------------------------------------------
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+<span class="c1"># OSLO DESTINATION</span>
+<span class="nv">default_folder</span><span class="o">=</span><span class="s2">&quot;/mn/stornext/d18/lapalma/quicklook/</span><span class="nv">$year</span><span class="s2">/</span><span class="nv">$year</span><span class="s2">-</span><span class="nv">$month</span><span class="s2">-</span><span class="nv">$day</span><span class="s2">/&quot;</span>
+<span class="nb">read</span> -p <span class="s2">&quot;Enter destination at ITA (</span><span class="nv">$default_folder</span><span class="s2">): &quot;</span> ita_folder
+: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ita_folder</span><span class="p">:=</span><span class="nv">$default_folder</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="c1">#------------------------------------------------------------------------------------------</span>
 
- #------------------------------------------------------------------------------------------
- # OSLO USER
- default_user=desiveri
- read -p "Enter your UiO username ($default_user): " username
- : "${username:=$default_user}"
- #------------------------------------------------------------------------------------------
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+<span class="c1"># OSLO USER</span>
+<span class="nv">default_user</span><span class="o">=</span>desiveri
+<span class="nb">read</span> -p <span class="s2">&quot;Enter your UiO username (</span><span class="nv">$default_user</span><span class="s2">): &quot;</span> username
+: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">username</span><span class="p">:=</span><span class="nv">$default_user</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="c1">#------------------------------------------------------------------------------------------</span>
 
- #------------------------------------------------------------------------------------------
- # RSYNC TO OSLO
- rsync -avzP \
-       --prune-empty-dirs \
-       $crisp_folder $chromis_folder \
-       --rsync-path="mkdir -p $ita_folder && rsync" \
-       $username@tsih.uio.no:$ita_folder
- #------------------------------------------------------------------------------------------
- ```
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+<span class="c1"># RSYNC TO OSLO</span>
+rsync -avzP <span class="se">\</span>
+      --prune-empty-dirs <span class="se">\</span>
+      <span class="nv">$crisp_folder</span> <span class="nv">$chromis_folder</span> <span class="se">\</span>
+      --rsync-path<span class="o">=</span><span class="s2">&quot;mkdir -p </span><span class="nv">$ita_folder</span><span class="s2"> &amp;&amp; rsync&quot;</span> <span class="se">\</span>
+      <span class="nv">$username</span>@tsih.uio.no:<span class="nv">$ita_folder</span>
+<span class="c1">#------------------------------------------------------------------------------------------</span>
+</code></pre></div>
  </p>
 </details>
 <p><br/></p>
@@ -274,33 +255,32 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <summary>Combine CHROMIS quicklook movies and images:</summary>
  <p>
 
- ```bash
- #!/bin/bash
- quickfile1=$1
- quickfile2=$2
- image_format=.jpg
- movie_format=.mov
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">image_format</span><span class="o">=</span>.jpg
+<span class="nv">movie_format</span><span class="o">=</span>.mov
 
- temp=*$quickfile1*$image_format
- header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
- image=$header"${jj//:}"$image_format 
- movie=$header"${jj//:}"$movie_format
- ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
+<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
+<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
+<span class="nv">ysize</span><span class="o">=</span><span class="k">$(</span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>height -of <span class="nv">csv</span><span class="o">=</span><span class="nv">s</span><span class="o">=</span>x:p<span class="o">=</span><span class="m">0</span> *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span><span class="k">)</span>
 
- echo "---------------------------------------------------------------------"
- echo "Creating $image"
- ffmpeg -i *$quickfile1*$image_format -i \
-           *$quickfile2*$image_format    \
-       -q:v 1 -filter_complex vstack=inputs=2 $image \
-    -hide_banner -loglevel error
- echo "---------------------------------------------------------------------"
- echo "Creating $movie"
- ffmpeg -i *$quickfile1*$movie_format -i \
-           *$quickfile2*$movie_format    \
-           -filter_complex vstack=inputs=2 \
-           $movie \
-    -hide_banner -loglevel error
- ```
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span>    <span class="se">\</span>
+      -q:v <span class="m">1</span> -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="nv">$image</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span>    <span class="se">\</span>
+          -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="se">\</span>
+          <span class="nv">$movie</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+</code></pre></div>
  </p>
 </details>
 <p><br/></p>
@@ -308,33 +288,32 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <summary>Combine CRISP quicklook movies and images:</summary>
  <p>
 
- ```bash
- #!/bin/bash
- quickfile1=$1
- quickfile2=$2
- quickfile3=$3
- image_format=.jpg
- movie_format=.mov
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">quickfile3</span><span class="o">=</span><span class="nv">$3</span>
+<span class="nv">image_format</span><span class="o">=</span>.jpg
+<span class="nv">movie_format</span><span class="o">=</span>.mov
 
- temp=*$quickfile1*$image_format
- header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
- image=$header"${jj//:}"$image_format 
- movie=$header"${jj//:}"$movie_format
- echo "---------------------------------------------------------------------"
- echo "Creating $image"
- ffmpeg -i *$quickfile1*$image_format -i \
-           *$quickfile2*$image_format -i \
-           *$quickfile3*$image_format      \
-           -q:v 1 -filter_complex hstack=inputs=3 $image \
-    -hide_banner -loglevel error
- echo "---------------------------------------------------------------------"
- echo "Creating $movie"
- ffmpeg -i *$quickfile1*$movie_format -i \
-           *$quickfile2*$movie_format -i \
-           *$quickfile3*$movie_format      \
-           -filter_complex hstack=inputs=3 $movie \
-    -hide_banner -loglevel error
- ```
+<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
+<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
+<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
+<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile3</span>*<span class="nv">$image_format</span>      <span class="se">\</span>
+          -q:v <span class="m">1</span> -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$image</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
+ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
+          *<span class="nv">$quickfile3</span>*<span class="nv">$movie_format</span>      <span class="se">\</span>
+          -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$movie</span> <span class="se">\</span>
+   -hide_banner -loglevel error
+</code></pre></div>
  </p>
 </details>
 <p><br/>  </p>
@@ -344,17 +323,16 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
 
  To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
 
- ```bash
- #!/bin/bash
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
- echo "-------------------------------------------------"
- echo "Transforming from pdf to png the following files:"
- filelist=`find . -type f -name '*.pdf'`
- for ii in ${filelist}; do
-     echo $ii
-     pdftoppm $ii $ii -png
- done
- ```
+<span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Transforming from pdf to png the following files:&quot;</span>
+<span class="nv">filelist</span><span class="o">=</span><span class="sb">`</span>find . -type f -name <span class="s1">&#39;*.pdf&#39;</span><span class="sb">`</span>
+<span class="k">for</span> ii <span class="k">in</span> <span class="si">${</span><span class="nv">filelist</span><span class="si">}</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="nv">$ii</span>
+    pdftoppm <span class="nv">$ii</span> <span class="nv">$ii</span> -png
+<span class="k">done</span>
+</code></pre></div>
  </p>
 </details>
 <p><br/>  </p>
@@ -362,24 +340,23 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
 
- ```bash
- #!/bin/bash                                                                                                                    
- for year in $(curl -s http://tsih3.uio.no/lapalma/ |
-                   grep '\[DIR\]' |
-                   sed 's/.*href="//' |
-                   sed 's/".*//'
-              ); do
-     echo "---------------------------"
-     echo $year
-     echo "---------------------------"
-     for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
-                       grep '\[DIR\]' |
-                       sed 's/.*href="//' |
-                       sed 's/".*//'); do
-         echo $date
-     done
- done
- ```
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                    </span>
+<span class="k">for</span> year <span class="k">in</span> <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/ <span class="p">|</span>
+                  grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                  sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                  sed <span class="s1">&#39;s/&quot;.*//&#39;</span>
+             <span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="nv">$year</span>
+    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+    <span class="k">for</span> date <span class="k">in</span> <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/<span class="nv">$year</span> <span class="p">|</span>
+                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+        <span class="nb">echo</span> <span class="nv">$date</span>
+    <span class="k">done</span>
+<span class="k">done</span>
+</code></pre></div>
 
  </p>
 </details>
@@ -389,53 +366,52 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <p>
 
 
- ```bash
- #!/bin/bash
- web="http://tsih3.uio.no/lapalma/"
- input=$1
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">web</span><span class="o">=</span><span class="s2">&quot;http://tsih3.uio.no/lapalma/&quot;</span>
+<span class="nv">input</span><span class="o">=</span><span class="nv">$1</span>
 
- if [ ${#input} -eq 0 ]
- then
-     folder=$web
-     read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
-     case $yn in
-  [Yy]* ) wget -c -r -l 3 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
-  [Nn]* ) break;;
-     esac           
- fi
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web</span>
+    <span class="nb">read</span> -p <span class="s2">&quot;Do you want to download all the available movies from &quot;</span><span class="nv">$folder</span><span class="s2">&quot; [y/n]: &quot;</span> yn
+    <span class="k">case</span> <span class="nv">$yn</span> <span class="k">in</span>
+ <span class="o">[</span>Yy<span class="o">]</span>* <span class="o">)</span> wget -c -r -l <span class="m">3</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="p">;;</span>
+ <span class="o">[</span>Nn<span class="o">]</span>* <span class="o">)</span> break<span class="p">;;</span>
+    <span class="k">esac</span>           
+<span class="k">fi</span>
 
- if [ ${#input} -eq 4 ]
- then
-     folder=$web$input"/"
-     wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
- fi
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">4</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$input</span><span class="s2">&quot;/&quot;</span>
+    wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
+<span class="k">fi</span>
 
- if [ ${#input} -eq 7 ]
- then
-     temp=(${input//-/ })
-     year=${temp[0]}
-     folder=$web$year"/"
-     echo $folder
-     echo  ${input}*
-     for date in $(curl -s $folder |
-                       grep '\[DIR\]' |
-                       sed 's/.*href="//' |
-                       sed 's/".*//'); do
-  if [[ "$date" == "$input"* ]]; then
-      echo $date
-      wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
-  fi
-     done
- fi
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">7</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
+    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span>
+    <span class="nb">echo</span> <span class="nv">$folder</span>
+    <span class="nb">echo</span>  <span class="si">${</span><span class="nv">input</span><span class="si">}</span>*
+    <span class="k">for</span> date <span class="k">in</span> <span class="k">$(</span>curl -s <span class="nv">$folder</span> <span class="p">|</span>
+                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
+                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
+ <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$date</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span>* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+     <span class="nb">echo</span> <span class="nv">$date</span>
+     wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="s2">&quot;/&quot;</span><span class="nv">$date</span>
+ <span class="k">fi</span>
+    <span class="k">done</span>
+<span class="k">fi</span>
 
- if [ ${#input} -eq 10 ]
- then
-     temp=(${input//-/ })
-     year=${temp[0]}
-     folder=$web$year"/"$input"/"
-     wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
- fi
- ```
+<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">10</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
+    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
+    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$input</span><span class="s2">&quot;/&quot;</span>
+    wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
+<span class="k">fi</span>
+</code></pre></div>
 
  </p>
 </details>
@@ -445,85 +421,55 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
- ```bash
- curl -s $1 | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' > saai.txt
- curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/'  > saao.txt
- paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
- rm saai.txt
- rm saao.txt
- ```
+ <div class="highlight"><pre><span></span><code>curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> &gt; saai.txt
+curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span>  &gt; saao.txt
+paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
+rm saai.txt
+rm saao.txt
+</code></pre></div>
  The input of the script for a given day can be found within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
  [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
 
  For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
- ```bash
- alias pbcopy='xsel --clipboard --input'
- alias pbpaste='xsel --clipboard --output'
- ```
+ <div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">pbcopy</span><span class="o">=</span><span class="s1">&#39;xsel --clipboard --input&#39;</span>
+<span class="nb">alias</span> <span class="nv">pbpaste</span><span class="o">=</span><span class="s1">&#39;xsel --clipboard --output&#39;</span>
+</code></pre></div>
  or with xclip:
- ```bash
- alias pbcopy='xclip -selection clipboard'
- alias pbpaste='xclip -selection clipboard -o'
- ```
+ <div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">pbcopy</span><span class="o">=</span><span class="s1">&#39;xclip -selection clipboard&#39;</span>
+<span class="nb">alias</span> <span class="nv">pbpaste</span><span class="o">=</span><span class="s1">&#39;xclip -selection clipboard -o&#39;</span>
+</code></pre></div>
  </p>
 </details></div>
-        
-        
-    </div>
+            </div>
+        </div>
 
-    
-      <footer class="col-md-12 text-center">
-          
-          
+        <footer class="col-md-12">
             <hr>
-            <p>
-            <small>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</small><br>
-            
-            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
-            </p>
-          
+                <p>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
 
-          
-          
-      </footer>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../js/bootstrap-3.0.3.min.js"></script>
-
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-        
-                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
-        
-    <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    <script>var base_url = ".."</script>
-    
-    <script src="../js/base.js"></script>
-    <script src="../search/main.js"></script>
-
-    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -569,6 +515,6 @@ We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/
         </div>
     </div>
 </div>
-    </body>
 
+    </body>
 </html>

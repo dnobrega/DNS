@@ -1,178 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Documentation about useful software packages, code, telescopes and satellites.">
-    <meta name="author" content="Daniel Nobrega-Siverio">
-    <link rel="canonical" href="https://dnobrega.github.io/DNS/sswidl/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-
-    
-    <title>IDL and SSWIDL - DNS</title>
-    
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
-    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../css/base.min.css" rel="stylesheet">
-    <link href="../css/cinder.min.css" rel="stylesheet">
-
-    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
-        
-    
+        <meta name="author" content="Daniel Nobrega-Siverio">
+        <link rel="canonical" href="https://dnobrega.github.io/DNS/sswidl/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>SSWIDL - DNS</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-        <![endif]-->
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-    
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="..">DNS</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-     
-</head>
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link"></a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">About</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../macos/" class="nav-link">Mac OS</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../terminal/" class="nav-link">Terminal</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../bifrost/" class="nav-link">Bifrost</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Programming languages <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../idl/" class="dropdown-item">IDL</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">SSWIDL</a>
+</li>
+                                    
+<li>
+    <a href="../dns/" class="dropdown-item">DNSPRO</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Observations <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SST/" class="dropdown-item">SST</a>
+</li>
+                                    
+<li>
+    <a href="../IRIS/" class="dropdown-item">IRIS</a>
+</li>
+                                    
+<li>
+    <a href="../SOLO/" class="dropdown-item">SOLO</a>
+</li>
+                                    
+<li>
+    <a href="../SDO/" class="dropdown-item">SDO</a>
+</li>
+                                    
+<li>
+    <a href="../ALMA/" class="dropdown-item">ALMA</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
 
-<body>
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-
-            <!-- Main title -->
-
-            
-              <a class="navbar-brand" href="..">DNS</a>
-            
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../idl/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../dns/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dnobrega/DNS" class="nav-link">dnobrega/DNS</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li >
-                        <a href="..">Introduction</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../macos/">Mac OS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../terminal/">Terminal</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../python/">Python</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../bifrost/">Bifrost</a>
-                    </li>
-                
-                
-                
-                    <li class="active">
-                        <a href="./">IDL and SSWIDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../idl/">IDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../dns/">DNSPRO</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SST/">SST</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../IRIS/">IRIS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SOLO/">SOLO</a>
-                    </li>
-                
-                
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                            <i class="fas fa-search"></i> Search
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="../bifrost/">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="next" href="../idl/">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/dnobrega/DNS">dnobrega/DNS</a>
-                    </li>
-            </ul>
-        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
-</div>
 
-    <div class="container">
-        
-        
-        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#sswidl">SSWIDL</a></li>
-            <li class="second-level"><a href="#installation">Installation</a></li>
-                
-            <li class="second-level"><a href="#terminal-configuration">Terminal configuration</a></li>
-                
-    </ul>
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#sswidl" class="nav-link">SSWIDL</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#terminal-configuration" class="nav-link">Terminal configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-        <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="sswidl">SSWIDL<a class="headerlink" href="#sswidl" title="Permanent link">&para;</a></h1>
 <p>SolarSoft is a set of integrated software libraries, data bases, and system utilities which provide a common programming and data analysis environment for Solar Physics. It is primarily an IDL based system, although some instrument teams integrate executables written in other languages. </p>
@@ -185,75 +161,48 @@ Choose, e.g., the following packages to install: <em>chianti ontology aia iris h
 In your home directory, in the .login file you need to define 
 the system variable <code>SSW</code> as the location of your
 SSW installation, e.g.: </p>
-<pre><code class="language-csh">setenv SSW &quot;/Users/yourname/ssw&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>SSW <span class="s2">&quot;/Users/yourname/ssw&quot;</span>
+</code></pre></div>
 <p>Then you need to define the <code>SSW_INSTR</code> with the list of instruments you have included in the installation.</p>
-<pre><code class="language-csh">setenv SSW_INSTR &quot;chianti ontology aia iris hmi&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>SSW_INSTR <span class="s2">&quot;chianti ontology aia iris hmi&quot;</span>
+</code></pre></div>
 <p>Finally, add the following line in your .login file:</p>
-<pre><code class="language-csh">source $SSW/gen/setup/setup.ssw /quiet
-</code></pre>
-<p>Once you have everything ready, in case you use zsh, you can define the following alias in your .zlogin (or .zshrc) file:</p>
-<pre><code class="language-csh">alias sswidl='tcsh -c &quot;sswidl&quot;'
-</code></pre>
-<p>This way you will be able to launch it without switching manually to tsch.</p></div>
-        
-        
-    </div>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span> <span class="nv">$SSW</span>/gen/setup/setup.ssw /quiet
+</code></pre></div>
+<p>Once you have everything ready, in case you use zsh, you can define the following alias in your .zlogin (or .zshrc) file:
+<div class="highlight"><pre><span></span><code><span class="nb">alias </span><span class="nv">sswidl</span><span class="o">=</span><span class="s1">&#39;tcsh -c &quot;sswidl&quot;&#39;</span>
+</code></pre></div>
+This way you will be able to launch it without switching manually to tsch.</p></div>
+            </div>
+        </div>
 
-    
-      <footer class="col-md-12 text-center">
-          
-          
+        <footer class="col-md-12">
             <hr>
-            <p>
-            <small>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</small><br>
-            
-            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
-            </p>
-          
+                <p>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
 
-          
-          
-      </footer>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../js/bootstrap-3.0.3.min.js"></script>
-
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-        
-                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
-        
-    <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    <script>var base_url = ".."</script>
-    
-    <script src="../js/base.js"></script>
-    <script src="../search/main.js"></script>
-
-    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -299,6 +248,6 @@ SSW installation, e.g.: </p>
         </div>
     </div>
 </div>
-    </body>
 
+    </body>
 </html>

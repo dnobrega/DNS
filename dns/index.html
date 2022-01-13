@@ -1,358 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Documentation about useful software packages, code, telescopes and satellites.">
-    <meta name="author" content="Daniel Nobrega-Siverio">
-    <link rel="canonical" href="https://dnobrega.github.io/DNS/dns/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-
-    
-    <title>DNSPRO - DNS</title>
-    
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
-    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../css/base.min.css" rel="stylesheet">
-    <link href="../css/cinder.min.css" rel="stylesheet">
-
-    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
-        
-    
+        <meta name="author" content="Daniel Nobrega-Siverio">
+        <link rel="canonical" href="https://dnobrega.github.io/DNS/dns/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>DNSPRO - DNS</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-        <![endif]-->
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-    
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="..">DNS</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-     
-</head>
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link"></a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">About</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../macos/" class="nav-link">Mac OS</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../terminal/" class="nav-link">Terminal</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../bifrost/" class="nav-link">Bifrost</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Programming languages <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../idl/" class="dropdown-item">IDL</a>
+</li>
+                                    
+<li>
+    <a href="../sswidl/" class="dropdown-item">SSWIDL</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">DNSPRO</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Observations <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SST/" class="dropdown-item">SST</a>
+</li>
+                                    
+<li>
+    <a href="../IRIS/" class="dropdown-item">IRIS</a>
+</li>
+                                    
+<li>
+    <a href="../SOLO/" class="dropdown-item">SOLO</a>
+</li>
+                                    
+<li>
+    <a href="../SDO/" class="dropdown-item">SDO</a>
+</li>
+                                    
+<li>
+    <a href="../ALMA/" class="dropdown-item">ALMA</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
 
-<body>
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-
-            <!-- Main title -->
-
-            
-              <a class="navbar-brand" href="..">DNS</a>
-            
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../sswidl/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../python/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dnobrega/DNS" class="nav-link">dnobrega/DNS</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li >
-                        <a href="..">Introduction</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../macos/">Mac OS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../terminal/">Terminal</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../python/">Python</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../bifrost/">Bifrost</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../sswidl/">IDL and SSWIDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../idl/">IDL</a>
-                    </li>
-                
-                
-                
-                    <li class="active">
-                        <a href="./">DNSPRO</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SST/">SST</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../IRIS/">IRIS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SOLO/">SOLO</a>
-                    </li>
-                
-                
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                            <i class="fas fa-search"></i> Search
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="../idl/">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="next" href="../SST/">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/dnobrega/DNS">dnobrega/DNS</a>
-                    </li>
-            </ul>
-        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
-</div>
 
-    <div class="container">
-        
-        
-        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#dns">DNS</a></li>
-            <li class="second-level"><a href="#getting-dns-package">Getting DNS package</a></li>
-                
-            <li class="second-level"><a href="#terminal-configuration">Terminal configuration</a></li>
-                
-            <li class="second-level"><a href="#using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations</a></li>
-                
-            <li class="second-level"><a href="#using-dns-routines-for-sst-observations">Using DNS routines for SST observations</a></li>
-                
-    </ul>
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#dns" class="nav-link">DNS</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#getting-dns-package" class="nav-link">Getting DNS package</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#terminal-configuration" class="nav-link">Terminal configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-dns-routines-for-bifrost-simulations" class="nav-link">Using DNS routines for Bifrost simulations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-dns-routines-for-sst-observations" class="nav-link">Using DNS routines for SST observations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-        <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="dns">DNS<a class="headerlink" href="#dns" title="Permanent link">&para;</a></h1>
 <h2 id="getting-dns-package">Getting DNS package<a class="headerlink" href="#getting-dns-package" title="Permanent link">&para;</a></h2>
 <p>You can clone the repository through HTTPS like this:</p>
-<pre><code class="language-tcsh">git clone https://username@github.com/dnobrega/DNS.git
-</code></pre>
+<div class="highlight"><pre><span></span><code>git clone https://username@github.com/dnobrega/DNS.git
+</code></pre></div>
 <p>replacing "username" with your github username.</p>
 <h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
 <p>It is necessary to modify your .login file in your home directory to add the following system variables.
 In case of working with zsh:</p>
-<pre><code class="language-zsh">export DNS=&quot;/folder/DNS&quot; 
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS</span><span class="o">=</span><span class="s2">&quot;/folder/DNS&quot;</span> 
+</code></pre></div>
 <p>where <em>folder</em> is in this case the location where you have cloned the DNS package. </p>
 <p>Then you need to add <code>DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
 in case of using tcsh and Mac:</p>
-<pre><code class="language-zsh">export IDL_PATH=&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;$BIFROST_IDL&quot;:+&quot;$DNS
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">IDL_PATH</span><span class="o">=</span><span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$DNS</span>
+</code></pre></div>
 <p>Finally, you need to define a variable called <code>DNS_PROJECTS</code> with the default
 location where you want to save the plots and movies you are going
 to create with the DNS package, e.g.,</p>
-<pre><code class="language-zsh">export DNS_PROJECTS=&quot;~/dns_plots&quot;
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS_PROJECTS</span><span class="o">=</span><span class="s2">&quot;~/dns_plots&quot;</span>
+</code></pre></div>
 <p>Obviously, you will also need to create that folder. 
 Within <code>DNS_PROJECTS</code>, other folders will be automatically 
 created with the name of the simulation when you save a image or movie.</p>
 <h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations<a class="headerlink" href="#using-dns-routines-for-bifrost-simulations" title="Permanent link">&para;</a></h2>
 <p>Within a folder with a Bifrost experiment, run <code>SSWIDL</code>. 
 The first plot we are going to create is a density plot:</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0
-</code></pre>
-<p>where you have to modify <code>snapt</code> variable with the number of snapshot you want to plot.
+<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>
+</code></pre></div>
+where you have to modify <code>snapt</code> variable with the number of snapshot you want to plot.
 In case of a 3D run, by default it will show the "XZ" plane along the whole Y-direction.
 You can modify which slices you want to show, e.g.,</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0, iy0=10, iyf=100, iystep=2
-</code></pre>
-<p>will show from index 10 to index 100 in Y-direction each two indexes.
+<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>, iy0<span class="o">=</span><span class="mi">10</span>, iyf<span class="o">=</span><span class="mi">100</span>, iystep<span class="o">=</span><span class="mi">2</span>
+</code></pre></div>
+will show from index 10 to index 100 in Y-direction each two indexes.
 In case you want a specific slice in Y-direction, 
 use <code>iyt</code>, e..g,</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0, iyt=300, /png
-</code></pre>
-<p>In this case we have also added the png flag to save the image as a .png file
+<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>, iyt<span class="o">=</span><span class="mi">300</span>, <span class="o">/</span>png
+</code></pre></div>
+In this case we have also added the png flag to save the image as a .png file
 in <code>DNS_PROJECTS</code> folder.</p>
 <p>You can also plot animations moving in time as follows:</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snap0=0, snapf=500, step=10, iyt=300
-</code></pre>
+<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snap0<span class="o">=</span><span class="mi">0</span>, snapf<span class="o">=</span><span class="mi">500</span>, step<span class="o">=</span><span class="mi">10</span>, iyt<span class="o">=</span><span class="mi">300</span>
+</code></pre></div>
 <p>That will show the XZ plane of the simulation in the index 300 of the Y-direction from
 snapshot 0 to snapshot 500 each 10 snapshots.</p>
 <p>You can save the previous animation, writing </p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snap0=0, snapf=500, step=10, iyt=300, /movie, /setplot
-</code></pre>
+<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snap0<span class="o">=</span><span class="mi">0</span>, snapf<span class="o">=</span><span class="mi">500</span>, step<span class="o">=</span><span class="mi">10</span>, iyt<span class="o">=</span><span class="mi">300</span>, <span class="o">/</span>movie, <span class="o">/</span>setplot
+</code></pre></div>
 <p>That will create a movie in your <code>DNS_PROJECTS</code> folder. The <code>setplot</code> flag is
 to create the movie using the Z buffer device.</p>
 <p>In 3D experiments you can plot different planes, for example,</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;yz&quot;, ixstep=10
-</code></pre>
-<p>which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10
-</code></pre>
+<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;yz&quot;</span>, ixstep<span class="o">=</span><span class="mi">10</span>
+</code></pre></div>
+which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,</p>
+<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>
+</code></pre></div>
 <p>You can customize your window size, thickness, colors, position of the plot... For instance,</p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74]
-</code></pre>
+<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>]
+</code></pre></div>
 <p>Once you are happy with your plot setup, you can save it, so you will not need to write
 all the commands again. To do that, use </p>
-<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74], /save_dns_confi
-</code></pre>
-<p>That will create a file in your current directory called <code>dns_confi.sav</code> with the plot parameters you have
+<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>], <span class="o">/</span>save_dns_confi
+</code></pre></div>
+That will create a file in your current directory called <code>dns_confi.sav</code> with the plot parameters you have
 defined.</p>
 <p>Concerning the variables you can plot with DNS package, check <code>dnspro/var</code> folder.
 There you will see a list of routines containg each one a variable. For example, for
 the density, you will see a file called <code>dnsvar_r.pro</code></p>
-<pre><code class="language-IDL">PRO dnsvar_r, d, name, snaps, swap, var, units, $
-    var_title=var_title, var_range=var_range, var_log=var_log, $
-    info=info
-    IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Density: rho',/info
-       RETURN
-    ENDIF ELSE BEGIN
-       IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_r, d, name, snaps, swap, var, units, ' $
-                 +'var_title=var_title, var_range=var_range, var_log=var_log',/info
-          RETURN
-       ENDIF
-       CALL_PROCEDURE, &quot;units_&quot;+units, u
-       var=d-&gt;getvar(name,snaps,swap=swap)*u.ur
-       var_title='!4q!3'
-       IF (units EQ &quot;solar&quot;) THEN var_title=var_title+&quot; (g cm!u-3!n)&quot;
-       var_range=[1.d-15,1.d-11]
-       var_log=1
-    ENDELSE
-END
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="k">PRO</span> dnsvar_r, d, name, snaps, swap, var, units, $
+    var_title<span class="o">=</span>var_title, var_range<span class="o">=</span>var_range, var_log<span class="o">=</span>var_log, $
+    info<span class="o">=</span>info
+    <span class="k">IF</span> <span class="nb">KEYWORD_SET</span>(info) <span class="k">THEN</span> <span class="k">BEGIN</span>
+       <span class="nb">message</span>, <span class="s1">&#39;Density: rho&#39;</span>,<span class="o">/</span>info
+       <span class="nb">RETURN</span>
+    <span class="k">ENDIF</span> <span class="k">ELSE</span> <span class="k">BEGIN</span>
+       <span class="k">IF</span> <span class="nb">n_params</span>() <span class="k">LT</span> <span class="mi">6</span> <span class="k">THEN</span> <span class="k">BEGIN</span>
+          <span class="nb">message</span>,<span class="s1">&#39;dnsvar_r, d, name, snaps, swap, var, units, &#39;</span> $
+                 <span class="o">+</span><span class="s1">&#39;var_title=var_title, var_range=var_range, var_log=var_log&#39;</span>,<span class="o">/</span>info
+          <span class="nb">RETURN</span>
+       <span class="k">ENDIF</span>
+       <span class="nb">CALL_PROCEDURE</span>, <span class="s2">&quot;units_&quot;</span><span class="o">+</span>units, u
+       var<span class="o">=</span>d<span class="o">-&gt;</span>getvar(name,snaps,swap<span class="o">=</span>swap)<span class="o">*</span>u.ur
+       var_title<span class="o">=</span><span class="s1">&#39;!4q!3&#39;</span>
+       <span class="k">IF</span> (units <span class="k">EQ</span> <span class="s2">&quot;solar&quot;</span>) <span class="k">THEN</span> var_title<span class="o">=</span>var_title<span class="o">+</span><span class="s2">&quot; (g cm!u-3!n)&quot;</span>
+       var_range<span class="o">=</span>[<span class="mf">1.d-15</span>,<span class="mf">1.d-11</span>]
+       var_log<span class="o">=</span><span class="mi">1</span>
+    <span class="k">ENDELSE</span>
+<span class="k">END</span>
+</code></pre></div>
 <p>You can create all the variables following this format. So far, the list only
 includes the most fundamental variables. If you need help
 with the meaning of each variable, in the IDL prompt you can type, e.g.,</p>
-<pre><code class="language-IDL">dnsvar_modb, /info
-</code></pre>
-<p>which will show the information about the variable of that routine, in this case,</p>
-<pre><code class="language-csh">% DNSVAR_MODB: Module of the magnetic field: B (G)
-</code></pre>
+<p><div class="highlight"><pre><span></span><code>dnsvar_modb, <span class="o">/</span>info
+</code></pre></div>
+which will show the information about the variable of that routine, in this case,</p>
+<div class="highlight"><pre><span></span><code>% DNSVAR_MODB: Module of the magnetic field: B <span class="o">(</span>G<span class="o">)</span>
+</code></pre></div>
 <h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations<a class="headerlink" href="#using-dns-routines-for-sst-observations" title="Permanent link">&para;</a></h2>
 <p>Within a folder with reduced SST observations, run <code>SSWIDL</code>. </p>
-<p>Then create a string list with the names of the cube files within that folder. To that end, type</p>
-<pre><code class="language-IDL">fcube, f
-</code></pre>
-<p>That will give you an array <code>f</code> of files that can be fcubes (floating-point cubes) or icubes (integer cubes).</p>
-<p>The following step is, e.g., to read the first cube of the list by writting</p>
-<pre><code class="language-IDL">cube=lp_read(f(0),header=header)
-</code></pre>
-<p>You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:</p>
-<pre><code class="language-IDL"> 0 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube
- 1 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37_sp.icube
- 2 hmimag_2017-05-25T08:07:37_aligned_3950_2017-05-25T08:07:37.fcube
-</code></pre>
-<p>so, </p>
-<pre><code class="language-IDL">crispex, f[0], f[1], refcube=f[2]
-</code></pre>
-<p>will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
+<p>Then create a string list with the names of the cube files within that folder. To that end, type
+<div class="highlight"><pre><span></span><code>fcube, f
+</code></pre></div>
+That will give you an array <code>f</code> of files that can be fcubes (floating-point cubes) or icubes (integer cubes).</p>
+<p>The following step is, e.g., to read the first cube of the list by writting
+<div class="highlight"><pre><span></span><code>cube<span class="o">=</span>lp_read(f(<span class="mi">0</span>),header<span class="o">=</span>header)
+</code></pre></div></p>
+<p>You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:
+<div class="highlight"><pre><span></span><code> <span class="mi">0</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>icube
+ <span class="mi">1</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_sp.icube
+ <span class="mi">2</span> hmimag_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>fcube
+</code></pre></div>
+so, 
+<div class="highlight"><pre><span></span><code>crispex, f[<span class="mi">0</span>], f[<span class="mi">1</span>], refcube<span class="o">=</span>f[<span class="mi">2</span>]
+</code></pre></div>
+will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
 file has to be an image file and the second file has to be a sp (spectral) file. They are actually the same array, but 
 ordered differently. </p></div>
-        
-        
-    </div>
+            </div>
+        </div>
 
-    
-      <footer class="col-md-12 text-center">
-          
-          
+        <footer class="col-md-12">
             <hr>
-            <p>
-            <small>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</small><br>
-            
-            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
-            </p>
-          
+                <p>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
 
-          
-          
-      </footer>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../js/bootstrap-3.0.3.min.js"></script>
-
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-        
-                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
-        
-    <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    <script>var base_url = ".."</script>
-    
-    <script src="../js/base.js"></script>
-    <script src="../search/main.js"></script>
-
-    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -398,6 +351,6 @@ ordered differently. </p></div>
         </div>
     </div>
 </div>
-    </body>
 
+    </body>
 </html>

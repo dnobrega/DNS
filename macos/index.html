@@ -1,186 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Documentation about useful software packages, code, telescopes and satellites.">
-    <meta name="author" content="Daniel Nobrega-Siverio">
-    <link rel="canonical" href="https://dnobrega.github.io/DNS/macos/">
-    <link rel="shortcut icon" href="../img/favicon.ico">
-
-    
-    <title>Mac OS - DNS</title>
-    
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/v4-shims.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css">
-    <link href='//rsms.me/inter/inter.css' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
-    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-    <link href="../css/base.min.css" rel="stylesheet">
-    <link href="../css/cinder.min.css" rel="stylesheet">
-
-    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
-        
-    
+        <meta name="author" content="Daniel Nobrega-Siverio">
+        <link rel="canonical" href="https://dnobrega.github.io/DNS/macos/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Mac OS - DNS</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-            <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-        <![endif]-->
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
 
-    
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="..">DNS</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-     
-</head>
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link"></a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">About</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Mac OS</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../terminal/" class="nav-link">Terminal</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../bifrost/" class="nav-link">Bifrost</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Programming languages <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../idl/" class="dropdown-item">IDL</a>
+</li>
+                                    
+<li>
+    <a href="../sswidl/" class="dropdown-item">SSWIDL</a>
+</li>
+                                    
+<li>
+    <a href="../dns/" class="dropdown-item">DNSPRO</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Observations <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SST/" class="dropdown-item">SST</a>
+</li>
+                                    
+<li>
+    <a href="../IRIS/" class="dropdown-item">IRIS</a>
+</li>
+                                    
+<li>
+    <a href="../SOLO/" class="dropdown-item">SOLO</a>
+</li>
+                                    
+<li>
+    <a href="../SDO/" class="dropdown-item">SDO</a>
+</li>
+                                    
+<li>
+    <a href="../ALMA/" class="dropdown-item">ALMA</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
 
-<body>
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            
-
-            <!-- Main title -->
-
-            
-              <a class="navbar-brand" href="..">DNS</a>
-            
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../about/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../terminal/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dnobrega/DNS" class="nav-link">dnobrega/DNS</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                
-                
-                    <li >
-                        <a href="..">Introduction</a>
-                    </li>
-                
-                
-                
-                    <li class="active">
-                        <a href="./">Mac OS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../terminal/">Terminal</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../python/">Python</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../bifrost/">Bifrost</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../sswidl/">IDL and SSWIDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../idl/">IDL</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../dns/">DNSPRO</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SST/">SST</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../IRIS/">IRIS</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../SOLO/">SOLO</a>
-                    </li>
-                
-                
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                            <i class="fas fa-search"></i> Search
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="prev" href="..">
-                            <i class="fas fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li >
-                        <a rel="next" href="../terminal/">
-                            Next <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/dnobrega/DNS">dnobrega/DNS</a>
-                    </li>
-            </ul>
-        </div>
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
-</div>
 
-    <div class="container">
-        
-        
-        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="first-level active"><a href="#mac-os">Mac OS</a></li>
-            <li class="second-level"><a href="#xcode">Xcode</a></li>
-                
-            <li class="second-level"><a href="#oh-my-zsh">Oh my zsh</a></li>
-                
-            <li class="second-level"><a href="#emacs">Emacs</a></li>
-                
-            <li class="second-level"><a href="#homebrew">Homebrew</a></li>
-                
-            <li class="second-level"><a href="#gcc">GCC</a></li>
-                
-            <li class="second-level"><a href="#mpich">MPICH</a></li>
-                
-    </ul>
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#mac-os" class="nav-link">Mac OS</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#xcode" class="nav-link">Xcode</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#oh-my-zsh" class="nav-link">Oh my zsh</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#emacs" class="nav-link">Emacs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#homebrew" class="nav-link">Homebrew</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#gcc" class="nav-link">GCC</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#mpich" class="nav-link">MPICH</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-        <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="mac-os">Mac OS<a class="headerlink" href="#mac-os" title="Permanent link">&para;</a></h1>
 <p>This list contains useful software you should install when using a Mac for the first time.</p>
@@ -195,79 +179,52 @@ themes to spice up your morning, and an auto-update tool so that makes it easy t
 <h2 id="emacs">Emacs<a class="headerlink" href="#emacs" title="Permanent link">&para;</a></h2>
 <p>Emacs is the extensible, customizable, self-documenting real-time display editor. Download the .dmg file from here:<br />
 <a href="https://emacsformacosx.com/">Emacs</a></p>
-<p>After installing Emacs, it is useful to define a new alias. In case of using zsh, modify your <em>.zshrc</em> file to include</p>
-<pre><code class="language-bash">alias emacs=&quot;emacs -nw&quot;
-</code></pre>
-<p>This will let you open any file in the terminal and not in a new extra annoying and time-consuming window.</p>
+<p>After installing Emacs, it is useful to define a new alias. In case of using zsh, modify your <em>.zshrc</em> file to include
+<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">emacs</span><span class="o">=</span><span class="s2">&quot;emacs -nw&quot;</span>
+</code></pre></div>
+This will let you open any file in the terminal and not in a new extra annoying and time-consuming window.</p>
 <h2 id="homebrew">Homebrew<a class="headerlink" href="#homebrew" title="Permanent link">&para;</a></h2>
 <p>Homebrew is the Missing Package Manager for macOS: <br />
 <a href="https://brew.sh/">Homebrew</a></p>
 <h2 id="gcc">GCC<a class="headerlink" href="#gcc" title="Permanent link">&para;</a></h2>
 <p>The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, Go, and D, as well as libraries for these languages (libstdc++,...). GCC was originally written as the compiler for the GNU operating system. The GNU system was developed to be 100% free software, free in the sense that it respects the user's freedom.</p>
 <p>Install it after having homebrew by typing</p>
-<pre><code class="language-bash">brew install gcc
-</code></pre>
+<div class="highlight"><pre><span></span><code>brew install gcc
+</code></pre></div>
 <h2 id="mpich">MPICH<a class="headerlink" href="#mpich" title="Permanent link">&para;</a></h2>
 <p>MPICH is a high performance and widely portable implementation of the Message Passing Interface (MPI) standard. You can install it
 through homebrew following the instructions here:<br />
 <a href="https://formulae.brew.sh/formula/mpich">MPICH</a></p></div>
-        
-        
-    </div>
+            </div>
+        </div>
 
-    
-      <footer class="col-md-12 text-center">
-          
-          
+        <footer class="col-md-12">
             <hr>
-            <p>
-            <small>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</small><br>
-            
-            <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</small>
-            </p>
-          
+                <p>Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
 
-          
-          
-      </footer>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../js/bootstrap-3.0.3.min.js"></script>
-
-    
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
-        
-                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
-        
-    <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    <script>var base_url = ".."</script>
-    
-    <script src="../js/base.js"></script>
-    <script src="../search/main.js"></script>
-
-    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>
@@ -313,6 +270,6 @@ through homebrew following the instructions here:<br />
         </div>
     </div>
 </div>
-    </body>
 
+    </body>
 </html>
