@@ -37,9 +37,6 @@
                                 <a href=".." class="nav-link"></a>
                             </li>
                             <li class="navitem">
-                                <a href="../about/" class="nav-link">About</a>
-                            </li>
-                            <li class="navitem">
                                 <a href="../macos/" class="nav-link">Mac OS</a>
                             </li>
                             <li class="navitem">
@@ -54,14 +51,6 @@
                                     
 <li>
     <a href="../idl/" class="dropdown-item">IDL</a>
-</li>
-                                    
-<li>
-    <a href="../sswidl/" class="dropdown-item">SSWIDL</a>
-</li>
-                                    
-<li>
-    <a href="../dns/" class="dropdown-item">DNSPRO</a>
 </li>
                                     
 <li>
@@ -143,6 +132,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#idl-routines-of-bifrost" class="nav-link">IDL routines of Bifrost</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -189,7 +182,68 @@ git config --global user.email username@example.com
 In case of tcsh:<br />
 <div class="highlight"><pre><span></span><code>setenv BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
 </code></pre></div>
-where <em>folder</em> is the location where you have cloned the Bifrost repository. </p></div>
+where <em>folder</em> is the location where you have cloned the Bifrost repository. </p>
+<h2 id="idl-routines-of-bifrost">IDL routines of Bifrost<a class="headerlink" href="#idl-routines-of-bifrost" title="Permanent link">&para;</a></h2>
+<p>Modify your .zlogin file to add the following system variables.
+In case of working with tcsh:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">BIFROST_IDL</span><span class="o">=</span><span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
+</code></pre></div>
+where <code>BIFROST</code> is a system variable for your Bifrost repository (see Bifrost section).
+Then, modifiy your <code>IDL_PATH</code> to the the Bifrost IDL folder:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">IDL_PATH</span><span class="o">=</span><span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span>
+</code></pre></div>
+<p>It is also necessary to define a system variable called <code>OSC_CSTAGGER</code>, which
+depends on your operative system.</p>
+<ul>
+<li>If you use a Linux system:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">OSC_CSTAGGER</span><span class="o">=</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/linux&quot;</span>
+</code></pre></div></li>
+<li>In case of a intelmac:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">OSC_CSTAGGER</span><span class="o">=</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;/cstagger/intelmac&quot;</span>
+</code></pre></div></li>
+</ul>
+<p>The next step is to go to your stagger folder, typing in your terminal</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> <span class="nv">$OSC_CSTAGGER</span>
+</code></pre></div>
+<p>and then</p>
+<div class="highlight"><pre><span></span><code>make
+</code></pre></div>
+<p>That would create the following six files:</p>
+<ul>
+<li>cstagger.pro</li>
+<li>cstagger.c</li>
+<li>cstagger.o</li>
+<li>init_stagger.o</li>
+<li>inverse.o</li>
+<li>cstagger.so</li>
+</ul>
+<p>which are necessary for stagger operations.</p>
+<p>After all this steps, create a IDL startup file.
+This file is going to be executed automatically each time IDL
+is started. For example, you can create it in your
+IDLWorkspace and then add a similar line in your .login file
+(in case of using tcsh) with the location:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">IDL_STARTUP</span><span class="o">=</span><span class="s2">&quot;/Users/yourname/IDLWorkspace85/startup.pro&quot;</span>
+</code></pre></div>
+Edit the startup.pro file to add the following line</p>
+<p><div class="highlight"><pre><span></span><code>.r $OSC_CSTAGGER<span class="o">/</span>cstagger
+</code></pre></div>
+whici will compile the Stagger routines each time you execute
+IDL. With all the information above, you should be able
+to use the IDL routines of Bifrost without any problem.</p>
+<p>I also have the following useful lines in startup.pro</p>
+<div class="highlight"><pre><span></span><code>br_select_idlparam, idlparam
+d<span class="o">=</span><span class="nb">obj_new</span>(<span class="s1">&#39;br_data&#39;</span>, idlparam)
+br_getsnapind, idlparam, snaps
+<span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
+<span class="nb">PRINT</span>, <span class="s1">&#39; Project : &#39;</span>, idlparam, <span class="s1">&#39;  &#39;</span>, <span class="nb">strtrim</span>(<span class="nb">string</span>(<span class="nb">min</span>(snaps)),<span class="mi">2</span>), <span class="s1">&#39;-&#39;</span>,<span class="nb">strtrim</span>(<span class="nb">string</span>(<span class="nb">max</span>(snaps)),<span class="mi">2</span>)
+<span class="nb">PRINT</span>, <span class="s1">&#39;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&#39;</span>
+<span class="nb">PRINT</span>, &#39;
+</code></pre></div>
+<p>so everytime I run IDL within a folder containing a numerical experiment carried out with
+Bifrost, I get the object to load Bifrost variables (<code>d</code>), the name of the simulation
+(<code>idlparam</code>) and all the snapshots I have in that folder (<code>snaps</code>). Then I print
+on the screen some of that information.</p></div>
             </div>
         </div>
 

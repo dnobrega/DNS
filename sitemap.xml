@@ -31,17 +31,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dnobrega.github.io/DNS/about/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://dnobrega.github.io/DNS/bifrost/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/dns/</loc>
          <lastmod>2022-01-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -57,11 +47,6 @@
     </url>
     <url>
          <loc>https://dnobrega.github.io/DNS/python/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/sswidl/</loc>
          <lastmod>2022-01-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
