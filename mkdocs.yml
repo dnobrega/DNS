@@ -1,57 +1,60 @@
+##################################################################
+
 site_name: DNS
 site_url: https://dnobrega.github.io/DNS/
 site_author: Daniel Nobrega-Siverio
-site_description: "Documentation about useful software packages, code, telescopes and satellites."
+site_description: "Documentation about useful software packages, 
+                   code, telescopes and satellites."
 copyright: 'Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio'
-
-#Repository
 repo_name: dnobrega/DNS
 repo_url: https://github.com/dnobrega/DNS
 edit_uri: ""
 
-nav:
-  - Introduction: index.md
-  - Mac OS: macos.md
-  - Terminal: terminal.md
-  - Python: python.md  
-  - Bifrost: bifrost.md
-  - IDL and SSWIDL: sswidl.md
-  - IDL: idl.md
-  - DNSPRO: dns.md
-  - SST: SST.md
-  - IRIS: IRIS.md
-  - SOLO: SOLO.md
-#  - SDO: SDO.md
-#  - ALMA: ALMA.md  
-#  - About me: about.md
+##################################################################
 
 theme:
-  name: null
-  custom_dir: 'cinder'
-  colorscheme: github
-  highlightjs: true
-  hljs_languages:
-    - yaml
+    name: mkdocs
+    nav_style: dark
+    navigation_depth: 3
+    highlightjs: true
 
-# Customization
-#extra:
-#  manifest: 'manifest.webmanifest'
-#  social:
-#    - type: 'github'
-#      link: 'https://github.com/dnobrega'
+##################################################################
+
+nav:
+  - '': index.md
+  - About: about.md
+  - Mac OS: macos.md
+  - Terminal: terminal.md
+  - Bifrost: bifrost.md
+  - 'Programming languages':
+    - IDL: idl.md
+    - SSWIDL: sswidl.md
+    - DNSPRO: dns.md
+    - Python: python.md
+  - 'Observations':
+    - SST: SST.md
+    - IRIS: IRIS.md
+    - SOLO: SOLO.md
+    - SDO: SDO.md
+    - ALMA: ALMA.md  
+#  - About me: about.md
+
+##################################################################
+
 # Extensions
 markdown_extensions:
   - admonition
   - toc:
       permalink: true
+  - codehilite:
+      guess_lang: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight  
+  - pymdownx.arithmatex
+  - pymdownx.tilde
+  - fontawesome_markdown
 
-extra:
-  collapse_toc: true
-  toc_depth: 2
+##################################################################
 
-#  - pymdownx.details
-#  - pymdownx.superfences
-#  - pymdownx.highlight
-#  - codehilite:
-#      guess_lang: false
 
