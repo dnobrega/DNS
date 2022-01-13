@@ -17,7 +17,18 @@ to include Anaconda. For Mac under zsh, modify the _.zlogin_ file in your home d
 export ANACONDA_DIR="/Users/username/opt/anaconda3/bin"
 export PATH=$ANACONDA_DIR":"$PATH
 ```
-
+## Helita
+Helita is a Python library for solar physics focused on interfacing with code and projects from the Institute of Theoretical Astrophysics (ITA) and the Rosseland Centre for Solar Physics (RoCS) at the University of Oslo. It contains routines to read SST observations and Bifrost simulations. You can install it through pip or cloning the directory from github, namely,
+```bash
+pip install git+https://github.com/ITA-Solar/helita.git@master
+```
+or
+```bash
+git clone https://github.com/ITA-solar/helita.git
+cd helita
+python setup.py install
+```
+For further details, check [Helita](https://ita-solar.github.io/helita/install/)
 
 ## IRISpy
 
