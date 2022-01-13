@@ -44,6 +44,8 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
+
+extra:
   collapse_toc: true
   toc_depth: 2
 
