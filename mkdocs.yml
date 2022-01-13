@@ -1,5 +1,8 @@
 site_name: DNS documentation
 site_url: https://dnobrega.github.io/DNS/
+site_author: Daniel Nobrega-Siverio
+site_description: "Documentation about useful software packages, code, telescopes and satellites."
+copyright: 'Copyright &copy; 2019 - 2022 Daniel Nobrega Siverio'
 
 #Repository
 repo_name: dnobrega/DNS
@@ -7,37 +10,34 @@ repo_url: https://github.com/dnobrega/DNS
 edit_uri: ""
 
 nav:
-  - INTRODUCTION: index.md
-  - MAC OS: macos.md
-  - TERMINAL: terminal.md
-  - PYTHON: python.md  
-  - BIFROST: bifrost.md
-  - SSWIDL: sswidl.md
+  - Introduction: index.md
+  - Mac OS: macos.md
+  - Terminal: terminal.md
+  - Python: python.md  
+  - Bifrost: bifrost.md
+  - IDL and SSWIDL: sswidl.md
   - IDL: idl.md
-  - DNS: dns.md
+  - DNSPRO: dns.md
   - SST: SST.md
   - IRIS: IRIS.md
   - SOLO: SOLO.md
   - SDO: SDO.md
   - ALMA: ALMA.md  
-  - ABOUT ME: about.md
+  - About me: about.md
 
+#theme:
+#  name: 'readthedocs'
+#  favicon: 'images/dns.png'
 theme:
-  name: 'readthedocs'
-  favicon: 'images/dns.png'
+  name: null
+  custom_dir: 'cinder'
 
-# Copyright
-copyright: 'Copyright &copy; 2019 - 2020 Daniel Nobrega Siverio'
 # Customization
 extra:
   manifest: 'manifest.webmanifest'
   social:
     - type: 'github'
       link: 'https://github.com/dnobrega'
-# Google Analytics
-google_analytics:
-  - 'UA-XXXXXXXX-X'
-  - 'auto'
 # Extensions
 markdown_extensions:
   - admonition
