@@ -74,6 +74,8 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#anaconda">Anaconda</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helita">Helita</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#irispy">IRISpy</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#aiapy">AIApy</a>
@@ -172,6 +174,16 @@ to include Anaconda. For Mac under zsh, modify the <em>.zlogin</em> file in your
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">ANACONDA_DIR</span><span class="o">=</span><span class="s2">&quot;/Users/username/opt/anaconda3/bin&quot;</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANACONDA_DIR</span><span class="s2">&quot;:&quot;</span><span class="nv">$PATH</span>
 </code></pre></div></p>
+<h2 id="helita">Helita<a class="headerlink" href="#helita" title="Permanent link">&para;</a></h2>
+<p>Helita is a Python library for solar physics focused on interfacing with code and projects from the Institute of Theoretical Astrophysics (ITA) and the Rosseland Centre for Solar Physics (RoCS) at the University of Oslo. It contains routines to read SST observations and Bifrost simulations. You can install it through pip or cloning the directory from github, namely,
+<div class="highlight"><pre><span></span><code>pip install git+https://github.com/ITA-Solar/helita.git@master
+</code></pre></div>
+or
+<div class="highlight"><pre><span></span><code>git clone https://github.com/ITA-solar/helita.git
+<span class="nb">cd</span> helita
+python setup.py install
+</code></pre></div>
+For further details, check <a href="https://ita-solar.github.io/helita/install/">Helita</a></p>
 <h2 id="irispy">IRISpy<a class="headerlink" href="#irispy" title="Permanent link">&para;</a></h2>
 <p>Python library to analyze IRIS Level 2 data: <a href="https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html">IRISpy</a></p>
 <p>It is probable that to run IRISSpy for the first ime, the only library is missing to install is <em>pyqtgraph</em>, so type in the terminal
