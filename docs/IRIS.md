@@ -1,4 +1,4 @@
-
+<h1><i class="fas fa-fire" style="color:#FA023C"></i> Cinder Theme <small>for MkDocs</small></h1>
 
 ## IRIS
 
