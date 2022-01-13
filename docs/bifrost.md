@@ -1,3 +1,5 @@
+
+
 # Bifrost
 
 Bifrost is a massively parallel code developed for tridimensional numerical experiments of stellar atmospheres [(Gudiksen et al. 2011)](http://adsabs.harvard.edu/abs/2011A%26A...531A.154G). In order to explicitly solve the standard partial differential equations of magnetohydrodynamics (MHD), its core uses a staggered mesh in cartesian coordinates `(x,y,z)`. The positioning of the variables in the mesh is as follows: the scalar variables, e.g., the density `ρ`, are defined in the center of the numerical cells; the components of the basic vector fields, namely, the magnetic field `B_i` and linear momentum `p_i`,  are located at the center of the cell faces;  and the cross product or curl of those vectors, like `(vxB)_i` or `J_i`, are defined on the cell edges.
