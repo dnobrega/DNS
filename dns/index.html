@@ -134,24 +134,6 @@
                     </li>
                 
                 
-                
-                    <li >
-                        <a href="../SDO/">SDO</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../ALMA/">ALMA</a>
-                    </li>
-                
-                
-                
-                    <li >
-                        <a href="../about/">About me</a>
-                    </li>
-                
-                
                 </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -196,13 +178,13 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="dns">DNS</h1>
-<h2 id="getting-dns-package">Getting DNS package</h2>
+<h1 id="dns">DNS<a class="headerlink" href="#dns" title="Permanent link">&para;</a></h1>
+<h2 id="getting-dns-package">Getting DNS package<a class="headerlink" href="#getting-dns-package" title="Permanent link">&para;</a></h2>
 <p>You can clone the repository through HTTPS like this:</p>
 <pre><code class="language-tcsh">git clone https://username@github.com/dnobrega/DNS.git
 </code></pre>
 <p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration">Terminal configuration</h2>
+<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
 <p>It is necessary to modify your .login file in your home directory to add the following system variables.
 In case of working with zsh:</p>
 <pre><code class="language-zsh">export DNS=&quot;/folder/DNS&quot; 
@@ -220,7 +202,7 @@ to create with the DNS package, e.g.,</p>
 <p>Obviously, you will also need to create that folder. 
 Within <code>DNS_PROJECTS</code>, other folders will be automatically 
 created with the name of the simulation when you save a image or movie.</p>
-<h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations</h2>
+<h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations<a class="headerlink" href="#using-dns-routines-for-bifrost-simulations" title="Permanent link">&para;</a></h2>
 <p>Within a folder with a Bifrost experiment, run <code>SSWIDL</code>. 
 The first plot we are going to create is a density plot:</p>
 <pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0
@@ -294,7 +276,7 @@ with the meaning of each variable, in the IDL prompt you can type, e.g.,</p>
 <p>which will show the information about the variable of that routine, in this case,</p>
 <pre><code class="language-csh">% DNSVAR_MODB: Module of the magnetic field: B (G)
 </code></pre>
-<h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations</h2>
+<h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations<a class="headerlink" href="#using-dns-routines-for-sst-observations" title="Permanent link">&para;</a></h2>
 <p>Within a folder with reduced SST observations, run <code>SSWIDL</code>. </p>
 <p>Then create a string list with the names of the cube files within that folder. To that end, type</p>
 <pre><code class="language-IDL">fcube, f
