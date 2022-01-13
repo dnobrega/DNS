@@ -22,14 +22,11 @@ theme:
 
 nav:
   - '': index.md
-  - About: about.md
   - Mac OS: macos.md
   - Terminal: terminal.md
   - Bifrost: bifrost.md
   - 'Programming languages':
     - IDL: idl.md
-    - SSWIDL: sswidl.md
-    - DNSPRO: dns.md
     - Python: python.md
   - 'Observations':
     - SST: SST.md
