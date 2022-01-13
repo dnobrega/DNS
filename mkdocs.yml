@@ -22,19 +22,18 @@ theme:
 
 nav:
   - '': index.md
-  - Mac OS: macos.md
-  - Terminal: terminal.md
-  - Bifrost: bifrost.md
-  - 'Programming languages':
+  - 'Installation':
+    - Mac OS: macos.md
+    - Terminal: terminal.md
     - IDL: idl.md
     - Python: python.md
+    - Bifrost: bifrost.md
   - 'Observations':
-    - SST: SST.md
-    - IRIS: IRIS.md
-    - SOLO: SOLO.md
-    - SDO: SDO.md
-    - ALMA: ALMA.md  
-#  - About me: about.md
+    - SST: sst.md
+    - IRIS: iris.md
+    - SOLO: solo.md
+    - SDO: sdo.md
+    - ALMA: alma.md  
 
 ##################################################################
 
