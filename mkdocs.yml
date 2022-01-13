@@ -21,9 +21,9 @@ nav:
   - SST: SST.md
   - IRIS: IRIS.md
   - SOLO: SOLO.md
-  - SDO: SDO.md
-  - ALMA: ALMA.md  
-  - About me: about.md
+#  - SDO: SDO.md
+#  - ALMA: ALMA.md  
+#  - About me: about.md
 
 theme:
   name: null
@@ -34,18 +34,19 @@ theme:
     - yaml
 
 # Customization
-extra:
-  manifest: 'manifest.webmanifest'
-  social:
-    - type: 'github'
-      link: 'https://github.com/dnobrega'
+#extra:
+#  manifest: 'manifest.webmanifest'
+#  social:
+#    - type: 'github'
+#      link: 'https://github.com/dnobrega'
 # Extensions
 markdown_extensions:
   - admonition
+  - toc:
+      permalink: true
 #  - pymdownx.details
 #  - pymdownx.superfences
 #  - pymdownx.highlight
 #  - codehilite:
 #      guess_lang: false
-#  - toc:
-#      permalink: true
+
