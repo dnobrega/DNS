@@ -60,3 +60,87 @@ In case of tcsh:
 setenv BIFROST "/folder/Bifrost"
 ```
 where _folder_ is the location where you have cloned the Bifrost repository. 
+
+## IDL routines of Bifrost
+
+Modify your .zlogin file to add the following system variables.
+In case of working with tcsh:
+``` zsh
+export BIFROST_IDL=$BIFROST"/IDL"
+```
+where ```BIFROST``` is a system variable for your Bifrost repository (see Bifrost section).
+Then, modifiy your ```IDL_PATH``` to the the Bifrost IDL folder:
+
+``` zsh
+export IDL_PATH="/Applications/exelis/idl85/bin"":+"$BIFROST_IDL
+```
+
+It is also necessary to define a system variable called ```OSC_CSTAGGER```, which
+depends on your operative system.
+
+- If you use a Linux system:
+``` zsh
+export OSC_CSTAGGER=$BIFROST_IDL"/cstagger/linux"
+```
+- In case of a intelmac:
+``` zsh
+export OSC_CSTAGGER=$BIFROST_IDL"/cstagger/intelmac"
+```
+
+The next step is to go to your stagger folder, typing in your terminal
+
+``` zsh
+cd $OSC_CSTAGGER
+```
+
+and then
+
+``` zsh
+make
+```
+
+That would create the following six files:
+
+* cstagger.pro
+* cstagger.c
+* cstagger.o
+* init_stagger.o
+* inverse.o
+* cstagger.so
+
+which are necessary for stagger operations.
+
+After all this steps, create a IDL startup file.
+This file is going to be executed automatically each time IDL
+is started. For example, you can create it in your
+IDLWorkspace and then add a similar line in your .login file
+(in case of using tcsh) with the location:
+
+``` zsh
+export IDL_STARTUP="/Users/yourname/IDLWorkspace85/startup.pro"
+```
+Edit the startup.pro file to add the following line
+
+``` idl
+.r $OSC_CSTAGGER/cstagger
+```
+whici will compile the Stagger routines each time you execute
+IDL. With all the information above, you should be able
+to use the IDL routines of Bifrost without any problem.
+
+I also have the following useful lines in startup.pro
+
+``` IDL
+br_select_idlparam, idlparam
+d=obj_new('br_data', idlparam)
+br_getsnapind, idlparam, snaps
+PRINT, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+PRINT, ' Project : ', idlparam, '  ', strtrim(string(min(snaps)),2), '-',strtrim(string(max(snaps)),2)
+PRINT, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+PRINT, '
+```
+
+so everytime I run IDL within a folder containing a numerical experiment carried out with
+Bifrost, I get the object to load Bifrost variables (```d```), the name of the simulation
+(```idlparam```) and all the snapshots I have in that folder (```snaps```). Then I print
+on the screen some of that information.
