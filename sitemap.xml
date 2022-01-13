@@ -6,27 +6,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dnobrega.github.io/DNS/ALMA/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/IRIS/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/SDO/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/SOLO/</loc>
-         <lastmod>2022-01-13</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dnobrega.github.io/DNS/SST/</loc>
+         <loc>https://dnobrega.github.io/DNS/alma/</loc>
          <lastmod>2022-01-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -41,12 +21,32 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dnobrega.github.io/DNS/iris/</loc>
+         <lastmod>2022-01-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dnobrega.github.io/DNS/macos/</loc>
          <lastmod>2022-01-13</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dnobrega.github.io/DNS/python/</loc>
+         <lastmod>2022-01-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dnobrega.github.io/DNS/sdo/</loc>
+         <lastmod>2022-01-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dnobrega.github.io/DNS/solo/</loc>
+         <lastmod>2022-01-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dnobrega.github.io/DNS/sst/</loc>
          <lastmod>2022-01-13</lastmod>
          <changefreq>daily</changefreq>
     </url>

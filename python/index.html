@@ -36,18 +36,17 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link"></a>
                             </li>
-                            <li class="navitem">
-                                <a href="../macos/" class="nav-link">Mac OS</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../terminal/" class="nav-link">Terminal</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../bifrost/" class="nav-link">Bifrost</a>
-                            </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Programming languages <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../macos/" class="dropdown-item">Mac OS</a>
+</li>
+                                    
+<li>
+    <a href="../terminal/" class="dropdown-item">Terminal</a>
+</li>
                                     
 <li>
     <a href="../idl/" class="dropdown-item">IDL</a>
@@ -56,6 +55,10 @@
 <li>
     <a href="./" class="dropdown-item active">Python</a>
 </li>
+                                    
+<li>
+    <a href="../bifrost/" class="dropdown-item">Bifrost</a>
+</li>
                                 </ul>
                             </li>
                             <li class="dropdown">
@@ -63,23 +66,23 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../SST/" class="dropdown-item">SST</a>
+    <a href="../sst/" class="dropdown-item">SST</a>
 </li>
                                     
 <li>
-    <a href="../IRIS/" class="dropdown-item">IRIS</a>
+    <a href="../iris/" class="dropdown-item">IRIS</a>
 </li>
                                     
 <li>
-    <a href="../SOLO/" class="dropdown-item">SOLO</a>
+    <a href="../solo/" class="dropdown-item">SOLO</a>
 </li>
                                     
 <li>
-    <a href="../SDO/" class="dropdown-item">SDO</a>
+    <a href="../sdo/" class="dropdown-item">SDO</a>
 </li>
                                     
 <li>
-    <a href="../ALMA/" class="dropdown-item">ALMA</a>
+    <a href="../alma/" class="dropdown-item">ALMA</a>
 </li>
                                 </ul>
                             </li>
@@ -97,7 +100,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../SST/" class="nav-link">
+                                <a rel="next" href="../bifrost/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -124,39 +127,46 @@
             
             <li class="nav-item" data-level="1"><a href="#python" class="nav-link">Python</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#anaconda" class="nav-link">Anaconda</a>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#helita" class="nav-link">Helita</a>
+            <li class="nav-item" data-level="2"><a href="#libraries" class="nav-link">Libraries</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#helita" class="nav-link">Helita</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#irispy" class="nav-link">IRISpy</a>
+            <li class="nav-item" data-level="3"><a href="#irispy" class="nav-link">IRISpy</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#aiapy" class="nav-link">AIApy</a>
+            <li class="nav-item" data-level="3"><a href="#aiapy" class="nav-link">AIApy</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#sunpy" class="nav-link">SunPy</a>
+            <li class="nav-item" data-level="3"><a href="#sunpy" class="nav-link">SunPy</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#scikit-learn" class="nav-link">scikit-learn</a>
+            <li class="nav-item" data-level="3"><a href="#chiantipy" class="nav-link">ChiantiPy</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="3"><a href="#scikit-learn" class="nav-link">Scikit-learn</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#scipy-meeting" class="nav-link">SciPy meeting</a>
               <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#some-tutorials-from-scipy-meeting" class="nav-link">Some tutorials from SciPy meeting</a>
+            <li class="nav-item" data-level="3"><a href="#tutorials" class="nav-link">Tutorials</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -166,8 +176,9 @@
 
 <h1 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
 <p>Python is an interpreted, high-level and general-purpose programming language. Created by Guido van Rossum and first released in 1991, Python's design philosophy emphasizes code readability with its notable use of significant whitespace. Its language constructs and object-oriented approach aim to help programmers write clear, logical code for small and large-scale projects. In the following, you can find some useful links to install Anaconda and interesting Python libraries as well as specific tutorials.</p>
-<h2 id="anaconda">Anaconda<a class="headerlink" href="#anaconda" title="Permanent link">&para;</a></h2>
-<p>Anaconda is a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages.
+<hr />
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<p>For Python installation I recommend to use Anaconda: a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages.
 See the instructions for the installation here: <a href="https://docs.anaconda.com/anaconda/install/">Anaconda</a></p>
 <p>After the installation, typing in the terminal
 <div class="highlight"><pre><span></span><code>python --version
@@ -175,34 +186,54 @@ See the instructions for the installation here: <a href="https://docs.anaconda.c
 you should get the latest version of Python from Anaconda (3.8.3 at the moment of writing this). If you get an older version, then modify your PATH
 to include Anaconda. For Mac under zsh, modify the <em>.zlogin</em> file in your home directory as follows:
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">ANACONDA_DIR</span><span class="o">=</span><span class="s2">&quot;/Users/username/opt/anaconda3/bin&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANACONDA_DIR</span><span class="s2">&quot;:&quot;</span><span class="nv">$PATH</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANACONDA_DIR</span> <span class="s2">&quot;:&quot;</span> <span class="nv">$PATH</span>
 </code></pre></div></p>
-<h2 id="helita">Helita<a class="headerlink" href="#helita" title="Permanent link">&para;</a></h2>
-<p>Helita is a Python library for solar physics focused on interfacing with code and projects from the Institute of Theoretical Astrophysics (ITA) and the Rosseland Centre for Solar Physics (RoCS) at the University of Oslo. It contains routines to read SST observations and Bifrost simulations. You can install it through pip or cloning the directory from github, namely,
+<h2 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">&para;</a></h2>
+<h3 id="helita">Helita<a class="headerlink" href="#helita" title="Permanent link">&para;</a></h3>
+<p>Helita is a Python library for solar physics focused on interfacing with code and projects from the Institute of Theoretical Astrophysics (ITA) and the Rosseland Centre for Solar Physics (RoCS) at the University of Oslo. It contains routines to read SST observations and Bifrost simulations. You can install it through pip or cloning the directory from github, namely,</p>
 <div class="highlight"><pre><span></span><code>pip install git+https://github.com/ITA-Solar/helita.git@master
 </code></pre></div>
-or
+<p>or</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/ITA-solar/helita.git
 <span class="nb">cd</span> helita
 python setup.py install
 </code></pre></div>
-For further details, check <a href="https://ita-solar.github.io/helita/install/">Helita</a></p>
-<h2 id="irispy">IRISpy<a class="headerlink" href="#irispy" title="Permanent link">&para;</a></h2>
+<p>For further details, check <a href="https://ita-solar.github.io/helita/install/">Helita</a>.</p>
+<h3 id="irispy">IRISpy<a class="headerlink" href="#irispy" title="Permanent link">&para;</a></h3>
 <p>Python library to analyze IRIS Level 2 data: <a href="https://iris.lmsal.com/itn45/IRIS-LMSALpy_chapter1.html">IRISpy</a></p>
 <p>It is probable that to run IRISSpy for the first ime, the only library is missing to install is <em>pyqtgraph</em>, so type in the terminal
 <div class="highlight"><pre><span></span><code>conda install pyqtgraph
 </code></pre></div>
-If everything is properly installed, you should be able to open a python session and type
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">iris_lmsalpy</span> <span class="k">as</span> <span class="nn">iris</span>
+If everything is properly installed, you should be able to open a python session and type</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">iris_lmsalpy</span> <span class="k">as</span> <span class="nn">iris</span>
 </code></pre></div>
 without any problem.</p>
-<h2 id="aiapy">AIApy<a class="headerlink" href="#aiapy" title="Permanent link">&para;</a></h2>
+<h3 id="aiapy">AIApy<a class="headerlink" href="#aiapy" title="Permanent link">&para;</a></h3>
 <p>AIApy is a Python package for analyzing data from the Atmospheric Imaging Assembly (AIA) instrument onboard the Solar Dynamics Observatory spacecraft. 
 It includes software for converting AIA images from level 1 to level 1.5, point spread function deconvolution, and computing the wavelength and 
 temperature response functions for the EUV channels: <a href="https://aiapy.readthedocs.io/en/v0.2.0/">AIApy</a></p>
-<h2 id="sunpy">SunPy<a class="headerlink" href="#sunpy" title="Permanent link">&para;</a></h2>
-<p>SunPy is an open-source Python library for Solar Physics data analysis and visualization: <a href="https://sunpy.org/">Sunpy</a></p>
-<h2 id="scikit-learn">scikit-learn<a class="headerlink" href="#scikit-learn" title="Permanent link">&para;</a></h2>
+<h3 id="sunpy">SunPy<a class="headerlink" href="#sunpy" title="Permanent link">&para;</a></h3>
+<p>SunPy is an open-source Python library for Solar Physics data analysis and vis
+ualization: <a href="https://sunpy.org/">Sunpy</a></p>
+<h3 id="chiantipy">ChiantiPy<a class="headerlink" href="#chiantipy" title="Permanent link">&para;</a></h3>
+<p>ChiantiPy is the Python interface to the CHIANTI atomic database for astrophysical spectroscopy. It provides the capability to calculate the emission line and continuum spectrum of an optically thin plasma based on the data in the CHIANTI database.</p>
+<p>To install it, first you need to get the CHIANTI database. If you have installed SSWIDL, then you already have it, so you just need to define the following
+enviroment variable (which depends on the location of your SSW folder), e.g.,
+<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">XUVTOP</span><span class="o">=</span><span class="s2">&quot;/Users/username/ssw/packages/chianti/dbase&quot;</span>
+</code></pre></div>
+If you do not have the database, then download it from: <a href="http://www.chiantidatabase.org/chianti_download.html">CHIANTI</a>. Extract the folder in a derided location and define the <code>XUVTOP</code> enviroment variable in a similar way as shown in the following:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">XUVTOP</span><span class="o">=</span><span class="s2">&quot;/Users/username/CHIANTI_10.0.1_database/&quot;</span>
+</code></pre></div>
+After that, close the following GitHub repository:</p>
+<p><div class="highlight"><pre><span></span><code>git clone --recursive https://github.com/chianti-atomic/ChiantiPy.git
+<span class="nb">cd</span> ChiantiPy
+python setup.py install
+</code></pre></div>
+It is recommended to install <code>ipyparallel</code>
+<div class="highlight"><pre><span></span><code>pip install ipyparallel
+</code></pre></div>
+since some routines in ChiantiPy use it. For further details, <a href="https://github.com/chianti-atomic/ChiantiPy">ChiantiPy</a></p>
+<h3 id="scikit-learn">Scikit-learn<a class="headerlink" href="#scikit-learn" title="Permanent link">&para;</a></h3>
 <p>Scikit-learn (formerly scikits.learn and also known as sklearn) is a free software machine learning library for the Python programming language.[2] It features various classification, regression and clustering algorithms including support vector machines, random forests, gradient boosting, k-means and DBSCAN, and is designed to interoperate with the Python numerical and scientific libraries NumPy and SciPy: <a href="https://scikit-learn.org/stable/install.html">scikit-learn</a></p>
 <h2 id="scipy-meeting">SciPy meeting<a class="headerlink" href="#scipy-meeting" title="Permanent link">&para;</a></h2>
 <p>The annual SciPy Conferences allows participants from academic, commercial, and governmental organizations to:
@@ -211,7 +242,7 @@ temperature response functions for the EUV channels: <a href="https://aiapy.read
 - collaborate on code development.</p>
 <p>The conferences generally consists of multiple days of tutorials followed by two-three days of presentations, and concludes with 1-2 days developer sprints on projects of interest to the attendees.</p>
 <p><a href="https://conference.scipy.org/">https://conference.scipy.org/</a></p>
-<h1 id="some-tutorials-from-scipy-meeting">Some tutorials from SciPy meeting<a class="headerlink" href="#some-tutorials-from-scipy-meeting" title="Permanent link">&para;</a></h1>
+<h3 id="tutorials">Tutorials<a class="headerlink" href="#tutorials" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Dask (multi-core execution on larger-than-memory datasets): <a href="https://github.com/dask/dask-tutorial">Dask tutorial</a></li>
 <li>Deep learning from scratch with pytorch: <a href="https://github.com/hugobowne/deep-learning-from-scratch-pytorch">Deep learning tutorial</a></li>
