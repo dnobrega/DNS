@@ -201,6 +201,6 @@ so,
 ``` IDL
 crispex, f[0], f[1], refcube=f[2]
 ```
-will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
+will start a CRISPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
 file has to be an image file and the second file has to be a sp (spectral) file. They are actually the same array, but
 ordered differently.
