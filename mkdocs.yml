@@ -44,6 +44,9 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
+  collapse_toc: true
+  toc_depth: 2
+
 #  - pymdownx.details
 #  - pymdownx.superfences
 #  - pymdownx.highlight
