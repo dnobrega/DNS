@@ -192,29 +192,29 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="sswidl">SSWIDL<a class="headerlink" href="#sswidl" title="Permanent link">&para;</a></h1>
+<h1 id="sswidl">SSWIDL</h1>
 <p>SolarSoft is a set of integrated software libraries, data bases, and system utilities which provide a common programming and data analysis environment for Solar Physics. It is primarily an IDL based system, although some instrument teams integrate executables written in other languages. </p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<h2 id="installation">Installation</h2>
 <p>SSWIDL can be only used in csh/tcsh terminals, but we can configurate our terminal to launch without having to switch (see below). 
 To install it, follow these instructions: <a href="http://www.lmsal.com/solarsoft/sswdoc/solarsoft/ssw_install_howto.html">SSWIDL_INSTALL</a>.<br />
 Choose, e.g., the following packages to install: <em>chianti ontology aia iris hmi</em></p>
-<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="terminal-configuration">Terminal configuration</h2>
 <p>Once installed, configurate your csh/tcsh terminal to use SSWIDL.
 In your home directory, in the .login file you need to define 
 the system variable <code>SSW</code> as the location of your
 SSW installation, e.g.: </p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>SSW <span class="s2">&quot;/Users/yourname/ssw&quot;</span>
-</code></pre></div>
+<pre><code class="language-csh">setenv SSW &quot;/Users/yourname/ssw&quot;
+</code></pre>
 <p>Then you need to define the <code>SSW_INSTR</code> with the list of instruments you have included in the installation.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">setenv </span>SSW_INSTR <span class="s2">&quot;chianti ontology aia iris hmi&quot;</span>
-</code></pre></div>
+<pre><code class="language-csh">setenv SSW_INSTR &quot;chianti ontology aia iris hmi&quot;
+</code></pre>
 <p>Finally, add the following line in your .login file:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span> <span class="nv">$SSW</span>/gen/setup/setup.ssw /quiet
-</code></pre></div>
-<p>Once you have everything ready, in case you use zsh, you can define the following alias in your .zlogin (or .zshrc) file:
-<div class="highlight"><pre><span></span><code><span class="nb">alias </span><span class="nv">sswidl</span><span class="o">=</span><span class="s1">&#39;tcsh -c &quot;sswidl&quot;&#39;</span>
-</code></pre></div>
-This way you will be able to launch it without switching manually to tsch.</p></div>
+<pre><code class="language-csh">source $SSW/gen/setup/setup.ssw /quiet
+</code></pre>
+<p>Once you have everything ready, in case you use zsh, you can define the following alias in your .zlogin (or .zshrc) file:</p>
+<pre><code class="language-csh">alias sswidl='tcsh -c &quot;sswidl&quot;'
+</code></pre>
+<p>This way you will be able to launch it without switching manually to tsch.</p></div>
         
         
     </div>
@@ -240,6 +240,8 @@ This way you will be able to launch it without switching manually to tsch.</p></
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
         
     <script>hljs.initHighlightingOnLoad();</script>
     

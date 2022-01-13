@@ -196,122 +196,122 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="dns">DNS<a class="headerlink" href="#dns" title="Permanent link">&para;</a></h1>
-<h2 id="getting-dns-package">Getting DNS package<a class="headerlink" href="#getting-dns-package" title="Permanent link">&para;</a></h2>
+<h1 id="dns">DNS</h1>
+<h2 id="getting-dns-package">Getting DNS package</h2>
 <p>You can clone the repository through HTTPS like this:</p>
-<div class="highlight"><pre><span></span><code>git clone https://username@github.com/dnobrega/DNS.git
-</code></pre></div>
+<pre><code class="language-tcsh">git clone https://username@github.com/dnobrega/DNS.git
+</code></pre>
 <p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
+<h2 id="terminal-configuration">Terminal configuration</h2>
 <p>It is necessary to modify your .login file in your home directory to add the following system variables.
 In case of working with zsh:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS</span><span class="o">=</span><span class="s2">&quot;/folder/DNS&quot;</span> 
-</code></pre></div>
+<pre><code class="language-zsh">export DNS=&quot;/folder/DNS&quot; 
+</code></pre>
 <p>where <em>folder</em> is in this case the location where you have cloned the DNS package. </p>
 <p>Then you need to add <code>DNS</code> path to the <code>IDL_PATH</code>. You should have something like this
 in case of using tcsh and Mac:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">IDL_PATH</span><span class="o">=</span><span class="s2">&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;</span><span class="nv">$BIFROST_IDL</span><span class="s2">&quot;:+&quot;</span><span class="nv">$DNS</span>
-</code></pre></div>
+<pre><code class="language-zsh">export IDL_PATH=&quot;/Applications/exelis/idl85/bin&quot;&quot;:+&quot;$BIFROST_IDL&quot;:+&quot;$DNS
+</code></pre>
 <p>Finally, you need to define a variable called <code>DNS_PROJECTS</code> with the default
 location where you want to save the plots and movies you are going
 to create with the DNS package, e.g.,</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">DNS_PROJECTS</span><span class="o">=</span><span class="s2">&quot;~/dns_plots&quot;</span>
-</code></pre></div>
+<pre><code class="language-zsh">export DNS_PROJECTS=&quot;~/dns_plots&quot;
+</code></pre>
 <p>Obviously, you will also need to create that folder. 
 Within <code>DNS_PROJECTS</code>, other folders will be automatically 
 created with the name of the simulation when you save a image or movie.</p>
-<h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations<a class="headerlink" href="#using-dns-routines-for-bifrost-simulations" title="Permanent link">&para;</a></h2>
+<h2 id="using-dns-routines-for-bifrost-simulations">Using DNS routines for Bifrost simulations</h2>
 <p>Within a folder with a Bifrost experiment, run <code>SSWIDL</code>. 
 The first plot we are going to create is a density plot:</p>
-<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>
-</code></pre></div>
-where you have to modify <code>snapt</code> variable with the number of snapshot you want to plot.
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0
+</code></pre>
+<p>where you have to modify <code>snapt</code> variable with the number of snapshot you want to plot.
 In case of a 3D run, by default it will show the "XZ" plane along the whole Y-direction.
 You can modify which slices you want to show, e.g.,</p>
-<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>, iy0<span class="o">=</span><span class="mi">10</span>, iyf<span class="o">=</span><span class="mi">100</span>, iystep<span class="o">=</span><span class="mi">2</span>
-</code></pre></div>
-will show from index 10 to index 100 in Y-direction each two indexes.
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0, iy0=10, iyf=100, iystep=2
+</code></pre>
+<p>will show from index 10 to index 100 in Y-direction each two indexes.
 In case you want a specific slice in Y-direction, 
 use <code>iyt</code>, e..g,</p>
-<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">0</span>, iyt<span class="o">=</span><span class="mi">300</span>, <span class="o">/</span>png
-</code></pre></div>
-In this case we have also added the png flag to save the image as a .png file
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=0, iyt=300, /png
+</code></pre>
+<p>In this case we have also added the png flag to save the image as a .png file
 in <code>DNS_PROJECTS</code> folder.</p>
 <p>You can also plot animations moving in time as follows:</p>
-<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snap0<span class="o">=</span><span class="mi">0</span>, snapf<span class="o">=</span><span class="mi">500</span>, step<span class="o">=</span><span class="mi">10</span>, iyt<span class="o">=</span><span class="mi">300</span>
-</code></pre></div>
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snap0=0, snapf=500, step=10, iyt=300
+</code></pre>
 <p>That will show the XZ plane of the simulation in the index 300 of the Y-direction from
 snapshot 0 to snapshot 500 each 10 snapshots.</p>
 <p>You can save the previous animation, writing </p>
-<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snap0<span class="o">=</span><span class="mi">0</span>, snapf<span class="o">=</span><span class="mi">500</span>, step<span class="o">=</span><span class="mi">10</span>, iyt<span class="o">=</span><span class="mi">300</span>, <span class="o">/</span>movie, <span class="o">/</span>setplot
-</code></pre></div>
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snap0=0, snapf=500, step=10, iyt=300, /movie, /setplot
+</code></pre>
 <p>That will create a movie in your <code>DNS_PROJECTS</code> folder. The <code>setplot</code> flag is
 to create the movie using the Z buffer device.</p>
 <p>In 3D experiments you can plot different planes, for example,</p>
-<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;yz&quot;</span>, ixstep<span class="o">=</span><span class="mi">10</span>
-</code></pre></div>
-which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,</p>
-<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>
-</code></pre></div>
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;yz&quot;, ixstep=10
+</code></pre>
+<p>which will show the YZ plane each 10 indexes in X-direction. You can do the same for XY,</p>
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10
+</code></pre>
 <p>You can customize your window size, thickness, colors, position of the plot... For instance,</p>
-<div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>]
-</code></pre></div>
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74]
+</code></pre>
 <p>Once you are happy with your plot setup, you can save it, so you will not need to write
 all the commands again. To do that, use </p>
-<p><div class="highlight"><pre><span></span><code>dns_plot, <span class="s2">&quot;r&quot;</span>,snapt<span class="o">=</span><span class="mi">100</span>, dim<span class="o">=</span><span class="s2">&quot;xy&quot;</span>, izstep<span class="o">=</span><span class="mi">10</span>, xsize<span class="o">=</span><span class="mi">1200</span>, ysize<span class="o">=</span><span class="mi">600</span>, load<span class="o">=</span><span class="mi">39</span>, position<span class="o">=</span>[<span class="mf">0.14</span>,<span class="mf">0.08</span>, <span class="mf">0.92</span>, <span class="mf">0.74</span>], <span class="o">/</span>save_dns_confi
-</code></pre></div>
-That will create a file in your current directory called <code>dns_confi.sav</code> with the plot parameters you have
+<pre><code class="language-IDL">dns_plot, &quot;r&quot;,snapt=100, dim=&quot;xy&quot;, izstep=10, xsize=1200, ysize=600, load=39, position=[0.14,0.08, 0.92, 0.74], /save_dns_confi
+</code></pre>
+<p>That will create a file in your current directory called <code>dns_confi.sav</code> with the plot parameters you have
 defined.</p>
 <p>Concerning the variables you can plot with DNS package, check <code>dnspro/var</code> folder.
 There you will see a list of routines containg each one a variable. For example, for
 the density, you will see a file called <code>dnsvar_r.pro</code></p>
-<div class="highlight"><pre><span></span><code><span class="k">PRO</span> dnsvar_r, d, name, snaps, swap, var, units, $
-    var_title<span class="o">=</span>var_title, var_range<span class="o">=</span>var_range, var_log<span class="o">=</span>var_log, $
-    info<span class="o">=</span>info
-    <span class="k">IF</span> <span class="nb">KEYWORD_SET</span>(info) <span class="k">THEN</span> <span class="k">BEGIN</span>
-       <span class="nb">message</span>, <span class="s1">&#39;Density: rho&#39;</span>,<span class="o">/</span>info
-       <span class="nb">RETURN</span>
-    <span class="k">ENDIF</span> <span class="k">ELSE</span> <span class="k">BEGIN</span>
-       <span class="k">IF</span> <span class="nb">n_params</span>() <span class="k">LT</span> <span class="mi">6</span> <span class="k">THEN</span> <span class="k">BEGIN</span>
-          <span class="nb">message</span>,<span class="s1">&#39;dnsvar_r, d, name, snaps, swap, var, units, &#39;</span> $
-                 <span class="o">+</span><span class="s1">&#39;var_title=var_title, var_range=var_range, var_log=var_log&#39;</span>,<span class="o">/</span>info
-          <span class="nb">RETURN</span>
-       <span class="k">ENDIF</span>
-       <span class="nb">CALL_PROCEDURE</span>, <span class="s2">&quot;units_&quot;</span><span class="o">+</span>units, u
-       var<span class="o">=</span>d<span class="o">-&gt;</span>getvar(name,snaps,swap<span class="o">=</span>swap)<span class="o">*</span>u.ur
-       var_title<span class="o">=</span><span class="s1">&#39;!4q!3&#39;</span>
-       <span class="k">IF</span> (units <span class="k">EQ</span> <span class="s2">&quot;solar&quot;</span>) <span class="k">THEN</span> var_title<span class="o">=</span>var_title<span class="o">+</span><span class="s2">&quot; (g cm!u-3!n)&quot;</span>
-       var_range<span class="o">=</span>[<span class="mf">1.d-15</span>,<span class="mf">1.d-11</span>]
-       var_log<span class="o">=</span><span class="mi">1</span>
-    <span class="k">ENDELSE</span>
-<span class="k">END</span>
-</code></pre></div>
+<pre><code class="language-IDL">PRO dnsvar_r, d, name, snaps, swap, var, units, $
+    var_title=var_title, var_range=var_range, var_log=var_log, $
+    info=info
+    IF KEYWORD_SET(info) THEN BEGIN
+       message, 'Density: rho',/info
+       RETURN
+    ENDIF ELSE BEGIN
+       IF n_params() LT 6 THEN BEGIN
+          message,'dnsvar_r, d, name, snaps, swap, var, units, ' $
+                 +'var_title=var_title, var_range=var_range, var_log=var_log',/info
+          RETURN
+       ENDIF
+       CALL_PROCEDURE, &quot;units_&quot;+units, u
+       var=d-&gt;getvar(name,snaps,swap=swap)*u.ur
+       var_title='!4q!3'
+       IF (units EQ &quot;solar&quot;) THEN var_title=var_title+&quot; (g cm!u-3!n)&quot;
+       var_range=[1.d-15,1.d-11]
+       var_log=1
+    ENDELSE
+END
+</code></pre>
 <p>You can create all the variables following this format. So far, the list only
 includes the most fundamental variables. If you need help
 with the meaning of each variable, in the IDL prompt you can type, e.g.,</p>
-<p><div class="highlight"><pre><span></span><code>dnsvar_modb, <span class="o">/</span>info
-</code></pre></div>
-which will show the information about the variable of that routine, in this case,</p>
-<div class="highlight"><pre><span></span><code>% DNSVAR_MODB: Module of the magnetic field: B <span class="o">(</span>G<span class="o">)</span>
-</code></pre></div>
-<h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations<a class="headerlink" href="#using-dns-routines-for-sst-observations" title="Permanent link">&para;</a></h2>
+<pre><code class="language-IDL">dnsvar_modb, /info
+</code></pre>
+<p>which will show the information about the variable of that routine, in this case,</p>
+<pre><code class="language-csh">% DNSVAR_MODB: Module of the magnetic field: B (G)
+</code></pre>
+<h2 id="using-dns-routines-for-sst-observations">Using DNS routines for SST observations</h2>
 <p>Within a folder with reduced SST observations, run <code>SSWIDL</code>. </p>
-<p>Then create a string list with the names of the cube files within that folder. To that end, type
-<div class="highlight"><pre><span></span><code>fcube, f
-</code></pre></div>
-That will give you an array <code>f</code> of files that can be fcubes (floating-point cubes) or icubes (integer cubes).</p>
-<p>The following step is, e.g., to read the first cube of the list by writting
-<div class="highlight"><pre><span></span><code>cube<span class="o">=</span>lp_read(f(<span class="mi">0</span>),header<span class="o">=</span>header)
-</code></pre></div></p>
-<p>You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:
-<div class="highlight"><pre><span></span><code> <span class="mi">0</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>icube
- <span class="mi">1</span> nb_6563_08<span class="o">:</span><span class="mi">05</span><span class="o">:</span>00_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_sp.icube
- <span class="mi">2</span> hmimag_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span>37_aligned_3950_2017<span class="o">-</span><span class="mi">05</span><span class="o">-</span>25T08<span class="o">:</span><span class="mi">07</span><span class="o">:</span><span class="mf">37.</span>fcube
-</code></pre></div>
-so, 
-<div class="highlight"><pre><span></span><code>crispex, f[<span class="mi">0</span>], f[<span class="mi">1</span>], refcube<span class="o">=</span>f[<span class="mi">2</span>]
-</code></pre></div>
-will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
+<p>Then create a string list with the names of the cube files within that folder. To that end, type</p>
+<pre><code class="language-IDL">fcube, f
+</code></pre>
+<p>That will give you an array <code>f</code> of files that can be fcubes (floating-point cubes) or icubes (integer cubes).</p>
+<p>The following step is, e.g., to read the first cube of the list by writting</p>
+<pre><code class="language-IDL">cube=lp_read(f(0),header=header)
+</code></pre>
+<p>You can also run a CRISPEX session by doing the following. Let's assume your list contains the following files:</p>
+<pre><code class="language-IDL"> 0 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube
+ 1 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37_sp.icube
+ 2 hmimag_2017-05-25T08:07:37_aligned_3950_2017-05-25T08:07:37.fcube
+</code></pre>
+<p>so, </p>
+<pre><code class="language-IDL">crispex, f[0], f[1], refcube=f[2]
+</code></pre>
+<p>will start a CRSIPEX session using the Halpha data together with an HMI magnetogram as reference. Please remind that the first
 file has to be an image file and the second file has to be a sp (spectral) file. They are actually the same array, but 
 ordered differently. </p></div>
         
@@ -339,6 +339,8 @@ ordered differently. </p></div>
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
         
     <script>hljs.initHighlightingOnLoad();</script>
     

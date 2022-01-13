@@ -198,17 +198,17 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="sst">SST<a class="headerlink" href="#sst" title="Permanent link">&para;</a></h1>
+<h1 id="sst">SST</h1>
 <p>The Swedish 1-m Solar Telescope (SST) is a refracting solar telescope at Roque de los Muchachos Observatory, La Palma in the Canary Islands.
 The SST is capable of providing high-quality time series of spectrally resolved photospheric and chromospheric diagnostics that under excellent seeing conditions reach the diffraction limit of 0.1" over the full arcmin^2 FOV. Furthermore, the versatile CRISP instrument can provide spectro-polarimetric data that enable measurement of the magnetic field topology. In addition, the tunable filter system CHROMIS, installed in 2016, can simultaneously provide narrowband filtergrams at several wavelengths in the core of the Ca II K line (Extracted from <a href="https://ui.adsabs.harvard.edu/abs/2020A%26A...641A.146R/abstract">Rouppe et al. (2020)</a>).</p>
-<h2 id="sst-main-links">SST main links<a class="headerlink" href="#sst-main-links" title="Permanent link">&para;</a></h2>
+<h2 id="sst-main-links">SST main links</h2>
 <ul>
 <li>Overview of the observation conditions at the ORM in La Palma: <a href="https://shahin.website/sst/">Shahin's website</a></li>
 <li>SST wiki of RoCS: <a href="https://wiki.uio.no/mn/astro/lapalma/">Wiki</a></li>
 <li>SST Observations Schedule: <a href="https://dubshen.astro.su.se/wiki/index.php/Observations_schedule_2021">SST Schedule</a></li>
 <li>SST Data acquisitions: <a href="https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions">Data acquisitions</a></li>
 </ul>
-<h2 id="sst-literature">SST literature<a class="headerlink" href="#sst-literature" title="Permanent link">&para;</a></h2>
+<h2 id="sst-literature">SST literature</h2>
 <ul>
 <li>The SST telescope design and its main optical elements: <a href="https://ui.adsabs.harvard.edu/abs/2003SPIE.4853..341S/abstract">Scharmer et al. 2003a</a>.</li>
 <li>The SST adaptive optics system: <a href="https://ui.adsabs.harvard.edu/abs/2003SPIE.4853..370S/abstract">Scharmer et al. 2003a</a>.</li>
@@ -216,7 +216,7 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 <li>The CRISP imaging spectropolarimeter: <a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...689L..69S/abstract">Scharmer et al. 2008</a></li>
 <li>Upgrades of optical components and instrumentation, as well as a thorough evaluation of optical performance: <a href="https://ui.adsabs.harvard.edu/abs/2019A%26A...626A..55S/abstract">Scharmer et al. 2019</a>.</li>
 </ul>
-<h2 id="connecting-to-sst-computers">Connecting to SST computers<a class="headerlink" href="#connecting-to-sst-computers" title="Permanent link">&para;</a></h2>
+<h2 id="connecting-to-sst-computers">Connecting to SST computers</h2>
 <p>It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:<br />
 <code>ssh obs@royac6.royac.iac.es</code></p>
 <details>
@@ -227,63 +227,64 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 </details>
 
 <p>Then you can type, e.g., <code>ssh -X obs@transport1</code> to login into the transport1 machine.</p>
-<h2 id="quicklook-movies-and-images">Quicklook movies and images<a class="headerlink" href="#quicklook-movies-and-images" title="Permanent link">&para;</a></h2>
+<h2 id="quicklook-movies-and-images">Quicklook movies and images</h2>
 <p>ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
 We can put the SST quicklook movies at <code>/mn/stornext/d18/lapalma/quicklook/</code> which will then appear under http://tsih3.uio.no/lapalma/
 - <em>For example, the 14-Jun quicklook movies from the LMSAL campaign are now under</em>  <br />
  http://tsih3.uio.no/lapalma/2020/2020-06-14/
 <em>which are linked from the Oslo SST wiki:</em> 
  <a href="https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020">https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020</a></p>
-<h2 id="scripts">Scripts<a class="headerlink" href="#scripts" title="Permanent link">&para;</a></h2>
+<h2 id="scripts">Scripts</h2>
 <p>A list of useful scripts that may help you (to see the code block, just click in the name):</p>
 <details>
  <summary>Transfer all the CRISP and CHROMIS quicklook files from SST transport1 to Oslo: </summary>
  <p>
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+ ```bash
+ #!/bin/bash
 
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-<span class="c1"># DATE</span>
-<span class="nv">default_date</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%Y.%m.%d&quot;</span><span class="sb">`</span>
-<span class="nb">read</span> -p <span class="s2">&quot;Enter date with format YYYY.MM.DD (</span><span class="nv">$default_date</span><span class="s2">): &quot;</span> userdate
-: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:=</span><span class="nv">$default_date</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">0</span><span class="p">:</span><span class="nv">4</span><span class="si">}</span>
-<span class="nv">month</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">5</span><span class="p">:</span><span class="nv">2</span><span class="si">}</span>
-<span class="nv">day</span><span class="o">=</span><span class="si">${</span><span class="nv">userdate</span><span class="p">:</span><span class="nv">8</span><span class="p">:</span><span class="nv">2</span><span class="si">}</span>
-<span class="c1">#------------------------------------------------------------------------------------------</span>
+ #------------------------------------------------------------------------------------------
+ # DATE
+ default_date=`date +"%Y.%m.%d"`
+ read -p "Enter date with format YYYY.MM.DD ($default_date): " userdate
+ : "${userdate:=$default_date}"
+ year=${userdate:0:4}
+ month=${userdate:5:2}
+ day=${userdate:8:2}
+ #------------------------------------------------------------------------------------------
 
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-<span class="c1"># LOCATION OF THE QUICKLOOK MOVIES</span>
-<span class="nv">crisp_folder</span><span class="o">=</span><span class="s2">&quot;/scratch/obs/</span><span class="nv">$userdate</span><span class="s2">/CRISP/quicklook/&quot;</span>
-<span class="nv">chromis_folder</span><span class="o">=</span><span class="s2">&quot;/scratch/obs/</span><span class="nv">$userdate</span><span class="s2">/CHROMIS/quicklook/&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Preparing to transfer quicklook files from the following folders: &quot;</span>
-<span class="nb">echo</span> <span class="nv">$crisp_folder</span>
-<span class="nb">echo</span> <span class="nv">$chromis_folder</span>
-<span class="c1">#------------------------------------------------------------------------------------------</span>
+ #------------------------------------------------------------------------------------------
+ # LOCATION OF THE QUICKLOOK MOVIES
+ crisp_folder="/scratch/obs/$userdate/CRISP/quicklook/"
+ chromis_folder="/scratch/obs/$userdate/CHROMIS/quicklook/"
+ echo "Preparing to transfer quicklook files from the following folders: "
+ echo $crisp_folder
+ echo $chromis_folder
+ #------------------------------------------------------------------------------------------
 
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-<span class="c1"># OSLO DESTINATION</span>
-<span class="nv">default_folder</span><span class="o">=</span><span class="s2">&quot;/mn/stornext/d18/lapalma/quicklook/</span><span class="nv">$year</span><span class="s2">/</span><span class="nv">$year</span><span class="s2">-</span><span class="nv">$month</span><span class="s2">-</span><span class="nv">$day</span><span class="s2">/&quot;</span>
-<span class="nb">read</span> -p <span class="s2">&quot;Enter destination at ITA (</span><span class="nv">$default_folder</span><span class="s2">): &quot;</span> ita_folder
-: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ita_folder</span><span class="p">:=</span><span class="nv">$default_folder</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="c1">#------------------------------------------------------------------------------------------</span>
+ #------------------------------------------------------------------------------------------
+ # OSLO DESTINATION
+ default_folder="/mn/stornext/d18/lapalma/quicklook/$year/$year-$month-$day/"
+ read -p "Enter destination at ITA ($default_folder): " ita_folder
+ : "${ita_folder:=$default_folder}"
+ #------------------------------------------------------------------------------------------
 
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-<span class="c1"># OSLO USER</span>
-<span class="nv">default_user</span><span class="o">=</span>desiveri
-<span class="nb">read</span> -p <span class="s2">&quot;Enter your UiO username (</span><span class="nv">$default_user</span><span class="s2">): &quot;</span> username
-: <span class="s2">&quot;</span><span class="si">${</span><span class="nv">username</span><span class="p">:=</span><span class="nv">$default_user</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="c1">#------------------------------------------------------------------------------------------</span>
+ #------------------------------------------------------------------------------------------
+ # OSLO USER
+ default_user=desiveri
+ read -p "Enter your UiO username ($default_user): " username
+ : "${username:=$default_user}"
+ #------------------------------------------------------------------------------------------
 
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-<span class="c1"># RSYNC TO OSLO</span>
-rsync -avzP <span class="se">\</span>
-      --prune-empty-dirs <span class="se">\</span>
-      <span class="nv">$crisp_folder</span> <span class="nv">$chromis_folder</span> <span class="se">\</span>
-      --rsync-path<span class="o">=</span><span class="s2">&quot;mkdir -p </span><span class="nv">$ita_folder</span><span class="s2"> &amp;&amp; rsync&quot;</span> <span class="se">\</span>
-      <span class="nv">$username</span>@tsih.uio.no:<span class="nv">$ita_folder</span>
-<span class="c1">#------------------------------------------------------------------------------------------</span>
-</code></pre></div>
+ #------------------------------------------------------------------------------------------
+ # RSYNC TO OSLO
+ rsync -avzP \
+       --prune-empty-dirs \
+       $crisp_folder $chromis_folder \
+       --rsync-path="mkdir -p $ita_folder && rsync" \
+       $username@tsih.uio.no:$ita_folder
+ #------------------------------------------------------------------------------------------
+ ```
  </p>
 </details>
 <p><br/></p>
@@ -291,32 +292,33 @@ rsync -avzP <span class="se">\</span>
  <summary>Combine CHROMIS quicklook movies and images:</summary>
  <p>
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
-<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
-<span class="nv">image_format</span><span class="o">=</span>.jpg
-<span class="nv">movie_format</span><span class="o">=</span>.mov
+ ```bash
+ #!/bin/bash
+ quickfile1=$1
+ quickfile2=$2
+ image_format=.jpg
+ movie_format=.mov
 
-<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
-<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
-<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
-<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
-<span class="nv">ysize</span><span class="o">=</span><span class="k">$(</span>ffprobe -v error -select_streams v:0 -show_entries <span class="nv">stream</span><span class="o">=</span>height -of <span class="nv">csv</span><span class="o">=</span><span class="nv">s</span><span class="o">=</span>x:p<span class="o">=</span><span class="m">0</span> *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span><span class="k">)</span>
+ temp=*$quickfile1*$image_format
+ header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
+ image=$header"${jj//:}"$image_format 
+ movie=$header"${jj//:}"$movie_format
+ ysize=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=s=x:p=0 *$quickfile1*$image_format)
 
-<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
-ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span>    <span class="se">\</span>
-      -q:v <span class="m">1</span> -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="nv">$image</span> <span class="se">\</span>
-   -hide_banner -loglevel error
-<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
-ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span>    <span class="se">\</span>
-          -filter_complex <span class="nv">vstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">2</span> <span class="se">\</span>
-          <span class="nv">$movie</span> <span class="se">\</span>
-   -hide_banner -loglevel error
-</code></pre></div>
+ echo "---------------------------------------------------------------------"
+ echo "Creating $image"
+ ffmpeg -i *$quickfile1*$image_format -i \
+           *$quickfile2*$image_format    \
+       -q:v 1 -filter_complex vstack=inputs=2 $image \
+    -hide_banner -loglevel error
+ echo "---------------------------------------------------------------------"
+ echo "Creating $movie"
+ ffmpeg -i *$quickfile1*$movie_format -i \
+           *$quickfile2*$movie_format    \
+           -filter_complex vstack=inputs=2 \
+           $movie \
+    -hide_banner -loglevel error
+ ```
  </p>
 </details>
 <p><br/></p>
@@ -324,32 +326,33 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
  <summary>Combine CRISP quicklook movies and images:</summary>
  <p>
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">quickfile1</span><span class="o">=</span><span class="nv">$1</span>
-<span class="nv">quickfile2</span><span class="o">=</span><span class="nv">$2</span>
-<span class="nv">quickfile3</span><span class="o">=</span><span class="nv">$3</span>
-<span class="nv">image_format</span><span class="o">=</span>.jpg
-<span class="nv">movie_format</span><span class="o">=</span>.mov
+ ```bash
+ #!/bin/bash
+ quickfile1=$1
+ quickfile2=$2
+ quickfile3=$3
+ image_format=.jpg
+ movie_format=.mov
 
-<span class="nv">temp</span><span class="o">=</span>*<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span>
-<span class="nv">header</span><span class="o">=</span><span class="k">$(</span> <span class="nb">echo</span> <span class="nv">$temp</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(quick_...................\).*/\1/&#39;</span><span class="k">)</span>
-<span class="nv">image</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$image_format</span> 
-<span class="nv">movie</span><span class="o">=</span><span class="nv">$header</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">jj</span><span class="p">//:</span><span class="si">}</span><span class="s2">&quot;</span><span class="nv">$movie_format</span>
-<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$image</span><span class="s2">&quot;</span>
-ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile2</span>*<span class="nv">$image_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile3</span>*<span class="nv">$image_format</span>      <span class="se">\</span>
-          -q:v <span class="m">1</span> -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$image</span> <span class="se">\</span>
-   -hide_banner -loglevel error
-<span class="nb">echo</span> <span class="s2">&quot;---------------------------------------------------------------------&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Creating </span><span class="nv">$movie</span><span class="s2">&quot;</span>
-ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile2</span>*<span class="nv">$movie_format</span> -i <span class="se">\</span>
-          *<span class="nv">$quickfile3</span>*<span class="nv">$movie_format</span>      <span class="se">\</span>
-          -filter_complex <span class="nv">hstack</span><span class="o">=</span><span class="nv">inputs</span><span class="o">=</span><span class="m">3</span> <span class="nv">$movie</span> <span class="se">\</span>
-   -hide_banner -loglevel error
-</code></pre></div>
+ temp=*$quickfile1*$image_format
+ header=$( echo $temp | sed -e 's/\(quick_...................\).*/\1/')
+ image=$header"${jj//:}"$image_format 
+ movie=$header"${jj//:}"$movie_format
+ echo "---------------------------------------------------------------------"
+ echo "Creating $image"
+ ffmpeg -i *$quickfile1*$image_format -i \
+           *$quickfile2*$image_format -i \
+           *$quickfile3*$image_format      \
+           -q:v 1 -filter_complex hstack=inputs=3 $image \
+    -hide_banner -loglevel error
+ echo "---------------------------------------------------------------------"
+ echo "Creating $movie"
+ ffmpeg -i *$quickfile1*$movie_format -i \
+           *$quickfile2*$movie_format -i \
+           *$quickfile3*$movie_format      \
+           -filter_complex hstack=inputs=3 $movie \
+    -hide_banner -loglevel error
+ ```
  </p>
 </details>
 <p><br/>  </p>
@@ -359,16 +362,17 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
 
  To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+ ```bash
+ #!/bin/bash
 
-<span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Transforming from pdf to png the following files:&quot;</span>
-<span class="nv">filelist</span><span class="o">=</span><span class="sb">`</span>find . -type f -name <span class="s1">&#39;*.pdf&#39;</span><span class="sb">`</span>
-<span class="k">for</span> ii <span class="k">in</span> <span class="si">${</span><span class="nv">filelist</span><span class="si">}</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nb">echo</span> <span class="nv">$ii</span>
-    pdftoppm <span class="nv">$ii</span> <span class="nv">$ii</span> -png
-<span class="k">done</span>
-</code></pre></div>
+ echo "-------------------------------------------------"
+ echo "Transforming from pdf to png the following files:"
+ filelist=`find . -type f -name '*.pdf'`
+ for ii in ${filelist}; do
+     echo $ii
+     pdftoppm $ii $ii -png
+ done
+ ```
  </p>
 </details>
 <p><br/>  </p>
@@ -376,23 +380,24 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
  <summary>See list of dates with avaialable quicklook files at ITA:</summary>
  <p>
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                    </span>
-<span class="k">for</span> year <span class="k">in</span> <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/ <span class="p">|</span>
-                  grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
-                  sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
-                  sed <span class="s1">&#39;s/&quot;.*//&#39;</span>
-             <span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
-    <span class="nb">echo</span> <span class="nv">$year</span>
-    <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
-    <span class="k">for</span> date <span class="k">in</span> <span class="k">$(</span>curl -s http://tsih3.uio.no/lapalma/<span class="nv">$year</span> <span class="p">|</span>
-                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
-                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
-                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
-        <span class="nb">echo</span> <span class="nv">$date</span>
-    <span class="k">done</span>
-<span class="k">done</span>
-</code></pre></div>
+ ```bash
+ #!/bin/bash                                                                                                                    
+ for year in $(curl -s http://tsih3.uio.no/lapalma/ |
+                   grep '\[DIR\]' |
+                   sed 's/.*href="//' |
+                   sed 's/".*//'
+              ); do
+     echo "---------------------------"
+     echo $year
+     echo "---------------------------"
+     for date in $(curl -s http://tsih3.uio.no/lapalma/$year |
+                       grep '\[DIR\]' |
+                       sed 's/.*href="//' |
+                       sed 's/".*//'); do
+         echo $date
+     done
+ done
+ ```
 
  </p>
 </details>
@@ -402,52 +407,53 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
  <p>
 
 
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">web</span><span class="o">=</span><span class="s2">&quot;http://tsih3.uio.no/lapalma/&quot;</span>
-<span class="nv">input</span><span class="o">=</span><span class="nv">$1</span>
+ ```bash
+ #!/bin/bash
+ web="http://tsih3.uio.no/lapalma/"
+ input=$1
 
-<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">0</span> <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web</span>
-    <span class="nb">read</span> -p <span class="s2">&quot;Do you want to download all the available movies from &quot;</span><span class="nv">$folder</span><span class="s2">&quot; [y/n]: &quot;</span> yn
-    <span class="k">case</span> <span class="nv">$yn</span> <span class="k">in</span>
- <span class="o">[</span>Yy<span class="o">]</span>* <span class="o">)</span> wget -c -r -l <span class="m">3</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="p">;;</span>
- <span class="o">[</span>Nn<span class="o">]</span>* <span class="o">)</span> break<span class="p">;;</span>
-    <span class="k">esac</span>           
-<span class="k">fi</span>
+ if [ ${#input} -eq 0 ]
+ then
+     folder=$web
+     read -p "Do you want to download all the available movies from "$folder" [y/n]: " yn
+     case $yn in
+  [Yy]* ) wget -c -r -l 3 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder;;
+  [Nn]* ) break;;
+     esac           
+ fi
 
-<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">4</span> <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$input</span><span class="s2">&quot;/&quot;</span>
-    wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
-<span class="k">fi</span>
+ if [ ${#input} -eq 4 ]
+ then
+     folder=$web$input"/"
+     wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+ fi
 
-<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">7</span> <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
-    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
-    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span>
-    <span class="nb">echo</span> <span class="nv">$folder</span>
-    <span class="nb">echo</span>  <span class="si">${</span><span class="nv">input</span><span class="si">}</span>*
-    <span class="k">for</span> date <span class="k">in</span> <span class="k">$(</span>curl -s <span class="nv">$folder</span> <span class="p">|</span>
-                      grep <span class="s1">&#39;\[DIR\]&#39;</span> <span class="p">|</span>
-                      sed <span class="s1">&#39;s/.*href=&quot;//&#39;</span> <span class="p">|</span>
-                      sed <span class="s1">&#39;s/&quot;.*//&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span>
- <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$date</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span>* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-     <span class="nb">echo</span> <span class="nv">$date</span>
-     wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span><span class="s2">&quot;/&quot;</span><span class="nv">$date</span>
- <span class="k">fi</span>
-    <span class="k">done</span>
-<span class="k">fi</span>
+ if [ ${#input} -eq 7 ]
+ then
+     temp=(${input//-/ })
+     year=${temp[0]}
+     folder=$web$year"/"
+     echo $folder
+     echo  ${input}*
+     for date in $(curl -s $folder |
+                       grep '\[DIR\]' |
+                       sed 's/.*href="//' |
+                       sed 's/".*//'); do
+  if [[ "$date" == "$input"* ]]; then
+      echo $date
+      wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder"/"$date
+  fi
+     done
+ fi
 
-<span class="k">if</span> <span class="o">[</span> <span class="si">${#</span><span class="nv">input</span><span class="si">}</span> -eq <span class="m">10</span> <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nv">temp</span><span class="o">=(</span><span class="si">${</span><span class="nv">input</span><span class="p">//-/ </span><span class="si">}</span><span class="o">)</span>
-    <span class="nv">year</span><span class="o">=</span><span class="si">${</span><span class="nv">temp</span><span class="p">[0]</span><span class="si">}</span>
-    <span class="nv">folder</span><span class="o">=</span><span class="nv">$web$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$input</span><span class="s2">&quot;/&quot;</span>
-    wget -c -r -l <span class="m">2</span> -q --show-progress --cut-dirs<span class="o">=</span><span class="m">1</span> -nH --no-parent --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> <span class="nv">$folder</span>
-<span class="k">fi</span>
-</code></pre></div>
+ if [ ${#input} -eq 10 ]
+ then
+     temp=(${input//-/ })
+     year=${temp[0]}
+     folder=$web$year"/"$input"/"
+     wget -c -r -l 2 -q --show-progress --cut-dirs=1 -nH --no-parent --reject="index.html*" $folder
+ fi
+ ```
 
  </p>
 </details>
@@ -457,23 +463,26 @@ ffmpeg -i *<span class="nv">$quickfile1</span>*<span class="nv">$movie_format</s
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
- <div class="highlight"><pre><span></span><code>curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> &gt; saai.txt
-curl -s <span class="nv">$1</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span>  &gt; saao.txt
-paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
-rm saai.txt
-rm saao.txt
-</code></pre></div>
+ ```bash
+ curl -s $1 | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' > saai.txt
+ curl -s $1 | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/'  > saao.txt
+ paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
+ rm saai.txt
+ rm saao.txt
+ ```
  The input of the script for a given day can be found within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
  [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
 
  For Linux, if you have X installed you may define an equivalent to pbcopy from MacOS in this way :
- <div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">pbcopy</span><span class="o">=</span><span class="s1">&#39;xsel --clipboard --input&#39;</span>
-<span class="nb">alias</span> <span class="nv">pbpaste</span><span class="o">=</span><span class="s1">&#39;xsel --clipboard --output&#39;</span>
-</code></pre></div>
+ ```bash
+ alias pbcopy='xsel --clipboard --input'
+ alias pbpaste='xsel --clipboard --output'
+ ```
  or with xclip:
- <div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">pbcopy</span><span class="o">=</span><span class="s1">&#39;xclip -selection clipboard&#39;</span>
-<span class="nb">alias</span> <span class="nv">pbpaste</span><span class="o">=</span><span class="s1">&#39;xclip -selection clipboard -o&#39;</span>
-</code></pre></div>
+ ```bash
+ alias pbcopy='xclip -selection clipboard'
+ alias pbpaste='xclip -selection clipboard -o'
+ ```
  </p>
 </details></div>
         
@@ -501,6 +510,8 @@ rm saao.txt
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
         
     <script>hljs.initHighlightingOnLoad();</script>
     

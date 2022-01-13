@@ -195,54 +195,54 @@
 </div></div>
         <div class="col-md-9" role="main">
 
-<h1 id="terminal">Terminal<a class="headerlink" href="#terminal" title="Permanent link">&para;</a></h1>
+<h1 id="terminal">Terminal</h1>
 <p>This page contains my terminal configuration. Currently I work with <em>zsh</em> and therefore
 all the configuration is refered to it.</p>
-<h2 id="zshrc-file">.zshrc file<a class="headerlink" href="#zshrc-file" title="Permanent link">&para;</a></h2>
-<h3 id="ls-options">ls options<a class="headerlink" href="#ls-options" title="Permanent link">&para;</a></h3>
-<p>Setting shorcuts and colors in all the ls commands by default.
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">ls</span><span class="o">=</span><span class="s2">&quot;/bin/ls -FG&quot;</span>
-<span class="nb">alias</span> <span class="nv">la</span><span class="o">=</span><span class="s2">&quot;ls -la&quot;</span>
-<span class="nb">alias</span> <span class="nv">ll</span><span class="o">=</span><span class="s2">&quot;ls -lhrt&quot;</span>
-<span class="nb">export</span> <span class="nv">CLICOLOR</span><span class="o">=</span><span class="m">1</span>
-<span class="nb">export</span> <span class="nv">LSCOLORS</span><span class="o">=</span>GxFxCxDxBxegedabagaced
-</code></pre></div></p>
-<h3 id="other-useful-alias">Other useful alias<a class="headerlink" href="#other-useful-alias" title="Permanent link">&para;</a></h3>
-<p>Setting no-window option as default for emacs:
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">emacs</span><span class="o">=</span><span class="s2">&quot;emacs -nw&quot;</span>
-</code></pre></div>
-Setting colors as default option for grep:
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">grep</span><span class="o">=</span><span class="s2">&quot;grep --colour&quot;</span>
-</code></pre></div>
-Checking empty folders:
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">empty</span><span class="o">=</span><span class="s2">&quot;find . -type d -empty&quot;</span> <span class="c1">#add -delete to remove the empty folders    </span>
-</code></pre></div>
-Since SSWIDL only works in <em>tcsh</em>, I do the following to avoid changing the terminal:
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">sswidl</span><span class="o">=</span><span class="s1">&#39;tcsh -c &quot;sswidl&quot;&#39;</span>
-</code></pre></div></p>
-<h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h3>
-<p>This a find function, so I can, e.g., f math_mpi to look for directories having * math_mpi * files avoiding moreover all the <em>Permission denied</em> messages in the output:
-<div class="highlight"><pre><span></span><code>f<span class="o">(){</span>
-    <span class="nb">echo</span> <span class="s2">&quot;find . -iname \&quot;*</span><span class="nv">$1</span><span class="s2">*\&quot; 2&gt;/dev/null&quot;</span>
-    find . -iname <span class="s2">&quot;*</span><span class="nv">$1</span><span class="s2">*&quot;</span> <span class="m">2</span>&gt;/dev/null
-<span class="o">}</span>
-</code></pre></div></p>
-<h3 id="terminal-appereance">Terminal appereance<a class="headerlink" href="#terminal-appereance" title="Permanent link">&para;</a></h3>
+<h2 id="zshrc-file">.zshrc file</h2>
+<h3 id="ls-options">ls options</h3>
+<p>Setting shorcuts and colors in all the ls commands by default.</p>
+<pre><code class="language-bash">alias ls=&quot;/bin/ls -FG&quot;
+alias la=&quot;ls -la&quot;
+alias ll=&quot;ls -lhrt&quot;
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+</code></pre>
+<h3 id="other-useful-alias">Other useful alias</h3>
+<p>Setting no-window option as default for emacs:</p>
+<pre><code class="language-bash">alias emacs=&quot;emacs -nw&quot;
+</code></pre>
+<p>Setting colors as default option for grep:</p>
+<pre><code class="language-bash">alias grep=&quot;grep --colour&quot;
+</code></pre>
+<p>Checking empty folders:</p>
+<pre><code class="language-bash">alias empty=&quot;find . -type d -empty&quot; #add -delete to remove the empty folders    
+</code></pre>
+<p>Since SSWIDL only works in <em>tcsh</em>, I do the following to avoid changing the terminal:</p>
+<pre><code class="language-bash">alias sswidl='tcsh -c &quot;sswidl&quot;'
+</code></pre>
+<h3 id="functions">Functions</h3>
+<p>This a find function, so I can, e.g., f math_mpi to look for directories having * math_mpi * files avoiding moreover all the <em>Permission denied</em> messages in the output:</p>
+<pre><code class="language-bash">f(){
+    echo &quot;find . -iname \&quot;*$1*\&quot; 2&gt;/dev/null&quot;
+    find . -iname &quot;*$1*&quot; 2&gt;/dev/null
+}
+</code></pre>
+<h3 id="terminal-appereance">Terminal appereance</h3>
 <p>I prefer having my terminal as minimalist as possible, therefore I remove the username and host information
-in the terminal, to only show a ~ character.
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;~ &quot;</span>
-</code></pre></div>
-In order to know your current folder, on MacOS, you can go to Terminal preferences, Profiles, Windows,
+in the terminal, to only show a ~ character.</p>
+<pre><code class="language-bash">export PS1=&quot;~ &quot;
+</code></pre>
+<p>In order to know your current folder, on MacOS, you can go to Terminal preferences, Profiles, Windows,
 and enable the option "Working directory or document" and "Path". This way, the current folder is shown
 in the uppermost part of the terminal.</p>
-<h3 id="autoload-and-zstyle">Autoload and zstyle<a class="headerlink" href="#autoload-and-zstyle" title="Permanent link">&para;</a></h3>
-<p>Enhancing the completion by assigning colors to the options, making them insensitive to lower-case/capital letters and enabling the TAB menu select:
-<div class="highlight"><pre><span></span><code>autoload -Uz compinit <span class="o">&amp;&amp;</span> compinit
+<h3 id="autoload-and-zstyle">Autoload and zstyle</h3>
+<p>Enhancing the completion by assigning colors to the options, making them insensitive to lower-case/capital letters and enabling the TAB menu select:</p>
+<pre><code class="language-bash">autoload -Uz compinit &amp;&amp; compinit
 zmodload -i zsh/complist
-zstyle <span class="s1">&#39;:completion:*&#39;</span> list-colors <span class="s1">&#39;&#39;</span>
-zstyle <span class="s1">&#39;:completion:*&#39;</span> matcher-list <span class="s1">&#39;m:{a-z}={A-Z}&#39;</span>
-zstyle <span class="s1">&#39;:completion:*&#39;</span> menu <span class="k">select</span>
-</code></pre></div></p></div>
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' menu select
+</code></pre></div>
         
         
     </div>
@@ -268,6 +268,8 @@ zstyle <span class="s1">&#39;:completion:*&#39;</span> menu <span class="k">sele
 
     
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+        
+                <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/languages/yaml.min.js"></script>
         
     <script>hljs.initHighlightingOnLoad();</script>
     
