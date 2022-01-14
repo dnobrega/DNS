@@ -8,7 +8,11 @@ The numerical scheme is a classic method of lines (MOL). It is based on a sixth 
 
 In spite of using high-order methods, the numerical codes are diffusive by their own nature due to the discretization of the equations. To ensure stability, Bifrost employs a diffusive operator that consists of two main terms: a small global diffusive term and the so called hyperdiffusion term inspired by [Nordlund & Galsgaard (1995)](http://sirrah.troja.mff.cuni.cz/~toast/archiv/nordlund-95.ps). The latter is a location-specific diffusion that acts in small regions of large gradients or jumps in the variables, like in current sheets or shocks.
 
-The advantage of using the Bifrost code is that it includes different modules that provide relevant physics for the solar atmosphere. In the following, we list the most important ones:
+The advantage of using the Bifrost code is that it includes different modules that provide relevant physics for the solar atmosphere.
+___
+
+#### Bifrost literature
+In the following, we list the papers that describe the main modules of Bifrost:
 
 - Equation of state: [Gustafsson et al. (1975)](http://adsabs.harvard.edu/abs/1975A%26A....42..407G)
 - Injection of magnetic field through the bottom boundary of the convection zone: [Martínez-Sykora et al. (2008)](http://adsabs.harvard.edu/abs/2008ApJ...679..871M)
@@ -21,9 +25,9 @@ The advantage of using the Bifrost code is that it includes different modules th
 - Lagrangian Tracing module: [Leenaarts (2018)](http://adsabs.harvard.edu/abs/2018A%26A...616A.136L)
 - New ambipolar diffusion module: [Nóbrega-Siverio et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...638A..79N/abstract)
 
-
-
-## Getting Bifrost
+___
+## Installation
+### Getting Bifrost
 
 Bifrost is located on github. The repository is private, meaning you
 should be logged in with your github username to see it at:
@@ -47,7 +51,7 @@ git clone https://username@github.com/ITA-Solar/Bifrost.git
 
 replacing "username" with your github username.
 
-## Terminal configuration
+### Terminal configuration
 
 It can be useful to create (or modify) your _.login_ (in csh/tcsh) or _.zlogin_ (in zsh) file in your home directory to add a Bifrost system variable.
 
@@ -61,9 +65,7 @@ setenv BIFROST "/folder/Bifrost"
 ```
 where _folder_ is the location where you have cloned the Bifrost repository. 
 
-## IDL routines of Bifrost
-
-Modify your .zlogin file to add the following system variables.
+To use the IDL routines of Bifrost, modify your .zlogin file to add the following system variables.
 In case of working with tcsh:
 ``` zsh
 export BIFROST_IDL=$BIFROST"/IDL"

@@ -2,7 +2,8 @@
 
 The Solar Orbiter mission is a M-class ESA mission from the COSMIC Vision Program, launched successfully on February 2020. Following the commissioning during spring 2020, all instruments are now working nominally. The cruise phase of the mission will extend until the end of 2021.
 
-## Solar Orbiter main links
+___
+#### Solar Orbiter main links
 
 - Solar Orbiter ESA webpage: [ESA](https://www.esa.int/Science_Exploration/Space_Science/Solar_Orbiter)
 - Solar Orbiter conferences: [CONF](https://solarorbiter.sciencesconf.org/)
@@ -12,14 +13,14 @@ The Solar Orbiter mission is a M-class ESA mission from the COSMIC Vision Progra
 - EUI data: [EUI](https://wwwbis.sidc.be/EUI/data/)
 
 
-## SolO literature (science)
+#### SolO literature (science)
 
 - The Solar Orbiter mission. Science overview: [Science](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A...1M/abstract)
 - Models and data analysis tools for the Solar Orbiter mission: [Models](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A...2R/abstract)
 - The Solar Orbiter Science Activity Plan. Translating solar and heliospheric physics questions into action: [Activity Plan](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A...3Z/abstract)
 
 
-## SolO literature (instruments)
+#### SolO literature (instruments)
 - The Solar Orbiter Solar Wind Analyser (SWA) suite: [SWA](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A..16O/abstract)
 - The Spectrometer/Telescope for Imaging X-rays (STIX): [STIX](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A..15K/abstract)
 - The Solar Orbiter SPICE instrument. An extreme UV imaging spectrometer (SPICE): [SPICE](https://ui.adsabs.harvard.edu/abs/2020A%26A...642A..14S/abstract)

@@ -20,6 +20,7 @@ including the ```IDL_PATH``` in your ```PATH```:
 export PATH=$PATH":"$IDL_PATH
 ```
 
+___
 ## SSWIDL
 
 SolarSoft is a set of integrated software libraries, data bases, and system utilities which provide a common programming and data analysi\
@@ -60,7 +61,7 @@ alias sswidl='tcsh -c "sswidl"'
 ```
 This way you will be able to launch it without switching manually to tsch.
 
-
+___
 ## DNSPRO
 
 DNSPRO is a package of IDL routines developed by Daniel Nóbrega Siverio to visualize Bifrost simulations.

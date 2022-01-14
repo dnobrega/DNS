@@ -3,14 +3,15 @@
 The Swedish 1-m Solar Telescope (SST) is a refracting solar telescope at Roque de los Muchachos Observatory, La Palma in the Canary Islands.
 The SST is capable of providing high-quality time series of spectrally resolved photospheric and chromospheric diagnostics that under excellent seeing conditions reach the diffraction limit of 0.1" over the full arcmin^2 FOV. Furthermore, the versatile CRISP instrument can provide spectro-polarimetric data that enable measurement of the magnetic field topology. In addition, the tunable filter system CHROMIS, installed in 2016, can simultaneously provide narrowband filtergrams at several wavelengths in the core of the Ca II K line (Extracted from [Rouppe et al. (2020)](https://ui.adsabs.harvard.edu/abs/2020A%26A...641A.146R/abstract)).
 
-## SST main links
+___
+#### SST main links
 
 - Overview of the observation conditions at the ORM in La Palma: [Shahin's website](https://shahin.website/sst/)
 - SST wiki of RoCS: [Wiki](https://wiki.uio.no/mn/astro/lapalma/)
 - SST Observations Schedule: [SST Schedule](https://dubshen.astro.su.se/wiki/index.php/Observations_schedule_2021)
 - SST Data acquisitions: [Data acquisitions](https://dubshen.astro.su.se/wiki/index.php/Data_acquisitions)
 
-## SST literature
+#### SST literature
 
 - The SST telescope design and its main optical elements: [Scharmer et al. 2003a](https://ui.adsabs.harvard.edu/abs/2003SPIE.4853..341S/abstract).
 - The SST adaptive optics system: [Scharmer et al. 2003a](https://ui.adsabs.harvard.edu/abs/2003SPIE.4853..370S/abstract).
@@ -18,32 +19,75 @@ The SST is capable of providing high-quality time series of spectrally resolved 
 - The CRISP imaging spectropolarimeter: [Scharmer et al. 2008](https://ui.adsabs.harvard.edu/abs/2008ApJ...689L..69S/abstract)
 - Upgrades of optical components and instrumentation, as well as a thorough evaluation of optical performance: [Scharmer et al. 2019](https://ui.adsabs.harvard.edu/abs/2019A%26A...626A..55S/abstract).
 
-## Connecting to SST computers
+___
+## Data analysis
 
-It is possible to login into the SST related computers to transfer files and to make the quicklook movies. To that end, type:  
-``` ssh obs@royac6.royac.iac.es ```
+This is a brief documentation to analyze SST data. In case of using IDL, it is necessary to have [SSWIDL](https://dnobrega.github.io/DNS/idl/#sswidl) to use CRISPEX, and to clone the [DNS](https://dnobrega.github.io/\
+DNS/) in order to read SST cubes. For Python users, you need
+to install [Helita](https://dnobrega.github.io/DNS/python/#helita).
 
-<details>
- <summary>Password</summary>
- <p>
- 3skedar
- </p>
-</details>
+### IDL users
 
-Then you can type, e.g., ``` ssh -X obs@transport1 ``` to login into the transport1 machine.
+Within a folder with reduced SST observations, run ```SSWIDL```.
 
-## Quicklook movies and images
+Then create a string list with the names of the cube files within that folder. To that en\
+d, type
+``` IDL
+fcube, f
+```
+
+That will give you an array ```f``` of files that can be fcubes (floating-point cubes) or\
+ icubes (integer cubes).
+
+The following step is, e.g., to read the first cube of the list by writting
+``` IDL
+cube=lp_read(f(0),header=header)
+```
+You can also run a CRISPEX session by doing the following. Let's assume your list contain\
+s the following files:
+``` IDL
+ 0 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube
+ 1 nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37_sp.icube
+ 2 hmimag_2017-05-25T08:07:37_aligned_3950_2017-05-25T08:07:37.fcube
+```
+so,
+``` IDL
+crispex, f[0], f[1], refcube=f[2]
+```
+will start a CRISPEX session using the Halpha data together with an HMI magnetogram as re\
+ference. Please remind that the first
+file has to be an image file and the second file has to be a sp (spectral) file. They are\
+ actually the same array, but
+ordered differently.
+
+### Python
+
+Under construction
+
+___
+## SST Campaigns
+
+This documentation contains useful information for observers going to the SST campagins. 
+
+### Quicklook storage
 
 ITA has now a very basic web server with the purpose of providing simple access to files ment for temporary viewing - like quicklook movies. 
-We can put the SST quicklook movies at `/mn/stornext/d18/lapalma/quicklook/` which will then appear under http://tsih3.uio.no/lapalma/
-- _For example, the 14-Jun quicklook movies from the LMSAL campaign are now under_    
- http://tsih3.uio.no/lapalma/2020/2020-06-14/
-_which are linked from the Oslo SST wiki:_ 
+We can put the SST quicklook movies at 
+
+```bash
+/mn/stornext/d18/lapalma/quicklook/
+```
+
+which will then appear under [http://tsih3.uio.no/lapalma/](http://tsih3.uio.no/lapalma/)
+
+ -  _For example, the 14-Jun quicklook movies from the LMSAL campaign are now under     
+ [http://tsih3.uio.no/lapalma/2020/2020-06-14/](http://tsih3.uio.no/lapalma/2020/2020-06-14/)   
+ which are linked from the Oslo SST wiki:_ 
  [https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020](https://wiki.uio.no/mn/astro/lapalma/index.php/Quicklook_June_2020#Sunday_14-Jun-2020)
  
-## Scripts
+### Scripts
 
-A list of useful scripts that may help you (to see the code block, just click in the name):
+Here you can find a list of useful scripts that may help you (to see the code block, just click in the name). If you have the DNS package, all these scripts are within the scripts folder:
 
 <details>
  <summary>Transfer all the CRISP and CHROMIS quicklook files from SST transport1 to Oslo: </summary>
@@ -169,7 +213,11 @@ A list of useful scripts that may help you (to see the code block, just click in
  <summary>Transform from pdf to png:</summary>
  <p>
 
- To use this script is necessary to install ``` brew install poppler ``` which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolderes to png files.
+ To use this script is necessary to install 
+```bash
+ brew install poppler 
+``` 
+which contains the main command to use (pdftoppm). Note that the instalation takes a while. After that, you can use the following script which will transform all the pdf file in the folder and subfolders to png files.
   
  ```bash
  #!/bin/bash
@@ -295,3 +343,12 @@ A list of useful scripts that may help you (to see the code block, just click in
  ```
  </p>
 </details> 
+
+<br/>
+### SST computers
+
+It is possible to login into the SST related computers to transfer files and to make the
+quicklook movies. To that end, type:
+``` ssh obs@royac6.royac.iac.es ```
+
+It will require a password that observers should know. Then you can type, e.g., ``` ssh -X obs@transport1 ``` to login into the transport1 machine.

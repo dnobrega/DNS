@@ -5,6 +5,16 @@ DNS is a Github repository developed by Daniel Nóbrega Siverio whose aim is to 
 in the installation and configuration of progamming languages, software packages, as well as
 useful information about solar telescopes and satellites, among others.
 
+
+You can clone the repository through HTTPS like this:
+
+```tcsh
+git clone https://username@github.com/dnobrega/DNS.git
+```
+
+replacing "username" with your github username.
+
+
 ___
 ### About me
 I am a Postdoctoral researcher at Instituto de Astrofísica de Canarias (IAC) since the 1st of March 2021. Previously, I worked at

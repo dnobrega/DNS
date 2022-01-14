@@ -22,18 +22,18 @@ theme:
 
 nav:
   - '': index.md
-  - 'Installation':
-    - Mac OS: macos.md
-    - Terminal: terminal.md
+  - 'Software':
     - IDL: idl.md
-    - Python: python.md
     - Bifrost: bifrost.md
+    - Mac OS: macos.md
+    - Python: python.md
   - 'Observations':
-    - SST: sst.md
+    - ALMA: alma.md  
     - IRIS: iris.md
     - SOLO: solo.md
     - SDO: sdo.md
-    - ALMA: alma.md  
+    - SST: sst.md
+
 
 ##################################################################
 

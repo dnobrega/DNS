@@ -18,6 +18,8 @@ to include Anaconda. For Mac under zsh, modify the _.zlogin_ file in your home d
 export ANACONDA_DIR="/Users/username/opt/anaconda3/bin"
 export PATH=$ANACONDA_DIR ":" $PATH
 ```
+
+___
 ## Libraries
 
 ### Helita
@@ -99,7 +101,7 @@ Scikit-learn (formerly scikits.learn and also known as sklearn) is a free softwa
 
 
 
-
+___
 ## SciPy meeting
 
 The annual SciPy Conferences allows participants from academic, commercial, and governmental organizations to:
