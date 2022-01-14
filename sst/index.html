@@ -41,19 +41,19 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../idl/" class="dropdown-item">IDL</a>
-</li>
-                                    
-<li>
-    <a href="../bifrost/" class="dropdown-item">Bifrost</a>
-</li>
-                                    
-<li>
     <a href="../macos/" class="dropdown-item">Mac OS</a>
 </li>
                                     
 <li>
+    <a href="../idl/" class="dropdown-item">IDL</a>
+</li>
+                                    
+<li>
     <a href="../python/" class="dropdown-item">Python</a>
+</li>
+                                    
+<li>
+    <a href="../bifrost/" class="dropdown-item">Bifrost</a>
 </li>
                                 </ul>
                             </li>
@@ -208,7 +208,30 @@ file has to be an image file and the second file has to be a sp (spectral) file.
  actually the same array, but
 ordered differently.</p>
 <h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
-<p>Under construction</p>
+<p>To read SST data using Helita, you need to import <code>lp</code>, which contains
+all the routines to manipulate SST cubes. </p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">helita.io</span> <span class="kn">import</span> <span class="n">lp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">file</span>   <span class="o">=</span> <span class="s2">&quot;nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube&quot;</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">lp</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="n">data</span>   <span class="o">=</span> <span class="n">lp</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</code></pre></div>
+the data will have (nx,ny, nt*nw) dimensions, where 
+<div class="highlight"><pre><span></span><code><span class="n">nx</span>   <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ny</span>   <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ntnw</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div>
+are the x, y, time and lambda dimensions. Knowing how many scans and
+how many spectral positions are contained in the observation, you
+can reshape the data, e.g., and plot the image:
+<div class="highlight"><pre><span></span><code><span class="n">nt</span>  <span class="o">=</span> <span class="mi">240</span>
+<span class="n">nw</span>  <span class="o">=</span> <span class="mi">32</span>
+<span class="n">data</span>  <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nw</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greys_r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></p>
 <hr />
 <h2 id="sst-campaigns">SST Campaigns<a class="headerlink" href="#sst-campaigns" title="Permanent link">&para;</a></h2>
 <p>This documentation contains useful information for observers going to the SST campagins. </p>
