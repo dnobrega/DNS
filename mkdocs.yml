@@ -23,10 +23,10 @@ theme:
 nav:
   - '': index.md
   - 'Software':
-    - IDL: idl.md
-    - Bifrost: bifrost.md
     - Mac OS: macos.md
+    - IDL: idl.md
     - Python: python.md
+    - Bifrost: bifrost.md
   - 'Observations':
     - ALMA: alma.md  
     - IRIS: iris.md

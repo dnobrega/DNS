@@ -62,7 +62,34 @@ ordered differently.
 
 ### Python
 
-Under construction
+To read SST data using Helita, you need to import ```lp```, which contains
+all the routines to manipulate SST cubes. 
+
+```python
+import numpy as np
+from helita.io import lp
+import matplotlib.pyplot as plt
+
+file   = "nb_6563_08:05:00_aligned_3950_2017-05-25T08:07:37.icube"
+header = lp.getheader(file)
+data   = lp.getdata(file)
+```
+the data will have (nx,ny, nt*nw) dimensions, where 
+```python
+nx   = header[0][0]
+ny   = header[0][1]
+ntnw = header[0][2]
+```
+are the x, y, time and lambda dimensions. Knowing how many scans and
+how many spectral positions are contained in the observation, you
+can reshape the data, e.g., and plot the image:
+```python
+nt  = 240
+nw  = 32
+data  = data.reshape((nx, ny, nt, nw))
+plt.imshow(data[:,::-1,180,5].T,cmap="Greys_r")
+plt.show()
+```
 
 ___
 ## SST Campaigns
