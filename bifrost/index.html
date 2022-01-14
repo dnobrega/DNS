@@ -37,27 +37,23 @@
                                 <a href=".." class="nav-link"></a>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Software <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../macos/" class="dropdown-item">Mac OS</a>
-</li>
-                                    
-<li>
-    <a href="../terminal/" class="dropdown-item">Terminal</a>
-</li>
                                     
 <li>
     <a href="../idl/" class="dropdown-item">IDL</a>
 </li>
                                     
 <li>
-    <a href="../python/" class="dropdown-item">Python</a>
+    <a href="./" class="dropdown-item active">Bifrost</a>
 </li>
                                     
 <li>
-    <a href="./" class="dropdown-item active">Bifrost</a>
+    <a href="../macos/" class="dropdown-item">Mac OS</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
 </li>
                                 </ul>
                             </li>
@@ -66,7 +62,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../sst/" class="dropdown-item">SST</a>
+    <a href="../alma/" class="dropdown-item">ALMA</a>
 </li>
                                     
 <li>
@@ -82,7 +78,7 @@
 </li>
                                     
 <li>
-    <a href="../alma/" class="dropdown-item">ALMA</a>
+    <a href="../sst/" class="dropdown-item">SST</a>
 </li>
                                 </ul>
                             </li>
@@ -95,12 +91,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../python/" class="nav-link">
+                                <a rel="prev" href="../idl/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="../sst/" class="nav-link">
+                                <a rel="next" href="../macos/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -127,16 +123,16 @@
             
             <li class="nav-item" data-level="1"><a href="#bifrost" class="nav-link">Bifrost</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#getting-bifrost" class="nav-link">Getting Bifrost</a>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#getting-bifrost" class="nav-link">Getting Bifrost</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#terminal-configuration" class="nav-link">Terminal configuration</a>
+            <li class="nav-item" data-level="3"><a href="#terminal-configuration" class="nav-link">Terminal configuration</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#idl-routines-of-bifrost" class="nav-link">IDL routines of Bifrost</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
@@ -150,7 +146,10 @@
 <p>Bifrost is a massively parallel code developed for tridimensional numerical experiments of stellar atmospheres <a href="http://adsabs.harvard.edu/abs/2011A%26A...531A.154G">(Gudiksen et al. 2011)</a>. In order to explicitly solve the standard partial differential equations of magnetohydrodynamics (MHD), its core uses a staggered mesh in cartesian coordinates <code>(x,y,z)</code>. The positioning of the variables in the mesh is as follows: the scalar variables, e.g., the density <code>ρ</code>, are defined in the center of the numerical cells; the components of the basic vector fields, namely, the magnetic field <code>B_i</code> and linear momentum <code>p_i</code>,  are located at the center of the cell faces;  and the cross product or curl of those vectors, like <code>(vxB)_i</code> or <code>J_i</code>, are defined on the cell edges.</p>
 <p>The numerical scheme is a classic method of lines (MOL). It is based on a sixth order operator for the spatial derivatives. Since Bifrost uses a staggered mesh, it is not possible to avoid the use of interpolations to re-collocate the variables in space during the computations. Those interpolations are of fifth order. The time derivatives can follow a predictor-corrector scheme of third order described by <a href="https://ui.adsabs.harvard.edu/abs/1979acmp.proc..313H/abstract">Hyman (1979)</a> or a third order Runge Kuttta method. In both cases, the timestep is controlled by the Courant-Friedrichs-Lewy (CFL) criterion <a href="http://adsabs.harvard.edu/abs/1928MatAn.100...32C">(Courant et al. 1928)</a>.</p>
 <p>In spite of using high-order methods, the numerical codes are diffusive by their own nature due to the discretization of the equations. To ensure stability, Bifrost employs a diffusive operator that consists of two main terms: a small global diffusive term and the so called hyperdiffusion term inspired by <a href="http://sirrah.troja.mff.cuni.cz/~toast/archiv/nordlund-95.ps">Nordlund &amp; Galsgaard (1995)</a>. The latter is a location-specific diffusion that acts in small regions of large gradients or jumps in the variables, like in current sheets or shocks.</p>
-<p>The advantage of using the Bifrost code is that it includes different modules that provide relevant physics for the solar atmosphere. In the following, we list the most important ones:</p>
+<p>The advantage of using the Bifrost code is that it includes different modules that provide relevant physics for the solar atmosphere.</p>
+<hr />
+<h4 id="bifrost-literature">Bifrost literature<a class="headerlink" href="#bifrost-literature" title="Permanent link">&para;</a></h4>
+<p>In the following, we list the papers that describe the main modules of Bifrost:</p>
 <ul>
 <li>Equation of state: <a href="http://adsabs.harvard.edu/abs/1975A%26A....42..407G">Gustafsson et al. (1975)</a></li>
 <li>Injection of magnetic field through the bottom boundary of the convection zone: <a href="http://adsabs.harvard.edu/abs/2008ApJ...679..871M">Martínez-Sykora et al. (2008)</a></li>
@@ -163,7 +162,9 @@
 <li>Lagrangian Tracing module: <a href="http://adsabs.harvard.edu/abs/2018A%26A...616A.136L">Leenaarts (2018)</a></li>
 <li>New ambipolar diffusion module: <a href="https://ui.adsabs.harvard.edu/abs/2020A%26A...638A..79N/abstract">Nóbrega-Siverio et al. (2020)</a></li>
 </ul>
-<h2 id="getting-bifrost">Getting Bifrost<a class="headerlink" href="#getting-bifrost" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<h3 id="getting-bifrost">Getting Bifrost<a class="headerlink" href="#getting-bifrost" title="Permanent link">&para;</a></h3>
 <p>Bifrost is located on github. The repository is private, meaning you
 should be logged in with your github username to see it at:</p>
 <p><a href="https://github.com/ITA-Solar/Bifrost">Bifrost repository</a></p>
@@ -177,7 +178,7 @@ git config --global user.email username@example.com
 <div class="highlight"><pre><span></span><code>git clone https://username@github.com/ITA-Solar/Bifrost.git
 </code></pre></div>
 <p>replacing "username" with your github username.</p>
-<h2 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="terminal-configuration">Terminal configuration<a class="headerlink" href="#terminal-configuration" title="Permanent link">&para;</a></h3>
 <p>It can be useful to create (or modify) your <em>.login</em> (in csh/tcsh) or <em>.zlogin</em> (in zsh) file in your home directory to add a Bifrost system variable.</p>
 <p>In case of working with zsh:<br />
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">BIFROST</span><span class="o">=</span><span class="s2">&quot;/folder/Bifrost&quot;</span>
@@ -186,8 +187,7 @@ In case of tcsh:<br />
 <div class="highlight"><pre><span></span><code>setenv BIFROST <span class="s2">&quot;/folder/Bifrost&quot;</span>
 </code></pre></div>
 where <em>folder</em> is the location where you have cloned the Bifrost repository. </p>
-<h2 id="idl-routines-of-bifrost">IDL routines of Bifrost<a class="headerlink" href="#idl-routines-of-bifrost" title="Permanent link">&para;</a></h2>
-<p>Modify your .zlogin file to add the following system variables.
+<p>To use the IDL routines of Bifrost, modify your .zlogin file to add the following system variables.
 In case of working with tcsh:
 <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">BIFROST_IDL</span><span class="o">=</span><span class="nv">$BIFROST</span><span class="s2">&quot;/IDL&quot;</span>
 </code></pre></div>

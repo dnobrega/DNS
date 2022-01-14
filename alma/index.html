@@ -37,27 +37,23 @@
                                 <a href=".." class="nav-link"></a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Software <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../macos/" class="dropdown-item">Mac OS</a>
-</li>
-                                    
-<li>
-    <a href="../terminal/" class="dropdown-item">Terminal</a>
-</li>
                                     
 <li>
     <a href="../idl/" class="dropdown-item">IDL</a>
 </li>
                                     
 <li>
-    <a href="../python/" class="dropdown-item">Python</a>
+    <a href="../bifrost/" class="dropdown-item">Bifrost</a>
 </li>
                                     
 <li>
-    <a href="../bifrost/" class="dropdown-item">Bifrost</a>
+    <a href="../macos/" class="dropdown-item">Mac OS</a>
+</li>
+                                    
+<li>
+    <a href="../python/" class="dropdown-item">Python</a>
 </li>
                                 </ul>
                             </li>
@@ -66,7 +62,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../sst/" class="dropdown-item">SST</a>
+    <a href="./" class="dropdown-item active">ALMA</a>
 </li>
                                     
 <li>
@@ -82,7 +78,7 @@
 </li>
                                     
 <li>
-    <a href="./" class="dropdown-item active">ALMA</a>
+    <a href="../sst/" class="dropdown-item">SST</a>
 </li>
                                 </ul>
                             </li>
@@ -95,12 +91,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../sdo/" class="nav-link">
+                                <a rel="prev" href="../python/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
+                                <a rel="next" href="../iris/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -127,16 +123,16 @@
             
             <li class="nav-item" data-level="1"><a href="#alma" class="nav-link">ALMA</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#alma-main-links" class="nav-link">ALMA main links</a>
+            <li class="nav-item" data-level="2"><a href="#data-analysis" class="nav-link">Data analysis</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="3"><a href="#synthetic-data-from-bifrost" class="nav-link">Synthetic data from Bifrost</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#analyzing-synthetic-alma-data-from-bifrost-simulations-inth5-files" class="nav-link">Analyzing synthetic ALMA data from Bifrost simulations: int.h5 files.</a>
+            <li class="nav-item" data-level="3"><a href="#model-data-from-bifrost" class="nav-link">Model data from Bifrost</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#analyzing-synthetic-alma-data-from-bifrost-simulations-modelh5-files" class="nav-link">Analyzing synthetic ALMA data from Bifrost simulations: model.h5 files.</a>
-              <ul class="nav flex-column">
               </ul>
             </li>
               </ul>
@@ -148,21 +144,24 @@
 
 <h1 id="alma">ALMA<a class="headerlink" href="#alma" title="Permanent link">&para;</a></h1>
 <p>The Atacama Large Millimeter/submillimeter Array (ALMA) is a radio interferometer constructed in the Atacama Desert at 5,000 meters above sea level in the northern Republic of Chile in South America. This radio telescope is composed of 66 high-precision antennas, which operate on wavelengths of 0.32 to 3.6 mm. Its main array has fifty antennas, each with 12-meter diameters, which act together as a single telescope: an interferometer. This is complemented by a compact array of four antennas with 12-meter diameters and 12 antennas with 7-meter diameters. ALMA’s antennas can be configured in different ways, spacing them at distances from 150 meters to 16 kilometers, giving ALMA a powerful “zoom” variable, which results in images clearer than the images from the Hubble Space Telescope (<a href="https://almascience.nrao.edu/about-alma/alma-basics">ALMA basics</a>).</p>
-<h2 id="alma-main-links">ALMA main links<a class="headerlink" href="#alma-main-links" title="Permanent link">&para;</a></h2>
+<hr />
+<h4 id="alma-main-links">ALMA main links<a class="headerlink" href="#alma-main-links" title="Permanent link">&para;</a></h4>
 <ul>
 <li>ALMA home webpage: <a href="https://almascience.nrao.edu/">ALMA</a></li>
 <li>SSALMON home webpage: <a href="https://www.ssalmon.uio.no/">SSALMON</a></li>
 </ul>
-<h2 id="analyzing-synthetic-alma-data-from-bifrost-simulations-inth5-files">Analyzing synthetic ALMA data from Bifrost simulations: int.h5 files.<a class="headerlink" href="#analyzing-synthetic-alma-data-from-bifrost-simulations-inth5-files" title="Permanent link">&para;</a></h2>
+<h4 id="alma-literature">ALMA literature<a class="headerlink" href="#alma-literature" title="Permanent link">&para;</a></h4>
 <ul>
-<li>
-<p><em>It is necessary to clone the Bifrost code and DNS package for the following instructions.</em></p>
-</li>
-<li>
-<p>To get a list of the existing synthetic files (int.h5) within a folder, type:
+<li>To be completed</li>
+</ul>
+<hr />
+<h2 id="data-analysis">Data analysis<a class="headerlink" href="#data-analysis" title="Permanent link">&para;</a></h2>
+<p>This is a brief documentation to analyze synthetic ALMA data from Bifrost simulations that have been stored in .h5 files. To that end, it is necessary to clone the Bifrost code and DNS package for the following instructions.</p>
+<h3 id="synthetic-data-from-bifrost">Synthetic data from Bifrost<a class="headerlink" href="#synthetic-data-from-bifrost" title="Permanent link">&para;</a></h3>
+<ul>
+<li>To get a list of the existing synthetic ALMA data files (int.h5) within a folder, type:
 <div class="highlight"><pre><span></span><code>f<span class="o">=</span>alma_synthfiles()
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 <li>The synthetic files contain the following variables: 
 <div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Stokes_I&#39;</span>,<span class="s1">&#39;Tau1&#39;</span>,<span class="s1">&#39;Wavelength&#39;</span>]
 </code></pre></div>
@@ -211,16 +210,11 @@ Band 7 // 0.88 -&gt; 0.84 [mm]
 18 : (lambda):  8454384.03835, (freq)    354600000000.00323, (to K) 2.588515e+13
 </code></pre></div></li>
 </ul>
-<h2 id="analyzing-synthetic-alma-data-from-bifrost-simulations-modelh5-files">Analyzing synthetic ALMA data from Bifrost simulations: model.h5 files.<a class="headerlink" href="#analyzing-synthetic-alma-data-from-bifrost-simulations-modelh5-files" title="Permanent link">&para;</a></h2>
+<h3 id="model-data-from-bifrost">Model data from Bifrost<a class="headerlink" href="#model-data-from-bifrost" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><em>It is necessary to clone the Bifrost code and DNS package for the following instructions.</em></p>
-</li>
-<li>
-<p>To get a list of the existing model files (model.h5) that generated the ALMA synthetic files within a folder, type:
+<li>To get a list of the existing model files (model.h5) that generated the ALMA synthetic files within a folder, type:
 <div class="highlight"><pre><span></span><code>g<span class="o">=</span>alma_modelfiles()
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 <li>The model files contain the following variables: 
 <div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="o">=</span>[<span class="s1">&#39;Pgas&#39;</span>,<span class="s1">&#39;temperature&#39;</span>,<span class="s1">&#39;dens&#39;</span>,<span class="s1">&#39;dx&#39;</span>,<span class="s1">&#39;dy&#39;</span>,<span class="s1">&#39;z&#39;</span>]
 </code></pre></div>
