@@ -30,7 +30,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
     yy  = -reverse(y)
     zz  = -reverse(zu)
     nl  = 2
-    nt  = 999
+    nt  = 9999
     dim = [nx,ny,nz]
     ext = [xx[0],yy[0],zz[0],xx[nx-1],yy[ny-1],zz[nz-1]]
 
@@ -61,7 +61,9 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
            ENDIF
            var=reverse(var,3)
            var=reverse(var,2)
+           help, var
            openw,lu,'var.dat',/get_lun
+           spawn, 'ls var.dat'
            writeu,lu,float(var)
            close,lu
            free_lun,lu
@@ -70,13 +72,5 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
            spawn,'rm -f var.dat'
         ENDIF
     ENDFOR
-
-    
-    STOP
-    
-
-    
-
-
 
 END
