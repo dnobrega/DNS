@@ -30,6 +30,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
     yy  = -reverse(y)
     zz  = -reverse(zu)
     nl  = 2
+    ns  = n_elements(isnaps)
     nt  = 9999
     dim = [nx,ny,nz]
     ext = [xx[0],yy[0],zz[0],xx[nx-1],yy[ny-1],zz[nz-1]]
@@ -43,34 +44,35 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile
     SPAWN, commandvdf  
 
 
-
-    
-    FOR ll=0,N_ELEMENTS(var_3Dlist)-1 DO BEGIN
-        name=var_3Dlist[ll]
-        print, "Loading...  ", name, string(isnaps)
-        dnsvar_name="dnsvar_"+name
-        file_exists=STRLEN(file_which(dnsvar_name+".pro"))
-        IF (file_exists GT 0) THEN BEGIN 
-           CALL_PROCEDURE, dnsvar_name, d, name, isnaps, swap, var, units,$
-                           var_log=var_log
-           IF (var_log) THEN var=alog10(var)
-           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
-              FOR i=0,nx-1 DO BEGIN
-                 FOR j=0,ny-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zu)
-              ENDFOR
-           ENDIF
-           var=reverse(var,3)
-           var=reverse(var,2)
-           help, var
-           openw,lu,'var.dat',/get_lun
-           spawn, 'ls var.dat'
-           writeu,lu,float(var)
-           close,lu
-           free_lun,lu
-           pmm, var
-           spawn,'raw2vdf -ts '+STRTRIM(string(isnaps),2)+' -varname ' +name +' '+vdffile+' var.dat'
-           spawn,'rm -f var.dat'
-        ENDIF
+    FOR jj=0,ns-1 DO BEGIN
+       
+       FOR ll=0,N_ELEMENTS(var_3Dlist)-1 DO BEGIN
+          name=var_3Dlist[ll]
+          print, "Loading...  ", name, string(isnaps[jj])
+          dnsvar_name="dnsvar_"+name
+          file_exists=STRLEN(file_which(dnsvar_name+".pro"))
+          IF (file_exists GT 0) THEN BEGIN 
+             CALL_PROCEDURE, dnsvar_name, d, name, isnaps[jj], swap, var, units,$
+                             var_log=var_log
+             IF (var_log) THEN var=alog10(var)
+             IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
+                FOR i=0,nx-1 DO BEGIN
+                   FOR j=0,ny-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zu)
+                ENDFOR
+             ENDIF
+             var=reverse(var,3)
+             var=reverse(var,2)
+             help, var
+             openw,lu,'var.dat',/get_lun
+             spawn, 'ls var.dat'
+             writeu,lu,float(var)
+             close,lu
+             free_lun,lu
+             pmm, var
+             spawn,'raw2vdf -ts '+STRTRIM(string(isnaps[jj]),2)+' -varname ' +name +' '+vdffile+' var.dat'
+             spawn,'rm -f var.dat'
+          ENDIF
+       ENDFOR
     ENDFOR
 
 END
