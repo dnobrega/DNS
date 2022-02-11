@@ -1,0 +1,15 @@
+#!/bin/bash
+read -p "Please enter the current name of the simulation: " input
+read -p "Please enter the desired name of the simulation: " output
+read -p "Are you sure of replacing all occurences of $input with $output in files matching *.idl, *.snap, *.aux [y/n]:"  yn
+case $yn in
+    [Yy]* )
+	find . -type f -name "*.idl" -print0 | xargs -0 sed -i '' -e "s/$input/$output/g"
+	ls *.idl  | awk -F $input '{print "mv "$0"       "$1"'$output'"$2}' | sh
+	ls *.snap | awk -F $input '{print "mv "$0"       "$1"'$output'"$2}' | sh
+	ls *.aux  | awk -F $input '{print "mv "$0"       "$1"'$output'"$2}' | sh
+	;;
+    [Nn]* ) break;;
+esac
+
+
