@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ -z "$1" ]
+then
+        newauxvalue=`ls *.idl | wc -l`
+else
+        newauxvalue=$1
+fi
+
+for ii in *.idl; do 
+    echo $ii
+    sed -i "s/ aux =.*/aux = \"p tg nel qspitz qthin qjoule qvisc ex ey ez \"/g" $ii
+    sed -i "s/ newaux =.*/newaux = $newauxvalue/g" $ii
+done
