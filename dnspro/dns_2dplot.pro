@@ -99,6 +99,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log, $
                 find_min=find_min, find_max=find_max, $
                 save_min=save_min, save_max=save_max, $
+                find_size=find_size, find_color=find_color, $
                 min_filename=min_filename, max_filename=max_filename, $
                 var_name=var_name, $
                 mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
@@ -116,6 +117,9 @@ COMMON BIFPLT_COMMON,  $
        bottom, top, $
        isotropic, smooth
 
+IF (NOT (KEYWORD_SET(find_size)))        THEN find_size=2
+IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
+          
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
 ;                                  MAIN
@@ -223,7 +227,7 @@ COMMON BIFPLT_COMMON,  $
      loc_max = ind_max*scale + origin
      PRINT, " Max at x = "+strtrim(loc_max[0],2)+' and y = '+strtrim(loc_max[1],2)
      PRINT, "------------------------------------------------------"
-     oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=1.0, color=0
+     oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size,color=find_color
      IF (N_ELEMENTS(save_max) NE 0) THEN BEGIN
         folder = "loc_max"
         IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
@@ -239,7 +243,7 @@ COMMON BIFPLT_COMMON,  $
      loc_min = ind_min*scale + origin
      PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
      PRINT, "------------------------------------------------------"
-     oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=1.0,color=255
+     oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size,color=find_color
      IF (N_ELEMENTS(save_min) NE 0) THEN BEGIN
         folder = "loc_min"
         IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder        
