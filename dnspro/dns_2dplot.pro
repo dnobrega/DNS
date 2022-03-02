@@ -205,15 +205,17 @@ COMMON BIFPLT_COMMON,  $
                  c_colors=mask_colors,$
                  c_thick=mask_thick, c_linestyle=mask_linestyle
         tvlct, rgb
-        IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
-           folder = "masks"
-           IF (N_ELEMENTS(mask_name) EQ 0) THEN mask_name = var_name
-           IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
-           save, xx, yy, coords, values, mask_fun, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
-        ENDIF
      ENDIF ELSE BEGIN
         PRINT, "No elements found with that mask"
+        coords = 0
+        values = 0
      ENDELSE
+     IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
+        folder = "masks"
+        IF (N_ELEMENTS(mask_name) EQ 0) THEN mask_name = var_name
+        IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
+        save, xx, yy, coords, values, mask_fun, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
+     ENDIF
   ENDIF
 
   IF ((N_ELEMENTS(find_max) NE 0) OR (N_ELEMENTS(save_max) NE 0)) THEN BEGIN
