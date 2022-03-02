@@ -209,7 +209,7 @@ COMMON BIFPLT_COMMON,  $
            folder = "masks"
            IF (N_ELEMENTS(mask_name) EQ 0) THEN mask_name = var_name
            IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
-           save, xx, yy, coords, values, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
+           save, xx, yy, coords, values, mask_fun, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
         ENDIF
      ENDIF ELSE BEGIN
         PRINT, "No elements found with that mask"
