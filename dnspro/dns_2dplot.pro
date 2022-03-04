@@ -234,7 +234,7 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
         IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, loc_max, xx, yy, filename=folder+filename
+        save, loc_max, var_max, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
 
@@ -251,7 +251,7 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
         IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
         ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, loc_min, xx, yy, filename=folder+filename
+        save, loc_min, var_min, xx, yy, filename=folder+filename
      ENDIF
   ENDIF
 
