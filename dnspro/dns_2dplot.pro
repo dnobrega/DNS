@@ -228,9 +228,9 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      loc_min = ind_min*scale + origin
      ind_max = array_indices(var_plot, pos_max)
      loc_max = ind_max*scale + origin
-     var_mean = mean(var_plot)
-     var_std  = std(var_plot)
-     var_tot  = total(var_plot)
+     var_mean = MEAN(var_plot)
+     var_std  = STDDEV(var_plot)
+     var_tot  = TOTAL(var_plot)
      PRINT, "------------------------------------------------------"
      PRINT, " STATS "
      PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
