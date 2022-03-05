@@ -89,6 +89,7 @@ END
 
 PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 var_minmax=var_minmax, $
+                var_extratitle=var_extratitle,$
                 showminmax=showminmax, $
                 bifrost_coord=bifrost_coord,$
                 xx=xx, yy=yy, zz=zz,$
@@ -98,9 +99,9 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 position=position,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log, $
                 find_min=find_min, find_max=find_max, $
-                save_min=save_min, save_max=save_max, $
                 find_size=find_size, find_color=find_color, $
-                min_filename=min_filename, max_filename=max_filename, $
+                stats=stats, save_stats=save_stats, $
+                stats_filename=stats_filename, $
                 var_name=var_name, $
                 mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
                 mask_colors=mask_colors,$
@@ -119,7 +120,7 @@ COMMON BIFPLT_COMMON,  $
 
 IF (NOT (KEYWORD_SET(find_size)))        THEN find_size=2
 IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
-          
+
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ;---------------------------------------------------------------------------------
 ;                                  MAIN
@@ -142,10 +143,10 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
   PRINT, "------------------------------------------------------"
   PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "------------------------------------------------------"
+  IF (N_ELEMENTS(var_extratitle) NE 0) THEN title=title+" "+var_extratitle
   IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
      final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
   ENDIF ELSE final_title=title
-
 
 
 ;---------------------------------------------------------------------------------  
@@ -222,39 +223,38 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      ENDIF
   ENDIF
 
-  IF ((N_ELEMENTS(find_max) NE 0) OR (N_ELEMENTS(save_max) NE 0)) THEN BEGIN
-     ind_max = array_indices(var_plot, pos_max)
-     loc_max = ind_max*scale + origin
-     PRINT, " Max at x = "+strtrim(loc_max[0],2)+' and y = '+strtrim(loc_max[1],2)
-     PRINT, "------------------------------------------------------"
-     oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size,color=find_color
-     IF (N_ELEMENTS(save_max) NE 0) THEN BEGIN
-        folder = "loc_max"
-        IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
-        IF (N_ELEMENTS(max_filename) EQ 0) THEN filename="/max_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
-        ELSE filename="/max_"+var_name+"_"+max_filename+"_"+STRTRIM(snaps,2)+".sav"
-        print, folder+filename
-        save, loc_max, var_max, xx, yy, filename=folder+filename
-     ENDIF
-  ENDIF
-
-  IF ((N_ELEMENTS(find_min) NE 0) OR (N_ELEMENTS(save_min) NE 0)) THEN BEGIN
+  IF ((N_ELEMENTS(stats) NE 0) OR (N_ELEMENTS(save_stats) NE 0)) THEN BEGIN
      ind_min = array_indices(var_plot, pos_min)
      loc_min = ind_min*scale + origin
-     PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
+     ind_max = array_indices(var_plot, pos_max)
+     loc_max = ind_max*scale + origin
+     var_mean = mean(var_plot)
+     var_std  = std(var_plot)
+     var_tot  = total(var_plot)
      PRINT, "------------------------------------------------------"
-     oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size,color=find_color
-     IF (N_ELEMENTS(save_min) NE 0) THEN BEGIN
-        folder = "loc_min"
+     PRINT, " STATS "
+     PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
+     PRINT, " Max at x = "+strtrim(loc_max[0],2)+' and y = '+strtrim(loc_max[1],2)
+     PRINT, " Total = "+strtrim(var_tot,2)
+     PRINT, " Mean value = "+strtrim(var_mean,2)
+     PRINT, " Standard deviation = "+strtrim(var_std,2)
+     PRINT, "------------------------------------------------------"
+     IF ((N_ELEMENTS(find_max) NE 0)  oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size, color=find_color
+     IF ((N_ELEMENTS(find_min) NE 0)  oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size, color=find_color
+     IF (N_ELEMENTS(save_stats NE 0) THEN BEGIN
+        folder = "stats"
         IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder        
         file_mkdir, folder
-        IF (N_ELEMENTS(min_filename) EQ 0) THEN filename="/min_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
-        ELSE filename="/min_"+var_name+"_"+min_filename+"_"+STRTRIM(snaps,2)+".sav"
+        IF (N_ELEMENTS(stats_filename) EQ 0) THEN filename="/stats_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
+        ELSE filename="/stats_"+var_name+"_"+stats_filename+"_"+STRTRIM(snaps,2)+".sav"
         print, folder+filename
-        save, loc_min, var_min, xx, yy, filename=folder+filename
+        save, xx, yy, $
+              loc_min, var_min, loc_max, var_max, $
+              var_tot, var_mean, var_std,
+              filename=folder+filename
      ENDIF
   ENDIF
-
+     
   DNS_COLORBAR, bar_range, nlev=nlev,$
                 varname=bar_name, $
                 log=bar_log,  $
