@@ -100,7 +100,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log, $
                 find_min=find_min, find_max=find_max, $
                 find_size=find_size, find_color=find_color, $
-                show_stats=stats, save_stats=save_stats, $
+                show_stats=show_stats, save_stats=save_stats, $
                 stats_filename=stats_filename, $
                 var_name=var_name, $
                 mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
