@@ -15,10 +15,10 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Specific options for 2D plots
                    smooth=smooth, $
                    bottom=bottom, top=top, $
-                   find_min=find_min, find_max=find_max,$
-                   save_min=save_min, save_max=save_max, $
+                   find_min=find_min, find_max=find_max, $
                    find_size=find_size, find_color=find_color, $
-		   min_filename=min_filename, max_filename=max_filename, $
+                   stats=stats, save_stats=save_stats, $
+                   stats_filename=stats_filename, $
                    ; Bar options for 2D plots
                    bar_pos=bar_pos, $
                    bar_titlepos=bar_titlepos,$
@@ -35,6 +35,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    swap=swap, units=units,$
                    bifrost_coord=bifrost_coord,$
                    var_range=var_range,var_log=var_log, var_title=var_title,$
+                   var_extratitle=var_extratitle,$
                    var_minmax=var_minmax,$
                    showminmax=showminmax, $
                    showsnap=showsnap,$
@@ -344,6 +345,7 @@ COMMON BIFPLT_COMMON,  $
            IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
            dns_2dplot, d,k,var_plot,dim, $
                        var_minmax=var_minmax,$
+                       var_extratitle=var_extratitle,$
                        showminmax=showminmax, $
                        bifrost_coord=bifrost_coord,$
                        xx=xx, yy=yy, zz=zz,$
@@ -353,9 +355,9 @@ COMMON BIFPLT_COMMON,  $
                        position=position,$
                        bar_name=bar_title, var_range=var_range, bar_log=bar_log, $
                        find_min=find_min, find_max=find_max, $
-                       save_min=save_min, save_max=save_max, $
                        find_size=find_size, find_color=find_color, $
-                       min_filename=min_filename, max_filename=max_filename, $
+                       stats=stats, save_stats=save_stats, $
+                       stats_filename=stats_filename, $
                        var_name=name, $
                        mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name, $
                        mask_colors=mask_colors, $
