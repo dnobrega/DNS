@@ -239,8 +239,8 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      PRINT, " Mean value = "+strtrim(var_mean,2)
      PRINT, " Standard deviation = "+strtrim(var_std,2)
      PRINT, "------------------------------------------------------"
-     IF ((N_ELEMENTS(find_max) NE 0)  oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size, color=find_color
-     IF ((N_ELEMENTS(find_min) NE 0)  oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size, color=find_color
+     IF ((N_ELEMENTS(find_max) NE 0) THEN  oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size, color=find_color
+     IF ((N_ELEMENTS(find_min) NE 0) THEN  oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size, color=find_color
      IF (N_ELEMENTS(save_stats NE 0) THEN BEGIN
         folder = "stats"
         IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder        
