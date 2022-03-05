@@ -17,7 +17,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    bottom=bottom, top=top, $
                    find_min=find_min, find_max=find_max, $
                    find_size=find_size, find_color=find_color, $
-                   stats=stats, save_stats=save_stats, $
+                   show_stats=show_stats, save_stats=save_stats, $
                    stats_filename=stats_filename, $
                    ; Bar options for 2D plots
                    bar_pos=bar_pos, $
@@ -356,7 +356,7 @@ COMMON BIFPLT_COMMON,  $
                        bar_name=bar_title, var_range=var_range, bar_log=bar_log, $
                        find_min=find_min, find_max=find_max, $
                        find_size=find_size, find_color=find_color, $
-                       stats=stats, save_stats=save_stats, $
+                       show_stats=show_stats, save_stats=save_stats, $
                        stats_filename=stats_filename, $
                        var_name=name, $
                        mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name, $
