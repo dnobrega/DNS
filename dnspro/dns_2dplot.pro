@@ -100,7 +100,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 bar_name=bar_name, var_range=var_range, bar_log=bar_log, $
                 find_min=find_min, find_max=find_max, $
                 find_size=find_size, find_color=find_color, $
-                stats=stats, save_stats=save_stats, $
+                show_stats=stats, save_stats=save_stats, $
                 stats_filename=stats_filename, $
                 var_name=var_name, $
                 mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
@@ -223,7 +223,7 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      ENDIF
   ENDIF
 
-  IF ((N_ELEMENTS(stats) NE 0) OR (N_ELEMENTS(save_stats) NE 0)) THEN BEGIN
+  IF ((N_ELEMENTS(show_stats) NE 0) OR (N_ELEMENTS(save_stats) NE 0)) THEN BEGIN
      ind_min = array_indices(var_plot, pos_min)
      loc_min = ind_min*scale + origin
      ind_max = array_indices(var_plot, pos_max)
