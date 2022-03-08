@@ -56,9 +56,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    c_levels=c_levels,c_load=c_load,c_colors=c_colors,$
                    c_thick=c_thick,c_linestyle=c_linestyle,c_labels=c_labels,$
                    c_charsize=c_charsize,c_charthick=c_charthick,$
-                   c_save=c_save,c_filename=c_filename, $
+                   save_contour=save_contour,c_filename=c_filename, $
                    ; Mask command options
-                   mask_fun=mask_fun, mask_var=mask_var, mask_save=mask_save,$
+                   mask_fun=mask_fun, mask_var=mask_var, save_mask=save_mask,$
                    ; Save 2D arrays
                    save_2d=save_2d
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -343,11 +343,14 @@ COMMON BIFPLT_COMMON,  $
 
         IF ((KEYWORD_SET(mask_fun))) THEN BEGIN
            IF (name NE mask_var) THEN BEGIN
-              dns_var,d,mask_var,snaps,swap,var_mask,$
+              dns_var,d,mask_var,k,swap,var_mask,$
                       units=units,$
                       ixt=ixt,iyt=iyt,izt=izt, $
-                      xx=xx,yy=yy,zz=zz
-           ENDIF
+                      ix0=ix0,iy0=iy0,iz0=iz0, $
+                      ixstep=ixstep, iystep=iystep, izstep=izstep,$
+                      ixf=ixf,iyf=iyf,izf=izf,$
+                      dim=dim
+           ENDIF ELSE var_mask = var
            void           = EXECUTE('wh = WHERE(' + mask_fun +', mask_nw, COMPLEMENT=cwh)')
            IF (mask_nw GT 0) THEN BEGIN
               PRINT, "------------------------------------------------------"
@@ -361,7 +364,7 @@ COMMON BIFPLT_COMMON,  $
               ind     =  0
               values   = 0
            ENDELSE
-           IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
+           IF (N_ELEMENTS(save_mask) NE 0) THEN BEGIN
               folder = "masks"
               IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
               save, xx, yy, zz, dim, ind, values, mask_fun, filename=folder+'/'+name+'_mask_'+mask_var+"_"+STRTRIM(k,2)+".sav"
@@ -416,7 +419,7 @@ COMMON BIFPLT_COMMON,  $
                            c_labels=c_labels, $
                            c_charsize=c_charsize, $
                            c_charthick=c_charthick, $
-                           c_save=c_save,c_filename=c_filename
+                           c_save=save_contour,c_filename=c_filename
            ENDIF
 
            wait, 0.0001
