@@ -103,9 +103,6 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 show_stats=show_stats, save_stats=save_stats, $
                 stats_filename=stats_filename, $
                 var_name=var_name, $
-                mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
-                mask_colors=mask_colors,$
-                mask_thick=mask_thick,mask_linestyle=mask_linestyle,$
                 save_2d=save_2d
 
 
@@ -143,7 +140,7 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
   PRINT, "------------------------------------------------------"
   PRINT, " ",bar_name+": "+strtrim(snaps,2)+' | '+strtrim(var_min,2)+' / '+strtrim(var_max,2)
   PRINT, "------------------------------------------------------"
-  IF (N_ELEMENTS(var_extratitle) NE 0) THEN title=title+" "+var_extratitle
+  IF (N_ELEMENTS(var_extratitle) NE 0) THEN bar_name=bar_name+" "+var_extratitle
   IF (N_ELEMENTS(showminmax) NE 0) THEN BEGIN
      final_title='['+strtrim(string(var_min),2)+'/'+strtrim(string(var_max),2)+'] '+title
   ENDIF ELSE final_title=title
@@ -186,52 +183,28 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
               bottom=bottom, top=top,$
               smooth=smooth
 
-  AA = FINDGEN(17) * (!PI*2/16.)
-  USERSYM, COS(AA), SIN(AA)
+  DNS_COLORBAR, bar_range, nlev=nlev,$
+                varname=bar_name, $
+                log=bar_log,  $
+                charthick=bar_charthick,$
+                thick=bar_thick, $
+                chars=bar_charsize,$
+                orient=bar_orient, $
+                position=bar_pos,$
+                postitle=bar_titlepos,$
+                tit_chart=bar_titchart,$ 
+                tit_chars=bar_titchars
 
-  IF (N_ELEMENTS(mask_fun) NE 0) THEN BEGIN
-     void   = EXECUTE('wh = WHERE(' + mask_fun +', nw)')
-     IF (nw GT 0) THEN BEGIN
-        PRINT, STRING(STRTRIM(nw,2))+" elements found with that mask"
-        ind    = array_indices(var_plot, wh)
-        coords = 0.0*ind
-        values = var_plot(wh)
-        coords[0,*] = ind[0,*]*scale[0] + origin[0]
-        coords[1,*] = ind[1,*]*scale[1] + origin[1]
-        c_var = var_plot*0.0
-        c_var(wh) = 1.0
-        IF (strpos(dim,"z") EQ 1) THEN y_plot=reverse(-yy) ELSE y_plot=yy
-        IF (N_ELEMENTS(mask_colors) EQ 0)    THEN mask_colors=0
-        IF (N_ELEMENTS(mask_thick) EQ 0)     THEN mask_thick=2
-        IF (N_ELEMENTS(mask_linestyle) EQ 0) THEN mask_linestyle=0
-        tvlct, rgb, /get
-        LOAD, 39
-        CONTOUR, c_var, xx, y_plot, levels=1, /overplot,$
-                 c_colors=mask_colors,$
-                 c_thick=mask_thick, c_linestyle=mask_linestyle
-        tvlct, rgb
-     ENDIF ELSE BEGIN
-        PRINT, "No elements found with that mask"
-        coords = 0
-        values = 0
-     ENDELSE
-     IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
-        folder = "masks"
-        IF (N_ELEMENTS(mask_name) EQ 0) THEN mask_name = var_name
-        IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
-        save, xx, yy, coords, values, mask_fun, filename=folder+'/mask_'+mask_name+"_"+STRTRIM(snaps,2)+".sav"
-     ENDIF
-  ENDIF
 
+  
   IF ((N_ELEMENTS(show_stats) NE 0) OR (N_ELEMENTS(save_stats) NE 0)) THEN BEGIN
      ind_min = array_indices(var_plot, pos_min)
      loc_min = ind_min*scale + origin
      ind_max = array_indices(var_plot, pos_max)
      loc_max = ind_max*scale + origin
-     var_mean = MEAN(var_plot)
-     var_std  = STDDEV(var_plot)
-     var_tot  = TOTAL(var_plot)
-     PRINT, "------------------------------------------------------"
+     var_mean = MEAN(var_plot,/NAN)
+     var_std  = STDDEV(var_plot,/NAN)
+     var_tot  = TOTAL(var_plot,/NAN)
      PRINT, " STATS "
      PRINT, " Min at x = "+strtrim(loc_min[0],2)+' and y = '+strtrim(loc_min[1],2)
      PRINT, " Max at x = "+strtrim(loc_max[0],2)+' and y = '+strtrim(loc_max[1],2)
@@ -239,6 +212,8 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      PRINT, " Mean value = "+strtrim(var_mean,2)
      PRINT, " Standard deviation = "+strtrim(var_std,2)
      PRINT, "------------------------------------------------------"
+     AA = FINDGEN(17) * (!PI*2/16.)
+     USERSYM, COS(AA), SIN(AA)
      IF ((N_ELEMENTS(find_max) NE 0)) THEN  oplot, loc_max[0]*[1,1], loc_max[1]*[1,1], psym=8, symsize=find_size, color=find_color
      IF ((N_ELEMENTS(find_min) NE 0)) THEN  oplot, loc_min[0]*[1,1], loc_min[1]*[1,1], psym=8, symsize=find_size, color=find_color
      IF (N_ELEMENTS(save_stats) NE 0) THEN BEGIN
@@ -255,17 +230,6 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      ENDIF
   ENDIF
      
-  DNS_COLORBAR, bar_range, nlev=nlev,$
-                varname=bar_name, $
-                log=bar_log,  $
-                charthick=bar_charthick,$
-                thick=bar_thick, $
-                chars=bar_charsize,$
-                orient=bar_orient, $
-                position=bar_pos,$
-                postitle=bar_titlepos,$
-                tit_chart=bar_titchart,$ 
-                tit_chars=bar_titchars
 
 
 END
