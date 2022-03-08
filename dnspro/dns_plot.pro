@@ -58,9 +58,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    c_charsize=c_charsize,c_charthick=c_charthick,$
                    c_save=c_save,c_filename=c_filename, $
                    ; Mask command options
-                   mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name,$
-                   mask_colors=mask_colors,$
-                   mask_thick=mask_thick,mask_linestyle=mask_linestyle, $
+                   mask_fun=mask_fun, mask_var=mask_var, mask_save=mask_save,$
                    ; Save 2D arrays
                    save_2d=save_2d
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -187,6 +185,10 @@ COMMON BIFPLT_COMMON,  $
   IF (NOT (KEYWORD_SET(swap)))         THEN swap=dswap  
   IF (NOT (KEYWORD_SET(units)))        THEN units=dunits
 
+  ; Mask options
+  IF (NOT (KEYWORD_SET(mask_var)))     THEN mask_var=name
+  IF (NOT (KEYWORD_SET(mask_nw)))      THEN mask_nw=0
+  
   ; Save default values in DNS_CONFI file
   IF KEYWORD_SET(save_dns_confi)       THEN BEGIN
 
@@ -338,11 +340,39 @@ COMMON BIFPLT_COMMON,  $
                 showsnap=showsnap
 
      IF STRLEN(dim) EQ 2 THEN BEGIN
-     
+
+        IF ((KEYWORD_SET(mask_fun))) THEN BEGIN
+           IF (name NE mask_var) THEN BEGIN
+              dns_var,d,mask_var,snaps,swap,var_mask,$
+                      units=units,$
+                      ixt=ixt,iyt=iyt,izt=izt, $
+                      xx=xx,yy=yy,zz=zz
+           ENDIF
+           void           = EXECUTE('wh = WHERE(' + mask_fun +', mask_nw, COMPLEMENT=cwh)')
+           IF (mask_nw GT 0) THEN BEGIN
+              PRINT, "------------------------------------------------------"
+              PRINT, " MASK: "+STRING(STRTRIM(mask_nw,2))+" elements were masked."
+              ind      = array_indices(var, cwh)
+              values   = var(cwh) 
+              var(wh)  = !VALUES.F_NAN
+           ENDIF ELSE BEGIN
+              PRINT, "------------------------------------------------------"
+              PRINT, " No elements found with that mask."
+              ind     =  0
+              values   = 0
+           ENDELSE
+           IF (N_ELEMENTS(mask_save) NE 0) THEN BEGIN
+              folder = "masks"
+              IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
+              save, xx, yy, zz, dim, ind, values, mask_fun, filename=folder+'/'+name+'_mask_'+mask_var+"_"+STRTRIM(k,2)+".sav"
+           ENDIF
+        ENDIF
+        
         FOR m=im0,imf,imstep DO BEGIN
            IF (dim EQ "yz") THEN var_plot = reform(var(m,*,*))
            IF (dim EQ "xz") THEN var_plot = reform(var(*,m,*))
            IF (dim EQ "xy") THEN var_plot = reform(var(*,*,m))
+
            dns_2dplot, d,k,var_plot,dim, $
                        var_minmax=var_minmax,$
                        var_extratitle=var_extratitle,$
@@ -359,9 +389,6 @@ COMMON BIFPLT_COMMON,  $
                        show_stats=show_stats, save_stats=save_stats, $
                        stats_filename=stats_filename, $
                        var_name=name, $
-                       mask_fun=mask_fun, mask_save=mask_save, mask_name=mask_name, $
-                       mask_colors=mask_colors, $
-                       mask_thick=mask_thick,mask_linestyle=mask_linestyle, $
                        save_2d=save_2d
 
 
