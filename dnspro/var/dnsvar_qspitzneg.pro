@@ -13,9 +13,10 @@ PRO dnsvar_qspitzneg, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        var=d->getvar('qspitz',snaps,swap=swap)*u.ue/u.ut
        var(where(var gt 0))=0
+       var=abs(var)
        var_title="-Q!dSpitz!n"
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
-       var_range=[-0.001, 0.001]
-       var_log=0
+       var_range=[1d-5, 1d5]
+       var_log=1
     ENDELSE
 END
