@@ -15,7 +15,7 @@ PRO dnsvar_qspitzpos, d, name, snaps, swap, var, units, $
        var(where(var lt 0))=0
        var_title="+Q!dSpitz!n"
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
-       var_range=[-0.001, 0.001]
-       var_log=0
+       var_range=[1d-5, 1d5]
+       var_log=1
     ENDELSE
 END
