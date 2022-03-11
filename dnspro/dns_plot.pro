@@ -355,14 +355,20 @@ COMMON BIFPLT_COMMON,  $
            IF (mask_nw GT 0) THEN BEGIN
               PRINT, "------------------------------------------------------"
               PRINT, " MASK: "+STRING(STRTRIM(mask_nw,2))+" elements were masked."
-              ind      = array_indices(var, cwh)
-              values   = var(cwh) 
-              var(wh)  = !VALUES.F_NAN
+              IF (N_ELEMENTS(cwh) GT 1) THEN BEGIN
+                 ind      = array_indices(var, cwh)
+                 values   = var(cwh) 
+                 var(wh)  = !VALUES.F_NAN
+              ENDIF ELSE BEGIN
+                 ind    = 0
+                 values = 0
+                 var(wh)  = !VALUES.F_NAN
+              ENDELSE
            ENDIF ELSE BEGIN
               PRINT, "------------------------------------------------------"
               PRINT, " No elements found with that mask."
               ind     =  0
-              values   = 0
+              values  = 0
            ENDELSE
            IF (N_ELEMENTS(save_mask) NE 0) THEN BEGIN
               folder = "masks"
