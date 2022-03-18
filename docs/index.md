@@ -21,17 +21,18 @@ I am a Postdoctoral researcher at Instituto de Astrofísica de Canarias (IAC) si
 Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 28th of February 2021.
 
 #### Papers
-18 papers in refereed journals. 281 citations. H-index: 10. Updated by 2022-01-13 [(ADS)](https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=database%3A%20astronomy&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
+19 papers in refereed journals. 302 citations. H-index: 10. Updated by 2022-03-18 [(ADS)](https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=database%3A%20astronomy&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
 
-
-> - _Solar surges related to UV bursts: Characterization through k-means, inversions, and density diagnosticsg._  
-[Nóbrega-Siverio et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021arXiv210813960N/abstract) 
+> - _Ambipolar diffusion: Self-similar solutions and MHD code testing. Cylindrical symmetry._  
+[Moreno-Insertis et al. (2022)](https://ui.adsabs.harvard.edu/abs/2022arXiv220306272M/abstract) 
+> - _Solar surges related to UV bursts: Characterization through k-means, inversions, and density diagnostics._  
+[Nóbrega-Siverio et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021A%26A...655A..28N/abstract) 
 > - _Evidence of multithermal nature of spicular downflows. Impact on solar atmospheric heating._  
-[Bose et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021arXiv210802153B/abstract) 
+[Bose et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021A%26A...654A..51B/abstract) 
 > - _Probing the Physics of the Solar Atmosphere with the Multi-slit Solar Explorer (MUSE): II. Flares and Eruptions._  
-[Cheung et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021arXiv210615591C/abstract)   
+[Cheung et al. (2021)](https://ui.adsabs.harvard.edu/abs/2022ApJ...926...53C/abstract)   
 > - _Probing the physics of the solar atmosphere with the Multi-slit Solar Explorer (MUSE): I. Coronal Heating._  
-[De Pontieu et al. (2021b)](https://ui.adsabs.harvard.edu/abs/2021arXiv210615584D/abstract)   
+[De Pontieu et al. (2021b)](https://ui.adsabs.harvard.edu/abs/2022ApJ...926...52D/abstract)   
 > - _A New View of the Solar Interface Region from the Interface Region Imaging Spectrograph (IRIS)._  
 [De Pontieu et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021SoPh..296...84D/abstract)   
 > - _The chromospheric component of coronal bright points. Coronal and chromospheric responses to magnetic-flux emergence._  
