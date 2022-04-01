@@ -26,8 +26,8 @@ PRO dnsvar_nhi, d, name, snaps, swap, var, units, $
        totconst = 2.0*!dpi*me*kb/(hh^2.0)
        phit     = (totconst*tg)^(1.5d)*2.0/nel
        xi       = 13.59*EVTOERG
-       n1_n0    = phit*u1/u0*exp(-xi*kb*tg)
-       ifracpos = n1_n0/(1. + n1_n0)
+       n1_n0    = phit*u1/u0*exp(-xi/(kb*tg))
+       ifracpos = 1/(1. + n1_n0)
 
        aux      = obj_new('br_aux')
        abnd     = d->gettababund()
@@ -42,8 +42,8 @@ PRO dnsvar_nhi, d, name, snaps, swap, var, units, $
        nht      = c2/awght(0)
        
        ; Result
-       var      = nht*(1.0d0-ifracpos)
-       var_title='n!dHI!n'
+       var      = nht*ifracpos
+       var_title='n!dH I!n'
        IF (units EQ "solar") THEN var_title=var_title+" (cm!u-3!n)"
        var_range=[1.d4,1d12]
        var_log=1
