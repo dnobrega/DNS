@@ -26,7 +26,7 @@ PRO dnsvar_nhiionhi, d, name, snaps, swap, var, units, $
        totconst = 2.0*!dpi*me*kb/(hh^2.0)
        phit     = (totconst*tg)^(1.5d)*2.0/nel
        xi       = 13.59*EVTOERG
-       var      = phit*u1/u0*exp(-xi*(kb*tg))
+       var      = phit*u1/u0*exp(-xi/(kb*tg))
        ; Result
        var_title='n!dH II!n/n!dH I!n (LTE)'
        var_range=[1.d-8,1d12]
