@@ -59,6 +59,18 @@ PRO dns_var,d,name,snaps,swap,var,$
     ENDELSE
  ENDELSE
 
+ d->readpars, snaps
+ d->readmesh
+ x=d->getx()
+ y=d->gety()
+ z=d->getz()
+ nelx=d->getmx()
+ nely=d->getmy()
+ nelz=d->getmz()
+
+ IF d->getboundarychk() THEN nelz=nelz+2.0*(d->getmb())
+
+ var=float(reform(var,nelx,nely,nelz))
  IF (KEYWORD_SET(save_dnsvar)) THEN BEGIN
     file_mkdir,save_dnsfolder             
     save, d, var, dnsvar_log, dnsvar_title, dnsvar_range, FILENAME=saved_dnsvar_name
@@ -76,19 +88,7 @@ PRO dns_var,d,name,snaps,swap,var,$
 ; SCANNING 3D VARIABLES
 ;---------------------------------------------------------------------------------  
 
- d->readpars, snaps
- d->readmesh
- x=d->getx()
- y=d->gety()
- z=d->getz()
- nelx=d->getmx()
- nely=d->getmy()
- nelz=d->getmz()
-
- IF d->getboundarychk() THEN nelz=nelz+2.0*(d->getmb())
- 
  IF STRPOS(name,"alma") EQ -1 THEN BEGIN
-    var=reform(var,nelx,nely,nelz)
     IF (NOT (KEYWORD_SET(dim))) THEN BEGIN
        dim='xz'
        IF (nelx EQ 1) THEN BEGIN
@@ -390,7 +390,6 @@ PRO dns_var,d,name,snaps,swap,var,$
               title}
     ENDIF
  ENDELSE
-
  IF (N_ELEMENTS(showsnap) NE 0) THEN BEGIN
     title=title+'  snap='+strtrim(string(snaps),2)
  ENDIF
