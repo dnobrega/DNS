@@ -21,7 +21,7 @@ I am a Postdoctoral researcher at Instituto de Astrofísica de Canarias (IAC) si
 Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 28th of February 2021.
 
 #### Papers
-19 papers in refereed journals. 302 citations. H-index: 10. Updated by 2022-03-18 [(ADS)](https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=database%3A%20astronomy&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
+19 papers in refereed journals. 306 citations. H-index: 10. Updated by 2022-04-22 [(ADS)](https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=database%3A%20astronomy&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
 
 > - _Ambipolar diffusion: Self-similar solutions and MHD code testing. Cylindrical symmetry._  
 [Moreno-Insertis et al. (2022)](https://ui.adsabs.harvard.edu/abs/2022arXiv220306272M/abstract) 
@@ -72,6 +72,8 @@ Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 2
 
 #### Invited talks
 
+> - _Simulations of flux emergence events._  
+International School of Space Science: The different spatio-temporal scales of the solar magnetism (L'Aquila, Italy).
 > - _Modeling solar coronal jets and surges._  
 HINODE-14/IRIS-11 meeting. 25-29 October 2021-10 (Washington, USA).  (online).  
 > - _Surges: a fundamental piece in the solar atmosphere puzzle._  
