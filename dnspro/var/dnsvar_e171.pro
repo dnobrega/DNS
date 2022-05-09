@@ -37,10 +37,11 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
        c2      = abnd(l)*r
        nh      = c2/m_h*u.ur
        nh      = reform(nh,si(1),si(2),si(3))
-       ;
+       ; ch_synthetic does not include the element abundances 
        ch_synthetic, 171.072, 171.074, density=1e9,/goft,SNGL_ION="fe_9",output=ion
+       ; abnd(14) is the Iron abundance. 
        FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) = nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
+          var(*,j,*) = abnd(14)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)
