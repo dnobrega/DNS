@@ -37,14 +37,15 @@ PRO dnsvar_e1334, d, name, snaps, swap, var, units, $
        c2      = abnd(l)*r
        nh      = c2/m_h*u.ur
        nh      = reform(nh,si(1),si(2),si(3))
-       ;
+       ; ch_synthetic does not include the element abundances  
        ch_synthetic, 1334.5, 1334.6, density=1e9,/goft,SNGL_ION="c_2",output=ion
+       ; abnd(2) is the Carbon abundance.  
        FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) = nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
+          var(*,j,*) = abnd(2)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)
-       var(where(var le 0)) = 1e-32
+       var(where(var le 0))  = 1e-32
        var(where(tg le 1e4)) = 1e-32
        var_title='!4e!3 C II 1334 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
