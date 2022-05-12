@@ -39,9 +39,9 @@ PRO dnsvar_e1334, d, name, snaps, swap, var, units, $
        nh      = reform(nh,si(1),si(2),si(3))
        ; ch_synthetic does not include the element abundances  
        ch_synthetic, 1334.5, 1334.6, density=1e9,/goft,SNGL_ION="c_2",output=ion
-       ; abnd(2) is the Carbon abundance.  
+       ; Feldman 1992 abundance for C 8.59 (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund) 
        FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) = abnd(2)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
+          var(*,j,*) = 10^(8.59-12.0)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)

@@ -39,9 +39,9 @@ PRO dnsvar_e1393, d, name, snaps, swap, var, units, $
        nh      = reform(nh,si(1),si(2),si(3))
        ; ch_synthetic does not include the element abundances
        ch_synthetic, 1393.754, 1393.756, density=1e9,/goft,SNGL_ION="si_4",output=ion
-       ; abnd(9) is the Silicon abundance. 
+       ; Feldman 1992 abundance for Si 8.10 (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund)
        FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) = abnd(9)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
+          var(*,j,*) = 10^(8.10-12.0)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)

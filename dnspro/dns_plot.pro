@@ -286,7 +286,15 @@ COMMON BIFPLT_COMMON,  $
      ENDIF
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  IF (load GT 74) THEN aia_lct, r,g, b, wave=load, /load ELSE load, load, /SILENT
+  aia_list  = [1600, 1700, 94, 131, 171, 193, 211, 304]
+  iris_list = [1330, 1400, 2796, 2832]
+  wh_aia    = WHERE(load EQ aia_list, nw_aia)
+  wh_iris   = WHERE(load EQ iris_list, nw_iris)
+  IF (nw_aia) THEN aia_lct, r,g, b, wave=load, /load ELSE BEGIN
+     IF (nw_iris) THEN BEGIN
+        IRIS_LCT, "SJI_"+STRTRIM(STRING(load),2), r, g, b
+     ENDIF ELSE load, load, /SILENT
+  ENDELSE
   IF (NOT KEYWORD_SET(multi)) THEN !P.multi=0
   !P.charthick=charthick
   !P.charsize=charsize
