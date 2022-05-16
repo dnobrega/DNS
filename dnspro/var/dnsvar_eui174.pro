@@ -23,8 +23,11 @@ PRO dnsvar_eui174, d, name, snaps, swap, var, units, $
      factx     = (nelx-1)/(maxx-minx)
      factz     = (nelz-1)/(maxz-minz)
 
+     tg_arr    = minx + (maxx-minx)*findgen(nelx)/(nelx-1)
+     nhone     = proton_dens(tg_array,abundance="sun_coronal_1992_feldman_ext.abund")
      nel_arr   = 10^(minz + (maxz-minz)*findgen(nelz)/(nelz-1))
-     FOR kk=0,nelz-1 DO goft[*,kk] = goft(*,kk)/1e2/nel_arr[kk]
+     FOR kk=0,nelz-1 DO goft[*,kk]  = goft(*,kk)/1e2/(nel_arr[kk]^2)
+     FOR kk=0,nelx-1 DO goft[kk, *] = goft[kk,*]/nhone[kk]
      
      nel       = alog10(d->getvar('nel',snaps,swap=swap))
      si        = size(nel)
@@ -53,7 +56,7 @@ PRO dnsvar_eui174, d, name, snaps, swap, var, units, $
      c2      = abnd(l)*r
      nh      = c2/m_h*u.ur
      
-     var       = reform(var*nh*nel/0.83)
+     var       = reform(var*nh*nel)
      var_title =  'EUI!dHRI!n 174'
      IF (units EQ "solar") THEN var_title=var_title+" (DN cm!u-1!n s!u-1!n pix!u-1!n)"
      var_range=[1d-8,5d-7]
