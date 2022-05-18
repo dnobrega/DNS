@@ -359,7 +359,7 @@ COMMON BIFPLT_COMMON,  $
                       ixf=ixf,iyf=iyf,izf=izf,$
                       dim=dim
            ENDIF ELSE var_mask = var
-           void           = EXECUTE('wh = WHERE(' + mask_fun +', mask_nw, COMPLEMENT=cwh)')
+           void           = EXECUTE('wh = WHERE(var_mask ' + mask_fun +', mask_nw, COMPLEMENT=cwh)')
            IF (mask_nw GT 0) THEN BEGIN
               PRINT, "------------------------------------------------------"
               PRINT, " MASK: "+STRING(STRTRIM(mask_nw,2))+" elements were masked."
@@ -375,13 +375,14 @@ COMMON BIFPLT_COMMON,  $
            ENDIF ELSE BEGIN
               PRINT, "------------------------------------------------------"
               PRINT, " No elements found with that mask."
-              ind     =  0
+              ind     = 0
               values  = 0
            ENDELSE
            IF (N_ELEMENTS(save_mask) NE 0) THEN BEGIN
               folder = "masks"
               IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
-              save, xx, yy, zz, dim, ind, values, mask_fun, filename=folder+'/'+name+'_mask_'+mask_var+"_"+STRTRIM(k,2)+".sav"
+              save, xx, yy, zz, dim, ind, values, mask_fun, $
+                    filename=folder+'/'+name+'_mask_'+mask_var+"_"+STRTRIM(k,2)+".sav"
            ENDIF
         ENDIF
         
