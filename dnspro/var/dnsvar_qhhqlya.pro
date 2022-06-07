@@ -1,4 +1,4 @@
-PRO dnsvar_qlyaqhh, d, name, snaps, swap, var, units, $
+PRO dnsvar_qhhqlya, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
@@ -11,8 +11,8 @@ PRO dnsvar_qlyaqhh, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('qlya',snaps,swap=swap)
-       var=(var - d->getvar('qhh',snaps,swap=swap))*u.ue/u.ut
+       var=d->getvar('qhh',snaps,swap=swap)
+       var=(var - d->getvar('qlya',snaps,swap=swap))*u.ue/u.ut
        var_title="Q!dLya!n"
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
        var_range=[-1d3, 1d3]
