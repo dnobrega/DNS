@@ -1,8 +1,8 @@
-PRO dnsvar_qlya, d, name, snaps, swap, var, units, $
+PRO dnsvar_qlyaqhh, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Entropy term due to R12 term (Eq. 16 Golding et al. 2016): qlya',/info
+       message, 'Entropy term due to Ly alpha (Eq. 16 Golding et al. 2016): qlyaqhh',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
@@ -11,10 +11,11 @@ PRO dnsvar_qlya, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('qlya',snaps,swap=swap)*u.ue/u.ut
-       var_title="Q!dR12!n"
+       var=d->getvar('qlya',snaps,swap=swap)
+       var=(var - d->getvar('qhh',snaps,swap=swap))*u.ue/u.ut
+       var_title="Q!dLya!n"
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
-       var_range=[1d-5, 1d5]
-       var_log=1
+       var_range=[-1d3, 1d3]
+       var_log=0
     ENDELSE
 END
