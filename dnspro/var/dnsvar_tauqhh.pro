@@ -2,7 +2,7 @@ PRO dnsvar_tauqhh, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Characteristic time of the R21 term (Eq. 16 Golding et al.2016): tau_qhh',/info
+       message, 'Characteristic time of the R12 term (Eq. 16 Golding et al.2016): tau_qhh',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
@@ -14,7 +14,7 @@ PRO dnsvar_tauqhh, d, name, snaps, swap, var, units, $
        var=d->getvar('qhh',snaps,swap=swap)
        e=d->getvar('e',snaps,swap=swap) 
        var=ABS(e/(var + 1d-30))*u.ut
-       var_title='!4s!3!dR21!n'
+       var_title='!4s!3!dR12!n'
        IF (units EQ "solar") THEN var_title=var_title+" (s)"
        var_range=[1d-1, 1.d3]
        var_log=1
