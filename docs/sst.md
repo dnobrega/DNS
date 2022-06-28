@@ -349,22 +349,22 @@ which contains the main command to use (pdftoppm). Note that the instalation tak
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
  ```bash
-#!/bin/bash                                                                                                                                              
-web="https://iris.lmsal.com/health-safety/timeline/iris_tim_archive"
-year=`date +"%Y"`
-month=`date +"%m"`
-day=`date +"%d"`
-web=$web"/"$year"/"$month"/"$day"/"
-
-echo "Looking for timeline in "$web
-iris_tim=`curl -s $web | grep ".txt" | sed 's/.*timeline_//' | sed 's/\.txt.*//' | sort -nr | head -1`
-web=$web"iris_tim_"$iris_tim
-echo "Getting timeline from the latest version: " $web
-curl -s $web | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' | sed -e 's/^/> /' > saai.txt
-curl -s $web | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/' | sed -e 's/$/ IRIS in SAA/' > saao.txt
-paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
-rm saai.txt
-rm saao.txt
+	 #!/bin/bash                                                                                                                                     
+	 web="https://iris.lmsal.com/health-safety/timeline/iris_tim_archive"
+	 year=`date +"%Y"`
+	 month=`date +"%m"`
+	 day=`date +"%d"`
+	 web=$web"/"$year"/"$month"/"$day"/"
+	 
+	 echo "Looking for timeline in "$web
+	 iris_tim=`curl -s $web | grep ".txt" | sed 's/.*timeline_//' | sed 's/\.txt.*//' | sort -nr | head -1`
+	 web=$web"iris_tim_"$iris_tim
+	 echo "Getting timeline from the latest version: " $web
+	 curl -s $web | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' | sed -e 's/^/> /' > saai.txt
+	 curl -s $web | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/' | sed -e 's/$/ IRIS in SAA/' > saao.txt
+	 paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
+	 rm saai.txt
+	 rm saao.txt
  ```
  The script automatically finds the timeline for the current day within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
  [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
