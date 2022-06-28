@@ -52,7 +52,6 @@ FOR jj=1, n_list-1, step DO BEGIN
       PRINT, 'File: ', list[jj], ' not found' 
    ENDIF ELSE BEGIN
       print, jj, ' Extracting ', list[jj]
-      image     = READ_PNG(list[jj])
       CASE input_format OF
          '.png'  : READ_PNG,  list[jj], image
          '.jpg'  : READ_JPEG, list[jj], image
