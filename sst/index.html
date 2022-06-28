@@ -473,19 +473,57 @@ which contains the main command to use (pdftoppm). Note that the instalation tak
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
- <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                                     </span>
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">###########################################################################################################</span>
+<span class="c1"># IRIS_SAA </span>
+<span class="c1">#</span>
+<span class="c1"># This scripts automatically extracts the IRIS SAA times of the current day.</span>
+<span class="c1"># This information is located within TIM in https://iris.lmsal.com/health-safety/timeline/</span>
+<span class="c1"># After extracting them, the script copies them in your clipboard,</span>
+<span class="c1"># so you can paste the IRIS SAA times in the SST Github wiki.</span>
+<span class="c1">#</span>
+<span class="c1"># NOTE: Please note that for weekends, the script will provide the SAA dates</span>
+<span class="c1"># for Saturday, Sunday and Monday in a single block.</span>
+<span class="c1">#</span>
+<span class="c1"># Current version is designed for MacOs systems.</span>
+<span class="c1"># For Linux, define the following alias (if you have X installed):</span>
+<span class="c1">#     alias pbcopy=&#39;xsel --clipboard --input&#39;</span>
+<span class="c1">#     alias pbpaste=&#39;xsel --clipboard --output&#39;</span>
+<span class="c1"># or in case you use xclip:</span>
+<span class="c1">#     alias pbcopy=&#39;xclip -selection clipboard&#39;</span>
+<span class="c1">#     alias pbpaste=&#39;xclip -selection clipboard -o&#39;</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># You should obtain in your clipboard a result with the following format:</span>
+<span class="c1">#</span>
+<span class="c1"># &gt; 07:xx - 08:xx IRIS in SAA</span>
+<span class="c1"># &gt; 08:xx - 09:xx IRIS in SAA     </span>
+<span class="c1"># &gt; 09:xx - 09:xx IRIS in SAA     </span>
+<span class="c1"># &gt; 10:xx - 11:xx IRIS in SAA     </span>
+<span class="c1">#</span>
+<span class="c1"># v1.0: 2022-06-28. Daniel Nobrega-Siverio: desiveri@astro.uio.no</span>
+<span class="c1">#</span>
+<span class="c1">###########################################################################################################</span>
+
+<span class="c1"># IRIS TIM Webpage</span>
 <span class="nv">web</span><span class="o">=</span><span class="s2">&quot;https://iris.lmsal.com/health-safety/timeline/iris_tim_archive&quot;</span>
+<span class="c1"># Current day</span>
 <span class="nv">year</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%Y&quot;</span><span class="sb">`</span>
 <span class="nv">month</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%m&quot;</span><span class="sb">`</span>
-<span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%d&quot;</span><span class="sb">`</span>
-<span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;/&quot;</span><span class="nv">$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$month</span><span class="s2">&quot;/&quot;</span><span class="nv">$day</span><span class="s2">&quot;/&quot;</span>
+<span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%d&quot;</span><span class="sb">`</span> 
+<span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;/&quot;</span><span class="nv">$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$month</span><span class="s2">&quot;/&quot;</span><span class="nv">$day</span><span class="s2">&quot;/&quot;</span> 
 
-<span class="nb">echo</span> <span class="s2">&quot;Looking for timeline in &quot;</span><span class="nv">$web</span>
+<span class="c1"># It looks for all the available versions of the TIM.</span>
+<span class="c1"># It extracts them and it takes the name of the latest version: </span>
 <span class="nv">iris_tim</span><span class="o">=</span><span class="sb">`</span>curl -s <span class="nv">$web</span> <span class="p">|</span> grep <span class="s2">&quot;.txt&quot;</span> <span class="p">|</span> sed <span class="s1">&#39;s/.*timeline_//&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\.txt.*//&#39;</span> <span class="p">|</span> sort -nr <span class="p">|</span> head -1<span class="sb">`</span>
+
+<span class="c1"># It greeps for the initial (SAAI) and ending (SAAO) times within the webpage,</span>
+<span class="c1"># creating two temporary files that store that information.</span>
 <span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;iris_tim_&quot;</span><span class="nv">$iris_tim</span>
-<span class="nb">echo</span> <span class="s2">&quot;Getting timeline from the latest version: &quot;</span> <span class="nv">$web</span>
+<span class="nb">echo</span> <span class="s2">&quot;Getting IRIS SAA from: &quot;</span><span class="nv">$web</span>
 curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/^/&gt; /&#39;</span> &gt; saai.txt
 curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/$/ IRIS in SAA/&#39;</span> &gt; saao.txt
+<span class="c1"># It puts together the SAAI and SAAO times for the Markdown wiki, and removes the temporary files</span>
 paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
 rm saai.txt
 rm saao.txt
