@@ -473,22 +473,22 @@ which contains the main command to use (pdftoppm). Note that the instalation tak
  <p>
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
- <div class="highlight"><pre><span></span><code>    <span class="c1">#!/bin/bash                                                                                                                                     </span>
-    <span class="nv">web</span><span class="o">=</span><span class="s2">&quot;https://iris.lmsal.com/health-safety/timeline/iris_tim_archive&quot;</span>
-    <span class="nv">year</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%Y&quot;</span><span class="sb">`</span>
-    <span class="nv">month</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%m&quot;</span><span class="sb">`</span>
-    <span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%d&quot;</span><span class="sb">`</span>
-    <span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;/&quot;</span><span class="nv">$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$month</span><span class="s2">&quot;/&quot;</span><span class="nv">$day</span><span class="s2">&quot;/&quot;</span>
+ <div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash                                                                                                                                     </span>
+<span class="nv">web</span><span class="o">=</span><span class="s2">&quot;https://iris.lmsal.com/health-safety/timeline/iris_tim_archive&quot;</span>
+<span class="nv">year</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%Y&quot;</span><span class="sb">`</span>
+<span class="nv">month</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%m&quot;</span><span class="sb">`</span>
+<span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date +<span class="s2">&quot;%d&quot;</span><span class="sb">`</span>
+<span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;/&quot;</span><span class="nv">$year</span><span class="s2">&quot;/&quot;</span><span class="nv">$month</span><span class="s2">&quot;/&quot;</span><span class="nv">$day</span><span class="s2">&quot;/&quot;</span>
 
-    <span class="nb">echo</span> <span class="s2">&quot;Looking for timeline in &quot;</span><span class="nv">$web</span>
-    <span class="nv">iris_tim</span><span class="o">=</span><span class="sb">`</span>curl -s <span class="nv">$web</span> <span class="p">|</span> grep <span class="s2">&quot;.txt&quot;</span> <span class="p">|</span> sed <span class="s1">&#39;s/.*timeline_//&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\.txt.*//&#39;</span> <span class="p">|</span> sort -nr <span class="p">|</span> head -1<span class="sb">`</span>
-    <span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;iris_tim_&quot;</span><span class="nv">$iris_tim</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Getting timeline from the latest version: &quot;</span> <span class="nv">$web</span>
-    curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/^/&gt; /&#39;</span> &gt; saai.txt
-    curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/$/ IRIS in SAA/&#39;</span> &gt; saao.txt
-    paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
-    rm saai.txt
-    rm saao.txt
+<span class="nb">echo</span> <span class="s2">&quot;Looking for timeline in &quot;</span><span class="nv">$web</span>
+<span class="nv">iris_tim</span><span class="o">=</span><span class="sb">`</span>curl -s <span class="nv">$web</span> <span class="p">|</span> grep <span class="s2">&quot;.txt&quot;</span> <span class="p">|</span> sed <span class="s1">&#39;s/.*timeline_//&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\.txt.*//&#39;</span> <span class="p">|</span> sort -nr <span class="p">|</span> head -1<span class="sb">`</span>
+<span class="nv">web</span><span class="o">=</span><span class="nv">$web</span><span class="s2">&quot;iris_tim_&quot;</span><span class="nv">$iris_tim</span>
+<span class="nb">echo</span> <span class="s2">&quot;Getting timeline from the latest version: &quot;</span> <span class="nv">$web</span>
+curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAI <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/^/&gt; /&#39;</span> &gt; saai.txt
+curl -s <span class="nv">$web</span> <span class="p">|</span> grep SAAO <span class="p">|</span> awk <span class="s1">&#39;{print $2}&#39;</span> <span class="p">|</span> sed <span class="s1">&#39;s/\(:..\).*/\1/&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/$/ IRIS in SAA/&#39;</span> &gt; saao.txt
+paste -d <span class="s2">&quot;~&quot;</span> saai.txt saao.txt <span class="p">|</span> sed <span class="s1">&#39;s/~/ - /&#39;</span> <span class="p">|</span> pbcopy -selection c
+rm saai.txt
+rm saao.txt
 </code></pre></div>
  The script automatically finds the timeline for the current day within TIM in the following webpage (Please note that for weekends, the TIM link will provide the SAA dates for Saturday, Sunday and Monday):
  [IRIS_SAA](https://iris.lmsal.com/health-safety/timeline/)
