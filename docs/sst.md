@@ -349,19 +349,57 @@ which contains the main command to use (pdftoppm). Note that the instalation tak
 
  This scripts extracts the IRIS SAA times and copy them in your clipboard on MacOs systems.
  ```bash
- #!/bin/bash                                                                                                                                     
+ #!/bin/bash
+ ###########################################################################################################
+ # IRIS_SAA 
+ #
+ # This scripts automatically extracts the IRIS SAA times of the current day.
+ # This information is located within TIM in https://iris.lmsal.com/health-safety/timeline/
+ # After extracting them, the script copies them in your clipboard,
+ # so you can paste the IRIS SAA times in the SST Github wiki.
+ #
+ # NOTE: Please note that for weekends, the script will provide the SAA dates
+ # for Saturday, Sunday and Monday in a single block.
+ #
+ # Current version is designed for MacOs systems.
+ # For Linux, define the following alias (if you have X installed):
+ #     alias pbcopy='xsel --clipboard --input'
+ #     alias pbpaste='xsel --clipboard --output'
+ # or in case you use xclip:
+ #     alias pbcopy='xclip -selection clipboard'
+ #     alias pbpaste='xclip -selection clipboard -o'
+ #
+ #
+ # You should obtain in your clipboard a result with the following format:
+ #
+ # > 07:xx - 08:xx IRIS in SAA
+ # > 08:xx - 09:xx IRIS in SAA     
+ # > 09:xx - 09:xx IRIS in SAA     
+ # > 10:xx - 11:xx IRIS in SAA     
+ #
+ # v1.0: 2022-06-28. Daniel Nobrega-Siverio: desiveri@astro.uio.no
+ #
+ ###########################################################################################################
+
+ # IRIS TIM Webpage
  web="https://iris.lmsal.com/health-safety/timeline/iris_tim_archive"
+ # Current day
  year=`date +"%Y"`
  month=`date +"%m"`
- day=`date +"%d"`
- web=$web"/"$year"/"$month"/"$day"/"
+ day=`date +"%d"` 
+ web=$web"/"$year"/"$month"/"$day"/" 
 
- echo "Looking for timeline in "$web
+ # It looks for all the available versions of the TIM.
+ # It extracts them and it takes the name of the latest version: 
  iris_tim=`curl -s $web | grep ".txt" | sed 's/.*timeline_//' | sed 's/\.txt.*//' | sort -nr | head -1`
+
+ # It greeps for the initial (SAAI) and ending (SAAO) times within the webpage,
+ # creating two temporary files that store that information.
  web=$web"iris_tim_"$iris_tim
- echo "Getting timeline from the latest version: " $web
+ echo "Getting IRIS SAA from: "$web
  curl -s $web | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' | sed -e 's/^/> /' > saai.txt
  curl -s $web | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/' | sed -e 's/$/ IRIS in SAA/' > saao.txt
+ # It puts together the SAAI and SAAO times for the Markdown wiki, and removes the temporary files
  paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
  rm saai.txt
  rm saao.txt
