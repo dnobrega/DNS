@@ -94,7 +94,10 @@ plt.show()
 ___
 ## SST Campaigns
 
-This documentation contains useful information for observers going to the SST campagins. 
+This documentation is not longer going to be updated since now we have a dedicated github webpage for SST with a detailed wiki:
+[SST](https://github.com/ITA-Solar/LaPalma)
+
+
 
 ### Quicklook storage
 
