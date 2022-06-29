@@ -21,10 +21,10 @@ I am a Postdoctoral researcher at Instituto de Astrofísica de Canarias (IAC) si
 Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 28th of February 2021.
 
 #### Papers
-19 papers in refereed journals. 306 citations. H-index: 10. Updated by 2022-04-22 [(ADS)](https://ui.adsabs.harvard.edu/search/fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq_database=database%3A%20astronomy&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
+19 papers in refereed journals. 324 citations. H-index: 11. Updated by 2022-06-29 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
 
 > - _Ambipolar diffusion: Self-similar solutions and MHD code testing. Cylindrical symmetry._  
-[Moreno-Insertis et al. (2022)](https://ui.adsabs.harvard.edu/abs/2022arXiv220306272M/abstract) 
+[Moreno-Insertis et al. (2022)](https://ui.adsabs.harvard.edu/abs/2022A%26A...662A..42M/abstract) 
 > - _Solar surges related to UV bursts: Characterization through k-means, inversions, and density diagnostics._  
 [Nóbrega-Siverio et al. (2021)](https://ui.adsabs.harvard.edu/abs/2021A%26A...655A..28N/abstract) 
 > - _Evidence of multithermal nature of spicular downflows. Impact on solar atmospheric heating._  
@@ -73,15 +73,21 @@ Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 2
 #### Invited talks
 
 > - _Simulations of flux emergence events._  
-International School of Space Science: The different spatio-temporal scales of the solar magnetism (L'Aquila, Italy).
+Centre for mathematical Plasma-Astrophysics (CmPA) seminars. 2022-06-09 (online).
+> - _Simulations of flux emergence events._  
+International School of Space Science: The different spatio-temporal scales of the solar magnetism. 2022-04-11 (L'Aquila, Italy).
 > - _Modeling solar coronal jets and surges._  
-HINODE-14/IRIS-11 meeting. 25-29 October 2021-10 (Washington, USA).  (online).  
+HINODE-14/IRIS-11 meeting. 2021-10-28 (online).  
 > - _Surges: a fundamental piece in the solar atmosphere puzzle._  
-XIV.0 Reunión científica de la SEA 2020-07 (online).   
+XIV.0 Reunión científica de la SEA 2020-07-13 (online).   
 > - _Modeling UV bursts._   
-10th IRIS meeting. 4-8 November 2019-11 (Bangalore, India).
+10th IRIS meeting. 4-8 November 2019-11-06 (Bangalore, India).
+> - _Cool ejections following flux emergence in a RMHD experiment including heat conduction._   
+Stanford University 4-8 November 2015-09-02 (Palo Alto, USA).
 
 #### Honors & Grants
+> - _PI of the computational grant: Coronal Bright Points on the Sun: a study from the photosphere to the corona (AECT-2022-2-0002)._  
+Barcelona Supercomputing Center (BSC), Spain (2022-07).   
 > - _PI of the ISSI team: Unraveling Surges: a joint perspective from numerical models, observations, and machine learning._  
 The International Space Science Institute (ISSI), Berna, Switzerland (2021-06).   
 > - _PI of the computational grant: Coronal Bright Points on the Sun: a study from the photosphere to the corona (AECT-2021-1-0023)._  
