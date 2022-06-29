@@ -47,7 +47,7 @@ iris_tim=`curl -s $web | grep ".txt" | sed 's/.*timeline_//' | sed 's/\.txt.*//'
 web=$web"iris_tim_"$iris_tim
 echo "Getting IRIS SAA from: "$web
 curl -s $web | grep SAAI | awk '{print $2}' | sed -e 's/\(:..\).*/\1/' | sed -e 's/^/> /' > saai.txt
-curl -s $web | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/' | sed -e 's/$/ IRIS in SAA/' > saao.txt
+curl -s $web | grep SAAO | awk '{print $2}' | sed 's/\(:..\).*/\1/' | sed -e 's/$/ IRIS in SAA  /' > saao.txt
 # It puts together the SAAI and SAAO times for the Markdown wiki, and removes the temporary files
 paste -d "~" saai.txt saao.txt | sed 's/~/ - /' | pbcopy -selection c
 rm saai.txt
