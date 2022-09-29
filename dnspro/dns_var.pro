@@ -124,11 +124,7 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
               IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
               var=var(im0 : imf,*,*)
-              IF (im0 EQ imf) THEN BEGIN
-                 imf=0 & im0=0 & imstep=1
-              ENDIF ELSE BEGIN
-                 imf=imf-im0 & im0=0
-              ENDELSE
+              IF (im0 EQ imf) THEN imstep=1
            ENDELSE
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+xshift
            IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
@@ -161,11 +157,7 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(iy0) EQ 0) THEN im0=0 ELSE im0=iy0
               IF (N_ELEMENTS(iyf) EQ 0) THEN imf=sizevar(2)-1 ELSE imf=iyf
               IF (NOT KEYWORD_SET(iystep)) THEN imstep=1 ELSE imstep=iystep
-              IF (im0 EQ imf) THEN BEGIN
-                 imf=0 & im0=0 & imstep=1
-              ENDIF ELSE BEGIN
-                 imf=imf-im0 & im0=0
-              ENDELSE
+              IF (im0 EQ imf) THEN imstep=1
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
@@ -196,11 +188,7 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
               IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
               IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
-              IF (im0 EQ imf) THEN BEGIN
-                 imf=0 & im0=0 & imstep=1
-              ENDIF ELSE BEGIN
-                 imf=imf-im0 & im0=0
-              ENDELSE
+              IF (im0 EQ imf) THEN imstep=1
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+yshift
