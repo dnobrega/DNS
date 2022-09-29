@@ -286,7 +286,7 @@ COMMON BIFPLT_COMMON,  $
      ENDIF
   ENDELSE
 ;---------------------------------------------------------------------------------     
-  aia_list  = [1600, 1700, 94, 131, 171, 193, 211, 304]
+  aia_list  = [1600, 1700, 94, 131, 171, 193, 211, 304, 335]
   iris_list = [1330, 1400, 2796, 2832]
   wh_aia    = WHERE(load EQ aia_list, nw_aia)
   wh_iris   = WHERE(load EQ iris_list, nw_iris)
