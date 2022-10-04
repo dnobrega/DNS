@@ -11,7 +11,7 @@ PRO dnsvar_aia335, d, name, snaps, swap, var, units, $
         RETURN
      ENDIF     
      CALL_PROCEDURE, "units_"+units, u
-     aia_tresp = aia_get_response(/temp,/dn,/all,/full)
+     aia_tresp = aia_get_response(/temp,/dn,/chiantifix,/noblend,/evenorm)
      nel   = d->getvar('nel',snaps,swap=swap)
      si    = size(nel)
      r     = d->getvar('r',snaps,swap=swap)
