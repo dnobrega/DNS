@@ -270,8 +270,8 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, minval=minval,
         IF (KEYWORD_SET(integration) OR KEYWORD_SET(minval) OR KEYWORD_SET(maxval)) THEN BEGIN
            IF KEYWORD_SET(integration) THEN BEGIN
               IF (dim EQ "x") THEN BEGIN
-                 FOR ii=0,nx-1 DO var(ii, iyt, :)=reform(var(ii, iyt, *))*dz1d*1e8
-                 scr1[*,iyt] = reform(total(var[*, iyt, 0 : wh],3))
+                 FOR ii=0,nx-1 DO var(ii, iyt, *)=reform(var(ii, iyt, *))*dz1d*1e8
+                 scr1[*,jj] = reform(total(var[*, iyt, 0 : wh],3))
               ENDIF
               IF (dim EQ "y") THEN STOP 
               IF (dim EQ "z") THEN STOP
