@@ -60,7 +60,9 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Mask command options
                    mask_fun=mask_fun, mask_var=mask_var, save_mask=save_mask,$
                    ; Save 2D arrays
-                   save_2d=save_2d
+                   save_2d=save_2d, $
+                   ; Integration
+                   integration=integration
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 ;
 ;                                COMMON
@@ -345,7 +347,7 @@ COMMON BIFPLT_COMMON,  $
                 xtitle=xtitle, ytitle=ytitle, title=title,$
                 bar_log=bar_log, bar_title=bar_title,$
                 save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
-                showsnap=showsnap
+                showsnap=showsnap, integration=integration
 
      IF STRLEN(dim) EQ 2 THEN BEGIN
 
