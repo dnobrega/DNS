@@ -157,6 +157,7 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, minval=minval,
   nx    = d->getmx()
   ny    = d->getmy()
   nz    = d->getmz()
+  dz1d  = d->getdz1d()
   IF ny EQ 1 THEN iyt=0 ELSE STOP
   IF dim EQ "x" THEN BEGIN
      tm   = min( ABS(-z-coord), wh) 
@@ -268,9 +269,12 @@ PRO DNS_SPACETIME, name, coord, integration=integration, dim=dim, minval=minval,
 
         IF (KEYWORD_SET(integration) OR KEYWORD_SET(minval) OR KEYWORD_SET(maxval)) THEN BEGIN
            IF KEYWORD_SET(integration) THEN BEGIN
-              IF (dim EQ "x") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[*, iyt, 0 : wh],3))/wh
-              IF (dim EQ "y") THEN scr1[*,jj] = 1e8*ABS(z(0)-z(wh))*reform(total(var[ixt, *, 0 : wh],3))/wh
-              IF (dim EQ "z") THEN scr1[*,jj] = 1e8*ABS(x(0)-x(wh))*reform(total(var[0 : wh, iyt, *],1))/wh
+              IF (dim EQ "x") THEN BEGIN
+                 FOR ii=0,nx-1 DO var(ii, iyt, :)=reform(var(ii, iyt, *))*dz1d*1e8
+                 scr1[*,iyt] = reform(total(var[*, iyt, 0 : wh],3))
+              ENDIF
+              IF (dim EQ "y") THEN STOP 
+              IF (dim EQ "z") THEN STOP
            ENDIF
            IF KEYWORD_SET(minval) THEN BEGIN
               IF (dim EQ "x") THEN scr1[*,jj] = reform(min(var[*, iyt, 0 : wh],dim=3))
