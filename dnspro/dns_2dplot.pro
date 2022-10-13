@@ -220,11 +220,11 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
         folder = "stats"
         IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder        
         file_mkdir, folder
-        IF (N_ELEMENTS(stats_filename) EQ 0) THEN filename="/stats_"+var_name+"_"+STRTRIM(snaps,2)+".sav" $
-        ELSE filename="/stats_"+var_name+"_"+stats_filename+"_"+STRTRIM(snaps,2)+".sav"
+        IF (N_ELEMENTS(stats_filename) EQ 0) THEN filename="/stats_"+var_name+"_"+STRTRIM(snaps,2)+"_"+dim+".sav" $
+        ELSE filename="/stats_"+var_name+"_"+stats_filename+"_"+STRTRIM(snaps,2)+"_"+dim+".sav"
         print, folder+filename
         save, xx, yy, $
-              loc_min, var_min, loc_max, var_max, $
+              ind_min, loc_min, var_min, ind_max,loc_max, var_max, $
               var_tot, var_mean, var_std, $
               filename=folder+filename
      ENDIF
