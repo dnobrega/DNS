@@ -20,7 +20,7 @@ PRO dns_var,d,name,snaps,swap,var,$
             title=title, $
             bar_log=bar_log, bar_title=bar_title, $
             save_dnsvar=save_dnsvar, save_dnsfolder=save_dnsfolder,$
-            showsnap=showsnap
+            showsnap=showsnap, integration=integration
 
 
 ;--------------------------------------------------------------------------------- 
@@ -188,6 +188,14 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(iz0) EQ 0) THEN im0=0 ELSE im0=iz0
               IF (N_ELEMENTS(izf) EQ 0) THEN imf=sizevar(3)-1 ELSE imf=izf
               IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
+              IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
+                 dz1d=d->getdz1d()
+                 FOR j=0,nely-1 DO BEGIN
+                    FOR i=0,nelx-1 DO var(i,j,*)=var(i,j,*)*dz1d*1e8
+                 ENDFOR
+                 FOR k=0,nelz-1 DO var(*,*,k)=total(var[*, *, im0 : imf],3)
+                 im0=imf
+              ENDIF
               IF (im0 EQ imf) THEN imstep=1
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
@@ -380,6 +388,11 @@ PRO dns_var,d,name,snaps,swap,var,$
  ENDELSE
  IF (N_ELEMENTS(showsnap) NE 0) THEN BEGIN
     title=title+'  snap='+strtrim(string(snaps),2)
+ ENDIF
+
+ IF KEYWORD_SET(integration) THEN BEGIN
+    bar_title = "Int of "+bar_title
+    bar_title = bar_title.Replace(')', ' cm)')
  ENDIF
  
 END
