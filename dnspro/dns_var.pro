@@ -161,6 +161,12 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            IF (N_ELEMENTS(xshift) NE 0) THEN x=x+xshift
            IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
+           IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
+              dy=d->getdy()
+              var=var*dy*1e8
+              var(*,imf,*)=total(var[*, im0 : imf, *],2)
+              im0=imf
+           ENDIF
            maxz=MAX(z, MIN=minz)
            dz=(maxz-minz)/(nelz-1)
            dz1d=d->getdz1d()
@@ -190,10 +196,8 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (NOT KEYWORD_SET(izstep)) THEN imstep=1 ELSE imstep=izstep
               IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
                  dz1d=d->getdz1d()
-                 FOR j=0,nely-1 DO BEGIN
-                    FOR i=0,nelx-1 DO var(i,j,*)=var(i,j,*)*dz1d*1e8
-                 ENDFOR
-                 FOR k=0,nelz-1 DO var(*,*,k)=total(var[*, *, im0 : imf],3)
+                 FOR k=0,nelz-1 DO var(*,*,k)=var(*,*,k)*dz1d(k)*1e8
+                 var(*,*,imf)=total(var[*, *, im0 : imf],3)
                  im0=imf
               ENDIF
               IF (im0 EQ imf) THEN imstep=1
