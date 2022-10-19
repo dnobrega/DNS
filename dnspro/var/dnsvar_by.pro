@@ -2,7 +2,7 @@ PRO dnsvar_by, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Magnetic field in x-direction: By',/info
+       message, 'Magnetic field in y-direction: By',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
