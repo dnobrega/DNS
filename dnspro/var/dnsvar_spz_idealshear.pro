@@ -14,14 +14,13 @@ PRO dnsvar_spz_idealshear, d, name, snaps, swap, var, units, $
 
        ux=d->getvar("ux",snaps,swap=swap)*u.uu
        uy=-d->getvar("uy",snaps,swap=swap)*u.uu
-       uz=-d->getvar("uz",snaps,swap=swap)*u.uu
        
        bx=d->getvar('bx',snaps,swap=swap)*u.ub
        by=-d->getvar('by',snaps,swap=swap)*u.ub
        bz=-d->getvar('bz',snaps,swap=swap)*u.ub
 
        var = xup(ux*bx) + yup(uy*by)
-       var=-bz*( zdn(var) + uz*bz ) ; in the z-face
+       var=-bz*( zdn(var) ) ; in the z-face
 
        var_title='S!dpz ideal,shear!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
