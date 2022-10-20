@@ -15,9 +15,8 @@ PRO dnsvar_spz_idealemer, d, name, snaps, swap, var, units, $
        uz=-d->getvar("uz",snaps,swap=swap)*u.uu
        bx=d->getvar('bx',snaps,swap=swap)*u.ub
        by=d->getvar('by',snaps,swap=swap)*u.ub
-       bz=d->getvar('bz',snaps,swap=swap)*u.ub
 
-       var = ( xup(bx*bx) + yup(by*by) + zup(bz*bz) )
+       var = ( xup(bx*bx) + yup(by*by) )
        var = uz*zdn(var) ; in the z-face
 
        var_title='S!dpz ideal,emer!n'
