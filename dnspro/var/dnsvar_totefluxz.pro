@@ -15,13 +15,13 @@ PRO dnsvar_totefluxz, d, name, snaps, swap, var, units, $
 
        r=d->getvar("r",snaps,swap=swap)*u.ur
        u2=d->getvar("u2",snaps,swap=swap)*u.uu*u.uu
-       var1=0.5*zdn(r*u2)*uz
+       var1=0.5*zdn(r*u2)
 
        e=d->getvar("e",snaps,swap=swap)*u.ue
-       var2 = zdn(e)*uz 
+       var2 = zdn(e)
        pg=d->getvar("p",snaps,swap=swap)*u.ue 
-       var3 = zdn(pg)*uz 
-       var=var1+var2+var3
+       var3 = zdn(pg) 
+       var=(var1+var2+var3)*uz
    
        var_title='F!dEz!n'
        IF (units EQ "solar") THEN BEGIN
