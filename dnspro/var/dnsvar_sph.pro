@@ -12,13 +12,13 @@ PRO dnsvar_sph, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
 
-       ex = d->getvar("ex",snaps,swap=swap)*u.uu*u.ub
-       ey = d->getvar("ey",snaps,swap=swap)*u.uu*u.ub
-       ez = d->getvar("ez",snaps,swap=swap)*u.uu*u.ub
+       ex = d->getvar("ex",snaps,swap=swap)
+       ey = d->getvar("ey",snaps,swap=swap)
+       ez = d->getvar("ez",snaps,swap=swap)
 
-       bx = d->getvar("bx",snaps,swap=swap)*u.ub      
-       by = d->getvar("by",snaps,swap=swap)*u.ub
-       bz = d->getvar("bz",snaps,swap=swap)*u.ub
+       bx = d->getvar("bx",snaps,swap=swap)
+       by = d->getvar("by",snaps,swap=swap)
+       bz = d->getvar("bz",snaps,swap=swap)
 
        ey = ey*xdn(bz)
        by = ez*xdn(by)
@@ -30,10 +30,10 @@ PRO dnsvar_sph, d, name, snaps, swap, var, units, $
        bx = -(xup(ez)-zup(bx))
        bx = xup(bx)
 
-       var = sqrt(bx*bx + by*by)
+       var = sqrt(bx*bx + by*by)*u.uu*u.ub*u.ub
        
        var_title='S!dph!n'
-       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
        var_range=[1d,1d8]
        var_log=1
     ENDELSE

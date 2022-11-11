@@ -12,18 +12,18 @@ PRO dnsvar_spy, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
        
-       ex=d->getvar("ex",snaps,swap=swap)*u.uu*u.ub
-       ez=d->getvar("ez",snaps,swap=swap)*u.uu*u.ub
+       ex=d->getvar("ex",snaps,swap=swap)
+       ez=d->getvar("ez",snaps,swap=swap)
        
-       bx=d->getvar("bx",snaps,swap=swap)*u.ub
-       bz=d->getvar("bz",snaps,swap=swap)*u.ub
+       bx=d->getvar("bx",snaps,swap=swap)
+       bz=d->getvar("bz",snaps,swap=swap)
 
        ez = ez*ydn(bx)
        ex = ex*ydn(bz)
-       var= -(xup(ez)-zup(ex)) ; in the y-face
+       var= -(xup(ez)-zup(ex))*u.uu*u.ub*u.ub ; in the y-face
 
        var_title='S!dpy!n'
-       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm s!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
        var_range=[-1.0,1.0]*1d-1
        var_log=0
     ENDELSE

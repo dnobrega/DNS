@@ -12,20 +12,27 @@ PRO dnsvar_divsp, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
        
-       ex=d->getvar("ex",snaps,swap=swap)*u.uu*u.ub
-       ey=d->getvar("ey",snaps,swap=swap)*u.uu*u.ub
-       ez=d->getvar("ez",snaps,swap=swap)*u.uu*u.ub
+       ex=d->getvar("ex",snaps,swap=swap)
+       ey=d->getvar("ey",snaps,swap=swap)
+       ez=d->getvar("ez",snaps,swap=swap)
        
-       bx=d->getvar("bx",snaps,swap=swap)*u.ub
-       by=d->getvar("by",snaps,swap=swap)*u.ub
-       bz=d->getvar("bz",snaps,swap=swap)*u.ub
+       bx=d->getvar("bx",snaps,swap=swap)
+       by=d->getvar("by",snaps,swap=swap)
+       bz=d->getvar("bz",snaps,swap=swap)
 
-       vari=zdn(ey)*bz-ydn(ez)*by
-       varj=xdn(ez)*bx-zdn(ex)*bz
-       vark=ydn(ex)*by-xdn(ey)*bx
+       scr1 = ex*zdn(by)
+       scr2 = ey*zdn(bx)
+       var  = ddzup(yup(scr1) - xup(scr2))
 
-       var=(ddxup(vari)+ddyup(varj)+ddzup(vark))/u.ul
+       scr1 = ey*xdn(bz)
+       scr2 = ez*xdn(by)
+       var  = var + ddxup(zup(scr1)-yup(scr2))
 
+       scr1 = ez*ydn(bx)
+       scr2 = ex*ydn(bz)
+       var  = var + ddyup(xup(scr1)-zup(scr2))
+       var  = var*u.ue/u.ut
+       
        var_title='div(S!dp!n)'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
        var_range=[-1.0,1.0]*1d-1

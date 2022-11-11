@@ -2,7 +2,7 @@ PRO dnsvar_tauqeadv, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Characteristic time of the enery advection: tau_qeadv',/info
+       message, 'Characteristic time of the energy advection: tau_qeadv',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN

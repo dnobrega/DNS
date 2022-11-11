@@ -20,10 +20,10 @@ PRO dnsvar_spz_noideal, d, name, snaps, swap, var, units, $
 
        ex = ex*zdn(by)
        ey = ey*zdn(bx)
+       
        var= - ( yup(ex) - xup(ey)) ; in the z face
-
        var_title='S!dpz noideal!n'
-       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n cm s!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
        var_range=[-1.0,1.0]*1d-1
        var_log=0
     ENDELSE
