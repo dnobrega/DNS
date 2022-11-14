@@ -14,7 +14,7 @@ PRO dnsvar_jvx, d, name, snaps, swap, var, units, $
        var=d->getvar('jvx',snaps,swap=swap)*u.ub/(u.ul)
        var_title="|J!dx!n|"
        IF (units EQ "solar") THEN var_title=var_title+" (G cm!u-1!n)"
-       var_range=[1d-6,1d-2]
+       var_range=[1d-8,1d-2]
        var_log=1
     ENDELSE
 END

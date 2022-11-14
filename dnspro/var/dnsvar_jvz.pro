@@ -1,7 +1,7 @@
 PRO dnsvar_jvz, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
-    IF KEZWORD_SET(info) THEN BEGIN
+    IF KEYWORD_SET(info) THEN BEGIN
        message, 'Absolute value of the current density in the z-direction: Jvz',/info
        RETURN
     ENDIF ELSE BEGIN
