@@ -60,7 +60,7 @@ PRO DNS_PLOT, name,snap0=snap0,snapf=snapf,snapt=snapt,step=step,$
                    ; Mask command options
                    mask_fun=mask_fun, mask_var=mask_var, save_mask=save_mask,$
                    ; Save 2D arrays
-                   save_2d=save_2d, $
+                   save_2d=save_2d, file_2d=file_2d,$
                    ; Integration
                    integration=integration
 ;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -409,7 +409,7 @@ COMMON BIFPLT_COMMON,  $
                        show_stats=show_stats, save_stats=save_stats, $
                        stats_filename=stats_filename, $
                        var_name=name, $
-                       save_2d=save_2d
+                       save_2d=save_2d, file_2d=file_2d
 
 
            IF (N_ELEMENTS(o_x) + N_ELEMENTS(o_y) GT 0) THEN BEGIN

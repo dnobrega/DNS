@@ -128,6 +128,12 @@ PRO dns_var,d,name,snaps,swap,var,$
            ENDELSE
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+xshift
            IF (N_ELEMENTS(zshift) NE 0) THEN z=z+zshift
+           IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
+              dx=d->getdx()
+              var=var*dx*1e8
+              var(imf,*,*)=total(var[im0 : imf, *, *],1)
+              im0=imf
+           ENDIF
            maxz=MAX(z, MIN=minz)
            dz=(maxz-minz)/(nelz-1)
            dz1d=d->getdz1d()
@@ -396,7 +402,14 @@ PRO dns_var,d,name,snaps,swap,var,$
 
  IF KEYWORD_SET(integration) THEN BEGIN
     bar_title = "Int of "+bar_title
-    bar_title = bar_title.Replace(')', ' cm)')
+    IF bar_title.contains("cm") THEN BEGIN
+       IF bar_title.contains("cm ")    THEN bar_title = bar_title.Replace('cm ', 'cm!u2!n')
+       IF bar_title.contains("cm!u-1!n") THEN bar_title = bar_title.Replace('cm!u-1!n ', '')
+       IF bar_title.contains("cm!u-2!n") THEN bar_title = bar_title.Replace('cm!u-2!n', 'cm!u-1!n')
+       IF bar_title.contains("cm!u-3!n") THEN bar_title = bar_title.Replace('cm!u-3!n', 'cm!u-2!n')
+    ENDIF ELSE BEGIN
+       bar_title = bar_title.Replace(')', ' cm)')
+    ENDELSE
  ENDIF
  
 END

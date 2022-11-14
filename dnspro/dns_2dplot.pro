@@ -103,7 +103,7 @@ PRO DNS_2DPLOT, d,snaps,var_plot,dim,$
                 show_stats=show_stats, save_stats=save_stats, $
                 stats_filename=stats_filename, $
                 var_name=var_name, $
-                save_2d=save_2d
+                save_2d=save_2d, file_2d=file_2d
 
 
 COMMON BIFPLT_COMMON,  $
@@ -167,9 +167,10 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      help, var_plot, position, origin, scale, final_title, xtitle, ytitle, bar_range
      folder = "var2d"
      IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
+     IF NOT (KEYWORD_SET(file_2d)) THEN filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+".sav" $
+                                   ELSE filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+"_"+file_2d+".sav"
      save, var_plot, position, origin, $
-           scale, final_title, xtitle, ytitle, bar_range, $
-           filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+".sav"
+           scale, final_title, xtitle, ytitle, bar_range, filename=filename
   ENDIF
   
   plot_image, var_plot, $

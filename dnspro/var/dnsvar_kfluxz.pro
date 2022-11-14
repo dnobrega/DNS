@@ -17,7 +17,7 @@ PRO dnsvar_kfluxz, d, name, snaps, swap, var, units, $
        var=0.5*zdn(r*u2)*var
        var_title='Fk!dz!n'
        IF (units EQ "solar") THEN BEGIN
-          var_title=var_title+" (erg cm!u-2!n cm s!u-1!n)"
+          var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
        ENDIF
        var_range=[-5.0,5.0]
        var_log=0
