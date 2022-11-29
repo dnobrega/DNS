@@ -1,0 +1,20 @@
+PRO dnsvar_jy2, d, name, snaps, swap, var, units, $
+    var_title=var_title, var_range=var_range, var_log=var_log, $
+    info=info
+    IF KEYWORD_SET(info) THEN BEGIN
+       message, 'Square value of the current density in the y-direction: Jy2',/info
+       RETURN
+    ENDIF ELSE BEGIN
+       IF n_params() LT 6 THEN BEGIN
+          message,'dnsvar_jy2, d, name, snaps, swap, var, units, ' $
+                 +'var_title=var_title, var_range=var_range, var_log=var_log',/info
+          RETURN
+       ENDIF
+       CALL_PROCEDURE, "units_"+units, u
+       var=(d->getvar('jy',snaps,swap=swap)*u.ub/(u.ul))^2.0
+       var_title="J!dy!n!u2!n"
+       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-5!n)"
+       var_range=[1d-8,1d-2]
+       var_log=1
+    ENDELSE
+END
