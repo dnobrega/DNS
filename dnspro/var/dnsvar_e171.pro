@@ -45,7 +45,7 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)
-       var(where(var le 0)) = 1e-32
+       var(where(var le 0))  = 1e-32
        var(where(tg le 1e4)) = 1e-32
        var_title='!4e!3 Fe IX 171 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
