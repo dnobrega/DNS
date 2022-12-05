@@ -11,12 +11,14 @@ PRO dnsvar_jh, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('jvx',snaps,swap=swap)*u.ub/(u.ul)
-       var=var^2.0 + (d->getvar('jvy',snaps,swap=swap)*u.ub/(u.ul))^2.0
-       var=sqrt(var)
+       var=zup(d->getvar('jvx',snaps,swap=swap)*u.ub/(u.ul))
+       var=yup(var)^2.0
+       var2=zup(d->getvar('jvy',snaps,swap=swap)*u.ub/(u.ul))
+       var2=xup(var2)^2.0
+       var=sqrt(var+var2)
        var_title="J!dh!n"
        IF (units EQ "solar") THEN var_title=var_title+" (G cm!u-1!n)"
-       var_range=[1d-8,1d-2]
+       var_range=[1d-8,1d-5]
        var_log=1
     ENDELSE
 END
