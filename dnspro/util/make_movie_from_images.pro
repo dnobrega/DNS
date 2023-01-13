@@ -22,6 +22,11 @@ IF (NOT KEYWORD_SET(list))           THEN SPAWN, 'ls *'+input_format, list
 
 n_list = n_elements(list)
 
+IF (step GE n_list) THEN BEGIN
+   PRINT, 'step is equal or greater than the number of images to make the movie'
+   BREAK
+ENDIF
+
 jj = 0
 IF (NOT FILE_EXIST(list[jj]))        THEN BEGIN
    PRINT, 'File: ', list[jj], ' not found'
@@ -46,7 +51,7 @@ ENDIF ELSE BEGIN
    ENDELSE
 ENDELSE
    
-FOR jj=1, n_list-1, step DO BEGIN
+FOR jj=step, n_list-1, step DO BEGIN
 
    IF (NOT FILE_EXIST(list[jj]))        THEN BEGIN
       PRINT, 'File: ', list[jj], ' not found' 
