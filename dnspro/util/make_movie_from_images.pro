@@ -24,7 +24,7 @@ n_list = n_elements(list)
 
 IF (step GE n_list) THEN BEGIN
    PRINT, 'step is equal or greater than the number of images to make the movie'
-   BREAK
+   STOP
 ENDIF
 
 jj = 0
