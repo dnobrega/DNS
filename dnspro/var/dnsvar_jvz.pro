@@ -13,6 +13,7 @@ PRO dnsvar_jvz, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        var=xup(d->getvar('jvz',snaps,swap=swap)*u.ub/(u.ul))
        var=yup(var)
+       var(where(var lt 0))=0.0
        var_title="|J!dz!n|"
        IF (units EQ "solar") THEN var_title=var_title+" (G cm!u-1!n)"
        var_range=[1d-8,1d-5]
