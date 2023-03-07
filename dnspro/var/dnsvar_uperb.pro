@@ -17,16 +17,17 @@ PRO dnsvar_uperb, d, name, snaps, swap, var, units, $
        ux  =  d->getvar('ux',snaps,swap=swap)
        uy  = -d->getvar('uy',snaps,swap=swap)
        uz  = -d->getvar('uz',snaps,swap=swap)
-       varx = ( xup(ux) - (xup(ux*bx))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2))*u.ul/u.ut
-       vary = ( yup(uy) - (yup(uy*by))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2))*u.ul/u.ut
-       varz = ( zup(uz) - (zup(uz*bz))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2))*u.ul/u.ut
-       var = varx + vary + varz
+       temp = sqrt(xup(bx)^2.0+yup(by)^2.0+zup(bz)^2.0)
+       varx = xup(ux - ux*bx/xdn(temp))
+       vary = yup(uy - uy*by/ydn(temp))
+       varz = zup(uz - uz*bz/zdn(temp))
+       var = sqrt(varx^2.0 + vary^2.0 + varz^2.0)*u.ul/u.ut
        var_title='u!dperpB!n'
        IF (units EQ "solar") THEN BEGIN
           var_title=var_title+" (km s!u-1!n)"
           var=var/1e5
        ENDIF
-       var_range=[-5.0,5.0]
-       var_log=0
+       var_range=[5d,1d2]
+       var_log=1
     ENDELSE
 END
