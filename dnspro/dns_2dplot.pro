@@ -122,7 +122,11 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
 ;---------------------------------------------------------------------------------
 ;                                  MAIN
 ;---------------------------------------------------------------------------------
-
+  
+ xxback = xx
+ yyback = yy
+ zzback = zz
+ 
  dns_pre_2dplot,var_plot,xx,yy,zz,dim,$
                 origin,scale,$
                 bar_name, snaps,$
@@ -231,6 +235,8 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      ENDIF
   ENDIF
      
-
+ xx = xxback
+ yy = yyback
+ zz = zzback
 
 END
