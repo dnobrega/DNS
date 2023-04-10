@@ -30,7 +30,7 @@ PRO dnsvar_sph, d, name, snaps, swap, var, units, $
        bx = -(xup(ez)-zup(bx))
        bx = xup(bx)
 
-       var = sqrt(bx*bx + by*by)*u.uu*u.ub*u.ub
+       var = sqrt(bx*bx + by*by)*u.ue*u.ul/u.ut
        
        var_title='S!dph!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"

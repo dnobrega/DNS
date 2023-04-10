@@ -12,15 +12,15 @@ PRO dnsvar_spz_braiding, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
 
-       ux=d->getvar("ux",snaps,swap=swap)*u.uu
-       uy=-d->getvar("uy",snaps,swap=swap)*u.uu
+       ux=d->getvar("ux",snaps,swap=swap)
+       uy=-d->getvar("uy",snaps,swap=swap)
        
-       bx=d->getvar('bx',snaps,swap=swap)*u.ub
-       by=-d->getvar('by',snaps,swap=swap)*u.ub
-       bz=-d->getvar('bz',snaps,swap=swap)*u.ub
+       bx=d->getvar('bx',snaps,swap=swap)
+       by=-d->getvar('by',snaps,swap=swap)
+       bz=-d->getvar('bz',snaps,swap=swap)
 
        var = xup(ux*bx) + yup(uy*by)
-       var=-bz*( zdn(var) ) ; in the z-face
+       var=-bz*( zdn(var) )*u.ue*u.ul/u.ut ; in the z-face
 
        var_title='S!dpz braiding!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"

@@ -12,16 +12,16 @@ PRO dnsvar_spzparb_braiding, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
 
-       ux=xup(d->getvar("ux",snaps,swap=swap)*u.uu)
-       uy=-yup(d->getvar("uy",snaps,swap=swap)*u.uu)
+       ux=xup(d->getvar("ux",snaps,swap=swap))
+       uy=-yup(d->getvar("uy",snaps,swap=swap))
        
-       bx=xup(d->getvar('bx',snaps,swap=swap)*u.ub)
-       by=-yup(d->getvar('by',snaps,swap=swap)*u.ub)
-       bz=-d->getvar('bz',snaps,swap=swap)*u.ub
+       bx=xup(d->getvar('bx',snaps,swap=swap))
+       by=-yup(d->getvar('by',snaps,swap=swap))
+       bz=-d->getvar('bz',snaps,swap=swap)
 
        modb = sqrt(bx*bx + by*by + zup(bz*bz))
        var = ux*bx*(bx/modb) + uy*by*(by/modb)
-       var=-bz*( zdn(var) ) ; in the z-face
+       var=-bz*( zdn(var) )*u.ue*u.ul/u.ut ; in the z-face
 
        var_title='S!dpz||B braiding!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"

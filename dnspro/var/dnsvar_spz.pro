@@ -20,7 +20,7 @@ PRO dnsvar_spz, d, name, snaps, swap, var, units, $
 
        ex = ex*zdn(by)
        ey = ey*zdn(bx)
-       var= - ( yup(ex) - xup(ey))*u.uu*u.ub*u.ub ; in the z face       
+       var= - ( yup(ex) - xup(ey))*u.ue*u.ul/u.ut ; in the z face       
        var_title='S!dpz!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
        var_range=[-1.0,1.0]*1d-1

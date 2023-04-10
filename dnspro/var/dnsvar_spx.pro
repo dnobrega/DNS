@@ -20,7 +20,7 @@ PRO dnsvar_spx, d, name, snaps, swap, var, units, $
 
        ey = ey*xdn(bz)
        ez = ez*xdn(by)
-       var=zup(ey)-yup(ez)*u.uu*u.ub*u.ub ; in the x face 
+       var=(zup(ey)-yup(ez))*u.ue*u.ul/u.ut ; in the x face 
 
        var_title='S!dpx!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"

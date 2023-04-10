@@ -12,12 +12,12 @@ PRO dnsvar_spz_emer, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
        
-       uz=d->getvar("uz",snaps,swap=swap)*u.uu
-       bx=d->getvar('bx',snaps,swap=swap)*u.ub
-       by=d->getvar('by',snaps,swap=swap)*u.ub
+       uz=d->getvar("uz",snaps,swap=swap)
+       bx=d->getvar('bx',snaps,swap=swap)
+       by=d->getvar('by',snaps,swap=swap)
 
        var = ( xup(bx*bx) + yup(by*by) )
-       var = -uz*zdn(var) ; in the z-face
+       var = -uz*zdn(var)*u.ue*u.ul/u.ut ; in the z-face
 
        var_title='S!dpz emer!n'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-2!n s!u-1!n)"
