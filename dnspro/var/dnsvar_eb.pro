@@ -11,7 +11,7 @@ PRO dnsvar_eb, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=0.5*d->getvar("b2",snaps,swap=swap)*u.ub*u.ub
+       var=0.5*d->getvar("b2",snaps,swap=swap)*u.ue
        var_title='eB'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n)"
        var_range=[1.d-2,2.d8]
