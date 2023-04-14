@@ -12,20 +12,26 @@ PRO dnsvar_qlf, d, name, snaps, swap, var, units, $
        ENDIF       
        CALL_PROCEDURE, "units_"+units, u
        
-       bx=xup(d->getvar("bx",snaps,swap=swap))
-       by=yup(d->getvar("by",snaps,swap=swap))
-       bz=zup(d->getvar("bz",snaps,swap=swap))
+       bx=d->getvar("bx",snaps,swap=swap)
+       by=d->getvar("by",snaps,swap=swap)
+       bz=d->getvar("bz",snaps,swap=swap)
 
-       rr=d->getvar("r",snaps,swap=swap)
-       ux=xup(d->getvar("px",snaps,swap=swap))/rr
-       uy=yup(d->getvar("py",snaps,swap=swap))/rr
-       uz=zup(d->getvar("pz",snaps,swap=swap))/rr
+       ux=d->getvar("ux",snaps,swap=swap)
+       uy=d->getvar("uy",snaps,swap=swap)
+       uz=d->getvar("uz",snaps,swap=swap)
 
-       jx=yup(d->getvar("jx",snaps,swap=swap))
-       jy=zup(d->getvar("jy",snaps,swap=swap))
-       jz=xup(d->getvar("jz",snaps,swap=swap))
+       jx=d->getvar("jx",snaps,swap=swap)
+       jy=d->getvar("jy",snaps,swap=swap)
+       jz=d->getvar("jz",snaps,swap=swap)
        
-       var = -(zup(jx)*(uy*bz - uz*by) + xup(jy)*(uz*bx-ux*bz) + yup(jz)*(ux*by-uy*bx))*u.ue/u.ut
+       ex = (- zdn(uy)*ydn(bz) + ydn(uz)*zdn(by) )*jx
+       ex = zup(ex)
+       ey = (- xdn(uz)*zdn(bx) + zdn(ux)*xdn(bz) )*jy
+       ey = xup(ey)
+       ez = (- ydn(ux)*xdn(by) + xdn(uy)*ydn(bx) )*jz
+       ez = yup(ez)
+      
+       var = (yup(ex) + zup(ey) + xup(ez))*u.ue/u.ut
 
        var_title='u*(JXB)'
        IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-3!n s!u-1!n)"
