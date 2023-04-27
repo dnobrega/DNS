@@ -11,7 +11,7 @@ PRO dnsvar_curlux, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=-d->getvar(name,snaps,swap=swap)/u.ut
+       var=d->getvar(name,snaps,swap=swap)/u.ut
        var_title='!4x!3!dx!n'
        IF (units EQ "solar") THEN var_title=var_title+" (s!u-1!n)"
        var_range=[-100.0,100.0]
