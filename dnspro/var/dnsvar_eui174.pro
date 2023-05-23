@@ -25,7 +25,8 @@ PRO dnsvar_eui174, d, name, snaps, swap, var, units, $
      factz     = (nelz-1)/(maxz-minz)
 
      tg_arr    = minx + (maxx-minx)*findgen(nelx)/(nelx-1)
-     nhone     = proton_dens(tg_arr,abund="sun_coronal_1992_feldman_ext.abund")
+     sswfolder = GETENV('SSW')+"/packages/chianti/dbase/abundance/"
+     nhone     = proton_dens(tg_arr,abund=sswfolder+"sun_coronal_1992_feldman_ext.abund")
      nel_arr   = 10^(minz + (maxz-minz)*findgen(nelz)/(nelz-1))
      FOR kk=0,nelz-1 DO goft[*,kk]  = goft(*,kk)/(nel_arr[kk]^2.0)
      FOR kk=0,nelx-1 DO goft[kk, *] = goft[kk,*]/nhone[kk]
