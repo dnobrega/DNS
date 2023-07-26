@@ -41,9 +41,10 @@ PRO  DNS_CONTOUR, d, snaps, m, swap, $
                    zmin=zmin,zmax=zmax
 
 
-   ;IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+   IF (strpos(dim,"z") EQ 1) THEN yy=reverse(-yy)
+   IF (strpos(dim,"y") EQ 0) THEN xx=reverse(-xx)
+   IF (strpos(dim,"y") EQ 1) THEN yy=reverse(-yy)
 
-   yy=reverse(-yy) 
    IF (N_ELEMENTS(c_save) GT 0) THEN BEGIN
       CONTOUR, reform(var),xx,yy,$
                levels=c_levels,c_colors=c_colors,$
