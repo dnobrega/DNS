@@ -9,6 +9,8 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst
 ; and the wavelentgh with three decimals
 ;
 ; Examples:
+; line = "fe_13_196.525"
+; line = "fe_13_202.044"
 ; line = "fe_14_264.788"
 ; line = "fe_14_274.203"
 ;
