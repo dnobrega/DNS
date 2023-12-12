@@ -1,3 +1,5 @@
 .DS_Store
 site
 dnspy/notebooks/.ipynb_checkpoints/
+dnspro/var/goft_tables/*.fits
+dnspro/var/goft_tables/*.sav
