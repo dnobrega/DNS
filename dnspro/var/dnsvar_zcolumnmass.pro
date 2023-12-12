@@ -29,8 +29,6 @@ PRO dnsvar_zcolumnmass, d, name, snaps, swap, var, units, $
        FOR i=0, nelx-1 DO BEGIN
           FOR j=0, nely-1 DO BEGIN
              ind  = max(where(var(i,j,*) le value))
-             ;temp = INTERPOL(z, var(i,j,*), value)
-             ;FOR k=0,nelz-1 DO
              zz[i,j,*] = z[ind]
           ENDFOR
        ENDFOR
