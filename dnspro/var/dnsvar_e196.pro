@@ -42,7 +42,7 @@ PRO dnsvar_e196, d, name, snaps, swap, var, units, $
        ; (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund)
        
        folder    = GETENV('DNS')+"/dnspro/var/goft_tables/"
-       RESTORE, folder+"goft_table_fe_13_196.525.sav"
+       RESTORE, folder+"goft_table_fe_13_196.5250.sav"
 
        kk = 0
        mywh = where(nel le density[kk], nmywh)
