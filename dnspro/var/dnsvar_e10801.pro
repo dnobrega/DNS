@@ -6,7 +6,7 @@ PRO dnsvar_e10801, d, name, snaps, swap, var, units, $
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_e10797, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_e10801, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -40,8 +40,9 @@ PRO dnsvar_e10801, d, name, snaps, swap, var, units, $
        ; ch_synthetic does not include the element abundances 
        ch_synthetic,10800.0,10802.,output=ion, sngl_ion='fe_13', dens=1e9, /goft ,radtemp=6000, rphot=1.025, /photons
        ; Feldman 1992 abundance for Fe 8.10 (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund)
+       ; We use Schmelz 2012 abundance for Fe 7.85 
        FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) = 10^(8.10-12.0)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
+          var(*,j,*) = 10^(7.85-12.0)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
        ENDFOR
        var(*,*,wh)=1e-32
        var=reform(var)
