@@ -17,7 +17,7 @@ IF (NOT KEYWORD_SET(input_format))   THEN input_format='.mp4'
 IF (NOT KEYWORD_SET(output_format))  THEN output_format='.mp4'
 IF (NOT KEYWORD_SET(fps))            THEN fps=10
 IF (NOT KEYWORD_SET(moviename))      THEN moviename='moviename'
-IF (NOT KEYWORD_SET(list))           THEN SPAWN, 'ls *'+input_format, list
+IF (NOT KEYWORD_SET(list))           THEN SPAWN, 'ls -tr *'+input_format, list
 
 n_list = n_elements(list)
 
