@@ -21,8 +21,10 @@ I am a Postdoctoral researcher at Instituto de Astrofísica de Canarias (IAC) si
 Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 28th of February 2021.
 
 #### Papers
-23 papers in refereed journals. 491 citations. H-index: 14. Updated by 2023-09-18 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
+24 papers in refereed journals. 554 citations. H-index: 14. Updated by 2024-03-05 [(ADS)](https://ui.adsabs.harvard.edu/search/filter_property_fq_property=AND&filter_property_fq_property=property%3A%22refereed%22&fq=%7B!type%3Daqp%20v%3D%24fq_database%7D&fq=%7B!type%3Daqp%20v%3D%24fq_property%7D&fq_database=database%3A%20astronomy&fq_property=(property%3A%22refereed%22)&p_=0&q=author%3A(%22nobrega-siverio%22)&sort=date%20desc%2C%20bibcode%20desc)
 
+> - _Deciphering Solar Coronal Heating: Energizing Small-scale Loops through Surface Convection._
+[Nóbrega-Siverio et al. (2023)](https://ui.adsabs.harvard.edu/abs/2023ApJ...958L..38N/abstract)
 > - _A comparative study of resistivity models for simulations of magnetic reconnection in the solar atmosphere._
 [Faeder et al. (2023)](https://ui.adsabs.harvard.edu/abs/2023A%26A...675A..97F/abstract)
 > - _The Chromosphere Underneath a Coronal Bright Point._
@@ -78,6 +80,12 @@ Rosseland Centre for Solar Physics (RoCS) from the 1st of Agust 2018 until the 2
 
 #### Invited talks
 
+> - _Characterizing CBP diagnostic observables for MUSE and Solar-C/EUVST._  
+American Geophysical Union (AGU). 2023-12-15 (online).
+> - _Deciphering the solar coronal heating: Energizing small-scale loops through surface convection._  
+CLASP 2.1 Science Meeting. 2023-10-19 (La Laguna, Tenerife).
+> - _Deciphering the solar coronal heating: Energizing small-scale loops through surface convection._  
+CLASP 2.1 Science Meeting. 2023-10-19 (La Laguna, Tenerife).
 > - _Simulations of flux emergence events._  
 Centre for mathematical Plasma-Astrophysics (CmPA) seminars. 2022-06-09 (online).
 > - _Simulations of flux emergence events._  
