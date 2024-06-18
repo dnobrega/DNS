@@ -1,4 +1,4 @@
-PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst
+PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ;----------------------------------------------------------------------------------------
 ; HELP
 ;----------------------------------------------------------------------------------------
@@ -16,6 +16,10 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst
 ; line = "fe_13_203.826" 
 ; line = "fe_14_264.788"
 ; line = "fe_14_274.203"
+; line = "fe_19_108.355"
+; line = "fe_8_108.073"
+; line = "o_4_279.933"
+; line = 
 ;
 ; OPTIONAL:
 ;
@@ -32,17 +36,22 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst
 ; OUTPUT:
 ; A table called "table_"+line+".sav" with axis density and temeprature
 ;----------------------------------------------------------------------------------------
-IF (NOT (KEYWORD_SET(ntg))) THEN ntg=101
-IF (NOT (KEYWORD_SET(ne0))) THEN ne0=7.5
-IF (NOT (KEYWORD_SET(nef))) THEN nef=12.5
-IF (NOT (KEYWORD_SET(nst))) THEN nst=0.05
+IF (NOT (KEYWORD_SET(ntg)))  THEN ntg=101
+IF (NOT (KEYWORD_SET(ne0)))  THEN ne0=7.5
+IF (NOT (KEYWORD_SET(nef)))  THEN nef=12.5
+IF (NOT (KEYWORD_SET(nst)))  THEN nst=0.05
+IF (NOT (KEYWORD_SET(wlim))) THEN wlim=0.001
 ;----------------------------------------------------------------------------------------
-sngl_ion = STRMID(line,0,5) 
-wvl0     = FLOAT(STRMID(line,6,8))-0.0010
-wvlf     = FLOAT(STRMID(line,6,8))+0.0010
+iname=strpos(line,"_",/reverse_search)
+ilimit=iname+1
+sngl_ion = STRMID(line,0,iname)
+wvl0     = FLOAT(STRMID(line,ilimit,ilimit+2))-wlim
+wvlf     = FLOAT(STRMID(line,ilimit,ilimit+2))+wlim
+print, wvl0, wvlf
+print, sngl_ion
 nne      = (nef-ne0)/nst + 1
 table    = fltarr(nne,ntg)
-density  = 10^(ne0 + (nef-ne0)*findgen(nne)/(nne-1))
+density  = (ne0 + (nef-ne0)*findgen(nne)/(nne-1))
 filename = "goft_table_"+line+".sav"
 print, "---------------------------------------"
 print, "Creating "+filename
@@ -50,7 +59,7 @@ print, "---------------------------------------"
 ;----------------------------------------------------------------------------------------
 FOR kk=0,nne-1,1 DO BEGIN
     print, strtrim(string(kk),2)+"/"+strtrim(string(fix(nne)),2)
-    ch_synthetic, wvl0, wvlf, density=density[kk], /goft, SNGL_ION=sngl_ion, output=ion
+    ch_synthetic, wvl0, wvlf, density=10^density[kk], /goft, SNGL_ION=sngl_ion, output=ion
     table[kk,*] = ion.lines[0].goft    
 ENDFOR
 temperature=ion.IONEQ_LOGT
