@@ -11,8 +11,8 @@ PRO dnsvar_eui174, d, name, snaps, swap, var, units, $
         RETURN
      ENDIF     
      CALL_PROCEDURE, "units_"+units, u
-     folder    = GETENV('DNS')+"/dnspro/var/"
-     goft      = readfits(folder+"gof_hri_174_sun_coronal_1992_feldman_ext.abund_chianti.ioneq_synthetic.fits",header)
+     folder    = GETENV('DNS')+"/dnspro/var/goft_tables/"
+     goft      = readfits(folder+"goft_hri_174_sun_coronal_1992_feldman_ext.abund_chianti.ioneq_synthetic.fits",header)
      goft      = goft/1e2          ; from DN m-1 s-1 pix-1 to Dn cm-1 s-1 pix-1
      str       = fitshead2struct(header)
      maxx      = alog10(str.tmax)
