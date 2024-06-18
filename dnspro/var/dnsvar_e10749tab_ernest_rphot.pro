@@ -16,10 +16,9 @@ PRO dnsvar_e10749tab_ernest_rphot, d, name, snaps, swap, var, units, $
        tg    = d->getvar('tg',snaps,swap=swap)
        tg    = reform(tg,si(1)*si(2)*si(3))
        nel   = reform(nel,si(1)*si(2)*si(3))
-       var   = fltarr(si(1),si(2),si(3))
        nh    = 0.85*nel
        z     = -d->getz()
-       myrphot = var
+       myrphot = fltarr(si(1),si(2),si(3))
        FOR kk=0,n_elements(z)-1 DO myrphot[*,*,kk] = 1.0 + z[kk]/695.7
        myrphot = reform(myrphot,si(1)*si(2)*si(3))
        
