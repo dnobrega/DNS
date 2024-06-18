@@ -15,10 +15,11 @@ PRO dnsvar_e193, d, name, snaps, swap, var, units, $
        si    = size(nel)
        r     = d->getvar('r',snaps,swap=swap)
        tg    = d->getvar('tg',snaps,swap=swap)
-       tg(where(tg le 1e4)) = 1e4
-       tg    = reform(tg,si(1),si(2),si(3))
-       var   = fltarr(si(1),si(2),si(3))
-       ;
+
+       tg    = reform(tg,si(1)*si(2)*si(3))
+       nel   = reform(nel,si(1)*si(2)*si(3))
+
+
        d->readpars, snaps
        d->readmesh
        z       = d->getz()
@@ -30,23 +31,27 @@ PRO dnsvar_e193, d, name, snaps, swap, var, units, $
        aux     = obj_new('br_aux')
        AMU     = 1.6605402d-24
        M_H     = 1.00794D*AMU
+       
        FOR il=0,nl-1 DO aweight(il)=aux->awgt(nameln[il])
        abnd    = abnd*aweight
        abnd    = abnd/total(abnd)
        l       = 0
        c2      = abnd(l)*r
        nh      = c2/m_h*u.ur
-       nh      = reform(nh,si(1),si(2),si(3))
-       ; ch_synthetic does not include the element abundances  
-       ch_synthetic, 193.5089, 193.5091, density=1e9,/goft,SNGL_ION="fe_12",output=ion
-      ; Feldman 1992 abundance for Fe 8.10 (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund) 
-       FOR j=0,si(2)-1 DO BEGIN
-          var(*,j,*) =  10^(8.10-12.0)*nel(*,j,*)*nh(*,j,*)*interpol(ion.lines[0].goft,ion.IONEQ_LOGT,alog10(tg(*,j,*)))
-       ENDFOR
-       var(*,*,wh)=1e-32
-       var=reform(var)
-       var(where(var le 0))  = 1e-32
-       var(where(tg le 1e4)) = 1e-32
+       nh      = reform(nh,si(1)*si(2)*si(3))
+
+       myabund = 8.10
+       folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
+       RESTORE, folder+"goft_table_fe_12_193.5090.sav"
+       dlogt   = temperature[1]-temperature[0]
+       dlogr   = density[1]-density[0]
+
+       indr    = (alog10(nel)-density[0])/dlogr
+       indt    = (alog10(tg)-temperature[0])/dlogt
+
+       var = 10^(myabund-12.0)*nel*nh*interpolate(table,indr,indt,missing=0)
+       var = reform(var,si(1),si(2),si(3))
+       
        var_title='!4e!3 Fe XII 193 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
        var_log=1
