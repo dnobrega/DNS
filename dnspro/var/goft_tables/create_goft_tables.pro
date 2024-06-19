@@ -9,6 +9,7 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ; and the wavelentgh with three decimals
 ;
 ; Examples:
+; line = "fe_8_108.073"
 ; line = "fe_12_186.887" 
 ; line = "fe_12_195.119" 
 ; line = "fe_13_196.525"
@@ -16,8 +17,8 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ; line = "fe_13_203.826" 
 ; line = "fe_14_264.788"
 ; line = "fe_14_274.203"
+; line = "fe_15_284.160"
 ; line = "fe_19_108.355"
-; line = "fe_8_108.073"
 ; line = "o_4_279.933"
 ; line = 
 ;
