@@ -11,7 +11,8 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ; Examples:
 ; line = "fe_8_108.073"
 ; line = "fe_12_186.887" 
-; line = "fe_12_195.119" 
+; line = "fe_12_195.119"
+; line = "fe_12_1349.40"
 ; line = "fe_13_196.525"
 ; line = "fe_13_202.044"
 ; line = "fe_13_203.826" 
