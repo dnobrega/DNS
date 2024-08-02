@@ -23,7 +23,7 @@ PRO dnsvar_abseparb, d, name, snaps, swap, var, units, $
           var = var*u.ul/u.ut*u.ub/3e10
           var_title=var_title+" (G)"
        ENDIF
-       var_range=[1e-2,1e-4]
+       var_range=[1e-6,1e-4]
        var_log=1
     ENDELSE
 END
