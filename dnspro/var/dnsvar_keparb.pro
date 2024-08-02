@@ -36,9 +36,12 @@ PRO dnsvar_keparb, d, name, snaps, swap, var, units, $
        ux   = yup(by)*bzob - zup(bz)*byob
        uy   = zup(bz)*bxob - xup(bx)*bzob
        uz   = xup(bx)*byob - yup(by)*bxob
-       var  = sqrt(ux*ux + uy*uy + uz*uz)*u.ub*u.ub/u.ul
+       var  = sqrt(ux*ux + uy*uy + uz*uz)
        var_title='B x rot(E!d||B!n b)'
-       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm!u-1!n)"
+       IF (units EQ "solar") THEN BEGIN
+          var = u.ub*var*(u.ul/u.ut*u.ub/3e10)/u.ul   ;  light speed in cm/s      
+          var_title=var_title+" (G!u2!n cm!u-1!n)"
+       ENDIF
        var_range=[1d-6,1.d6]
        var_log=1
     ENDELSE

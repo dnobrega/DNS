@@ -17,10 +17,13 @@ PRO dnsvar_eparb, d, name, snaps, swap, var, units, $
        ux  =  d->getvar('ex',snaps,swap=swap)
        uy  =  d->getvar('ey',snaps,swap=swap)
        uz  =  d->getvar('ez',snaps,swap=swap)
-       var = ((zup(uz*bz)+xup(ux*bx)+yup(uy*by))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2))*u.ul/u.ut*u.ub
+       var = ((zup(uz*bz)+xup(ux*bx)+yup(uy*by))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2))
        var_title='E!d||B!n'
-       IF (units EQ "solar") THEN var_title=var_title+" (G cm s!u-1!n)"
-       var_range=[-1.0,1.0]*1d6
+       IF (units EQ "solar") THEN BEGIN
+          var = var*u.ul/u.ut*u.ub/3e10        ; light speed in cm/s
+          var_title=var_title+" (G)"
+       ENDIF
+       var_range=[-1.0,1.0]*1d-4
        var_log=0
     ENDELSE
 END
