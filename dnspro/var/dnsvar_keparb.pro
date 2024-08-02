@@ -39,7 +39,7 @@ PRO dnsvar_keparb, d, name, snaps, swap, var, units, $
        var  = sqrt(ux*ux + uy*uy + uz*uz)*u.ub*u.ub/u.ul
        var_title='B x rot(E!d||B!n b)'
        IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n cm!u-1!n)"
-       var_range=[-1.0,1.0]*1d6
-       var_log=0
+       var_range=[1d-6,1.d6]
+       var_log=1
     ENDELSE
 END
