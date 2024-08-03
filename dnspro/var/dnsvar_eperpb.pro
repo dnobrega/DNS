@@ -5,7 +5,7 @@ PRO dnsvar_eperpb, d, name, snaps, swap, var, units, $
        message, 'E perpendicular to B: eperpb',/info
        RETURN
     ENDIF ELSE BEGIN
-       IF n_perpams() LT 6 THEN BEGIN
+       IF n_params() LT 6 THEN BEGIN
           message,'dnsvar_eperpb, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
