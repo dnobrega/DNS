@@ -14,14 +14,17 @@ PRO dnsvar_keparb, d, name, snaps, swap, var, units, $
        bx   = d->getvar('bx',snaps,swap=swap)
        by   = d->getvar('by',snaps,swap=swap)
        bz   = d->getvar('bz',snaps,swap=swap)
-       modb = sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2)
+       bxob = xup(bx)
+       byob = yup(by)
+       bzob = zup(bz)
+       modb = sqrt(bxob^2+byob^2+bzob^2)
+       ux   = zup(yup(d->getvar('ex',snaps,swap=swap)))
+       uy   = xup(zup(d->getvar('ey',snaps,swap=swap)))
+       uz   = yup(xup(d->getvar('ez',snaps,swap=swap)))
+       var  = (uz*bzob+ux*bxob+uy*byob)/modb
        bxob = bx/xdn(modb)
        byob = by/ydn(modb)
        bzob = bz/zdn(modb)
-       ux   = d->getvar('ex',snaps,swap=swap)
-       uy   = d->getvar('ey',snaps,swap=swap)
-       uz   = d->getvar('ez',snaps,swap=swap)
-       var  = ((zup(uz*bz)+xup(ux*bx)+yup(uy*by))/modb) 
        ux   = var*bxob 
        uy   = var*byob
        uz   = var*bzob
