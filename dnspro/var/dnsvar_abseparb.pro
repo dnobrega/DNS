@@ -11,13 +11,13 @@ PRO dnsvar_abseparb, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       bx  =  d->getvar('bx',snaps,swap=swap)
-       by  =  d->getvar('by',snaps,swap=swap)
-       bz  =  d->getvar('bz',snaps,swap=swap)
-       ux  =  d->getvar('ex',snaps,swap=swap)
-       uy  =  d->getvar('ey',snaps,swap=swap)
-       uz  =  d->getvar('ez',snaps,swap=swap)
-       var = abs(((zup(uz*bz)+xup(ux*bx)+yup(uy*by))/sqrt(xup(bx)^2+yup(by)^2+zup(bz)^2)))
+       bx  =  xup(d->getvar('bx',snaps,swap=swap))
+       by  =  yup(d->getvar('by',snaps,swap=swap))
+       bz  =  zup(d->getvar('bz',snaps,swap=swap))
+       ex  =  zup(yup(d->getvar('ex',snaps,swap=swap)))
+       ey  =  xup(zup(d->getvar('ey',snaps,swap=swap)))
+       ez  =  yup(xup(d->getvar('ez',snaps,swap=swap)))
+       var =  abs(((ez*bz+ex*bx+ey*by)/sqrt(bx^2+by^2+bz^2)))
        var_title='|E!d||B!n|'
        IF (units EQ "solar") THEN BEGIN
           var = var*u.ul/u.ut*u.ub/3e10
