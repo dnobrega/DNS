@@ -25,9 +25,9 @@ PRO dnsvar_keparb, d, name, snaps, swap, var, units, $
        bxob = bx/xdn(modb)
        byob = by/ydn(modb)
        bzob = bz/zdn(modb)
-       ux   = var*bxob 
-       uy   = var*byob
-       uz   = var*bzob
+       ux   = xdn(var)*bxob 
+       uy   = ydn(var)*byob
+       uz   = zdn(var)*bzob
        ; rot (E||B b) centered 
        bxob = ddydn(uz) - ddzdn(uy)
        bxob = zup(yup(bxob))
