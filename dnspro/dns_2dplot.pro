@@ -173,14 +173,7 @@ IF (N_ELEMENTS(find_color) EQ 0)         THEN find_color=255
      IF (NOT FILE_TEST(folder, /DIRECTORY)) THEN file_mkdir, folder
      IF NOT (KEYWORD_SET(file_2d)) THEN filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+".sav" $
                                    ELSE filename=folder+'/var2d_'+var_name+"_"+STRTRIM(snaps,2)+"_"+file_2d+".sav"
-     ;save, var_plot, position, origin, $
-                                ;      scale, final_title, xtitle,
-                                ;      ytitle, bar_range,
-                                ;      filename=filename
-     xarray = xx
-     zarray = -yy
-     eui174 = var_plot
-     save, eui174, xarray, zarray, filename=filename
+     save, var_plot, position, origin, scale, final_title, xtitle, ytitle, bar_range, filename=filename
   ENDIF
   
   plot_image, var_plot, $
