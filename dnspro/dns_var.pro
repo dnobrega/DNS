@@ -123,7 +123,6 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(ix0) EQ 0) THEN im0=0 ELSE im0=ix0
               IF (N_ELEMENTS(ixf) EQ 0) THEN imf=sizevar(1)-1 ELSE imf=ixf
               IF (NOT KEYWORD_SET(ixstep)) THEN imstep=1 ELSE imstep=ixstep
-              var=var(im0 : imf,*,*)
               IF (im0 EQ imf) THEN imstep=1
            ENDELSE
            IF (N_ELEMENTS(yshift) NE 0) THEN y=y+xshift
@@ -137,11 +136,13 @@ PRO dns_var,d,name,snaps,swap,var,$
            maxz=MAX(z, MIN=minz)
            dz=(maxz-minz)/(nelz-1)
            dz1d=d->getdz1d()
+           help, var
            IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
-              zz=minz+dz*FINDGEN(nelz)
-              FOR i=im0,imf,imstep DO BEGIN
-                 FOR j=0,nely-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
-              ENDFOR
+              zz    = minz+dz*FINDGEN(nelz)
+              index = (indgen(nelx))[im0:imf:imstep]
+              indey = indgen(nely)
+              indez = interpol(indgen(nelz),z,zz )
+              var[im0:imf:imstep,*,*] = INTERPOLATE(var, index, indey, indez, /grid)
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
@@ -176,11 +177,12 @@ PRO dns_var,d,name,snaps,swap,var,$
            maxz=MAX(z, MIN=minz)
            dz=(maxz-minz)/(nelz-1)
            dz1d=d->getdz1d()
-           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN 
-              zz=minz+dz*FINDGEN(nelz)
-              FOR j=im0,imf,imstep DO BEGIN
-                 FOR i=0,nelx-1 DO var(i,j,*)=INTERPOL(var(i,j,*),z,zz)
-              ENDFOR
+           IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
+              zz    = minz+dz*FINDGEN(nelz)
+              index = indgen(nelx)
+              indey = (indgen(nely))[im0:imf:imstep]
+              indez = interpol(indgen(nelz),z,zz )
+              var[*,im0:imf:imstep,*] = INTERPOLATE(var, index, indey, indez, /grid)
            ENDIF ELSE BEGIN
               zz=z
            ENDELSE
