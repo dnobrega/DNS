@@ -30,7 +30,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
     zz  = -reverse(zu)
     nl  = 2
     ns  = n_elements(isnaps)
-    nt  = 9999
+    nt  = ns*3
     dim = [nx,ny,nz]
     ext = [xx[0],yy[0],zz[0],xx[nx-1],yy[ny-1],zz[nz-1]]
 
@@ -55,6 +55,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
              IF (file_exists GT 0) THEN BEGIN 
                 CALL_PROCEDURE, dnsvar_name, d, name, isnaps[jj], swap, var, units,$
                                 var_log=var_log
+                help, var
                 IF (var_log) THEN var=alog10(var)
                 IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
                    index  = findgen(nx)
@@ -64,14 +65,14 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
                 ENDIF
                 var=reverse(var,3)
                 var=reverse(var,2)
-                help, var
-                openw,lu,'var.dat',/get_lun
-                spawn, 'ls var.dat'
+                datfile = "var_"+name+".dat"
+                openw,lu,datfile,/get_lun
+                spawn, 'ls '+datfile
                 writeu,lu,float(var)
                 close,lu
                 free_lun,lu
-                spawn,'raw2vdf -ts '+STRTRIM(string(isnaps[jj]),2)+' -varname ' +name +' '+vdffile+' var.dat'
-                spawn,'rm -f var.dat'
+                spawn,'raw2vdf -ts '+STRTRIM(string(isnaps[jj]),2)+' -varname ' +name +' '+vdffile+' '+datfile
+                spawn,'rm -f '+datfile
              ENDIF
           ENDFOR
        ENDFOR
