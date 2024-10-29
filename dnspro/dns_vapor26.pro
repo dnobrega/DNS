@@ -30,7 +30,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
     zz  = -reverse(zu)
     nl  = 2
     ns  = n_elements(isnaps)
-    nt  = ns*3
+    nt  = 9999
     dim = [nx,ny,nz]
     ext = [xx[0],yy[0],zz[0],xx[nx-1],yy[ny-1],zz[nz-1]]
 
