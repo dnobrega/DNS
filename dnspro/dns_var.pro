@@ -130,13 +130,12 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
               dx=d->getdx()
               var=var*dx*1e8
-              var(imf,*,*)=total(var[im0 : imf, *, *],1)
+              var(imf,*,*)=total(var[im0 : imf, *, *],1) - 0.5*(var[im0,*,*]+var[imf,*,*]) 
               im0=imf
            ENDIF
            maxz=MAX(z, MIN=minz)
            dz=(maxz-minz)/(nelz-1)
            dz1d=d->getdz1d()
-           help, var
            IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
               zz    = minz+dz*FINDGEN(nelz)
               index = (indgen(nelx))[im0:imf:imstep]
@@ -171,7 +170,7 @@ PRO dns_var,d,name,snaps,swap,var,$
            IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
               dy=d->getdy()
               var=var*dy*1e8
-              var(*,imf,*)=total(var[*, im0 : imf, *],2)
+              var(*,imf,*)=total(var[*, im0 : imf, *],2) - 0.5*(var[*,im0,*]+var[*,imf,*])
               im0=imf
            ENDIF
            maxz=MAX(z, MIN=minz)
@@ -205,7 +204,7 @@ PRO dns_var,d,name,snaps,swap,var,$
               IF (N_ELEMENTS(integration) NE 0) THEN BEGIN
                  dz1d=d->getdz1d()
                  FOR k=0,nelz-1 DO var(*,*,k)=var(*,*,k)*dz1d(k)*1e8
-                 var(*,*,imf)=total(var[*, *, im0 : imf],3)
+                 var(*,*,imf)=total(var[*, *, im0 : imf],3) - 0.5*(var[*,*,im0]+var[*,*,imf])
                  im0=imf
               ENDIF
               IF (im0 EQ imf) THEN imstep=1
