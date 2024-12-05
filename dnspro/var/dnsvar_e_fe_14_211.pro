@@ -1,12 +1,12 @@
-PRO dnsvar_e171, d, name, snaps, swap, var, units, $
+PRO dnsvar_e_fe_14_211, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Emissivity of Fe IX 171',/info
+       message, 'Emissivity of Fe XIV 211',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_e171, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_e_fe_14_211, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -15,11 +15,11 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
        si    = size(nel)
        r     = d->getvar('r',snaps,swap=swap)
        tg    = d->getvar('tg',snaps,swap=swap)
-              
+
        tg    = reform(tg,si(1)*si(2)*si(3))
        nel   = reform(nel,si(1)*si(2)*si(3))
-       
-                               
+
+
        d->readpars, snaps
        d->readmesh
        z       = d->getz()
@@ -31,6 +31,7 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
        aux     = obj_new('br_aux')
        AMU     = 1.6605402d-24
        M_H     = 1.00794D*AMU
+       
        FOR il=0,nl-1 DO aweight(il)=aux->awgt(nameln[il])
        abnd    = abnd*aweight
        abnd    = abnd/total(abnd)
@@ -41,7 +42,7 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
 
        myabund = 8.10
        folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
-       RESTORE, folder+"goft_table_fe_9_171.0730.sav"
+       RESTORE, folder+"goft_table_fe_14_211.3170.sav"
        dlogt   = temperature[1]-temperature[0]
        dlogr   = density[1]-density[0]
 
@@ -50,8 +51,8 @@ PRO dnsvar_e171, d, name, snaps, swap, var, units, $
 
        var = 10^(myabund-12.0)*nel*nh*interpolate(table,indr,indt,missing=0)
        var = reform(var,si(1),si(2),si(3))
-
-       var_title='!4e!3 Fe IX 171 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
+       
+       var_title='!4e!3 Fe XIV 211 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
        var_log=1
     ENDELSE
