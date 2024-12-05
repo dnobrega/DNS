@@ -50,7 +50,7 @@ PRO dnsvar_e_fe_14_264, d, name, snaps, swap, var, units, $
        var = 10^(myabund-12.0)*nel*nh*interpolate(table,indr,indt,missing=0)
        var = reform(var,si(1),si(2),si(3))
 
-       var_title='!4e!3 Fe XIV 264.788 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
+       var_title='!4e!3 Fe XIV 264 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
        var_log=1
     ENDELSE

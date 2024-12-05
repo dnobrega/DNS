@@ -1,12 +1,12 @@
-PRO dnsvar_e274, d, name, snaps, swap, var, units, $
+PRO dnsvar_e_fe_14_274, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'Emissivity of Fe XIV 274.203',/info
+       message, 'Emissivity of Fe XIV 274.2030',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_e274, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_e_fe_14_274, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -15,10 +15,10 @@ PRO dnsvar_e274, d, name, snaps, swap, var, units, $
        si    = size(nel)
        r     = d->getvar('r',snaps,swap=swap)
        tg    = d->getvar('tg',snaps,swap=swap)
-       tg(where(tg le 1e4)) = 1e4
-       tg    = reform(tg,si(1),si(2),si(3))
-       var   = fltarr(si(1),si(2),si(3))
-       ;
+
+       tg    = reform(tg,si(1)*si(2)*si(3))
+       nel   = reform(nel,si(1)*si(2)*si(3))
+
        d->readpars, snaps
        d->readmesh
        z       = d->getz()
@@ -37,28 +37,20 @@ PRO dnsvar_e274, d, name, snaps, swap, var, units, $
        c2      = abnd(l)*r
        nh      = c2/m_h*u.ur
        nh      = reform(nh,si(1),si(2),si(3))
-       ; ch_synthetic does not include the element abundances
-       ; Feldman 1992 abundance for Fe 8.10
-       ; (/ssw/packages/chianti/dbase/abundance/sun_coronal_1992_feldman.abund)
 
-       folder    = GETENV('DNS')+"/dnspro/var/goft_tables/"
-       RESTORE, folder+"goft_table_fe_xiv_274.203.sav"
-       
-       kk = 0
-       mywh = where(nel le density[kk], nmywh)
-       var(mywh) =  10^(8.10-12.0)*nel(mywh)*nh(mywh)*interpol(table[0,*],temperature,alog10(tg(mywh)))
-       FOR kk=1,n_elements(density)-2 DO BEGIN
-          mywh = where(nel gt density[kk-1] and nel le density[kk], nmywh)
-          var(mywh) =  10^(8.10-12.0)*nel(mywh)*nh(mywh)*interpol(table[kk,*],temperature,alog10(tg(mywh)))
-       ENDFOR
-       mywh = where(nel gt density[kk], nmywh)
-       var(mywh) =  10^(8.10-12.0)*nel(mywh)*nh(mywh)*interpol(table[kk,*],temperature,alog10(tg(mywh)))
+       myabund = 8.10
+       folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
+       RESTORE, folder+"goft_table_fe_14_274.2030.sav"
+       dlogt   = temperature[1]-temperature[0]
+       dlogr   = density[1]-density[0]
 
-       var(*,*,wh)=1e-32
-       var=reform(var)
-       var(where(var le 0))  = 1e-32
-       var(where(tg le 1e4)) = 1e-32
-       var_title='!4e!3 Fe XIV 274.203 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
+       indr    = (alog10(nel)-density[0])/dlogr
+       indt    = (alog10(tg)-temperature[0])/dlogt
+
+       var = 10^(myabund-12.0)*nel*nh*interpolate(table,indr,indt,missing=0)
+       var = reform(var,si(1),si(2),si(3))
+
+       var_title='!4e!3 Fe XIV 274 (erg cm!u-3!n sr!u-1!n s!u-1!n)'
        var_range=[1d-8,5d-7]
        var_log=1
     ENDELSE
