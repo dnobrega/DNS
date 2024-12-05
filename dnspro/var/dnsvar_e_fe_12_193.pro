@@ -1,4 +1,4 @@
-PRO dnsvar_e193, d, name, snaps, swap, var, units, $
+PRO dnsvar_e_fe_12_193, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
@@ -6,7 +6,7 @@ PRO dnsvar_e193, d, name, snaps, swap, var, units, $
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_e193, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_e_fe_12_193, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
