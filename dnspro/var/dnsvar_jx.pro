@@ -11,9 +11,9 @@ PRO dnsvar_jx, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('jx',snaps,swap=swap)*u.ub/(u.ul)
+       var=d->getvar('jx',snaps,swap=swap)*u.ui
        var_title="J!dx!n"
-       IF (units EQ "solar") THEN var_title=var_title+" (G cm!u-1!n)"
+       IF (units EQ "solar") THEN var_title=var_title+" (G s!u-1!n)"
        var_range=[-1,1]*1d-2
        var_log=0
     ENDELSE

@@ -20,7 +20,7 @@ PRO dnsvar_abseparb, d, name, snaps, swap, var, units, $
        var =  abs(((ez*bz+ex*bx+ey*by)/sqrt(bx^2+by^2+bz^2)))
        var_title='|E!d||B!n|'
        IF (units EQ "solar") THEN BEGIN
-          var = var*u.ul/u.ut*u.ub/3e10
+          var = var*u.uel
           var_title=var_title+" (G)"
        ENDIF
        var_range=[1e-6,1e-4]

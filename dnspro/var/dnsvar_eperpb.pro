@@ -27,7 +27,7 @@ PRO dnsvar_eperpb, d, name, snaps, swap, var, units, $
        var  =  sqrt(ex^2.0+ey^2.0+ez^2.0)
        var_title='|E!d_|_B!n|'
        IF (units EQ "solar") THEN BEGIN
-          var = var*u.ul/u.ut*u.ub/3e10        ; light speed in cm/s
+          var = var*u.uel       
           var_title=var_title+" (G)"
        ENDIF
        var_range=[-1.0,1.0]*1d-4

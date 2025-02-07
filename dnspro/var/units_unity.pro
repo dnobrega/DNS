@@ -14,6 +14,6 @@ PRO units_unity, units
    kr:1.0,$  ; Rosseland opacity
    cl:1.0,$  ; Speed of light:
    qe:1.0,$  ; Electron charge:
-   ub:1.0}   ; Magnetic field units:
+   ub:1.0, ui:1.0, ue:1.0}   ; Magnetic field units:
 
 END
