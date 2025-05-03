@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script to download SDO .fits files from JSOC link generated after requesting in JSOC Data Export
+# Input should be something like https://jsoc1.stanford.edu/SUM38/D1871868873/S00000/
+
+# Saves the JSOC link as html locally
+wget -O page.html "$1"
+
+# Extracts URLs of the .fits and saves it in urls.txt
+sed -n 's/.*HREF="\([^"]*\.fits\)".*/\1/p' jsoc_page.html > urls.txt
+
+# Download .fits
+wget -i urls.txt
