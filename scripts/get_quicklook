@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Get today's date in YYYY.MM.DD format
+default_date=$(date +%Y.%m.%d)
+
+# Prompt user for date input
+read -p "Enter the date [${default_date}]: " input_date
+
+# Use input or default if empty
+date_to_use=${input_date:-$default_date}
+
+# Perform rsync
+rsync -avzP -e "ssh -J obs@royac6.royac.iac.es" \
+    "obs@transport1:/scratch/obs/${date_to_use}/C*/quicklook*" .
