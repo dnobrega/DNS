@@ -11,7 +11,8 @@ PRO dnsvar_tauqpdv, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       var=d->getvar('qpdv',snaps,swap=swap)
+       var=(d->getvar('divu',snaps,swap=swap))
+       var=-d->getvar('p',snaps,swap=swap)*var
        e=d->getvar('e',snaps,swap=swap) 
        var=ABS(e/(var + 1d-30))*u.ut
        var_title='!4s!3!dpdv!n'
