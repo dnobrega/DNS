@@ -36,7 +36,7 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ;      By default, 0.05.
 ;  
 ; OUTPUT:
-; A table called "table_"+line+".sav" with axis density and temeprature
+; A table called "goft_table_"+line+".sav" with axis density and temeprature
 ;----------------------------------------------------------------------------------------
 IF (NOT (KEYWORD_SET(ntg)))  THEN ntg=101
 IF (NOT (KEYWORD_SET(ne0)))  THEN ne0=7.5
