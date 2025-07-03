@@ -7,7 +7,7 @@
 wget -O page.html "$1"
 
 # Extracts URLs of the .fits and saves it in urls.txt
-sed -n 's/.*HREF="\([^"]*\.fits\)".*/\1/p' jsoc_page.html > urls.txt
+sed -n 's/.*HREF="\([^"]*\.fits\)".*/\1/p' page.html > urls.txt
 
 # Download .fits
 wget -i urls.txt
