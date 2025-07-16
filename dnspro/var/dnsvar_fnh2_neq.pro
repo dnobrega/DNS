@@ -1,4 +1,4 @@
-PRO dnsvar_fnh2, d, name, snaps, swap, var, units, $
+PRO dnsvar_fnh2_neq, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
