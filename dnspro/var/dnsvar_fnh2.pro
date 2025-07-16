@@ -43,17 +43,17 @@ PRO dnsvar_fnh2, d, name, snaps, swap, var, units, $
        abnd     = abnd/total(abnd)
        c2       = abnd(0)*r
        nht      = c2/awght(0)
-       
-       ; Result
+
        var      = 0*nht
        n0       = ifracpos*nht
        n1       = (1-ifracpos)*nht
-       di       = 4.478007D*EVTOERG       ; Dissociation energy of H2 from Barklem and Collet (2016)
+       di       = 4.478007D*EVTOERG       ; Dissociation energy of H2 from Barklem and Collet (2016)   
        pf_h2    = interpol(h2_pf,h2_tg,tg(wh),/quadratic)
        n02_nh2  = 2.0d*(!dpi*awght(0)*kb*tg(wh)/hh^2)^(1.5d)*u1/pf_h2*exp(-di/(kbtg(wh)))
-       var(wh)  = nht(wh)/((1. + n1_n0(wh))*sqrt(n02_nh2)  + 2.)
-       n0(wh)   = sqrt(n02_nh2)*var(wh)
-       n1(wh)   = n0(wh)*n1_n0(wh)
+       n0(wh)   = (-(n1_n0(wh) + 1.0d) + sqrt((n1_n0(wh) + 1.0d)^2.0d + 8.0d*nht(wh)/n02_nh2))/(4.0d/n02_nh2)
+       var(wh)  = n0(wh)*n0(wh)/n02_nh2
+       n1(wh)   = nht(wh)*(1.0d - n0(wh)/nht(wh) - 2d*var(wh)/nht(wh))
+       n1(where(n1 lt 0)) = 0.0
        var      = 2*var/(n0+n1+2*var)
        var_title='f!dnH2!n'
        var_range=[1d-3,1.0]

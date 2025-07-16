@@ -46,10 +46,13 @@ PRO dnsvar_nh2, d, name, snaps, swap, var, units, $
        
        ; Result
        var      = 0*nht
-       di       = 4.478007D*EVTOERG       ; Dissociation energy of H2 from Barklem and Collet (2016)
+       n0       = ifracpos*nht
+       n1       = (1-ifracpos)*nht
+       di       = 4.478007D*EVTOERG       ; Dissociation energy of H2 from Barklem and Collet (2016)                                           
        pf_h2    = interpol(h2_pf,h2_tg,tg(wh),/quadratic)
        n02_nh2  = 2.0d*(!dpi*awght(0)*kb*tg(wh)/hh^2)^(1.5d)*u1/pf_h2*exp(-di/(kbtg(wh)))
-       var(wh)  = nht(wh)/((1. + n1_n0(wh))*sqrt(n02_nh2)  + 2.)       
+       n0(wh)   = (-(n1_n0(wh) + 1.0d) + sqrt((n1_n0(wh) + 1.0d)^2.0d + 8.0d*nht(wh)/n02_nh2))/(4.0d/n02_nh2)
+       var(wh)  = n0(wh)*n0(wh)/n02_nh2
        var_title='n!dH2!n'
        IF (units EQ "solar") THEN var_title=var_title+" (cm!u-3!n)"
        var_range=[1.d4,1d12]
