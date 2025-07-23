@@ -13,8 +13,8 @@ PRO dnsvar_j2, d, name, snaps, swap, var, units, $
        CALL_PROCEDURE, "units_"+units, u
        var=d->getvar('j2',snaps,swap=swap)*u.ui*u.ui
        var_title="J!u2!n"
-       IF (units EQ "solar") THEN var_title=var_title+" (erg cm!u-5!n)"
-       var_range=[1d-16, 1d-8]
+       IF (units EQ "solar") THEN var_title=var_title+" (G!u2!n s!u-2!n)"
+       var_range=[1d4, 1d7]
        var_log=1
     ENDELSE
 END
