@@ -3,13 +3,15 @@
 ;---------------------------------------------------------
 ; Input parameters
 ;---------------------------------------------------------
-snap0        = 670
-snapf        = 1614
+snap0        = 670 
+snapf        = 671 
 step         = 2
 save_uniform = 0
 save_squash  = 1
 factor       = 1
 traceFlag    = 1
+tol          = 1e-4
+max_trace_steps = 200
 ;---------------------------------------------------------
 units_solar, u
 IF save_uniform THEN BEGIN
@@ -84,28 +86,12 @@ IF save_squash EQ 1 THEN BEGIN
 
       zz = zz[wh]
 
-      ;wh = where(zz LE 15.0)
-
-      ;xup_bx = xup_bx[*,*,wh]
-      ;yup_by = yup_by[*,*,wh]
-      ;zup_bz = zup_bz[*,*,wh]
-
-      ;zz = zz[wh]
-
       xreg = [0,n_elements(xx)-1]
       yreg = [0,n_elements(yy)-1]
       zreg = [0,n_elements(zz)-1]
 
-      print, xreg
-      print, yreg
-      print, zreg      
-
-      pmm, xx
-      pmm, yy
-      pmm, zz
-
       qfactor, xup_bx, yup_by, zup_bz, xreg=xreg, yreg=yreg, zreg=zreg, factor=factor, fstr="qfactor_"+STRTRIM(STRING(snap),2), $
-               no_preview=1, nbridges=32, scottFlag=1, /twistFlag, traceFlag=traceFlag, traceint=snap
+               no_preview=1, nbridges=32, scottFlag=1, /twistFlag, traceFlag=traceFlag, traceint=snap, tol=tol, max_trace_steps=max_trace_steps
 
    ENDFOR
 
