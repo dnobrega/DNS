@@ -1,12 +1,12 @@
-PRO dnsvar_xrt_bethin, d, name, snaps, swap, var, units, $
+PRO dnsvar_xrt_cpoly, d, name, snaps, swap, var, units, $
                    var_title=var_title, var_range=var_range, var_log=var_log, $
                    info=info
   IF KEYWORD_SET(info) THEN BEGIN
-     message, 'XRT-bethin response with ne dependence and Asplund 2021 coronal abundance',/info
+     message, 'XRT-cpoly response with ne dependence and Asplund 2021 coronal abundance',/info
      RETURN
   ENDIF ELSE BEGIN
      IF n_params() LT 6 THEN BEGIN
-        message,'dnsvar_xrt_be-thin, d, name, snaps, swap, var, units, ' $
+        message,'dnsvar_xrt_c-poly, d, name, snaps, swap, var, units, ' $
                 +'var_title=var_title, var_range=var_range, var_log=var_log',/info
         RETURN
      ENDIF     
@@ -40,7 +40,7 @@ PRO dnsvar_xrt_bethin, d, name, snaps, swap, var, units, $
      nh      = reform(nh,si(1)*si(2)*si(3))
      
      folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
-     RESTORE, folder+"xrt_be-thin_response_ne_tg.sav"
+     RESTORE, folder+"xrt_c-poly_response_ne_tg.sav"
      dlogt   = temperature[1]-temperature[0]
      dlogr   = density[1]-density[0]
      
@@ -50,7 +50,7 @@ PRO dnsvar_xrt_bethin, d, name, snaps, swap, var, units, $
      var = nel*nh*interpolate(table,indr,indt,missing=0)
      var = reform(var,si(1),si(2),si(3))
      
-     var_title='XRT Be-thin'
+     var_title='XRT C-poly'
      IF (units EQ "solar") THEN var_title=var_title+" (DN cm!u-1!n s!u-1!n pix!u-1!n)"
      var_range=[1d-8,5d-7]
      var_log=1
