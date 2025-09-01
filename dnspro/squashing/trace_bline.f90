@@ -21,7 +21,7 @@ module trace_common
         logical:: traceflag
         integer :: traceint
         real, allocatable :: xfl(:,:,:), yfl(:,:,:), zfl(:,:,:)
-        integer, parameter :: max_trace_steps = 200
+        integer :: max_trace_steps
         !DNSf
 end module trace_common
 
@@ -587,7 +587,7 @@ real, allocatable:: Bfield_tmp(:, :, :, :)
 open(unit=8, file='head.txt', status='unknown')
 read(8, *) nx, ny, nz, nbridges, factor, maxsteps, &
            xreg, yreg, zreg, step, tol, &
-           twistFlag_int, RK4flag_int, scottFlag_int, csFlag_int, traceflag_int, traceint
+           twistFlag_int, RK4flag_int, scottFlag_int, csFlag_int, traceflag_int, traceint, max_trace_steps
  close(8)
 !----------------------------------------------------------------------------
 twistFlag= twistFlag_int .eq. 1
