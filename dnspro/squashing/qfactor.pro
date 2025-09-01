@@ -1,7 +1,7 @@
 PRO qfactor, bx, by, bz, xreg=xreg, yreg=yreg, zreg=zreg, csFlag=csFlag, factor=factor, $
              RK4Flag=RK4Flag, step=step, tol=tol, scottFlag=scottFlag, maxsteps=maxsteps, $
              twistFlag=twistFlag, nbridges=nbridges, odir=odir, fstr=fstr, $
-             no_preview=no_preview, tmpB=tmpB, RAMtmp=RAMtmp, traceFlag=traceFlag, traceint=traceint
+             no_preview=no_preview, tmpB=tmpB, RAMtmp=RAMtmp, traceFlag=traceFlag, traceint=traceint, max_trace_steps=max_trace_steps
 ;+
 ; PURPOSE:
 ;   Calculate the squashing factor Q at the photosphere or a cross section
@@ -241,7 +241,7 @@ get_lun,unit
 openw,  unit, tmp_dir+'head.txt'
 printf, unit, long(nx), long(ny), long(nz), long(nbridges), long(factor), long(maxsteps)
 printf, unit, float(xreg), float(yreg), float(zreg), float(step), float(tol)
-printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), long(traceFlag), long(traceint)
+printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), long(traceFlag), long(traceint), long(max_trace_steps)
 close,  unit
 
 openw,  unit, tmp_dir+'b3d.bin'
@@ -420,11 +420,11 @@ IF z0Flag THEN BEGIN
   ; save results 
 	if scottFlag then begin
 	 	if twistFlag then save, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, factor, $
-	 	                  rF, q_perp, slogq_perp, slogq_perp_orig, twist $ 
+	 	                  rF, q_perp, slogq_perp, slogq_perp_orig, twist $
 		             else save, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, factor, $
 		                  rF, q_perp, slogq_perp, slogq_perp_orig
 	endif else begin
-		if twistFlag then save, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, factor, rF, twist $ 
+		if twistFlag then save, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, factor, rF, twist $
 		             else save, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, factor, rF
 	endelse
 ENDIF 
@@ -511,13 +511,6 @@ IF vflag THEN BEGIN
 	readu, unit, q3d
 	close, unit
 	
-	rboundary3d=bytarr(qx,qy,qz)	
-	openr, unit, tmp_dir+'rboundary3d.bin'
-	readu, unit, rboundary3d
-	close, unit	
-  ;     rboundary3d=rsboundary3d+8*reboundary3d  (It has been calculated in Fortran),
-  ;     so if rboundary3d[i, j, k] eq 9B, both two mapping surfaces of q3d[i, j, k] are photosphere
-
 	if scottFlag then begin
 		q_perp3d=fltarr(qx,qy,qz)
 		openr, unit, tmp_dir+'q_perp3d.bin'
@@ -543,11 +536,11 @@ IF vflag THEN BEGIN
 		
   ; save results 
 	if scottFlag then begin
-		if twistFlag then save, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, factor, q_perp3d, twist3d $
-		             else save, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, factor, q_perp3d
+		if twistFlag then save, filename=file_sav, q3d, xreg, yreg, zreg, factor, q_perp3d, twist3d $
+		             else save, filename=file_sav, q3d, xreg, yreg, zreg, factor, q_perp3d
 	endif else begin
-		if twistFlag then save, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, factor, twist3d $
-		             else save, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, factor	
+		if twistFlag then save, filename=file_sav, q3d, xreg, yreg, zreg, factor, twist3d $
+		             else save, filename=file_sav, q3d, xreg, yreg, zreg, factor	
 	endelse
 ENDIF 
 ;----------------------------------------------------------------------------------------------	
