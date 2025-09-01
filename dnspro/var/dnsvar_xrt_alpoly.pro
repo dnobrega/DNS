@@ -1,37 +1,55 @@
-PRO dnsvar_alpoly, d, name, snaps, swap, var, units, $
-                    var_title=var_title, var_range=var_range, var_log=var_log, $
-                    info=info
+PRO dnsvar_xrt_alpoly, d, name, snaps, swap, var, units, $
+                   var_title=var_title, var_range=var_range, var_log=var_log, $
+                   info=info
   IF KEYWORD_SET(info) THEN BEGIN
-     message, 'XRT Al-poly response',/info
+     message, 'XRT-alpoly response with ne dependence and Asplund 2021 coronal abundance',/info
      RETURN
   ENDIF ELSE BEGIN
      IF n_params() LT 6 THEN BEGIN
-        message,'dnsvar_alpoly, d, name, snaps, swap, var, units, ' $
+        message,'dnsvar_xrt_al-poly, d, name, snaps, swap, var, units, ' $
                 +'var_title=var_title, var_range=var_range, var_log=var_log',/info
         RETURN
      ENDIF     
      CALL_PROCEDURE, "units_"+units, u
-     wave_resp = make_xrt_wave_resp(contam_time='2023-Mar-01 09:00:00')
-     xrt_tresp = make_xrt_temp_resp(wave_resp,/apec_default)
-     tresp = alog10((xrt_tresp.temp)[0:25,1])
-     xresp = (xrt_tresp.temp_resp)[0:25,1]
      nel   = d->getvar('nel',snaps,swap=swap)
      si    = size(nel)
+     r     = d->getvar('r',snaps,swap=swap)
      tg    = d->getvar('tg',snaps,swap=swap)
-     tg(where(tg le tresp[0])) = tresp[0]
-     tg    = reform(tg,si(1),si(2),si(3))
-     var   = fltarr(si(1),si(2),si(3))
-     FOR j=0,si(2)-1 DO BEGIN
-        var(*,j,*) = nel(*,j,*)*nel(*,j,*)*interpol(xresp,tresp,alog10(tg(*,j,*)),/NAN)
-     ENDFOR
+     
+     tg    = reform(tg,si(1)*si(2)*si(3))
+     nel   = reform(nel,si(1)*si(2)*si(3))
+     
+     
      d->readpars, snaps
      d->readmesh
      z       = d->getz()
      wh      = where(z ge -1.0)
-     var(*,*,wh)=1e-32
-     var=reform(var)
-     var(where(var le 0)) = 1e-32
-     var(where(tg le tresp[0])) = 1e-32
+     abnd    = d->gettababund()
+     nl      = n_elements(abnd)
+     aweight = fltarr(nl)
+     nameln  = d->gettabelements()
+     aux     = obj_new('br_aux')
+     AMU     = 1.6605402d-24
+     M_H     = 1.00794D*AMU
+     FOR il=0,nl-1 DO aweight(il)=aux->awgt(nameln[il])
+     abnd    = abnd*aweight
+     abnd    = abnd/total(abnd)
+     l       = 0
+     c2      = abnd(l)*r
+     nh      = c2/m_h*u.ur
+     nh      = reform(nh,si(1)*si(2)*si(3))
+     
+     folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
+     RESTORE, folder+"xrt_al-poly_response_ne_tg.sav"
+     dlogt   = temperature[1]-temperature[0]
+     dlogr   = density[1]-density[0]
+     
+     indr    = (alog10(nel)-density[0])/dlogr
+     indt    = (alog10(tg)-temperature[0])/dlogt
+     
+     var = nel*nh*interpolate(table,indr,indt,missing=0)
+     var = reform(var,si(1),si(2),si(3))
+     
      var_title='XRT Al-poly'
      IF (units EQ "solar") THEN var_title=var_title+" (DN cm!u-1!n s!u-1!n pix!u-1!n)"
      var_range=[1d-8,5d-7]
