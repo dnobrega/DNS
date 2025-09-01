@@ -3,5 +3,6 @@ site
 dnspy/notebooks/.ipynb_checkpoints/
 dnspro/var/goft_tables/*.fits
 dnspro/var/goft_tables/*.sav
+dnspro/var/goft_tables/*.ioneq
 dnspro/.ipynb_checkpoints/
 dnspro/var/gof_hri_174_sun_coronal_1992_feldman_ext.abund_chianti.ioneq_synthetic.fits
