@@ -1,8 +1,8 @@
 PRO dnsvar_aia171, d, name, snaps, swap, var, units, $
-                    var_title=var_title, var_range=var_range, var_log=var_log, $
-                    info=info
+                   var_title=var_title, var_range=var_range, var_log=var_log, $
+                   info=info
   IF KEYWORD_SET(info) THEN BEGIN
-     message, 'AIA Fe IX 171 response',/info
+     message, 'AIA 171 response with ne dependence and Asplund 2021 coronal abundance',/info
      RETURN
   ENDIF ELSE BEGIN
      IF n_params() LT 6 THEN BEGIN
@@ -11,17 +11,15 @@ PRO dnsvar_aia171, d, name, snaps, swap, var, units, $
         RETURN
      ENDIF     
      CALL_PROCEDURE, "units_"+units, u
-     aia_tresp = aia_get_response(/temp,/dn,/chiantifix,/noblend,/evenorm)
      nel   = d->getvar('nel',snaps,swap=swap)
      si    = size(nel)
      r     = d->getvar('r',snaps,swap=swap)
      tg    = d->getvar('tg',snaps,swap=swap)
-     tg(where(tg le 1e4)) = 1e4
-     tg    = reform(tg,si(1),si(2),si(3))
-     var   = fltarr(si(1),si(2),si(3))
-     ; ---------------------------------------------------
-     ; Computing the total number of hydrogen
-     ; ---------------------------------------------------
+     
+     tg    = reform(tg,si(1)*si(2)*si(3))
+     nel   = reform(nel,si(1)*si(2)*si(3))
+     
+     
      d->readpars, snaps
      d->readmesh
      z       = d->getz()
@@ -31,23 +29,27 @@ PRO dnsvar_aia171, d, name, snaps, swap, var, units, $
      aweight = fltarr(nl)
      nameln  = d->gettabelements()
      aux     = obj_new('br_aux')
-     AMU     = 1.6605402d-24 
-     M_H     = 1.00794D*AMU 
+     AMU     = 1.6605402d-24
+     M_H     = 1.00794D*AMU
      FOR il=0,nl-1 DO aweight(il)=aux->awgt(nameln[il])
      abnd    = abnd*aweight
      abnd    = abnd/total(abnd)
      l       = 0
      c2      = abnd(l)*r
-     nh      = c2/m_h*u.ur 
-     nh      = reform(nh,si(1),si(2),si(3))
-     ; ---------------------------------------------------
-     FOR j=0,si(2)-1 DO BEGIN
-        var(*,j,*) = nel(*,j,*)*nh(*,j,*)*interpol(aia_tresp.a171.tresp,aia_tresp.a171.logte,alog10(tg(*,j,*)))
-     ENDFOR
-     var(*,*,wh)=1e-32
-     var=reform(var)
-     var(where(var le 0)) = 1e-32
-     var(where(tg le 1e4)) = 1e-32
+     nh      = c2/m_h*u.ur
+     nh      = reform(nh,si(1)*si(2)*si(3))
+     
+     folder  = GETENV('DNS')+"/dnspro/var/goft_tables/"
+     RESTORE, folder+"aia_171_response_ne_tg.sav"
+     dlogt   = temperature[1]-temperature[0]
+     dlogr   = density[1]-density[0]
+     
+     indr    = (alog10(nel)-density[0])/dlogr
+     indt    = (alog10(tg)-temperature[0])/dlogt
+     
+     var = nel*nh*interpolate(table,indr,indt,missing=0)
+     var = reform(var,si(1),si(2),si(3))
+     
      var_title='AIA171'
      IF (units EQ "solar") THEN var_title=var_title+" (DN cm!u-1!n s!u-1!n pix!u-1!n)"
      var_range=[1d-8,5d-7]
