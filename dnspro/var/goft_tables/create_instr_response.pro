@@ -11,7 +11,6 @@ IF (nne LT 2.0) THEN density = ne0 ELSE density = (ne0 + (nef-ne0)*findgen(nne)/
 inst = STRLOWCASE(instr)
 CASE 1 OF
    STRMATCH(inst, '*aia*'): BEGIN
-      inst = STRLOWCASE(instr)
       ch   = STREGEX(inst, '(94|131|171|193|211|304|335)', /EXTRACT)
       IF ch EQ '' THEN MESSAGE, 'Wrong AIA channel.'
 
@@ -54,6 +53,8 @@ CASE 1 OF
             platescale = wave_resp.a335.PLATESCALE[0]
          END
       ENDCASE
+      wv0 = 0
+      wvf = -1
   END
 
   STRMATCH(inst, '*muse*'): BEGIN
@@ -61,9 +62,23 @@ CASE 1 OF
      STOP
   END
 
-  STRMATCH(inst, '*hinode*'): BEGIN
-     print, "Not implemented yet"
-     STOP
+  STRMATCH(inst, '*xrt*'): BEGIN
+     filters = ['al-mesh','al-poly','c-poly','ti-poly','be-thin','be-med','al-med','al-thick','be-thick']
+
+     idx = -1L
+     FOR k=0, N_ELEMENTS(filters)-1 DO BEGIN
+        IF STRPOS(inst, filters[k]) NE -1 THEN BEGIN
+           idx = k
+           BREAK
+        ENDIF
+     ENDFOR
+     IF idx EQ -1 THEN MESSAGE, 'XRT: wrong filter'
+     wave_resp = make_xrt_wave_resp(contam_time='2023-Mar-01 09:00:00')
+     ea         = wave_resp[idx].SPRSP.SPEC_RESP[0:990]
+     wave       = wave_resp[idx].effar.WAVE[0:990]
+     platescale = 1.0
+     wv0        = 0
+     wvf        = 1980
   END
 
   STRMATCH(inst, '*solar-c*'): BEGIN
@@ -90,13 +105,14 @@ IF NNE GT 1 THEN BEGIN
       dens     = density[kk]
       filename = "isothermal_" + STRING(dens, FORMAT='(F0.2)') + ".sav"
       restore, filename
-      filter   = interpol(ea, wave, lambda)
-      sp_conv  = 0.0*spectrum
+      filter   = interpol(ea, wave, lambda[wv0 : wvf])
+      sp_conv  = 0.0*spectrum[wv0 : wvf,*]
       FOR i = 0, ntg-1 DO sp_conv[*, i] = platescale*spectrum[*,i]*filter
       table[kk,*] = total(sp_conv,1)
    ENDFOR
 ENDIF
 temperature = temp
+table[where(table LT  0)] = 0.0
 save, density, temperature, table, filename=instr+"_response_ne_tg.sav"
 
 
