@@ -1,5 +1,7 @@
 .DS_Store
 site
+dnspro/var/ratio_lines/
+dnspro/var/goft_tables/list_to_tables.pro
 dnspy/notebooks/.ipynb_checkpoints/
 dnspro/squashing/*.x
 dnspro/var/goft_tables/*.fits
