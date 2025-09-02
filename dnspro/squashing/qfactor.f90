@@ -649,15 +649,10 @@ if (vflag) then
                 k0=1
                 !DNSi
                 if (traceflag) then
-                   !write(dns_filename, '(A,I4.4,".txt")') "../bline_",traceint   
-                   !open(unit=5, file=dns_filename, status='replace', action='write', form="formatted")
                    write(dns_filename, '(A,I4.4,".bin")') "../bline_",traceint
                    open(unit=5, file=dns_filename, status='replace', action='write', form="unformatted", access='stream')   
                    do j_j = 0, qy-1
                       do i_i = 0, qx-1
-                         !do n_n = 0, max_trace_steps-1
-                         !   write(5,'(F10.5,1X,F10.5,1X,F10.5)') xfl(i_i,j_j,n_n), yfl(i_i,j_j,n_n), zfl(i_i,j_j,n_n)
-                         !enddo
                          write(5) xfl(i_i,j_j,:), yfl(i_i,j_j,:), zfl(i_i,j_j,:)   
                       enddo
                    enddo
