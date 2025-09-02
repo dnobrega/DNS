@@ -245,7 +245,7 @@ printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), lon
 close,  unit
 
 openw,  unit, tmp_dir+'b3d.bin'
-if keyword_set(tmpB) then $
+if tmpB then $
      writeu, unit, float(temporary(Bx)), float(temporary(By)), float(temporary(Bz)) $
 else writeu, unit, float(Bx), float(By), float(Bz)
 close,  unit
