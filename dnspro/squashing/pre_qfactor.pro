@@ -3,8 +3,8 @@
 ;---------------------------------------------------------
 ; Input parameters
 ;---------------------------------------------------------
-snap0        = 670 
-snapf        = 671 
+snap0        = 0 
+snapf        = 1 
 step         = 2
 save_uniform = 0
 save_squash  = 1
@@ -25,8 +25,7 @@ IF save_uniform THEN BEGIN
       xup_bx = xup(bx)
       yup_by = yup(by)
       zup_bz = zup(bz)
-      modb   = sqrt(xup_bx^2.0 + yup_by^2.0 + zup_bz^2.0)
-
+      
       xx   = d->getx()
       yy   = d->gety()
       z    = d->getz()
@@ -44,7 +43,6 @@ IF save_uniform THEN BEGIN
          xup_bx = INTERPOLATE(xup_bx, index, indey, indez, /grid)
          yup_by = INTERPOLATE(yup_by, index, indey, indez, /grid)
          zup_bz = INTERPOLATE(zup_bz, index, indey, indez, /grid)
-         modb   = INTERPOLATE(modb,   index, indey, indez, /grid)
       ENDIF 
       
       xup_bx   = reverse(xup_bx,3)
@@ -56,10 +54,9 @@ IF save_uniform THEN BEGIN
       zup_bz   = reverse(zup_bz,3)
       zup_bz   = -reverse(zup_bz,2)
 
-      modb     = reverse(modb,3)
-      modb     = reverse(modb,2)
+      modb     = sqrt(xup_bx^2.0 + yup_by^2.0 + zup_bz^2.0)
 
-      zz = -reverse(zz)
+      zz       = -reverse(zz)
 
       save, xx, yy, zz, xup_bx, yup_by, zup_bz, modb, filename="CENUNI/cenuni_bfield_"+STRTRIM(STRING(snap),2)+".sav"
 
