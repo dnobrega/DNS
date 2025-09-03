@@ -4,6 +4,7 @@ dnspro/var/ratio_lines/
 dnspro/var/goft_tables/list_to_tables.pro
 dnspy/notebooks/.ipynb_checkpoints/
 dnspro/squashing/*.x
+dnspro/squashing/*.mod
 dnspro/var/goft_tables/*.fits
 dnspro/var/goft_tables/*.sav
 dnspro/var/goft_tables/*.ioneq
