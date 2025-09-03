@@ -4,7 +4,7 @@
 ; Input parameters
 ;---------------------------------------------------------
 snap0        = 0 
-snapf        = 1 
+snapf        = 1
 step         = 2
 save_uniform = 0
 save_squash  = 1
@@ -27,19 +27,21 @@ IF save_uniform THEN BEGIN
       zup_bz = zup(bz)
       
       xx   = d->getx()
+      dx   = d->getdx()
       yy   = d->gety()
       z    = d->getz()
+      dz   = dx
       nelx = d->getmx()
       nely = d->getmy()
-      nelz = d->getmz()
+      nz   = d->getmz()
       maxz = MAX(z, MIN=minz)
-      dz   = (maxz-minz)/(nelz-1)
+      nelz = floor((maxz-minz)/(dz) + 1)
       dz1d = d->getdz1d()
       zz   = minz+dz*FINDGEN(nelz)
       IF (abs(min(dz1d)-dz) GT 1e-5) THEN BEGIN
          index  = indgen(nelx)
          indey  = indgen(nely)
-         indez  = interpol(indgen(nelz), z, zz)
+         indez  = interpol(indgen(nz), z, zz)
          xup_bx = INTERPOLATE(xup_bx, index, indey, indez, /grid)
          yup_by = INTERPOLATE(yup_by, index, indey, indez, /grid)
          zup_bz = INTERPOLATE(zup_bz, index, indey, indez, /grid)
