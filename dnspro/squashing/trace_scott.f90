@@ -1,111 +1,187 @@
-!for the second way of calculating grad unit vec B, please uncomment the subroutine of interpolate_grad_unit_vec_B2 or interpolate_grad_unit_vec_B3, 
-!and change line 92 to "call interpolate_grad_unit_vec_B2(vp, unit_vec_bp, grad_unit_vec_B)" or "call interpolate_grad_unit_vec_B3(vp, unit_vec_bp, grad_unit_vec_B)"
-
-!subroutine  interpolate_grad_unit_vec_B2(vp, unit_vec_bp, grad_unit_vec_B)
-!!!the way of https://github.com/Kai-E-Yang/QSL
-!implicit none
-!real:: vp(0:2),vp1(0:2),vp2(0:2), unit_vec_bp(0:2), unit_vec_bp1(0:2), unit_vec_bp2(0:2), grad_unit_vec_B(0:2,0:2)
-!integer:: i
-!!----------------------------------------------------------------------------
-!do i=0,2
-!	vp1=vp
-!	vp2=vp
-!	vp1(i)=vp(i)-0.001
-!	vp2(i)=vp(i)+0.001
-!	call interpolate_unit_vec_B(vp1, unit_vec_bp1)
-!	call interpolate_unit_vec_B(vp2, unit_vec_bp2)
-!	grad_unit_vec_B(i,0:2)=(unit_vec_bp2-unit_vec_bp1)/0.002
-!enddo
-!call interpolate_unit_vec_B(vp, unit_vec_bp)
-!end subroutine interpolate_grad_unit_vec_B2
-
-
-subroutine interpolate_grad_unit_vec_B3(vp, unit_vec_bp, grad_unit_vec_B)
-!the way of https://bitbucket.org/tassev/qsl_squasher/src/hg/
+subroutine grad_unit_vec_B_grid0(i, j, k, grad_unit_vec_B)
 use trace_common
 use field_common
 implicit none
-real:: w(0:1,0:2), wd(0:1), weigh(0:1,0:1,0:1), vp(0:2), bp(0:2), unit_vec_bp(0:2), &
-grad_unit_vec_B(0:2,0:2), unit_vec_B_cell(0:2,0:1,0:1,0:1)
-integer:: round(0:1,0:2), i, j, k, s
+integer:: i, j, k
+real:: grad_unit_vec_B(0:2, 0:2)
 !----------------------------------------------------------------------------
-round(0,:)=floor(vp)
-w(1,:)=vp-round(0,:)
+if (i .eq. 0) then
+	grad_unit_vec_B(0,:) = &
+	-1.5*Bfield(:,0,j,k)/norm2(Bfield(:,0,j,k)) &
+	+2.0*Bfield(:,1,j,k)/norm2(Bfield(:,1,j,k)) &
+	-0.5*Bfield(:,2,j,k)/norm2(Bfield(:,2,j,k))
+else if (i .eq. nxm1) then	
+	grad_unit_vec_B(0,:) = &
+	 1.5*Bfield(:,i  ,j,k)/norm2(Bfield(:,i  ,j,k)) &
+	-2.0*Bfield(:,i-1,j,k)/norm2(Bfield(:,i-1,j,k)) &
+	+0.5*Bfield(:,i-2,j,k)/norm2(Bfield(:,i-2,j,k))
+else
+	grad_unit_vec_B(0,:) = &
+	(Bfield(:,i+1,j,k)/Norm2(Bfield(:,i+1,j,k))-Bfield(:,i-1,j,k)/Norm2(Bfield(:,i-1,j,k)))*0.5
+endif
+!----------------------------------------------------------------------------
+if (j .eq. 0) then
+	grad_unit_vec_B(1,:) = &
+	-1.5*Bfield(:,i,0,k)/norm2(Bfield(:,i,0,k)) &
+	+2.0*Bfield(:,i,1,k)/norm2(Bfield(:,i,1,k)) &
+	-0.5*Bfield(:,i,2,k)/norm2(Bfield(:,i,2,k))
+else if (j .eq. nym1) then	
+	grad_unit_vec_B(1,:) = &
+	 1.5*Bfield(:,i,j  ,k)/norm2(Bfield(:,i,j  ,k)) &
+	-2.0*Bfield(:,i,j-1,k)/norm2(Bfield(:,i,j-1,k)) &
+	+0.5*Bfield(:,i,j-2,k)/norm2(Bfield(:,i,j-2,k))	
+else
+	grad_unit_vec_B(1,:) = &
+	(Bfield(:,i,j+1,k)/Norm2(Bfield(:,i,j+1,k))-Bfield(:,i,j-1,k)/Norm2(Bfield(:,i,j-1,k)))*0.5
+endif
+!----------------------------------------------------------------------------
+if (k .eq. 0) then
+	grad_unit_vec_B(2,:) = &
+	-1.5*Bfield(:,i,j,0)/norm2(Bfield(:,i,j,0)) &
+	+2.0*Bfield(:,i,j,1)/norm2(Bfield(:,i,j,1)) &
+	-0.5*Bfield(:,i,j,2)/norm2(Bfield(:,i,j,2))
+else if (k .eq. nzm1) then
+	grad_unit_vec_B(2,:) = &
+	 1.5*Bfield(:,i,j,k  )/norm2(Bfield(:,i,j,k  )) &
+	-2.0*Bfield(:,i,j,k-1)/norm2(Bfield(:,i,j,k-1)) &
+	+0.5*Bfield(:,i,j,k-2)/norm2(Bfield(:,i,j,k-2))
+else
+	grad_unit_vec_B(2,:) = &
+	(Bfield(:,i,j,k+1)/Norm2(Bfield(:,i,j,k+1))-Bfield(:,i,j,k-1)/Norm2(Bfield(:,i,j,k-1)))*0.5
+endif
 
-do i=0,2
-	if (vp(i) .lt. 0.0) then
-		round(0,i)=0	
-		w(1,i)=0.0		
-	else if (vp(i) .ge. pmax(i)) then
-		round(0,i)=r0max(i)
-		w(1,i)=1.0
-	endif
+END subroutine grad_unit_vec_B_grid0
+
+
+subroutine grad_unit_vec_B_grid_stretch(i, j, k, grad_unit_vec_B)
+use field_common
+implicit none
+integer:: i, j, k, ci0, cj0, ck0, t
+real:: coef(0:2, 0:2), grad_unit_vec_B(0:2,0:2)
+!----------------------------------------------------------------------------
+call diff_coefficent(i, j, k, ci0, cj0, ck0, coef)
+grad_unit_vec_B=0.0
+do t=0,2
+	grad_unit_vec_B(0,:)=grad_unit_vec_B(0,:)+&
+		coef(t, 0)*Bfield(:, i+ci0+t, j, k)/norm2(Bfield(:, i+ci0+t, j, k))
+enddo
+do t=0,2
+	grad_unit_vec_B(1,:)=grad_unit_vec_B(1,:)+&
+		coef(t, 1)*Bfield(:, i, j+cj0+t, k)/norm2(Bfield(:, i, j+cj0+t, k))
+enddo
+do t=0,2
+	grad_unit_vec_B(2,:)=grad_unit_vec_B(2,:)+&
+		coef(t, 2)*Bfield(:, i, j, k+ck0+t)/norm2(Bfield(:, i, j, k+ck0+t))		
 enddo
 
-round(1,:)=round(0,:)+1
-w(0,:)=1.0-w(1,:)
-
-forall(i=0:1,j=0:1,k=0:1) weigh(i,j,k)=w(i,0)*w(j,1)*w(k,2)
-forall(i=0:2) Bp(i)=sum(Bfield(i, round(:,0), round(:,1), round(:,2))*weigh)
-
-wd(0)=-1.0
-wd(1)=1.0
-
-forall(i=0:1,j=0:1,k=0:1) unit_vec_B_cell(:,i,j,k)= &
-Bfield(:, round(i,0), round(j,1), round(k,2))/norm2(Bfield(:, round(i,0), round(j,1), round(k,2)))
-
-forall(i=0:1,j=0:1,k=0:1) weigh(i,j,k)=wd(i)*w(j,1)*w(k,2)
-forall(i=0:2)  grad_unit_vec_B(0,i)=sum(unit_vec_B_cell(i,:,:,:)*weigh)
-
-forall(i=0:1,j=0:1,k=0:1) weigh(i,j,k)=w(i,0)*wd(j)*w(k,2)
-forall(i=0:2)  grad_unit_vec_B(1,i)=sum(unit_vec_B_cell(i,:,:,:)*weigh)
-
-forall(i=0:1,j=0:1,k=0:1) weigh(i,j,k)=w(i,0)*w(j,1)*wd(k)
-forall(i=0:2)  grad_unit_vec_B(2,i)=sum(unit_vec_B_cell(i,:,:,:)*weigh)
-
-unit_vec_bp=bp/norm2(bp)
-end subroutine interpolate_grad_unit_vec_B3
+END subroutine grad_unit_vec_B_grid_stretch
 
 
-subroutine interpolate_grad_unit_vec_B(vp, unit_vec_bp, grad_unit_vec_B)
+subroutine interpolate_grad_unit_vec_B(vp, unit_vec_bp, grad_unit_vec_Bp)
 use trace_common
 use field_common
 implicit none
-real:: weigh(0:1,0:1,0:1), vp(0:2), bp(0:2), unit_vec_bp(0:2), grad_unit_vec_B(0:2,0:2)
-integer:: round(0:1,0:2), i, j
+real:: weight(0:1,0:1,0:1), vp(0:2), bp(0:2), unit_vec_bp(0:2), &
+grad_unit_vec_Bp(0:2,0:2), grad_unit_vec_B_cell(0:2,0:2,0:1,0:1,0:1)
+integer:: round(0:1,0:2), i, j, k
 !----------------------------------------------------------------------------
-call round_weigh(vp, round, weigh)
-forall(i=0:2) Bp(i)=sum(Bfield(i, round(:,0), round(:,1), round(:,2))*weigh)
-forall(i=0:2, j=0:2) grad_unit_vec_B(i,j)=sum(weigh*grad_unit_vec_Bfield(i, j, round(:,0), round(:,1), round(:,2)))
-unit_vec_bp=bp/norm2(bp)
+call round_weight(vp, round, weight)
+forall(i=0:2) Bp(i)=sum(weight*Bfield(i, round(:,0), round(:,1), round(:,2)))
+unit_vec_bp= bp/norm2(bp)
+
+if (grad3DFlag) then
+	forall(i=0:2, j=0:2) grad_unit_vec_Bp(i,j)=sum(weight*grad_unit_vec_Bfield(i, j, round(:,0), round(:,1), round(:,2)))
+else
+!the output is identical as the upper, but don't require grad_unit_vec_Bfield
+!the efficiency is 1/4.79(gfortran) or 1/2.21(ifort) times of the upper
+	do k=0,1
+	do j=0,1
+	do i=0,1
+		if (weight(i,j,k) .ne. 0.0) then
+			call grad_unit_vec_B_grid(round(i,0), round(j,1), round(k,2), grad_unit_vec_B_cell(:,:,i,j,k))
+		else
+			!avoid NaN
+			grad_unit_vec_B_cell(:,:,i,j,k)=0.0
+		endif
+	enddo
+	enddo
+	enddo
+	forall(i=0:2, j=0:2) grad_unit_vec_Bp(i,j)=sum(weight*grad_unit_vec_B_cell(i, j, :, :, :))
+endif
+
 end subroutine interpolate_grad_unit_vec_B
 
 
-subroutine f_scott(vector9, vector9_k)
-use qfactor_common
+subroutine interpolateAll(vp, unit_vec_bp, grad_unit_vec_Bp, alpha, alphaFlag, ds_factor)
+use trace_common
+use field_common
 implicit none
-real::  vector9(0:8),vector9_k(0:8), grad_unit_vec_B(0:2,0:2), vp(0:2), unit_vec_bp(0:2)
+real:: weight(0:1,0:1,0:1), vp(0:2), bp(0:2), unit_vec_bp(0:2), grad_unit_vec_Bp(0:2,0:2), &
+grad_unit_vec_B_cell(0:2,0:2,0:1,0:1,0:1), alpha, ds_factor, CurlBp(0:2)
+integer:: round(0:1,0:2), i, j, k
+logical:: alphaFlag
+!----------------------------------------------------------------------------
+call round_weight(vp, round, weight)
+forall(i=0:2) Bp(i)=sum(weight*Bfield(i, round(:,0), round(:,1), round(:,2)))
+unit_vec_bp= bp/norm2(bp)
+
+if (grad3DFlag) then
+	forall(i=0:2, j=0:2) grad_unit_vec_Bp(i,j)=sum(weight*grad_unit_vec_Bfield(i, j, round(:,0), round(:,1), round(:,2)))
+else
+	do k=0,1
+	do j=0,1
+	do i=0,1
+		if (weight(i,j,k) .ne. 0.0) then
+			call grad_unit_vec_B_grid(round(i,0), round(j,1), round(k,2), grad_unit_vec_B_cell(:,:,i,j,k))
+		else
+			grad_unit_vec_B_cell(:,:,i,j,k)=0.0
+		endif
+	enddo
+	enddo
+	enddo
+	forall(i=0:2, j=0:2) grad_unit_vec_Bp(i,j)=sum(weight*grad_unit_vec_B_cell(i, j, :, :, :))
+endif
+
+if(alphaFlag) then
+	forall(i=0:2) CurlBp(i)=sum(weight*curlB(i, round(:,0), round(:,1), round(:,2)))
+	alpha=dot_product(curlbp, bp)/dot_product(bp, bp)
+endif
+
+if (stretchFlag) then
+	ds_factor=norm2(unit_vec_bp/[dxa(round(0,0)),dya(round(0,1)),dza(round(0,2))])
+else
+	ds_factor=1.0
+endif
+
+end subroutine interpolateAll
+
+
+subroutine f_scott(vector9, vector9_k)
+implicit none
+real:: vector9(0:8), vector9_k(0:8), grad_unit_vec_Bp(0:2,0:2)
 integer:: i
 !----------------------------------------------------------------------------
-vp=vector9(0:2)
-if (scottFlag) then 
-	call interpolate_grad_unit_vec_B(vp, unit_vec_bp, grad_unit_vec_B)
-else 
-!For method 3 of Pariat_2012_A&A_541_A78, some points have difficult mapping surface. 
-!interpolate_grad_unit_vec_B have much better quality than interpolate_grad_unit_vec_B3, 
-!but ocupping more memory (grad_unit_vec_Bfield). 
-!So these unimportant points can be filled by interpolate_grad_unit_vec_B3.
-	call interpolate_grad_unit_vec_B3(vp, unit_vec_bp, grad_unit_vec_B)  
-endif
-vector9_k(0:2)= unit_vec_bp
-forall(i=0:2) vector9_k(3+i)= dot_product(vector9(3:5), grad_unit_vec_B(0:2,i))
-forall(i=0:2) vector9_k(6+i)= dot_product(vector9(6:8), grad_unit_vec_B(0:2,i))
+call interpolate_grad_unit_vec_B(vector9(0:2), vector9_k(0:2), grad_unit_vec_Bp)
+forall(i=0:2) vector9_k(3+i)= dot_product(vector9(3:5), grad_unit_vec_Bp(0:2,i))
+forall(i=0:2) vector9_k(6+i)= dot_product(vector9(6:8), grad_unit_vec_Bp(0:2,i))
 end subroutine f_scott
+
+
+subroutine f_scott_k1(vector9, vector9_k, alpha, alphaFlag, ds_factor)
+implicit none
+real:: vector9(0:8), vector9_k(0:8), grad_unit_vec_Bp(0:2,0:2), alpha, ds_factor
+integer:: i
+logical:: alphaFlag
+!----------------------------------------------------------------------------
+call interpolateAll(vector9(0:2), vector9_k(0:2), grad_unit_vec_Bp, alpha, alphaFlag, ds_factor)
+forall(i=0:2) vector9_k(3+i)= dot_product(vector9(3:5), grad_unit_vec_Bp(0:2,i))
+forall(i=0:2) vector9_k(6+i)= dot_product(vector9(6:8), grad_unit_vec_Bp(0:2,i))
+end subroutine f_scott_k1
 
 
 subroutine f_scott_boundary(vector9, vector9_k, b_dim)
 implicit none
-real::  vector9(0:8),vector9_k(0:8)
+real:: vector9(0:8), vector9_k(0:8)
 integer:: b_dim
 !----------------------------------------------------------------------------
 call f_scott(vector9, vector9_k)
@@ -114,172 +190,170 @@ vector9_k(b_dim)=1.0
 end subroutine f_scott_boundary
 
 
-subroutine RK4_scott(dt, vector9, vector9_1)
+subroutine RK4_scott(dt, vector9, vector9_1, alpha, alphaFlag)
 implicit none
-real:: dt, vector9(0:8),vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8)
+real:: vector9(0:8), vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8), &
+dt, ds, alpha, ds_factor
+logical:: alphaFlag
 !----------------------------------------------------------------------------
-call f_scott(vector9, k1)
-call f_scott(vector9+dt*1./3.*k1, k2)
-call f_scott(vector9+dt*(-1./3.*k1+k2), k3)
-call f_scott(vector9+dt*(k1-k2+k3), k4)
-vector9_1=vector9+dt/8.0*(k1+3.*k2+3.*k3+k4)
+call f_scott_k1(vector9, k1, alpha, alphaFlag, ds_factor)
+ds=dt/ds_factor
+call f_scott(vector9+ds*1./3.*k1,       k2)
+call f_scott(vector9+ds*(-1./3.*k1+k2), k3)
+call f_scott(vector9+ds*(k1-k2+k3),     k4)
+
+vector9_1=vector9+ds/8.0*(k1+3.*k2+3.*k3+k4)
 end subroutine RK4_scott
 
 
-subroutine RK4_scott_boundary(dt, vector9, vector9_1, b_dim)
+subroutine RK4_scott_boundary(ds, vector9, vector9_1, b_dim)
 implicit none
-real:: dt, vector9(0:8),vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8)
+real:: ds, vector9(0:8),vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8)
 integer:: b_dim
 !----------------------------------------------------------------------------
-call f_scott_boundary(vector9, k1, b_dim)
-call f_scott_boundary(vector9+dt*1./3.*k1, k2, b_dim)
-call f_scott_boundary(vector9+dt*(-1./3.*k1+k2), k3, b_dim)
-call f_scott_boundary(vector9+dt*(k1-k2+k3), k4, b_dim)
-vector9_1=vector9+dt/8.0*(k1+3.*k2+3.*k3+k4)
+call f_scott_boundary(vector9,                   k1, b_dim)
+call f_scott_boundary(vector9+ds*1./3.*k1,       k2, b_dim)
+call f_scott_boundary(vector9+ds*(-1./3.*k1+k2), k3, b_dim)
+call f_scott_boundary(vector9+ds*(k1-k2+k3),     k4, b_dim)
+vector9_1=vector9+ds/8.0*(k1+3.*k2+3.*k3+k4)
 end subroutine RK4_scott_boundary
 
 
-subroutine RKF45_scott(dt, vector9, vector9_1)
+subroutine RKF45_scott(dt, vector9, vector9_1, alpha, alphaFlag)
 use trace_common
-use rkf45_common
 implicit none
-real:: vector9(0:8),vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8), k5(0:8), k6(0:8),vp0(0:2),vp1(0:2)
-real:: dt, dt0, dt1, error, min_error
-real:: dvp(0:2), scale_dt
-logical:: continue_flag
+real:: vector9(0:8), vector9_1(0:8), k1(0:8), k2(0:8), k3(0:8), k4(0:8), k5(0:8), k6(0:8), &
+dt, ds, ds0, ds1, error, min_error, ds_factor, vp0(0:2), vp1(0:2), dvp(0:2), scale_dt, alpha, tol_this_1
+logical:: continue_flag, alphaFlag
 integer:: rb, rb_index
 !----------------------------------------------------------------------------
-
-continue_flag=.true.
 vp0=vector9(0:2)
-call f_scott(vector9, k1)
+continue_flag=.true.
+call f_scott_k1(vector9, k1, alpha, alphaFlag, ds_factor)
+tol_this_1=tol/ds_factor
 
 do while ( continue_flag ) 
+	ds=dt/ds_factor
+	call f_scott(vector9+ds*a21*k1,                               k2)
+	call f_scott(vector9+ds*(a31*k1+a32*k2),                      k3)
+	call f_scott(vector9+ds*(a41*k1+a42*k2+a43*k3),               k4)   
+	call f_scott(vector9+ds*(a51*k1+a52*k2+a53*k3+a54*k4),        k5)   
+	call f_scott(vector9+ds*(a61*k1+a62*k2+a63*k3+a64*k4+a65*k5), k6)
 
-   
-	call f_scott(vector9+dt*a21*k1, k2)
-	call f_scott(vector9+dt*(a31*k1+ a32*k2), k3)   
-	call f_scott(vector9+dt*(a41*k1+ a42*k2+ a43*k3), k4)   
-	call f_scott(vector9+dt*(a51*k1+ a52*k2+ a53*k3+ a54*k4), k5)   
-	call f_scott(vector9+dt*(a61*k1+ a62*k2+ a63*k3+ a64*k4+ a65*k5), k6)
-
-	vector9_1 = vector9+dt*(b1*k1 + b3*k3 + b4*k4 + b5*k5 + b6*k6)
+	vector9_1 = vector9+ds*(b1*k1 + b3*k3 + b4*k4 + b5*k5 + b6*k6)
 	
-	dvp=dt*(ce1*k1(0:2)+ce3*k3(0:2)+ce4*k4(0:2)+ce5*k5(0:2)+ce6*k6(0:2))
+	dvp=ds*(ce1*k1(0:2)+ce3*k3(0:2)+ce4*k4(0:2)+ce5*k5(0:2)+ce6*k6(0:2))
 	error = norm2(dvp)
 	
-	continue_flag =.false.
-	if (abs(dt) .gt. min_step) then
-                vp1=vector9_1(0:2)
-                if (.not.(minval(vp1-pmin)>=0 .and. maxval(vp1-pmax)<=0 ))  then
-			call vp_rboundary(vp1, rb, rb_index)		
-			if (rb .ne. 7) then 
-						
-				if (abs(dt) .ge. 2.*norm2(vp1-vp0))  then
-					dt=dt/2.
-				else
-					if( mod(rb, 2) .eq. 1) then
-					 	dt0=pmin(rb_index)-vp0(rb_index)
-					 	dt1=vp1(rb_index)-pmin(rb_index)
-					else
-					 	dt0=pmax(rb_index)-vp0(rb_index)
-					 	dt1=vp1(rb_index)-pmax(rb_index)
-					endif			
-					dt=dt*dt0/(dt0+dt1)*0.95
-				endif
-				
-				if (abs(dt) .lt. min_step) then	
-					dt=sign(min_step,dt)	
-					continue_flag=.false.
-				else
-					continue_flag=.true.
-				endif
-			else
-				dt=dt*0.618
-				if (abs(dt) .lt. min_step) dt=sign(min_step,dt)
-				continue_flag=.true.
-			endif
-			
-			cycle
+!----------------------------------------------------------------------------
+	vp1=vector9_1(0:2)
+	call vp_rboundary(vp1, rb, rb_index)
+	if (rb .eq. 0) then
+		continue_flag = error .gt. tol_this_1 .and. (abs(dt) .gt. min_step)
+		if (error .gt. 0.) then
+			dt=dt* ((tol_this_1/error)**0.2)*0.9
+		else
+			dt=sign(100., dt)
 		endif
-		
-		if  (error .gt. tol) then
-			dt=dt*0.618
-			if (abs(dt) .lt. min_step) dt=sign(min_step,dt)
-			continue_flag=.true.
-			cycle
+		if (abs(dt) .gt. 100.) dt=sign(100., dt)
+		if (abs(dt) .lt. min_step) dt=sign(min_step, dt)
+!----------------------------------------------------------------------------
+	else
+		continue_flag =abs(dt) .gt. min_step
+		if (continue_flag) then
+
+			select case (rb)
+			case(1:6)
+				if(mod(rb, 2) .eq. 1) then
+					ds0=pmin(rb_index)- vp0(rb_index)
+					ds1= vp1(rb_index)-pmin(rb_index)
+				else
+					ds0=pmax(rb_index)- vp0(rb_index)
+					ds1= vp1(rb_index)-pmax(rb_index)
+				endif
+				if (abs(ds0+ds1) .le. 0.05*norm2(vp1-vp0)) then
+					 dt=sign(min_step, dt)
+				else
+					! then if a next do loop exist, continue_flag will be .false. in that loop
+					! because dt will \approx 0.5*sign(min_step, dt) in that loop
+					dt=sign(abs(dt*ds0/(ds0+ds1))-0.5*min_step, dt)
+				endif
+			case(7)
+				dt=dt*0.5
+			end select
+			! once dt is scaled to sign(min_step, dt), only once left to be processed in the do loop
+			if (abs(dt) .lt. min_step) dt=sign(min_step, dt)
 		endif
+!----------------------------------------------------------------------------
 	endif
 	
 enddo
 
-!(0.618)^-5 \approx 11.0932
-min_error=(tol/11.0932)/((100./abs(dt))**5.)
-if (error .lt. min_error) then
-	if (error .ne. 0.0) dt=sign(100.,dt)
-else
-	scale_dt=((tol/error)**0.2)*0.618
-	dt=dt*scale_dt
-endif
-
-if (abs(dt) .lt. min_step) dt=sign(min_step,dt)
-
 end subroutine RKF45_scott
 
 
-subroutine correct_foot_scott(vector9, vector9_1, sign_dt, rb)
+subroutine correct_foot_scott(vector9_orig, vector9_1, sign_dt, rb)
 use trace_common
 implicit none
-real:: dt, dt0, dt1, vp(0:2), vp0(0:2), vp1(0:2)
-real:: vector9(0:8), vector9_0(0:8), vector9_1(0:8), vector9_orig(0:8), vector9_1_orig(0:8)
-integer:: sign_dt, rb, rb_index, maxsteps2, it
-!----------------------------------------------------------------------------
+real:: dt, dt0, ds0, ds1, vp(0:2), vp0(0:2), vp1(0:2), alpha, &
+vector9(0:8), vector9_0(0:8), vector9_1(0:8), vector9_orig(0:8), vector9_1_orig(0:8)
+integer:: sign_dt, rb, rb_index, it
+!---------------------------------------------------------------------------
+vp=vector9_orig(0:2)
 vp1=vector9_1(0:2)
+dt0=dt
+
 call vp_rboundary(vp1, rb, rb_index)
 if (rb .eq. 0) return
-vector9_orig  =vector9
+
+if (any((vp .eq. pmin) .or. (vp .eq. pmax))) then
+	vector9_1=vector9_orig
+	return
+endif
+
 vector9_1_orig=vector9_1
-vector9_0=vector9
+vector9_0=vector9_orig
+vector9=vector9_orig
 
 if (rb .ne. 7) then 
 	vp0=vector9_0(0:2)
 	vp1=vector9_1(0:2)
 	if( mod(rb, 2) .eq. 1) then
-		dt0=pmin(rb_index)- vp0(rb_index)
-		dt1= vp1(rb_index)-pmin(rb_index)
+		ds0=pmin(rb_index)- vp0(rb_index)
+		ds1= vp1(rb_index)-pmin(rb_index)
 	else
-		dt0=pmax(rb_index)- vp0(rb_index)
-		dt1= vp1(rb_index)-pmin(rb_index)
+		ds0=pmax(rb_index)- vp0(rb_index)
+		ds1= vp1(rb_index)-pmax(rb_index)
 	endif
 	
 	if  (RK4flag) then
-		dt=    step*abs(dt0/(dt0+dt1))*sign_dt*0.95
+		dt=    step*abs(ds0/(ds0+ds1))*sign_dt*0.95
 	else
-		dt=min_step*abs(dt0/(dt0+dt1))*sign_dt*0.95
+		dt=min_step*abs(ds0/(ds0+ds1))*sign_dt*0.95
 	endif
 	
-	if (abs(dt) .ge. min_foot_step) then
-		call RK4_scott(dt, vector9_0, vector9)
+	if (abs(dt) .ge. min_step_foot) then
+		call RK4_scott(dt, vector9_0, vector9, alpha, .false.)
 		vp=vector9(0:2)
-		do while( .not.( minval(vp-pmin)>=0 .and. maxval(vp-pmax)<=0) .and. (abs(dt) .ge. min_foot_step) )
+		do while(.not.(all(pmin<=vp .and. vp<=pmax)) .and. (abs(dt) .ge. min_step_foot))
 			dt= dt*0.9
-			if (abs(dt) .ge. min_foot_step) call RK4_scott(dt, vector9_0, vector9)
+			if (abs(dt) .ge. min_step_foot) call RK4_scott(dt, vector9_0, vector9, alpha, .false.)
 			vp=vector9(0:2)
 		enddo
 	endif
 endif
 
-dt=min_foot_step*sign_dt
+dt=min_step_foot*sign_dt
 vp=vector9(0:2)
 it=0
-maxsteps2=norm2(vector9_1(0:2)-vector9(0:2))/abs(dt)*2
 
-do while( minval(vp-pmin)>=0 .and. maxval(vp-pmax)<=0)
-	call RK4_scott(dt, vector9, vector9_1) 
+do while(all(pmin<=vp .and. vp<=pmax))
+	call RK4_scott(dt, vector9, vector9_1, alpha, .false.)
 	it=it+1
-	if (it .ge. maxsteps2) then
+	if (it .ge. maxsteps_foot) then
 		vector9_0=vector9_orig
 		vector9_1=vector9_1_orig
+		dt=dt0
 		exit
 	endif	
 	vector9_0=vector9
@@ -293,156 +367,69 @@ vp1=vector9_1(0:2)
 call vp_rboundary(vp1, rb, rb_index)
 if (rb .eq. 7) return
 
-if( mod(rb, 2) .eq. 1) then
-	 dt0=pmin(rb_index)-  vp(rb_index)
-	 dt1= vp1(rb_index)-pmin(rb_index)
+if(mod(rb, 2) .eq. 1) then
+	 ds0=pmin(rb_index)-  vp(rb_index)
+	 ds1= vp1(rb_index)-pmin(rb_index)
 else
-	 dt0=pmax(rb_index)-  vp(rb_index)
-	 dt1= vp1(rb_index)-pmax(rb_index)
+	 ds0=pmax(rb_index)-  vp(rb_index)
+	 ds1= vp1(rb_index)-pmax(rb_index)
 endif
 
-if (abs(dt0+dt1) .le. 0.05*norm2(vp-vp1)) then
-	if(abs(dt0+dt1) .ne. 0.0) then
-		vector9_1=(vector9_0*dt1+vector9_1*dt0)/(dt0+dt1)
-	else
-		vector9_1=vector9_0
-	endif
+if (abs(ds0+ds1) .le. 0.05*norm2(vp0-vp1)) then
+ 	call RK4_scott(dt*ds0/(ds0+ds1), vector9_0, vector9_1, alpha, .false.)
 else
-	call RK4_scott_Boundary(dt0, vector9_0, vector9_1, rb_index)
+	call RK4_scott_Boundary(ds0, vector9_0, vector9_1, rb_index)
 endif
+
 end subroutine correct_foot_scott
 
 
-subroutine grad_unit_vec_B_calculate(k)
-use trace_common
-use field_common
-implicit none
-integer:: i,j,k
-!----------------------------------------------------------------------------
-do j=0,nym1
-do i=0,nxm1
-!----------------------------------------------------------------------------
-	if (i .eq. 0) then
-		grad_unit_vec_Bfield(0,:,i,j,k) = &
-		-3.0*Bfield(:,0,j,k)/norm2(Bfield(:,0,j,k))&
-		+4.0*Bfield(:,1,j,k)/norm2(Bfield(:,1,j,k))&
-		-    Bfield(:,2,j,k)/norm2(Bfield(:,2,j,k))
-	else if (i .eq. nxm1) then	
-		grad_unit_vec_Bfield(0,:,i,j,k) = &
-		 3.0*Bfield(:,i  ,j,k)/norm2(Bfield(:,i  ,j,k))&
-		-4.0*Bfield(:,i-1,j,k)/norm2(Bfield(:,i-1,j,k))&
-		+    Bfield(:,i-2,j,k)/norm2(Bfield(:,i-2,j,k))
-	else
-		grad_unit_vec_Bfield(0,:,i,j,k) = Bfield(:,i+1,j,k)/Norm2(Bfield(:,i+1,j,k))-Bfield(:,i-1,j,k)/Norm2(Bfield(:,i-1,j,k))
-	endif
-!----------------------------------------------------------------------------
-	if (j .eq. 0) then
-		grad_unit_vec_Bfield(1,:,i,j,k) = &
-		-3.0*Bfield(:,i,0,k)/norm2(Bfield(:,i,0,k))&
-		+4.0*Bfield(:,i,1,k)/norm2(Bfield(:,i,1,k))&
-		-    Bfield(:,i,2,k)/norm2(Bfield(:,i,2,k))
-	else if (j .eq. nym1) then	
-		grad_unit_vec_Bfield(1,:,i,j,k) = &
-		 3.0*Bfield(:,i,j  ,k)/norm2(Bfield(:,i,j  ,k))&
-		-4.0*Bfield(:,i,j-1,k)/norm2(Bfield(:,i,j-1,k))&
-		+    Bfield(:,i,j-2,k)/norm2(Bfield(:,i,j-2,k))	
-	else
-		grad_unit_vec_Bfield(1,:,i,j,k) = Bfield(:,i,j+1,k)/Norm2(Bfield(:,i,j+1,k))-Bfield(:,i,j-1,k)/Norm2(Bfield(:,i,j-1,k))
-	endif
-!----------------------------------------------------------------------------
-	if (k .eq. 0) then
-		grad_unit_vec_Bfield(2,:,i,j,k) = &
-		-3.0*Bfield(:,i,j,0)/norm2(Bfield(:,i,j,0))&
-		+4.0*Bfield(:,i,j,1)/norm2(Bfield(:,i,j,1))&
-		-    Bfield(:,i,j,2)/norm2(Bfield(:,i,j,2))
-	else if (k .eq. nzm1) then
-		grad_unit_vec_Bfield(2,:,i,j,k) = &
-		 3.0*Bfield(:,i,j,k  )/norm2(Bfield(:,i,j,k  ))&
-		-4.0*Bfield(:,i,j,k-1)/norm2(Bfield(:,i,j,k-1))&
-		+    Bfield(:,i,j,k-2)/norm2(Bfield(:,i,j,k-2))
-	else
-		grad_unit_vec_Bfield(2,:,i,j,k) = Bfield(:,i,j,k+1)/Norm2(Bfield(:,i,j,k+1))-Bfield(:,i,j,k-1)/Norm2(Bfield(:,i,j,k-1))
-	endif
-!----------------------------------------------------------------------------
-	grad_unit_vec_Bfield(:,:,i,j,k)=grad_unit_vec_Bfield(:,:,i,j,k)/2.
-enddo
-enddo
-
-END subroutine grad_unit_vec_B_calculate
-
-
 !Scott_2017_ApJ_848_117
-subroutine trace_scott(vp0, q0, q_perp0, rs, re, rbs, rbe, line_length, twist0, iix, iiy)!, twistFlag)
+subroutine trace_scott(vp0, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag)
 use trace_common
-use qfactor_common  
 implicit none
-real :: dt, vp(0:2), vp0(0:2), q0, bp(0:2), b0square, Bn_s, Bn_e, q_perp0
-real :: unit_vec_bp(0:2), rs(0:2),re(0:2), line_length, twist0, alpha, alpha0, dL, dL0, dtwist
-real :: vector9(0:8), vector9_0(0:8), vector9_1(0:8), vector9_s(0:8), vector9_e(0:8),&
-u0(0:2), us(0:2), ue(0:2), v0(0:2), vs(0:2), ve(0:2), b0(0:2), bs(0:2), be(0:2), &
-vs1(0:2), ve1(0:2), us1(0:2), ue1(0:2)
-integer:: it, rb, rbe, rbs, e_index, s_index, sign_dt, maxdim, index1, index2
-logical:: z0flag!, twistFlag
-!DNSi
-integer :: iix, iiy, idns
-real, allocatable :: xline(:), yline(:), zline(:)
-integer:: nline
-allocate(xline(0:maxsteps), yline(0:maxsteps), zline(0:maxsteps))
-!DNSf
+real:: vp(0:2), vp0(0:2), q0, q_perp0, dt, dL, dL0, length0, alpha, alpha0, twist0, dtwist, &
+rs(0:2), re(0:2), Bn_s, Bn_e, b0_square, b0(0:2), bs(0:2), be(0:2), &
+vector9(0:8), vector9_0(0:8), vector9_1(0:8), vector9_s(0:8), vector9_e(0:8), &
+u0(0:2), us(0:2), ue(0:2), v0(0:2), vs(0:2), ve(0:2), vs1(0:2), ve1(0:2), us1(0:2), ue1(0:2)
+integer:: it, sign_dt, rb, rbe, rbs, e_index, s_index, maxdim, index1, index2
+logical:: z0flag, twistFlag
 !----------------------------------------------------------------------------
-twist0     =0.0
-line_length=0.0
+twist0 =0.0
+length0=0.0
 !----------------------------------------------------------------------------
-z0flag= vp0(2) .eq. 0.0
+z0flag= vp0(2) .eq. zmin
 call interpolateB(vp0, b0)
 
-b0square=dot_product(b0, b0)
+b0_square=dot_product(b0, b0)
 
 maxdim=sum(maxloc(abs(b0)))-1
 index1=mod(maxdim+1,3)
 index2=mod(maxdim+2,3)
+
 v0(maxdim)= b0(index1)
 v0(index1)=-b0(maxdim)
 v0(index2)=0.
 
-v0   =v0 - dot_product(v0, b0)*b0 / b0square
-v0   =v0/norm2(v0)
-
-u0(0)=dble(b0(1))*v0(2)-dble(b0(2))*v0(1)
-u0(1)=dble(b0(2))*v0(0)-dble(b0(0))*v0(2)
-u0(2)=dble(b0(0))*v0(1)-dble(b0(1))*v0(0)
-u0   =u0/norm2(u0)
+v0=v0/norm2(v0)
+call cross_product(b0, v0, u0)
+u0=u0/norm2(u0)
 !----------------------------------------------------------------------------
-
-!DNSi
-if (traceflag) then 
-   nline = 0
-   xline(nline) = vp0(0)
-   yline(nline) = vp0(1)
-   zline(nline) = vp0(2)
-   nline = nline+1
-endif
-!DNSf
-
-
 do sign_dt=-1, 1, 2	
 	vector9(0:2)=vp0
 	vector9(3:5)=u0
 	vector9(6:8)=v0
 	
 	if (z0flag) then
-		if ( b0(2)*sign_dt .le. 0) then 
+		if ( b0(2)*sign_dt .le. 0.) then 
 			if (sign_dt .eq. -1) then
-				vector9_s=vector9
-				rbs      =1
+				vector9_s=vector9; rbs=1
 			else
-				vector9_e=vector9
-				rbe      =1
+				vector9_e=vector9; rbe=1
 			endif		
 			cycle
 		endif
-	endif
-	
+	endif	
 	
 	it=0
 	dL=0.
@@ -451,83 +438,62 @@ do sign_dt=-1, 1, 2
 		dt=    step*sign_dt
 	else
 		dt=min_step*sign_dt
-	endif
+	endif	
 	
-	
-	do while( minval(vp-pmin)>=0 .and. maxval(vp-pmax)<=0 .and. abs(it) < maxsteps)
+	do while(all(pmin<=vp .and. vp<=pmax) .and. abs(it) < maxsteps)
 
-		line_length=line_length+dL		
+		length0=length0+dL		
 		
 		if (RK4flag) then  
-		 	call   RK4_scott(dt, vector9, vector9_1) 
+		 	call   RK4_scott(dt, vector9, vector9_1, alpha, twistflag)
 		else			
-			call RKF45_scott(dt, vector9, vector9_1) 
+			call RKF45_scott(dt, vector9, vector9_1, alpha, twistflag)
 		endif
 		
 		dL0=dL
 		dL =norm2(vector9_1(0:2)-vector9(0:2))
 		
-		if (twistflag) then 
-			call interpolateAlpha(vp, unit_vec_bp, alpha)
+		if (twistflag) then
 			if (it .ne. 0) then
 				dtwist=(alpha0+alpha)/2.*dL0
 				twist0=twist0+dtwist
-			endif
-			
+			endif			
 			alpha0=alpha
 		endif
 				
 		it       =it+sign_dt	
 		vector9_0=vector9
 		vector9  =vector9_1
-                vp       =vector9_1(0:2)
-                !DNSi
-                if (traceflag) then 
-                   xline(nline) = vp(0)
-                   yline(nline) = vp(1)
-                   zline(nline) = vp(2)
-                   nline        = nline+1
-                endif
-                !DNSf
-
+		vp       =vector9_1(0:2)
 	end do
 	
 	call correct_foot_scott(vector9_0, vector9_1, sign_dt, rb)
 	
+	if (rb .eq. 0 .or. rb .eq. 7) then 
+		rbs=rb; rbe=rb
+		q0=NaN; q_perp0=NaN
+		return
+	endif
+
 	dL=norm2(vector9_1(0:2)-vector9_0(0:2))
-	line_length=line_length+dL
-        vp=vector9_1(0:2)
-        !DNSi
-        if (traceflag) then 
-           xline(nline-1) = vp(0)
-           yline(nline-1) = vp(1)
-           zline(nline-1) = vp(2)
-        endif
-        !DNSf
-        
+	length0=length0+dL
+	
 	if (twistflag) then
-		call interpolateAlpha(vp, unit_vec_bp, alpha)
+		vp=vector9_1(0:2)
+		call interpolateAlpha(vp, alpha)
 		dtwist=(alpha0+alpha)/2.*dL
 		twist0=twist0+dtwist
 	endif
 	
 	if (sign_dt .eq. -1) then
-		vector9_s=vector9_1
-		rbs      =rb
+		vector9_s=vector9_1; rbs=rb
 	else
-		vector9_e=vector9_1
-		rbe      =rb
+		vector9_e=vector9_1; rbe=rb
 	endif
 enddo
 
 if (twistflag) twist0=twist0/(4.0*pi)
-
-if ((rbs .eq. 0) .or. (rbe .eq. 0) .or. (rbs .eq. 7) .or. (rbe .eq. 7)) then 
-	q0=NaN
-	q_perp0=NaN
-	return 
-endif
-
+!----------------------------------------------------------------------------
 rs=vector9_s(0:2)
 call interpolateB(rs, bs)
 s_index=(6-rbs)/2
@@ -542,40 +508,24 @@ Bn_e=be(e_index)
 ue=vector9_e(3:5)
 ve=vector9_e(6:8)
 
+us1=us-us(s_index)/Bn_s*bs
+vs1=vs-vs(s_index)/Bn_s*bs
+ue1=ue-ue(e_index)/Bn_e*be
+ve1=ve-ve(e_index)/Bn_e*be
 
-us1=us-us(s_index)/bs(s_index)*bs
-vs1=vs-vs(s_index)/bs(s_index)*bs
-ue1=ue-ue(e_index)/be(e_index)*be
-ve1=ve-ve(e_index)/be(e_index)*be
-
-
-q0      =abs( dot_product(Ue1,Ue1)*dot_product(Vs1,Vs1)  &
-        +     dot_product(Us1,Us1)*dot_product(Ve1,Ve1)  &
-        - 2.0*dot_product(Ue1,Ve1)*dot_product(Us1,Vs1))/&
-     ( b0square / abs(Bn_s*Bn_e))
+q0      =abs(dot_product(Ue1,Ue1)*dot_product(Vs1,Vs1)  &
+        +    dot_product(Us1,Us1)*dot_product(Ve1,Ve1)  &
+        -2.0*dot_product(Ue1,Ve1)*dot_product(Us1,Vs1))/&
+      (b0_square / abs(Bn_s*Bn_e))
 
 ue1=ue-dot_product(ue,be)/norm2(be)*(be/norm2(be))
 ve1=ve-dot_product(ve,be)/norm2(be)*(be/norm2(be))
 us1=us-dot_product(us,bs)/norm2(bs)*(bs/norm2(bs))
 vs1=vs-dot_product(vs,bs)/norm2(bs)*(bs/norm2(bs))
 
-q_perp0 =abs( dot_product(Ue1,Ue1)*dot_product(Vs1,Vs1)  &
-        +     dot_product(Us1,Us1)*dot_product(Ve1,Ve1)  &
-        - 2.0*dot_product(Ue1,Ve1)*dot_product(Us1,Vs1))/&
-     ( b0square / (norm2(bs)*norm2(be)))
-
-
-!DNSi
-if (traceflag) then 
-   do idns = 0, nline - 1
-      if (idns < max_trace_steps) then
-         xfl(iix, iiy, idns) = xline(idns)
-         yfl(iix, iiy, idns) = yline(idns)
-         zfl(iix, iiy, idns) = zline(idns)
-      endif
-   end do
-   deallocate(xline, yline, zline)
-endif
-!DNSf
-
+q_perp0 =abs(dot_product(Ue1,Ue1)*dot_product(Vs1,Vs1)  &
+        +    dot_product(Us1,Us1)*dot_product(Ve1,Ve1)  &
+        -2.0*dot_product(Ue1,Ve1)*dot_product(Us1,Vs1))/&
+            (b0_square / (norm2(bs)*norm2(be)))
+     
 end subroutine trace_scott
