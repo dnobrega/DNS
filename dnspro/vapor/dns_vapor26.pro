@@ -1,5 +1,11 @@
 
-PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
+PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var2Dlist, $
+                 isnaps=isnaps, vdffile=vdffile, do_vdf=do_vdf, do_data=do_data
+
+    IF (N_ELEMENTS(var_3Dlist) EQ 0) THEN var_3Dlist = ["bxob", "byob","bzob","eparb","eui174","q_perp3d","r","tg","twist3d","ux","uy","uz"]
+    IF (N_ELEMENTs(var_2Dlist) EQ 0) THEN var_2Dlist = ["eui174"]
+    IF (N_ELEMENTS(isnaps) EQ 0)     THEN isnaps     = 2*indgen(806)
+    IF (N_ELEMENTS(vdffile) EQ 0)    THEN vdffile    = "vapor_data"
 
     swap=0
     units="solar"
@@ -37,6 +43,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
     IF (KEYWORD_SET(do_vdf)) THEN BEGIN
        commandvdf="vdfcreate -level "+strtrim(string(nl),2)+ $
                   " -vars3d "+strjoin(var_3Dlist,':')+ var_2Dlist + $
+                  " -vars2dxy "+strjoin(var_2Dlist+"xy",':')+ $
                   " -dimension "+strjoin(strtrim(string(dim,format="(I4)"),2),'x')+ $
                   " -extents "+strjoin(strtrim(string(ext),2),':')+ $
                   " -numts "+string(nt)+" -periodic 1:1:0 " $
@@ -47,6 +54,7 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
     IF (KEYWORD_SET(do_data)) THEN BEGIN
        FOR jj=0,ns-1 DO BEGIN
           FOR ll=0,N_ELEMENTS(var_3Dlist)-1 DO BEGIN
+             name = var_3Dlist[ll]
              do_reverse = 1
              dnsvar_name="dnsvar_"+var_3Dlist[ll]
              IF (NOT KEYWORD_SET(save_dnsfolder)) THEN save_dnsfolder='dnsvar'
@@ -56,7 +64,6 @@ PRO dns_vapor26, var_3Dlist, isnaps, vdffile, do_vdf=do_vdf, do_data=do_data
                 print, "Restoring variable"
                 restore, saved_dnsvar_name,/verbose
              ENDIF ELSE BEGIN
-                name=var_3Dlist[ll]
                 IF (name NE "q_perp3d") OR (name NE "twist3d") THEN BEGIN
                    print, "Loading...  ", name, string(isnaps[jj])
                    dnsvar_name="dnsvar_"+name
