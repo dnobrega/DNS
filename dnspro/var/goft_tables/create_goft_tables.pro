@@ -26,8 +26,8 @@ PRO create_goft_tables, line, ntg=ntg, ne0=ne0, nef=nef, nst=nst, wlim=wlim
 ; OPTIONAL:
 ;
 ; ntg: Number of elements in Tg. 
-;      By default, 101: the number of elements by default by CHIANTI.
-;      So far, the routine is not prepared for a different value.   
+;      By default, 101: the number of elements by default by CHIANTI
+;      in all the coronal lines; however, for TR lines, they use 81.
 ; ne0: Lower limit for the electron number density in log10.
 ;      By default, 7.5.
 ; nef: Upper limit for the electron number density in log10.
@@ -44,13 +44,15 @@ IF (NOT (KEYWORD_SET(nef)))  THEN nef=12.5
 IF (NOT (KEYWORD_SET(nst)))  THEN nst=0.05
 IF (NOT (KEYWORD_SET(wlim))) THEN wlim=0.001
 ;----------------------------------------------------------------------------------------
-iname=strpos(line,"_",/reverse_search)
-ilimit=iname+1
+iname    = STRPOS(line,"_",/reverse_search)
+ilimit   = iname+1
 sngl_ion = STRMID(line,0,iname)
-wvl0     = FLOAT(STRMID(line,ilimit,ilimit+2))-wlim
-wvlf     = FLOAT(STRMID(line,ilimit,ilimit+2))+wlim
-print, wvl0, wvlf
-print, sngl_ion
+length   = STRLEN(line)
+idot     = STRPOS(line,".",/reverse_search)
+howmany  = length-1-idot
+wvl0     = FLOAT(STRMID(line,ilimit,ilimit+howmany))-wlim
+wvlf     = FLOAT(STRMID(line,ilimit,ilimit+howmany))+wlim
+print, sngl_ion, 1d*wvl0, 1d*wvlf
 nne      = (nef-ne0)/nst + 1
 table    = fltarr(nne,ntg)
 density  = (ne0 + (nef-ne0)*findgen(nne)/(nne-1))
