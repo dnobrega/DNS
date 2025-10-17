@@ -5,7 +5,7 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var2Dlist, $
     IF (N_ELEMENTS(var_3Dlist) EQ 0) THEN var_3Dlist = ["bxob", "byob","bzob","eparb","eui174","q_perp3d","r","tg","twist3d","ux","uy","uz"]
     IF (N_ELEMENTs(var_2Dlist) EQ 0) THEN var_2Dlist = ["eui174"]
     IF (N_ELEMENTS(isnaps) EQ 0)     THEN isnaps     = 2*indgen(806)
-    IF (N_ELEMENTS(vdffile) EQ 0)    THEN vdffile    = "vapor_data"
+    IF (N_ELEMENTS(vdffile) EQ 0)    THEN vdffile    = "vapor"
 
     swap=0
     units="solar"
