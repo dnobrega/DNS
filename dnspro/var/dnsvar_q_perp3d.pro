@@ -15,11 +15,13 @@ PRO dnsvar_q_perp3d, d, name, snaps, swap, var, units, $
      nx  = d->getmx()
      ny  = d->getmy()
      nz  = d->getmz()
-     var = fltarr(nx,ny,nz)
+     var = fltarr(nx,ny,nz) + 1.0
      spawn, "pwd", folder
      folder   = folder+"/qfactor/"
      RESTORE, folder+"q_perp3d_"+STRTRIM(STRING(snaps),2)+".sav"
      var[*,*,0:(size(q_perp3d))[3]-1] = reverse(reverse(q_perp3d,3),2)
+     var(where(finite(var) EQ 0)) = 1.0
+     var(where(var ge 1e5)) = 1e5
      var_title='Q!dperp!n'
      var_range=[2,1e4]
      var_log=1
