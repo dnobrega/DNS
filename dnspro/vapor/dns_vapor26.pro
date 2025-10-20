@@ -2,17 +2,11 @@
 PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
                  isnaps=isnaps, vdffile=vdffile, do_vdf=do_vdf, do_data=do_data
 
-  IF KEYWORD_SET(var_3Dlist) EQ 0 THEN BEGIN
-     var_3Dlist = []
-  ENDIF ELSE BEGIN
-     IF (N_ELEMENTS(var_3Dlist) LE 1) THEN var_3Dlist = ["bxob","byob","bzob","bz","eparb","eui174","keparb","q_perp3d","r","tg","twist3d","ux","uy","uz"]
-  ENDELSE
+  default_3Dlist = ["bxob","byob","bzob","bz","eparb","eui174","keparb","q_perp3d","r","tg","twist3d","ux","uy","uz"]
+  default_2Dlist = ["aia171xy","aia193xy","aia211xy","eui174xy","xrt_alpolyxy"]
 
-  IF KEYWORD_SET(var_2Dlist) EQ 0 THEN BEGIN
-     var_2Dlist = []
-  ENDIF ELSE BEGIN
-     IF (N_ELEMENTs(var_2Dlist) LE 1) THEN var_2Dlist = ["aia171xy","aia193xy","aia211xy","eui174xy","xrt_alpolyxy"]
-  ENDELSE
+  IF (N_ELEMENTS(var_3Dlist) EQ 0) THEN var_3Dlist = default_3Dlist
+  IF (N_ELEMENTS(var_2Dlist) EQ 0) THEN var_2Dlist = default_2Dlist
   IF (N_ELEMENTS(isnaps) EQ 0)     THEN isnaps     = 2*indgen(806)
   IF (N_ELEMENTS(vdffile) EQ 0)    THEN vdffile    = "vapor"
   
