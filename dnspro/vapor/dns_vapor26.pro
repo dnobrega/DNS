@@ -5,8 +5,10 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
   default_3Dlist = ["bxob","byob","bzob","bz","eparb","eui174","keparb","q_perp3d","r","tg","twist3d","ux","uy","uz"]
   default_2Dlist = ["aia171xy","aia193xy","aia211xy","eui174xy","xrt_alpolyxy"]
 
-  IF (N_ELEMENTS(var_3Dlist) EQ 0) THEN var_3Dlist = default_3Dlist
-  IF (N_ELEMENTS(var_2Dlist) EQ 0) THEN var_2Dlist = default_2Dlist
+  IF ((N_ELEMENTS(var_3Dlist) EQ 0) AND ((N_ELEMENTS(var_2Dlist) EQ 0))) THEN BEGIN
+     var_3Dlist = default_3Dlist
+     var_2Dlist = default_2Dlist
+  ENDIF
   IF (N_ELEMENTS(isnaps) EQ 0)     THEN isnaps     = 2*indgen(806)
   IF (N_ELEMENTS(vdffile) EQ 0)    THEN vdffile    = "vapor"
   
@@ -43,30 +45,24 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
     ext = [xx[0],yy[0],zz[0],xx[nx-1],yy[ny-1],zz[nz-1]]
 
     list_xy = []
-; For Vapor 2.6 xz and yz are not available.    
-;    list_xz = []
-;    list_yz = []
 
-    FOR i=0, N_ELEMENTS(var_2Dlist)-1 DO BEGIN
-       ending = strmid(var_2Dlist[i], strlen(var_2Dlist[i])-2, 2)
-       CASE ending OF
-          'xy': list_xy = [list_xy, var_2Dlist[i]]
-;          'xz': list_xz = [list_xz, var_2Dlist[i]]
-;          'yz': list_yz = [list_yz, var_2Dlist[i]]
-       ENDCASE
-    ENDFOR
-
+    IF ((N_ELEMENTS(var_2Dlist) GT 0)) THEN BEGIN
+       FOR i=0, N_ELEMENTS(var_2Dlist)-1 DO BEGIN
+          ending = strmid(var_2Dlist[i], strlen(var_2Dlist[i])-2, 2)
+          CASE ending OF
+             'xy': list_xy = [list_xy, var_2Dlist[i]]
+          ENDCASE
+       ENDFOR
+    ENDIF
 
     IF (KEYWORD_SET(do_vdf)) THEN BEGIN
        
-       PRINT, "VDF 3D:", var_3Dlist
-       PRINT, "VDF 2D:", var_2Dlist
+       PRINT, "VDF 3D:", " -vars3d "+strjoin(var_3Dlist,':')
+       PRINT, "VDF 2D:", " -vars2dxy "+strjoin(list_xy,':')
        
        commandvdf="vdfcreate -level "+strtrim(string(nl),2)+ $
-                  " -vars3d "+strjoin(var_3Dlist,':') + $
+                  " -vars3d "+strjoin(var_3Dlist,':')+ $
                   " -vars2dxy "+strjoin(list_xy,':')+ $
-;                  " -vars2dxz "+strjoin(list_xz,':')+ $
-;                  " -vars2dyz "+strjoin(list_yz,':')+ $
                   " -dimension "+strjoin(strtrim(string(dim,format="(I4)"),2),'x')+ $
                   " -extents "+strjoin(strtrim(string(ext),2),':')+ $
                   " -numts "+string(nt)+" -periodic 1:1:0 " $
@@ -76,8 +72,8 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
 
     IF (KEYWORD_SET(do_data)) THEN BEGIN
 
-       PRINT, "Preparing to create 3D data:", var_3Dlist
-       PRINT, "Preparing to create 2D data:", var_2Dlist
+       IF ((N_ELEMENTS(var_3Dlist) GT 0)) THEN PRINT, "Preparing to create 3D data:", var_3Dlist
+       IF ((N_ELEMENTS(var_2Dlist) GT 0)) THEN PRINT, "Preparing to create 2D data:", var_2Dlist
        
        FOR jj=0,ns-1 DO BEGIN
           print, "----------------------------------------------------------"
