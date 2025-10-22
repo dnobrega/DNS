@@ -2,7 +2,7 @@
 PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
                  isnaps=isnaps, vdffile=vdffile, do_vdf=do_vdf, do_data=do_data
 
-  default_3Dlist = ["bxob","byob","bzob","bz","eparb","eui174","keparb","q_perp3d","r","tg","twist3d","ux","uy","uz"]
+  default_3Dlist = ["bxob","byob","bzob","bz","eparb","eui174","keparb","q_perp3d","r","tg","twist3d","ux","uy","uz", "v_aia193xz", "v_aia193yz"]
   default_2Dlist = ["aia171xy","aia193xy","aia211xy","eui174xy","xrt_alpolyxy"]
 
   IF ((N_ELEMENTS(var_3Dlist) EQ 0) AND ((N_ELEMENTS(var_2Dlist) EQ 0))) THEN BEGIN
@@ -84,7 +84,6 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
              dnsvar_name="dnsvar_"+name
              IF (NOT KEYWORD_SET(save_dnsfolder)) THEN save_dnsfolder='dnsvar'
              saved_dnsvar_name=save_dnsfolder+'/'+name+'_'+strtrim(string(isnaps[jj]),2)+'.sav'
-             
              IF file_test(saved_dnsvar_name) EQ 1 THEN BEGIN
                 print, "Restoring variable"
                 restore, saved_dnsvar_name,/verbose
@@ -107,7 +106,7 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
              ENDIF
              var=reverse(var,3)
              var=reverse(var,2)
-             datfile = "var_"+name+".dat"
+             datfile = "var_"+name+"_"+STRTRIM(string(isnaps[jj]),2)+".dat"
              openw,lu,datfile,/get_lun
              spawn, 'ls '+datfile
              writeu,lu,float(var)
