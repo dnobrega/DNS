@@ -58,15 +58,24 @@ PRO dns_vapor26, var_3Dlist=var_3Dlist, var_2Dlist=var_2Dlist, $
     IF (KEYWORD_SET(do_vdf)) THEN BEGIN
        
        PRINT, "VDF 3D:", " -vars3d "+strjoin(var_3Dlist,':')
-       PRINT, "VDF 2D:", " -vars2dxy "+strjoin(list_xy,':')
-       
-       commandvdf="vdfcreate -level "+strtrim(string(nl),2)+ $
-                  " -vars3d "+strjoin(var_3Dlist,':')+ $
-                  " -vars2dxy "+strjoin(list_xy,':')+ $
-                  " -dimension "+strjoin(strtrim(string(dim,format="(I4)"),2),'x')+ $
-                  " -extents "+strjoin(strtrim(string(ext),2),':')+ $
-                  " -numts "+string(nt)+" -periodic 1:1:0 " $
-                  + filetimesswitch +   ' '+vdffile
+
+       IF ((N_ELEMENTS(var_2Dlist) GT 0)) THEN BEGIN
+          PRINT, "VDF 2D:", " -vars2dxy "+strjoin(list_xy,':')
+          commandvdf="vdfcreate -level "+strtrim(string(nl),2)+ $
+                     " -vars3d "+strjoin(var_3Dlist,':')+ $
+                     " -vars2dxy "+strjoin(list_xy,':')+ $
+                     " -dimension "+strjoin(strtrim(string(dim,format="(I4)"),2),'x')+ $
+                     " -extents "+strjoin(strtrim(string(ext),2),':')+ $
+                     " -numts "+string(nt)+" -periodic 1:1:0 " $
+                     + filetimesswitch +   ' '+vdffile
+       ENDIF ELSE BEGIN
+          commandvdf="vdfcreate -level "+strtrim(string(nl),2)+ $
+                     " -vars3d "+strjoin(var_3Dlist,':')+ $
+                     " -dimension "+strjoin(strtrim(string(dim,format="(I4)"),2),'x')+ $
+                     " -extents "+strjoin(strtrim(string(ext),2),':')+ $
+                     " -numts "+string(nt)+" -periodic 1:1:0 " $
+                     + filetimesswitch +   ' '+vdffile
+       ENDELSE
        SPAWN, commandvdf
     ENDIF ELSE print, "No vdf created"
 
