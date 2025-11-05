@@ -12,10 +12,10 @@ PRO dnsvar_gradpgz, d, name, snaps, swap, var, units, $
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
        var=d->getvar('p',snaps,swap=swap)*u.up
-       var=-ddzdn(var)/u.ul
-       var_title='dP!dg!n/dz'
-       IF (units EQ "solar") THEN var_title=var_title+" (Ba/cm)"
-       var_range=[-1.e-5,1.e-5]
+       var=ddzdn(var)/u.ul      
+       var_title='-dP!dg!n/dz' ; The sign is to ease the comparison with the Lorentz Force
+       IF (units EQ "solar") THEN var_title=var_title+" (Ba cm!u-1!n)"
+       var_range=[-1e-7,1e-7]
        var_log=0
     ENDELSE
 END
