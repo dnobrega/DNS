@@ -1,4 +1,4 @@
-PRO dnsvar_gradpghor, d, name, snaps, swap, var, units, $
+PRO dnsvar_gpah, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
@@ -6,7 +6,7 @@ PRO dnsvar_gradpghor, d, name, snaps, swap, var, units, $
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_gradpghor, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_gpah, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -16,7 +16,7 @@ PRO dnsvar_gradpghor, d, name, snaps, swap, var, units, $
        var2 = yup(ddydn(pg))
        r    = d->getvar('r',snaps,swap=swap)
        var  = sqrt(var1*var1 + var2*var2)/r*u.ul/u.ut/u.ut
-       var_title='|dP!dg!n/dH|/!4q!3' 
+       var_title='aGph' 
        IF (units EQ "solar") THEN BEGIN
           var=var/1e5
           var_title=var_title+" (km s!u-2!n)"
