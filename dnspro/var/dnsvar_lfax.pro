@@ -1,4 +1,4 @@
-PRO dnsvar_lfxor, d, name, snaps, swap, var, units, $
+PRO dnsvar_lfax, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
@@ -6,19 +6,13 @@ PRO dnsvar_lfxor, d, name, snaps, swap, var, units, $
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_lfxor, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_lfax, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       jy  = (d->getvar('jy',snaps,swap=swap))
-       jz  = (d->getvar('jz',snaps,swap=swap))
-       by  = d->getvar('by',snaps,swap=swap)
-       bz  = d->getvar('bz',snaps,swap=swap)
-       r   = xdn(d->getvar('r',snaps,swap=swap))
-       var = (zup(jy*xdn(bz)) - yup(jz*xdn(by)))/r*u.ul/u.ut/u.ut
-       
-       var_title="(JxB)!dx!n/!4q!3"
+       var = (d->getvar('lfax',snaps,swap=swap))*u.ul/u.ut/u.ut
+       var_title="aLfx"
        IF (units EQ "solar") THEN BEGIN
           var = var/1e5
           var_title=var_title+" (km s!u-2!n)"
