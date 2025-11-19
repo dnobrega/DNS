@@ -1,4 +1,4 @@
-PRO PRE_QFACTOR_PLANE, snap0, snapf, step, zplane, factor=factor, nbridges=nbridges, tol=tol
+PRO PRE_QFACTOR_PLANE, snap0, snapf, step, zplane, ztop=ztop, factor=factor, nbridges=nbridges, tol=tol
 
 br_select_idlparam,idlparam
 d=obj_new('br_data',idlparam)
@@ -42,24 +42,29 @@ FOR snap=snap0,snapf,step DO BEGIN
 
     modb     = sqrt(xup_bx^2.0 + yup_by^2.0 + zup_bz^2.0)
     zz       = -reverse(zz)
-
+    IF ~keyword_set(ztop) THEN ztop = max(zz)
+    
     xup_bx = xup_bx/modb
     yup_by = yup_by/modb
     zup_bz = zup_bz/modb
 
     wh = where(zz GE zplane)
-
     xup_bx = xup_bx[*,*,wh[0]-1 : wh[-1]]
     yup_by = yup_by[*,*,wh[0]-1 : wh[-1]]
     zup_bz = zup_bz[*,*,wh[0]-1 : wh[-1]]
+    zz     = zz[wh[0]-1 : wh[-1]]
     
-    zz = zz[wh[0]-1 : wh[-1]]
+    wh     = min(where(zz GE ztop))
+    xup_bx = xup_bx[*,*,0 : wh]
+    yup_by = yup_by[*,*,0 : wh]
+    zup_bz = zup_bz[*,*,0 : wh]
+    zz     = zz[0 : wh]
+
     t1 = SYSTIME(/SECONDS)
     PRINT, 'Time: ', (t1-t0), ' seg'
 
     qfactor, xup_bx, yup_by, zup_bz, xa=xx, ya=yy, za=zz, $
-;             xreg=[xx[0],xx[-1]], yreg=[yy[0],yy[-1]],zreg=[0,0],$
-             factor=factor, fstr="q_perp_xy_"+STRTRIM(STRING(zplane, FORMAT='(F0.1)'),2)+"_"+STRTRIM(STRING(snap),2), $
+             factor=factor, fstr="q_perp_xy_"+STRTRIM(STRING(zplane, FORMAT='(F0.1)'),2)+"_"+STRTRIM(STRING(factor),2)+"_"+STRTRIM(STRING(snap),2), $
              no_preview=1, nbridges=nbridges, /scottFlag, /twistFlag, xfile="qfactor_plane.x"
 
 ENDFOR

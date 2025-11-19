@@ -536,9 +536,15 @@ IF z0Flag THEN BEGIN
 	endif
 
 ; save results 
-	if scottFlag then begin
-	 	if twistFlag then save, compress=compress, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, delta, $
-	 	                  rF, q_perp, slogq_perp, slogq_perp_orig, twist $ 
+        if scottFlag then begin
+                ;DNSi
+                if twistFlag then save, compress=compress, filename=file_sav,  length, rboundary, xreg, yreg, zreg, rF, q_perp, twist $
+	 	;if twistFlag then save, compress=compress, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, delta, $
+                                ;                  rF, q_perp,
+                                ;                  slogq_perp,
+                                ;                  slogq_perp_orig,
+                                ;                  twist $
+                ;DNSf                         
 		             else save, compress=compress, filename=file_sav, slogq, slogq_orig, q, length, Bnr, rboundary, xreg, yreg, zreg, delta, $
 		                  rF, q_perp, slogq_perp, slogq_perp_orig
 	endif else begin
@@ -550,8 +556,6 @@ ENDIF
 ; Q at the cross section ----------------------------------------------------------------------------------------------
 IF cFlag THEN BEGIN
 ; read the output of qfactor.x
-   help, q1
-   help, q2
 	qcs=fltarr(q1,q2)
 	length=fltarr(q1,q2)
 	rsF=fltarr(3,q1,q2)
