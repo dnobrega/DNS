@@ -1,7 +1,8 @@
 PRO qfactor, bx, by, bz, xa=xa, ya=ya, za=za, xreg=xreg, yreg=yreg, zreg=zreg, csFlag=csFlag,       $
              factor=factor, delta=delta,  RK4Flag=RK4Flag, step=step, tol=tol, maxsteps=maxsteps,   $
              scottFlag=scottFlag, twistFlag=twistFlag, save_curlB=save_curlB, odir=odir, fstr=fstr, $
-             nbridges=nbridges, no_preview=no_preview, tmpB=tmpB, RAMtmp=RAMtmp, compress=compress
+             nbridges=nbridges, no_preview=no_preview, tmpB=tmpB, RAMtmp=RAMtmp, compress=compress, $
+             xfile=xfile
 ;+
 ; PURPOSE:
 ;   Calculate the squashing factor Q at the photosphere or a cross section or a box volume, 
@@ -306,7 +307,9 @@ endif
 ; calculate in Fortran
 cd, tmp_dir
 tnow=systime(1)
-spawn, 'qfactor.x' ; if not known by the system, specify the path
+if ~keyword_set(xfile) then xfile='qfactor.x'
+print, "Executing...", xfile
+spawn, xfile ; if not known by the system, specify the path
 tend=systime(1)
 cd, cdir
 tcalc=tend-tnow
@@ -547,6 +550,8 @@ ENDIF
 ; Q at the cross section ----------------------------------------------------------------------------------------------
 IF cFlag THEN BEGIN
 ; read the output of qfactor.x
+   help, q1
+   help, q2
 	qcs=fltarr(q1,q2)
 	length=fltarr(q1,q2)
 	rsF=fltarr(3,q1,q2)
