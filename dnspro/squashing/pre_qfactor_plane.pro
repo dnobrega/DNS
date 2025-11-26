@@ -24,7 +24,7 @@ FOR snap=snap0,snapf,step DO BEGIN
     zup_bz = zup(bz)
       
     xx   = d->getx()
-    yy   = d->gety()
+    yy   = xx
     zz   = d->getz()
 
     nelx = d->getmx()
