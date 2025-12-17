@@ -1,12 +1,12 @@
-PRO dnsvar_separbob2, d, name, snaps, swap, var, units, $
+PRO dnsvar_tau3d, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 's = B . Rot (E parallel to B b)/B2: separbob2',/info
+       message, 'b x curl(Eparb)/B',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_separbob2, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_tau3d, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -18,6 +18,7 @@ PRO dnsvar_separbob2, d, name, snaps, swap, var, units, $
        byob = yup(by)
        bzob = zup(bz)
        modb = sqrt(bxob^2+byob^2+bzob^2)
+       ; E (centered)
        ux   = zup(yup(d->getvar('ex',snaps,swap=swap)))
        uy   = xup(zup(d->getvar('ey',snaps,swap=swap)))
        uz   = yup(xup(d->getvar('ez',snaps,swap=swap)))
@@ -25,6 +26,7 @@ PRO dnsvar_separbob2, d, name, snaps, swap, var, units, $
        bxob = bx/xdn(modb)
        byob = by/ydn(modb)
        bzob = bz/zdn(modb)
+       ; E parallel (no centered)
        ux   = xdn(var)*bxob 
        uy   = ydn(var)*byob
        uz   = zdn(var)*bzob
@@ -36,16 +38,13 @@ PRO dnsvar_separbob2, d, name, snaps, swap, var, units, $
        bzob = ddxdn(uy) - ddydn(ux)
        bzob = xup(yup(bzob))
        ; B x rot (E||B b) centered
-       ux   = bxob*xup(bx)
-       uy   = byob*yup(by)
-       uz   = bzob*zup(bz)
-       var  = abs((ux + uy + uz)/modb/modb)
-       var_title="B.rot(E!d||B!n b)/B!u2!n"
-       IF (units EQ "solar") THEN BEGIN
-          var = var/1e3
-          var_title=var_title+" (km!u-1!n)"
-       ENDIF
-       var_range=[1d-6,1.d6]
+       ux   = yup(by)*bzob - zup(bz)*byob
+       uy   = zup(bz)*bxob - xup(bx)*bzob
+       uz   = xup(bx)*byob - yup(by)*bxob
+       var  = sqrt(ux*ux + uy*uy + uz*uz)/modb/modb/u.ut
+       var_title='b x curl(E!d||B!nb)/B'
+       IF (units EQ "solar") THEN var_title=var_title+" (s!u-1!n)"
+       var_range=[2d-3,1.d]
        var_log=1
     ENDELSE
 END

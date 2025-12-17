@@ -1,12 +1,12 @@
-PRO dnsvar_keparbob2, d, name, snaps, swap, var, units, $
+PRO dnsvar_tau3d_slippage, d, name, snaps, swap, var, units, $
     var_title=var_title, var_range=var_range, var_log=var_log, $
     info=info
     IF KEYWORD_SET(info) THEN BEGIN
-       message, 'k = b x Rot (E parallel to B b)/B2: keparbob2',/info
+       message, 'b . curl (Eparb)/B',/info
        RETURN
     ENDIF ELSE BEGIN
        IF n_params() LT 6 THEN BEGIN
-          message,'dnsvar_eparb, d, name, snaps, swap, var, units, ' $
+          message,'dnsvar_tau3d_slippage, d, name, snaps, swap, var, units, ' $
                  +'var_title=var_title, var_range=var_range, var_log=var_log',/info
           RETURN
        ENDIF
@@ -35,17 +35,14 @@ PRO dnsvar_keparbob2, d, name, snaps, swap, var, units, $
        byob = zup(xup(byob))
        bzob = ddxdn(uy) - ddydn(ux)
        bzob = xup(yup(bzob))
-       ; B x rot (E||B b) centered
-       ux   = yup(by)*bzob - zup(bz)*byob
-       uy   = zup(bz)*bxob - xup(bx)*bzob
-       uz   = xup(bx)*byob - yup(by)*bxob
-       var  = sqrt(ux*ux + uy*uy + uz*uz)/modb/modb
-       var_title='B x rot(E!d||B!n b)/B!u2!n'
-       IF (units EQ "solar") THEN BEGIN
-          var = var/1e3
-          var_title=var_title+" (km!u-1!n)"
-       ENDIF
-       var_range=[1d-6,1.d6]
+       ; B . rot (E||B b) centered
+       ux   = bxob*xup(bx)
+       uy   = byob*yup(by)
+       uz   = bzob*zup(bz)
+       var  = abs((ux + uy + uz)/modb/modb)/u.ut
+       var_title="B.curl(E!d||B!n b)/B!u2!n"
+       IF (units EQ "solar") THEN var_title=var_title+" (s!u-1!n)"
+       var_range=[2d-3,1.d]
        var_log=1
     ENDELSE
 END
