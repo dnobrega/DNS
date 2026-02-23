@@ -70,6 +70,27 @@ CASE caso OF
       line     = "si_09_39293.00"
       radtemp  = 5807.152 ; 6000
    END
+   7: BEGIN ; Exploration...
+      sngl_ion = "fe_15"
+      wvl0     = 7061
+      wvlf     = 7063
+      line     = "fe_15_7062.147"
+      radtemp  = 6000
+   END
+   8: BEGIN ; Exploration...
+      sngl_ion = "ca_13"
+      wvl0     = 4086
+      wvlf     = 4088
+      line     = "ca_13_4087.472"
+      radtemp  = 6000
+   END
+   9: BEGIN ; Exploration...
+      sngl_ion = "ca_15"
+      wvl0     = 5694
+      wvlf     = 5696
+      line     = "ca_15_5695.085"
+      radtemp  = 6000
+   END
 ENDCASE
    
 rphot    = 1.0 + 0.002*findgen(nz)
