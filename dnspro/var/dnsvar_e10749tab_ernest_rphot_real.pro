@@ -11,7 +11,7 @@ PRO dnsvar_e10749tab_ernest_rphot_real, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       dns_var,d,"nel",snaps,swap,nel, units=units
+       nel    = d->getvar('nel',snaps,swap=swap)
        si    = 1.0*size(nel)
        tg    = d->getvar('tg',snaps,swap=swap)
        tg    = reform(tg,si(1)*si(2)*si(3))
