@@ -21,7 +21,7 @@ PRO dnsvar_abseparb, d, name, snaps, swap, var, units, $
        var_title='|E!d||B!n|'
        IF (units EQ "solar") THEN BEGIN
           var = var*u.uel
-          var_title=var_title+" (G)"
+          var_title=var_title+" (statV cm!u-1!n)"
        ENDIF
        var_range=[1e-6,1e-4]
        var_log=1
