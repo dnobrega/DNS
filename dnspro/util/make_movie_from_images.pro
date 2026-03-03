@@ -35,9 +35,19 @@ ENDIF ELSE BEGIN
    CASE input_format OF
       '.png'  : READ_PNG,  list[jj], image
       '.jpg'  : READ_JPEG, list[jj], image
-      '.jpeg ': READ_JPEG, list[jj], image
+      '.jpeg' : READ_JPEG, list[jj], image
+      '.gif'  : BEGIN
+                    READ_GIF, list[jj], image1, R, G, B
+                    siz	= size(image1, /DIMENSIONS)
+                    nx  = siz[0]
+                    ny  = siz[1]
+                    image = BYTARR(3, nx, ny)
+                    image[0,*,*] = R[image1]
+                    image[1,*,*] = G[image1]
+                    image[2,*,*] = B[image1]
+                  END
       ELSE: BEGIN
-            PRINT, "Only .png, .jpg or .jpeg are accepted"
+            PRINT, "Only .png, .jpg, .jpeg or .gif are accepted"
             STOP
             END
    ENDCASE
@@ -60,9 +70,19 @@ FOR jj=step, n_list-1, step DO BEGIN
       CASE input_format OF
          '.png'  : READ_PNG,  list[jj], image
          '.jpg'  : READ_JPEG, list[jj], image
-         '.jpeg ': READ_JPEG, list[jj], image
+         '.jpeg' : READ_JPEG, list[jj], image
+         '.gif'  : BEGIN
+                    READ_GIF, list[jj], image1, R, G, B
+                    siz = size(image1, /DIMENSIONS)
+                    nx  = siz[0]
+                    ny  = siz[1]
+                    image = BYTARR(3, nx, ny)
+                    image[0,*,*] = R[image1]
+                    image[1,*,*] = G[image1]
+                    image[2,*,*] = B[image1]
+                  END
          ELSE: BEGIN
-               PRINT, "Only .png, .jpg or .jpeg are accepted"
+               PRINT, "Only .png, .jpg, .jpeg or .gif are accepted"
                STOP
                END
       ENDCASE
