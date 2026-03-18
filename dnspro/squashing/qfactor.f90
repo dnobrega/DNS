@@ -16,7 +16,7 @@ call interpolateB(vp, bp)
 bzp=bp(2)
 
 if (scottFlag) then 
-	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag)
+	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag, i, j)
 	q(i,j)=q0
 	q_perp(i,j)=q_perp0
 else
@@ -111,7 +111,7 @@ if ((bkey1 .or. bkey11 .or. bkey12) .and. (bkey2 .or. bkey21 .or. bkey22)) then
 	q(i,j)=(nxx*nxx+nxy*nxy+nyx*nyx+nyy*nyy) / (bnr(i,j) * (2.0*delta)**2.0)
 else
  	call ij2vp(i, j, vp)
-	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false.)
+	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false., i, j)
 	q(i,j)=q0
 endif
 end subroutine qfactor0_calculate
@@ -161,7 +161,7 @@ integer:: i, j, rbs, rbe, s_index0, e_index0
 call ij2vp(i, j, vp)
 
 if (scottFlag) then
-	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag)
+	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag, i, j)
 	q(i,j)=q0
 	q_perp(i,j)=q_perp0
 else
@@ -317,7 +317,7 @@ if (tangent_Flag(i,j)) then
 	endif
 
 	if (.not. tangent_success) then
-		call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false.)
+		call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false., i, j)
 		q(i,j)=q0
 	endif
 	return
@@ -330,7 +330,7 @@ if ((.not. tangent_Flag(i,j) .and.                                       &
 	  ((j .gt.    0) .and. tangent_Flag(i, j-1)) .or.                &
 	  ((j .lt. q2m1) .and. tangent_Flag(i, j+1)) .or. .not. bkey))) then
 	call ij2vp(i, j, vp)
-	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false.)
+	call trace_scott(vp, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, .false., i, j)
 	q(i,j)=q0
  	return
 endif
@@ -493,6 +493,10 @@ use qfactor_common
 use field_common
 implicit none
 integer:: k, k0
+!DNSi
+integer:: i_i, j_j, n_n
+character(len=100) :: dns_filename
+!DNSf
 !----------------------------------------------------------------------------
 call initialize()
 
@@ -544,38 +548,43 @@ if (cflag) then
 endif
 !----------------------------------------------------------------------------	
 if (vflag) then
-	open(unit=1, file='q3d.bin', access='stream', status='replace')
-	open(unit=2, file='rboundary3d.bin', access='stream', status='replace')
-	if(scottFlag) open(unit=3, file='q_perp3d.bin', access='stream', status='replace')
-	if(twistFlag) open(unit=4, file= 'twist3d.bin', access='stream', status='replace')
-	if (zreg(0) .eq. zmin) then
-		call qfactor0()
-		write(1) q
-		write(2) rboundary_tmp
-		if (scottFlag) write(3) q_perp
-		if (twistFlag) write(4) twist
-		k0=1
-	else
-		k0=0
-	endif
-				
-	do k=k0, qz-1			
-                cut_coordinate=zreg(0)+k*delta
-                !DNSi
-                cut_coordinate=za(k)
-                !DNSf
-		call qcs()
-		write(1) q
-		write(2) rboundary_tmp
-		if (scottFlag) write(3) q_perp
-		if (twistFlag) write(4) twist
-	
-		if (mod(k+1, 4) .eq. 0) call show_time(float(k+1)/qz*100.0)
-	enddo
-	close(1)
-	close(2)
-	if (scottFlag) close(3)
-	if (twistFlag) close(4)
+   !DNSi
+   if (traceflag) then
+      call qfactor0()
+      write(dns_filename, '(A,I4.4,".bin")') "../bline_",traceint
+      open(unit=5, file=dns_filename, status='replace', action='write', form="unformatted", access='stream')
+      do j_j = 0, qy-1
+         do i_i = 0, qx-1
+            write(5) xfl(i_i,j_j,:), yfl(i_i,j_j,:), zfl(i_i,j_j,:)
+         enddo
+      enddo
+      traceflag = .False.
+      close(5)
+   else
+      !DNSf
+      open(unit=1, file='q3d.bin', access='stream', status='replace')
+      open(unit=2, file='rboundary3d.bin', access='stream', status='replace')
+      if(scottFlag) open(unit=3, file='q_perp3d.bin', access='stream', status='replace')
+      if(twistFlag) open(unit=4, file= 'twist3d.bin', access='stream', status='replace')
+      k0=0  
+      do k=k0, qz-1
+         !DNSi
+         ! I commented this line because it is a bug. delta does not take into account that z array is non uniform.
+         !cut_coordinate=zreg(0)+k*delta
+         cut_coordinate=za(k)
+         !DNSf
+         call qcs()
+         write(1) q
+         write(2) rboundary_tmp
+         if (scottFlag) write(3) q_perp
+         if (twistFlag) write(4) twist
+         if (mod(k+1, 4) .eq. 0) call show_time(float(k+1)/qz*100.0)
+      enddo
+      close(1)
+      close(2)
+      if (scottFlag) close(3)
+      if (twistFlag) close(4)
+   endif
 endif
 !----------------------------------------------------------------------------
 deallocate(Bfield, q, reF, length, bnr, reboundary, rboundary_tmp)

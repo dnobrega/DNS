@@ -385,7 +385,7 @@ end subroutine correct_foot_scott
 
 
 !Scott_2017_ApJ_848_117
-subroutine trace_scott(vp0, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag)
+subroutine trace_scott(vp0, q0, q_perp0, rs, re, rbs, rbe, length0, twist0, twistFlag, iix, iiy)
 use trace_common
 implicit none
 real:: vp(0:2), vp0(0:2), q0, q_perp0, dt, dL, dL0, length0, alpha, alpha0, twist0, dtwist, &
@@ -394,6 +394,12 @@ vector9(0:8), vector9_0(0:8), vector9_1(0:8), vector9_s(0:8), vector9_e(0:8), &
 u0(0:2), us(0:2), ue(0:2), v0(0:2), vs(0:2), ve(0:2), vs1(0:2), ve1(0:2), us1(0:2), ue1(0:2)
 integer:: it, sign_dt, rb, rbe, rbs, e_index, s_index, maxdim, index1, index2
 logical:: z0flag, twistFlag
+!DNSi
+integer :: iix, iiy, idns
+real, allocatable :: xline(:), yline(:), zline(:)
+integer:: nline
+allocate(xline(0:maxsteps), yline(0:maxsteps), zline(0:maxsteps))
+!DNSf
 !----------------------------------------------------------------------------
 twist0 =0.0
 length0=0.0
@@ -415,6 +421,16 @@ v0=v0/norm2(v0)
 call cross_product(b0, v0, u0)
 u0=u0/norm2(u0)
 !----------------------------------------------------------------------------
+!DNSi
+if (traceflag) then
+   nline = 0
+   xline(nline) = vp0(0)
+   yline(nline) = vp0(1)
+   zline(nline) = vp0(2)
+   nline = nline+1
+endif
+!DNSf
+
 do sign_dt=-1, 1, 2	
 	vector9(0:2)=vp0
 	vector9(3:5)=u0
@@ -464,7 +480,15 @@ do sign_dt=-1, 1, 2
 		it       =it+sign_dt	
 		vector9_0=vector9
 		vector9  =vector9_1
-		vp       =vector9_1(0:2)
+                vp       =vector9_1(0:2)
+                !DNSi
+                if (traceflag) then 
+                   xline(nline) = vp(0)
+                   yline(nline) = vp(1)
+                   zline(nline) = vp(2)
+                   nline        = nline+1
+                endif
+                !DNSf
 	end do
 	
 	call correct_foot_scott(vector9_0, vector9_1, sign_dt, rb)
@@ -479,7 +503,14 @@ do sign_dt=-1, 1, 2
 	length0=length0+dL
 	
 	if (twistflag) then
-		vp=vector9_1(0:2)
+                vp=vector9_1(0:2)
+                !DNSi
+                if (traceflag) then 
+                   xline(nline-1) = vp(0)
+                   yline(nline-1) = vp(1)
+                   zline(nline-1) = vp(2)
+                endif
+                !DNSf
 		call interpolateAlpha(vp, alpha)
 		dtwist=(alpha0+alpha)/2.*dL
 		twist0=twist0+dtwist
@@ -527,5 +558,19 @@ q_perp0 =abs(dot_product(Ue1,Ue1)*dot_product(Vs1,Vs1)  &
         +    dot_product(Us1,Us1)*dot_product(Ve1,Ve1)  &
         -2.0*dot_product(Ue1,Ve1)*dot_product(Us1,Vs1))/&
             (b0_square / (norm2(bs)*norm2(be)))
-     
+
+
+!DNSi
+if (traceflag) then
+   do idns = 0, nline - 1
+      if (idns < max_trace_steps) then
+         xfl(iix, iiy, idns) = xline(idns)
+         yfl(iix, iiy, idns) = yline(idns)
+         zfl(iix, iiy, idns) = zline(idns)
+      endif
+   end do
+   deallocate(xline, yline, zline)
+endif
+!DNSf
+
 end subroutine trace_scott

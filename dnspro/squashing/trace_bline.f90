@@ -28,6 +28,12 @@ implicit none
 	b1,b3,b4,b5,b6, &
 	ce1,ce3,ce4,ce5,ce6;
 !----------------------------------------------------------------------------
+!DNSi
+        logical:: traceflag
+        integer :: traceint
+        real, allocatable :: xfl(:,:,:), yfl(:,:,:), zfl(:,:,:)
+        integer :: max_trace_steps
+!DNSf
 INTERFACE
 	subroutine indexes(vp, vpBound, index_i, index_j, index_k)
 	implicit none
@@ -860,7 +866,10 @@ grad_unit_vec_B_grid0, grad_unit_vec_B_grid_stretch, curlB_grid0, curlB_grid_str
 !----------------------------------------------------------------------------
 integer:: i, j, k, s, &
 twistFlag_int, RK4flag_int, scottFlag_int, csFlag_int, curlB_out_int, &
-q0flag_int, vflag_int, cflag_int, reclen, nbridges, nx_mag, ny_mag
+q0flag_int, vflag_int, cflag_int, reclen, nbridges, nx_mag, ny_mag, &
+!DNSi
+traceflag_int
+!DNSf
 real, allocatable:: Bfield_tmp(:, :, :, :), magnetogram(:, :)
 real:: point1(0:2), point2(0:2), vp(0:2), bp(0:2), delta_mag
 logical:: xa_exist, ya_exist, za_exist, ifort_flag, curlB_out
@@ -868,7 +877,10 @@ logical:: xa_exist, ya_exist, za_exist, ifort_flag, curlB_out
 open(unit=8, file='head.txt', status='old')
 read(8, *) nx, ny, nz, nbridges, delta, maxsteps, &
            xreg, yreg, zreg, step, tol, &
-           twistFlag_int, RK4flag_int, scottFlag_int, csFlag_int, curlB_out_int
+           twistFlag_int, RK4flag_int, scottFlag_int, csFlag_int, curlB_out_int, &
+           !DNSi
+           traceflag_int, traceint, max_trace_steps
+           !DNSf
  close(8)
  
  twistFlag=twistFlag_int .eq. 1
@@ -876,6 +888,9 @@ read(8, *) nx, ny, nz, nbridges, delta, maxsteps, &
  scottFlag=scottFlag_int .eq. 1
     csFlag=   csFlag_int .eq. 1
  curlB_out=curlB_out_int .eq. 1
+!DNSi
+traceflag= traceflag_int .eq. 1
+!DNSf 
 !----------------------------------------------------------------------------
 ! for RKF45
 if (.not. RK4flag) then
@@ -1092,6 +1107,15 @@ allocate(rboundary_tmp(0:q1m1, 0:q2m1))
 
 if (twistFlag) allocate( twist(0:q1m1, 0:q2m1))
 if (scottFlag) allocate(q_perp(0:q1m1, 0:q2m1))
+
+if (twistflag) then
+   allocate(xfl(0:nxm1, 0:nym1, 0:max_trace_steps-1))
+   allocate(yfl(0:nxm1, 0:nym1, 0:max_trace_steps-1))
+   allocate(zfl(0:nxm1, 0:nym1, 0:max_trace_steps-1))
+   xfl = -1.0
+   yfl = -1.0
+   zfl = -1.0
+endif
 
 if (vflag .or. cflag) then
 	allocate(rsboundary(-2:q1+1, -2:q2+1))

@@ -2,7 +2,9 @@ PRO qfactor, bx, by, bz, xa=xa, ya=ya, za=za, xreg=xreg, yreg=yreg, zreg=zreg, c
              factor=factor, delta=delta,  RK4Flag=RK4Flag, step=step, tol=tol, maxsteps=maxsteps,   $
              scottFlag=scottFlag, twistFlag=twistFlag, save_curlB=save_curlB, odir=odir, fstr=fstr, $
              nbridges=nbridges, no_preview=no_preview, tmpB=tmpB, RAMtmp=RAMtmp, compress=compress, $
-             xfile=xfile
+             ;DNSi
+             xfile=xfile, traceFlag=traceFlag, traceint=traceint, max_trace_steps=max_trace_steps
+             ;DNSf
 ;+
 ; PURPOSE:
 ;   Calculate the squashing factor Q at the photosphere or a cross section or a box volume, 
@@ -239,6 +241,9 @@ endif
 if  keyword_set(twistFlag)  then twistFlag =1B else twistFlag =0B
 if  keyword_set(RK4Flag)    then RK4Flag   =1B else RK4Flag   =0B
 if  keyword_set(scottFlag)  then scottFlag =1B else scottFlag =0B
+;DNSi
+if  keyword_set(traceFlag)  then traceFlag =1B else traceFlag =0B
+;DNSf
 if  keyword_set(save_curlB) then save_curlB=1B else save_curlB=0B
 if  keyword_set(no_preview) then preview   =0B else preview   =1B
 if  keyword_set(tmpB)       then tmpB      =1B else tmpB      =0B
@@ -280,7 +285,10 @@ get_lun,unit
 openw,  unit, tmp_dir+'head.txt'
 printf, unit, long(nx), long(ny), long(nz), long(nbridges), float(delta), long(maxsteps)
 printf, unit, float(xreg), float(yreg), float(zreg), float(step), float(tol)
-printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), long(save_curlB)
+;DNSi
+;printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), long(save_curlB)
+printf, unit, long(twistFlag), long(RK4flag), long(scottFlag), long(csflag), long(save_curlB), long(traceFlag), long(traceint), long(max_trace_steps)
+;DNSf
 close,  unit
 
 openw,  unit, tmp_dir+'b3d.bin'
@@ -629,6 +637,7 @@ IF cFlag THEN BEGIN
 ENDIF
 
 ; Q in the 3D box volume ----------------------------------------------------------------------------------------------
+IF NOT traceFlag THEN BEGIN
 IF vflag THEN BEGIN
 ; read the output of qfactor.x
 	q3d=fltarr(qx,qy,qz)
@@ -683,7 +692,8 @@ IF vflag THEN BEGIN
 		if twistFlag then save, compress=compress, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, delta, twist3d $
 		             else save, compress=compress, filename=file_sav, q3d, rboundary3d, xreg, yreg, zreg, delta	
 	endelse
-ENDIF 
+     ENDIF
+ENDIF
 
 ;----------------------------------------------------------------------------------------------	
 ; house keeping
@@ -691,6 +701,5 @@ file_delete, tmp_dir, /recursive
 free_lun, unit, /force
 if ~preset_odir then dummy=temporary(odir)
 if ~preset_fstr then dummy=temporary(fstr)
-
-print, "Results are saved in '"+file_sav+"'"
+print, "Done"
 END
