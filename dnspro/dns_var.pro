@@ -405,7 +405,7 @@ PRO dns_var,d,name,snaps,swap,var,$
     bar_title = "Int of "+bar_title
     IF bar_title.contains("cm") THEN BEGIN
        IF bar_title.contains("cm ")    THEN bar_title = bar_title.Replace('cm ', 'cm!u2!n')
-       IF bar_title.contains("cm!u-1!n") THEN bar_title = bar_title.Replace('cm!u-1!n ', '')
+       IF bar_title.contains("cm!u-1!n") THEN bar_title = bar_title.Replace('cm!u-1!n', '')
        IF bar_title.contains("cm!u-2!n") THEN bar_title = bar_title.Replace('cm!u-2!n', 'cm!u-1!n')
        IF bar_title.contains("cm!u-3!n") THEN bar_title = bar_title.Replace('cm!u-3!n', 'cm!u-2!n')
     ENDIF ELSE BEGIN
