@@ -20,7 +20,7 @@ PRO dnsvar_lfah, d, name, snaps, swap, var, units, $
        bz=d->getvar('bz',snaps,swap=swap)
 
        varx = xup((zup(jy*xdn(bz)) - yup(jz*xdn(by))))
-       vary = yup((yup(jz*ydn(bx)) - zup(jx*ydn(bz))))
+       vary = yup((xup(jz*ydn(bx)) - zup(jx*ydn(bz))))
 
        r=d->getvar('r',snaps,swap=swap)
        var=sqrt(varx*varx+vary*vary)/r*u.ul/u.ut/u.ut
