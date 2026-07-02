@@ -11,20 +11,28 @@ PRO dnsvar_lfrlh, d, name, snaps, swap, var, units, $
           RETURN
        ENDIF
        CALL_PROCEDURE, "units_"+units, u
-       bx=d->getvar('bx',snaps,swap=swap)
-       by=d->getvar('by',snaps,swap=swap)
-       bz=d->getvar('bz',snaps,swap=swap)
+       bx  = d->getvar('bx',snaps,swap=swap)
+       by  = d->getvar('by',snaps,swap=swap)
+       bz  = d->getvar('bz',snaps,swap=swap)
+       bxc = xup(bx)
+       byc = yup(by)
+       bzc = zup(bz)
 
-       varx = xup(bx)*ddxup(bx)
-       vary = yup(by)*ddyup(by)
-       var1 = sqrt(varx*varx+vary*vary)
+       pm  = 0.5*(bxc*bxc + byc*byc + bzc*bzc)
+
+       ; Magnetic tension: T = (B . grad) B
+       Tx  = bxc*ddxup(bx) + byc*ddyup(bx) + bzc*ddzup(bx)
+       Ty  = bxc*ddyup(by) + byc*ddyup(by) + bzc*ddzup(by)
+       T_h = sqrt(Tx*Tx + Ty*Ty)
+
+       ; Magnetic-pressure-gradient magnitude
+       Gx = xup(ddxdn(pm))
+       Gy = yup(ddydn(pm))
+
+       Gm_h = sqrt(Gx*Gx + Gy*Gy)
        
-       var   = (xup(bx*bx) + yup(by*by) + zup(bz*bz))/2.0
-       varx  = xup(ddxdn(var))
-       vary  = yup(ddydn(var))       
-       var2  = sqrt(varx*varx+vary*vary)
-
-       var   = (var1 - var2)/(var1+var2)
+       eps = 1.d-30
+       var = (T_h - Gm_h)/(T_h + Gm_h + eps)
        
        var_title="R!dL,h!n"
        var_range=[-1,1]
